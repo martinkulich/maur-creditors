@@ -1,0 +1,72 @@
+error_404:
+  url:   /404
+  param: { module: security, action: error404 }
+
+create_role_perm:
+  url:   /create-role-perm/:role_id/:perm_id
+  param: { module: security, action: createRolePerm }
+delete_role_perm:
+  url:   /delete-role-perm/:role_id/:perm_id
+  param: { module: security, action: deleteRolePerm }
+
+
+create_user_perm:
+  url:   /create-user-perm/:user_id/:perm_id
+  param: { module: security, action: createUserPerm }
+delete_user_perm:
+  url:   /delete-user-perm/:user_id/:perm_id
+  param: { module: security, action: deleteUserPerm }
+
+
+create_user_role:
+  url:   /create-user-role/:user_id/:role_id
+  param: { module: security, action: createUserRole }
+delete_user_role:
+  url:   /delete-user-role/:user_id/:role_id
+  param: { module: security, action: deleteUserRole }
+
+create_role:
+  url:   /create-role
+  param: { module: security, action: createRole }
+
+delete_role:
+  url:   /delete-role/:id
+  param: { module: security, action: deleteRole }
+
+create_playground_user:
+  url:   /create-playground-user/
+  param: { module: security, action: createPlaygroundUser }
+
+delete_playground_user:
+  url:   /delete-playground-user/
+  param: { module: security, action: deletePlaygroundUser }
+
+rights:
+  url:   /rights
+  param: { module: security, action: rights }
+
+login:
+  url:   /login
+  param: { module: security, action: login }
+
+logout:
+  url:   /logout
+  param: { module: security, action: logout }
+
+account:
+  url:   /account
+  param: { module: security, action: account }
+
+
+registration:
+  url:   /registration
+  param: { module: security, action: registration }
+
+forgotten_password:
+  url:   /forgotten-password
+  param: { module: security, action: forgottenPassword }
+
+
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing

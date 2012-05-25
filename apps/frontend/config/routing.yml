@@ -1,0 +1,126 @@
+regulation:
+  class: sfPropelRouteCollection
+  options:
+    model:                regulation
+    module:               regulation
+    prefix_path:          /regulation
+    column:               contract_id
+    with_wildcard_routes: true
+
+security_user:
+  class: sfPropelRouteCollection
+  options:
+    model:                securityUser
+    module:               securityUser
+    prefix_path:          /user
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
+payment:
+  class: sfPropelRouteCollection
+  options:
+    model:                payment
+    module:               payment
+    prefix_path:          /payment
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
+settlement:
+  class: sfPropelRouteCollection
+  options:
+    model:                settlement
+    module:               settlement
+    prefix_path:          /settlement
+    column:               id
+    with_wildcard_routes: true
+    object_actions: {capitalize: get, pay: get}
+    collection_actions: {filters: get, filter: post, reset: get}
+
+creditor:
+  class: sfPropelRouteCollection
+  options:
+    model:                creditor
+    module:               creditor
+    prefix_path:          /creditor
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
+contract:
+  class: sfPropelRouteCollection
+  options:
+    model:                contract
+    module:               contract
+    prefix_path:          /contract
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get, regulation: get}
+
+group:
+  class: sfPropelRouteCollection
+  options:
+    model:                securityGroup
+    module:               group
+    prefix_path:          /group
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
+
+user:
+  class: sfPropelRouteCollection
+  options:
+    model:                securityUser
+    module:               user
+    prefix_path:          /user
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
+payment_contract_filter:
+  url:   /payment/contract-filter/:contract_id
+  param: { module: payment, action: contractFilter }
+
+settlement_contract_filter:
+  url:   /settlement/contract-filter/:contract_id
+  param: { module: settlement, action: contractFilter }
+
+
+report_filters:
+  url:   /report/:report_type/filters
+  param: { module: report, action: filters }
+
+report_filter:
+  url:   /report/:report_type/filter
+  param: { module: report, action: filter }
+
+report_reset:
+  url:   /report/:report_type/reser
+  param: { module: report, action: reset }
+
+report_sort:
+  url:   /report/:report_type/sort/:sort
+  param: { module: report, action: sort }
+
+report:
+  url:   /report/:report_type
+  param: { module: report, action: index }
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: contract, action: index }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

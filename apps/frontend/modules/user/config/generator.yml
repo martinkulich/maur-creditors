@@ -1,0 +1,37 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           securityUser
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              securityUser
+    plural:                securityUsers
+    route_prefix:          user
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        display: [email, firstname, surname, phone]
+        actions:
+          filters: ~
+          reset:
+            action: ~
+            label: Reset filter
+        object_actions:
+          _edit: ~
+        batch_actions: []
+#          send_mail:
+#            action: sendMail
+#            label: Send mail
+#            credentials: mail.admin
+        sort: [email, asc]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

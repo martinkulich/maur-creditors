@@ -1,0 +1,31 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           contract
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              contract
+    plural:                contracts
+    route_prefix:          contract
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        created_at:
+          date_format: D
+          label: Date of signature
+        activated_at:
+          date_format: D
+          label: Date of payment
+      list:
+        batch_actions: []
+        display: [name, creditor, amount, payments_amount, interest_rate_as_string, period_as_string, created_at, activated_at]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

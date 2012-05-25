@@ -1,0 +1,27 @@
+dev:
+  propel:
+    param:
+      classname: DebugPDO
+      debug:
+        realmemoryusage: true
+        details:
+          time:
+            enabled: true
+          slow:
+            enabled: true
+            threshold: 0.005
+          memdelta:
+            enabled: true
+          mempeak:
+            enabled: true
+          method:
+            enabled: true
+          mem:
+            enabled: true
+          querycount:
+            enabled: true
+all:
+  propel:
+    class:          sfPropelDatabase
+    param:
+      dsn:          pgsql:host=<?php echo DB_HOST;?> port=<?php echo DB_PORT;?> dbname=<?php echo DB_NAME;?> user=<?php echo DB_USER;?> password=<?php echo DB_PASS;?>

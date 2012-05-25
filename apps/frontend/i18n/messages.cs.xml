@@ -1,0 +1,1501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff>
+  <body original="global" source-language="cs" datatype="plaintext">
+    <trans-unit id="1">
+      <source>lang_code</source>
+      <target>cs</target>
+    </trans-unit>
+    <trans-unit id="2">
+      <source></source>
+      <target></target>
+    </trans-unit>
+    <trans-unit id="3">
+      <source>Account</source>
+      <target>Účet</target>
+    </trans-unit>
+    <trans-unit id="4">
+      <source>Login</source>
+      <target>Přihlásit</target>
+    </trans-unit>
+    <trans-unit id="5">
+      <source>Logout</source>
+      <target>Odhlásit</target>
+    </trans-unit>
+    <trans-unit id="6">
+      <source>registration</source>
+      <target>Registace</target>
+    </trans-unit>
+    <trans-unit id="7">
+      <source>forgotten_password</source>
+      <target>Zapomenuté heslo</target>
+    </trans-unit>
+    <trans-unit id="8">
+      <source>Password</source>
+      <target>Heslo</target>
+    </trans-unit>
+    <trans-unit id="9">
+      <source>curt admin</source>
+      <target>Kurty</target>
+    </trans-unit>
+    <trans-unit id="10">
+      <source>price admin</source>
+      <target>Ceny</target>
+    </trans-unit>
+    <trans-unit id="11">
+      <source>schedule admin</source>
+      <target>Rozvrhy</target>
+    </trans-unit>
+    <trans-unit id="12">
+      <source>rights admin</source>
+      <target>Práva</target>
+    </trans-unit>
+    <trans-unit id="13">
+      <source>reservation admin</source>
+      <target>Rezervace</target>
+    </trans-unit>
+    <trans-unit id="14">
+      <source>No schedule </source>
+      <target>Pro toto datum neexistuje žádný rozvrh</target>
+    </trans-unit>
+    <trans-unit id="15">
+      <source>Curt</source>
+      <target>Kurt</target>
+    </trans-unit>
+    <trans-unit id="16">
+      <source>Time</source>
+      <target>Čas</target>
+    </trans-unit>
+    <trans-unit id="17">
+      <source>Price</source>
+      <target>Cena</target>
+    </trans-unit>
+    <trans-unit id="18">
+      <source>Delete</source>
+      <target>Smazat</target>
+    </trans-unit>
+    <trans-unit id="19">
+      <source>Total price</source>
+      <target>Cena celkem</target>
+    </trans-unit>
+    <trans-unit id="20">
+      <source>Save</source>
+      <target>Uložit</target>
+    </trans-unit>
+    <trans-unit id="21">
+      <source>Delete all</source>
+      <target>Smazat vše</target>
+    </trans-unit>
+    <trans-unit id="22">
+      <source>Cancel</source>
+      <target>Zrušit</target>
+    </trans-unit>
+    <trans-unit id="23">
+      <source>Update</source>
+      <target>Aktualizovat</target>
+    </trans-unit>
+    <trans-unit id="24">
+      <source>Account_update_success</source>
+      <target>Učet úspěšně aktualizován</target>
+    </trans-unit>
+    <trans-unit id="25">
+      <source>registration_successfull</source>
+      <target>Registrace proběhla úspěšně</target>
+    </trans-unit>
+    <trans-unit id="26">
+      <source>registration_mail_send</source>
+      <target>Registrační údaje byly úspěšně odsláný na Váš email</target>
+    </trans-unit>
+    <trans-unit id="27">
+      <source>registration_mail_send_failed</source>
+      <target>Odeslání registračního mailu selhalo</target>
+    </trans-unit>
+    <trans-unit id="28">
+      <source>forgotten_password_unknow_user</source>
+      <target>Email není registrován</target>
+    </trans-unit>
+    <trans-unit id="29">
+      <source>forgotten_password_resend</source>
+      <target>Nové heslo bylo úsěšně odesláno na Váš email</target>
+    </trans-unit>
+    <trans-unit id="30">
+      <source>forgotten_password_resend_failed</source>
+      <target>Odeslání nového hesla selhalo</target>
+    </trans-unit>
+    <trans-unit id="31">
+      <source>Forgotten password</source>
+      <target>Zapomenuté heslo</target>
+    </trans-unit>
+    <trans-unit id="32">
+      <source>Send</source>
+      <target>Odeslat</target>
+    </trans-unit>
+    <trans-unit id="33">
+      <source>Registration</source>
+      <target>Registrace</target>
+    </trans-unit>
+    <trans-unit id="34">
+      <source>Register</source>
+      <target>Registrovat</target>
+    </trans-unit>
+    <trans-unit id="35">
+      <source>Unavailable</source>
+      <target>Nedostupné</target>
+    </trans-unit>
+    <trans-unit id="36">
+      <source>Occupied</source>
+      <target>Obsazeno</target>
+    </trans-unit>
+    <trans-unit id="37">
+      <source>Reserved</source>
+      <target>Rezervováno</target>
+    </trans-unit>
+    <trans-unit id="38">
+      <source>Roles</source>
+      <target>Role</target>
+    </trans-unit>
+    <trans-unit id="39">
+      <source>Create role</source>
+      <target>vytvořit roli</target>
+    </trans-unit>
+    <trans-unit id="40">
+      <source>Delete role</source>
+      <target>Smazat roli</target>
+    </trans-unit>
+    <trans-unit id="41">
+      <source>Users</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="42">
+      <source>Add playground user</source>
+      <target>Přiřadit uživatele</target>
+    </trans-unit>
+    <trans-unit id="43">
+      <source>Delete playground user</source>
+      <target>Odebrat uživatele</target>
+    </trans-unit>
+    <trans-unit id="44">
+      <source>Delete user role</source>
+      <target>Odebrat roli</target>
+    </trans-unit>
+    <trans-unit id="45">
+      <source>Add user role</source>
+      <target>Přiřadit roli</target>
+    </trans-unit>
+    <trans-unit id="46">
+      <source>Delete role perm</source>
+      <target>Odebrat právo</target>
+    </trans-unit>
+    <trans-unit id="47">
+      <source>Add role perm</source>
+      <target>Přiřadit právo</target>
+    </trans-unit>
+    <trans-unit id="48">
+      <source>Add user perm</source>
+      <target>Přiřadit právo</target>
+    </trans-unit>
+    <trans-unit id="49">
+      <source>Delete user perm</source>
+      <target>Odebrat právo</target>
+    </trans-unit>
+    <trans-unit id="50">
+      <source>Are you sure? This could not be undone!</source>
+      <target>Tuto operaci nelze vrátit, opravdu chcete pokračovat?</target>
+    </trans-unit>
+    <trans-unit id="51">
+      <source>No active schedule/curt for this sport and date</source>
+      <target>Pro tento sport není v daném termínu žádný aktivní rozvrh/kurt</target>
+    </trans-unit>
+    <trans-unit id="52">
+      <source>Users who have credential&lt;br /&gt;to select this price category &lt;br /&gt;in reservation administration</source>
+      <target>Uživatelé kteří mají právo&lt;br /&gt; zvolit tuto cenovou kategorii &lt;br /&gt;při vytváření rezervace&lt;br /&gt; pokud neni cenová kategorie veřejná</target>
+    </trans-unit>
+    <trans-unit id="53">
+      <source>Fullname</source>
+      <target>Jméno</target>
+    </trans-unit>
+    <trans-unit id="54">
+      <source>Date</source>
+      <target>Datum</target>
+    </trans-unit>
+    <trans-unit id="55">
+      <source>price_category admin</source>
+      <target>Cenové kategorie</target>
+    </trans-unit>
+    <trans-unit id="56">
+      <source>Is public</source>
+      <target>Veřejná</target>
+    </trans-unit>
+    <trans-unit id="57">
+      <source>Price category user list</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="58">
+      <source>Price category administration</source>
+      <target>cen. Kategorie</target>
+    </trans-unit>
+    <trans-unit id="59">
+      <source>Another active schedule for this period and curt(s)</source>
+      <target>Pro toto období a kurt(y) již rozvrh existuje</target>
+    </trans-unit>
+    <trans-unit id="60">
+      <source>Reservation saved successfully</source>
+      <target>Rezervace byla úspěšně uložena</target>
+    </trans-unit>
+    <trans-unit id="61">
+      <source>Reservation deleted successfully</source>
+      <target>Rezervace byla úspěšně smazána</target>
+    </trans-unit>
+    <trans-unit id="62">
+      <source>Price category</source>
+      <target>Cenová kategorie</target>
+    </trans-unit>
+    <trans-unit id="63">
+      <source>At least one price category must be public</source>
+      <target>Alespoň jedna cenová kategorie musí být veřejná</target>
+    </trans-unit>
+    <trans-unit id="64">
+      <source>You are not allowed for this action</source>
+      <target>Pro tuto akci nemáte oprávnění</target>
+    </trans-unit>
+    <trans-unit id="65">
+      <source>Curt administration</source>
+      <target>Kurty</target>
+    </trans-unit>
+    <trans-unit id="66">
+      <source>Schedule administration</source>
+      <target>Rozvrhy</target>
+    </trans-unit>
+    <trans-unit id="67">
+      <source>Price administration</source>
+      <target>Ceny</target>
+    </trans-unit>
+    <trans-unit id="68">
+      <source>Rights administration</source>
+      <target>Práva</target>
+    </trans-unit>
+    <trans-unit id="69">
+      <source>Reservation administration</source>
+      <target>Rezervace</target>
+    </trans-unit>
+    <trans-unit id="70">
+      <source>Name</source>
+      <target>Název</target>
+    </trans-unit>
+    <trans-unit id="71">
+      <source>Amount</source>
+      <target>Částka</target>
+    </trans-unit>
+    <trans-unit id="72">
+      <source>Active</source>
+      <target>Aktivní</target>
+    </trans-unit>
+    <trans-unit id="73">
+      <source>Color</source>
+      <target>Barva</target>
+    </trans-unit>
+    <trans-unit id="74">
+      <source>Price user list</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="75">
+      <source>Active from</source>
+      <target>Aktivní od</target>
+    </trans-unit>
+    <trans-unit id="76">
+      <source>Activo to</source>
+      <target>Aktivní do</target>
+    </trans-unit>
+    <trans-unit id="77">
+      <source>Schedule price list</source>
+      <target>Ceny</target>
+    </trans-unit>
+    <trans-unit id="78">
+      <source>Edit prices</source>
+      <target>Editovat ceny</target>
+    </trans-unit>
+    <trans-unit id="79">
+      <source>Edit schedule</source>
+      <target>Editace rozvrhu</target>
+    </trans-unit>
+    <trans-unit id="80">
+      <source>Monday</source>
+      <target>Pondělí</target>
+    </trans-unit>
+    <trans-unit id="81">
+      <source>Tuesday</source>
+      <target>Úterý</target>
+    </trans-unit>
+    <trans-unit id="82">
+      <source>Wednesday</source>
+      <target>Středa</target>
+    </trans-unit>
+    <trans-unit id="83">
+      <source>Thursday</source>
+      <target>Čtvrtek</target>
+    </trans-unit>
+    <trans-unit id="84">
+      <source>Friday</source>
+      <target>Pátek</target>
+    </trans-unit>
+    <trans-unit id="85">
+      <source>Saturday</source>
+      <target>Sobota</target>
+    </trans-unit>
+    <trans-unit id="86">
+      <source>Sunday</source>
+      <target>Neděle</target>
+    </trans-unit>
+    <trans-unit id="87">
+      <source>User</source>
+      <target>Uživatel</target>
+    </trans-unit>
+    <trans-unit id="88">
+      <source>Repeat (weekly)</source>
+      <target>Opakovat (týdně)</target>
+    </trans-unit>
+    <trans-unit id="89">
+      <source>Password (again)</source>
+      <target>Heslo (znovu)</target>
+    </trans-unit>
+    <trans-unit id="90">
+      <source>Firstname</source>
+      <target>Jméno</target>
+    </trans-unit>
+    <trans-unit id="91">
+      <source>Surname</source>
+      <target>Příjmení</target>
+    </trans-unit>
+    <trans-unit id="92">
+      <source>Phone</source>
+      <target>Telefon</target>
+    </trans-unit>
+    <trans-unit id="93">
+      <source>Required.</source>
+      <target>Požadováno</target>
+    </trans-unit>
+    <trans-unit id="94">
+      <source>Order no</source>
+      <target>Pořadí</target>
+    </trans-unit>
+    <trans-unit id="95">
+      <source>Repeat from</source>
+      <target>Opakovat od</target>
+    </trans-unit>
+    <trans-unit id="96">
+      <source>Repeat to</source>
+      <target>Opakovat do</target>
+    </trans-unit>
+    <trans-unit id="97">
+      <source>Role deleted successfully</source>
+      <target>Role úspěšně smazána</target>
+    </trans-unit>
+    <trans-unit id="98">
+      <source>Role created successfully</source>
+      <target>Role úspěšně vytvořena</target>
+    </trans-unit>
+    <trans-unit id="99">
+      <source>Role creating failed</source>
+      <target>Vytvoření role selhalo</target>
+    </trans-unit>
+    <trans-unit id="100">
+      <source>User deleted successfully</source>
+      <target>Uživatel úspěšně smazán</target>
+    </trans-unit>
+    <trans-unit id="101">
+      <source>Unable to add user</source>
+      <target>Vytoření uživatele selhalo</target>
+    </trans-unit>
+    <trans-unit id="102">
+      <source>Users added succesfully</source>
+      <target>Uživatel úspěšně přidán</target>
+    </trans-unit>
+    <trans-unit id="103">
+      <source>Perm added successfully</source>
+      <target>Právo úspěně přiřazeno</target>
+    </trans-unit>
+    <trans-unit id="104">
+      <source>Perm deleted successfully</source>
+      <target>Právo úspěšně odebráno</target>
+    </trans-unit>
+    <trans-unit id="105">
+      <source>Role added successfully</source>
+      <target>Role úspěšně přiřazena</target>
+    </trans-unit>
+    <trans-unit id="106">
+      <source>Role removed successfully</source>
+      <target>Role úspěně odebrána</target>
+    </trans-unit>
+    <trans-unit id="107">
+      <source>Period length</source>
+      <target>Perioda</target>
+    </trans-unit>
+    <trans-unit id="108">
+      <source>Time from</source>
+      <target>Čas od</target>
+    </trans-unit>
+    <trans-unit id="109">
+      <source>Time to</source>
+      <target>Čas do</target>
+    </trans-unit>
+    <trans-unit id="110">
+      <source>30 minute</source>
+      <target>30 minut</target>
+    </trans-unit>
+    <trans-unit id="111">
+      <source>1 hour</source>
+      <target>1 hodina</target>
+    </trans-unit>
+    <trans-unit id="112">
+      <source>Active to</source>
+      <target>Aktivní do</target>
+    </trans-unit>
+    <trans-unit id="113">
+      <source>Schedule curt list</source>
+      <target>Kurt</target>
+    </trans-unit>
+    <trans-unit id="114">
+      <source>Price for time changed successfully</source>
+      <target>Cena pro daný čas byla úspěšně změněna</target>
+    </trans-unit>
+    <trans-unit id="115">
+      <source>Price changed successfully</source>
+      <target>Cena pro daný den v týdnu a čas byla úspěšně změněna</target>
+    </trans-unit>
+    <trans-unit id="116">
+      <source>Price of weekday changed successfully</source>
+      <target>Cena pro daný den v týdnu byla úspěšně změněna</target>
+    </trans-unit>
+    <trans-unit id="117">
+      <source>Reservation created successfully</source>
+      <target>Rezervace byla úspěšně vytvořena</target>
+    </trans-unit>
+    <trans-unit id="118">
+      <source>Reservation part deleted successfully</source>
+      <target>Položka byla úspěšně smazána</target>
+    </trans-unit>
+    <trans-unit id="119">
+      <source>Reservation part added successfully</source>
+      <target>Položka byla úspěšně přidána</target>
+    </trans-unit>
+    <trans-unit id="120">
+      <source>Back</source>
+      <target>Zpět</target>
+    </trans-unit>
+    <trans-unit id="121">
+      <source>Unable to add repeating for date %date%, curt %curt% and time %time%</source>
+      <target>Nelze přidat opakování pro datum %date%, kurt %curt% čas %time%</target>
+    </trans-unit>
+    <trans-unit id="122">
+      <source>Curt time zone occupied</source>
+      <target>Kurt je v tomto čase obsazen</target>
+    </trans-unit>
+    <trans-unit id="123">
+      <source>Time from must be less or equal to time to</source>
+      <target>Čas “od” musí být menší roven času “do”</target>
+    </trans-unit>
+    <trans-unit id="124">
+      <source>Repeat to must be greather or equal to reservation date</source>
+      <target>Opakovat do musí být větší rovno datu rezervace</target>
+    </trans-unit>
+    <trans-unit id="125">
+      <source>Schedule is active from %active_from%</source>
+      <target>Rozvrh je aktivní do %active_from%</target>
+    </trans-unit>
+    <trans-unit id="126">
+      <source>Schedule is active to %active_to%</source>
+      <target>Rozvrh je aktivní do %active_to%</target>
+    </trans-unit>
+    <trans-unit id="127">
+      <source>Repeat from must be less or equal to reservation date</source>
+      <target>Opakovat od musí být menší rovno datu rezervace</target>
+    </trans-unit>
+    <trans-unit id="128">
+      <source>Repeat from must be less or equal to repeat to</source>
+      <target>Opakovat od musí menší rovno opakovat do</target>
+    </trans-unit>
+    <trans-unit id="129">
+      <source>Repeat from is required</source>
+      <target>Opakovat od je požadováno</target>
+    </trans-unit>
+    <trans-unit id="130">
+      <source>Repeat to is required</source>
+      <target>Opakovat od je požadováno</target>
+    </trans-unit>
+    <trans-unit id="131">
+      <source>From</source>
+      <target>Od</target>
+    </trans-unit>
+    <trans-unit id="132">
+      <source>To</source>
+      <target>Do</target>
+    </trans-unit>
+    <trans-unit id="133">
+      <source>Amount for price in this price category</source>
+      <target>Hodnota rezervace pro tuto  cenu</target>
+    </trans-unit>
+    <trans-unit id="134">
+      <source>Amount in price category for this price</source>
+      <target>Hodnota rezervace pro tuto cenovou kategorii</target>
+    </trans-unit>
+    <trans-unit id="135">
+      <source>Security user group list</source>
+      <target>Skupina uživatelů</target>
+    </trans-unit>
+    <trans-unit id="136">
+      <source>user admin</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="137">
+      <source>Price category security group list</source>
+      <target>Skupiny uživatelů</target>
+    </trans-unit>
+    <trans-unit id="138">
+      <source>Users groups which have credential&lt;br /&gt;to select this price category &lt;br /&gt;in reservation administration</source>
+      <target>Skupiny uživatelů, které mají právo&lt;br /&gt;zvolit tuto cenovou kategorii&lt;br /&gt;při vytváření rezervace&lt;br /&gt;pokud neni cenová kategorie veřejná</target>
+    </trans-unit>
+    <trans-unit id="139">
+      <source>group admin</source>
+      <target>Skupiny uživatelů</target>
+    </trans-unit>
+    <trans-unit id="140">
+      <source>User administration</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="141">
+      <source>group administration</source>
+      <target>Skupiny uživatelů</target>
+    </trans-unit>
+    <trans-unit id="142">
+      <source>Playground administration</source>
+      <target>Hřiště</target>
+    </trans-unit>
+    <trans-unit id="143">
+      <source>playground admin</source>
+      <target>Hřiště</target>
+    </trans-unit>
+    <trans-unit id="144">
+      <source>Playground sport list</source>
+      <target>Sporty</target>
+    </trans-unit>
+    <trans-unit id="145">
+      <source>Save and send</source>
+      <target>Uložit a odeslat</target>
+    </trans-unit>
+    <trans-unit id="146">
+      <source>Separate the recipients with comma</source>
+      <target>Příjemce oddělte čárkou</target>
+    </trans-unit>
+    <trans-unit id="147">
+      <source>Mail administration</source>
+      <target>Maily</target>
+    </trans-unit>
+    <trans-unit id="148">
+      <source>mail admin</source>
+      <target>Maily</target>
+    </trans-unit>
+    <trans-unit id="149">
+      <source>Sport administration</source>
+      <target>Sporty</target>
+    </trans-unit>
+    <trans-unit id="150">
+      <source>sport admin</source>
+      <target>Sporty</target>
+    </trans-unit>
+    <trans-unit id="151">
+      <source>Sended</source>
+      <target>Odeslán</target>
+    </trans-unit>
+    <trans-unit id="152">
+      <source>Recipients</source>
+      <target>Příjemci</target>
+    </trans-unit>
+    <trans-unit id="153">
+      <source>Subject</source>
+      <target>Předmět</target>
+    </trans-unit>
+    <trans-unit id="154">
+      <source>Message</source>
+      <target>Zpráva</target>
+    </trans-unit>
+    <trans-unit id="155">
+      <source>yes or no</source>
+      <target>Ano i ne</target>
+    </trans-unit>
+    <trans-unit id="156">
+      <source>yes</source>
+      <target>Ano</target>
+    </trans-unit>
+    <trans-unit id="157">
+      <source>no</source>
+      <target>Ne</target>
+    </trans-unit>
+    <trans-unit id="158">
+      <source>Please update your profile and select you user group for this playground</source>
+      <target>Prosím aktualizujte svůj účet a zvolte svou skupinu uživatelů pro toto sportoviště</target>
+    </trans-unit>
+    <trans-unit id="159">
+      <source>Undefined page</source>
+      <target>Stránka nenalezena</target>
+    </trans-unit>
+    <trans-unit id="160">
+      <source>Sender</source>
+      <target>Odesílatel</target>
+    </trans-unit>
+    <trans-unit id="161">
+      <source>Perex</source>
+      <target>Krátký popis</target>
+    </trans-unit>
+    <trans-unit id="162">
+      <source>Descrip</source>
+      <target>Popis</target>
+    </trans-unit>
+    <trans-unit id="163">
+      <source>Capacity</source>
+      <target>Kapacita</target>
+    </trans-unit>
+    <trans-unit id="164">
+      <source>Tournament saved successfully</source>
+      <target>Turnaj byl úspěšně uložen</target>
+    </trans-unit>
+    <trans-unit id="165">
+      <source>Training saved successfully</source>
+      <target>Trénink byl úspěšně uložen</target>
+    </trans-unit>
+    <trans-unit id="166">
+      <source>Players count</source>
+      <target>Hráčů v týmu</target>
+    </trans-unit>
+    <trans-unit id="167">
+      <source>tournament admin</source>
+      <target>Turnaje</target>
+    </trans-unit>
+    <trans-unit id="168">
+      <source>Player</source>
+      <target>Hráč</target>
+    </trans-unit>
+    <trans-unit id="169">
+      <source>Coplayer</source>
+      <target>Spoluhráč</target>
+    </trans-unit>
+    <trans-unit id="170">
+      <source>Participations count</source>
+      <target>Účast</target>
+    </trans-unit>
+    <trans-unit id="171">
+      <source>training admin</source>
+      <target>Tréninky</target>
+    </trans-unit>
+    <trans-unit id="172">
+      <source>Tournament administration</source>
+      <target>Turnaje</target>
+    </trans-unit>
+    <trans-unit id="173">
+      <source>Training administration</source>
+      <target>Tréninky</target>
+    </trans-unit>
+    <trans-unit id="174">
+      <source>Unregister</source>
+      <target>Odhlásit</target>
+    </trans-unit>
+    <trans-unit id="175">
+      <source>Created at</source>
+      <target>Vytvořeno</target>
+    </trans-unit>
+    <trans-unit id="176">
+      <source>Per page</source>
+      <target>Zobrzit položek</target>
+    </trans-unit>
+    <trans-unit id="177">
+      <source>All</source>
+      <target>Vše</target>
+    </trans-unit>
+    <trans-unit id="178">
+      <source>No active tournament</source>
+      <target>Žádný aktivní turnaj</target>
+    </trans-unit>
+    <trans-unit id="179">
+      <source>No active training</source>
+      <target>Žádný aktivní trénink</target>
+    </trans-unit>
+    <trans-unit id="180">
+      <source>No User</source>
+      <target>Žádný uživatel</target>
+    </trans-unit>
+    <trans-unit id="181">
+      <source>No Mail</source>
+      <target>Žádný email</target>
+    </trans-unit>
+    <trans-unit id="182">
+      <source>For registration you must %s</source>
+      <target>Pokud se chcete zůčastnit, musíte se %s do systému</target>
+    </trans-unit>
+    <trans-unit id="183">
+      <source>For reservation you must be %s</source>
+      <target>Pokud chcete vytvářet/měnit rezervace, musíte se %s do systému</target>
+    </trans-unit>
+    <trans-unit id="184">
+      <source>day</source>
+      <target>den</target>
+    </trans-unit>
+    <trans-unit id="185">
+      <source>days</source>
+      <target>dny</target>
+    </trans-unit>
+    <trans-unit id="186">
+      <source>week</source>
+      <target>týden</target>
+    </trans-unit>
+    <trans-unit id="187">
+      <source>weeks</source>
+      <target>týdny</target>
+    </trans-unit>
+    <trans-unit id="188">
+      <source>Please select playground</source>
+      <target>Prosím zvolte sportoviště</target>
+    </trans-unit>
+    <trans-unit id="189">
+      <source>Allow substitutions</source>
+      <target>Náhradníci</target>
+    </trans-unit>
+    <trans-unit id="190">
+      <source>Substitutions</source>
+      <target>Náhradníci</target>
+    </trans-unit>
+    <trans-unit id="191">
+      <source>Players</source>
+      <target>Hráči</target>
+    </trans-unit>
+    <trans-unit id="192">
+      <source>Results updated successfully</source>
+      <target>Pořadí úspěšně uloženo</target>
+    </trans-unit>
+    <trans-unit id="193">
+      <source>Results update failed</source>
+      <target>Uložení pořadí selhalo</target>
+    </trans-unit>
+    <trans-unit id="194">
+      <source>Rating</source>
+      <target>Pořadí</target>
+    </trans-unit>
+    <trans-unit id="195">
+      <source>Points</source>
+      <target>Počet bodů</target>
+    </trans-unit>
+    <trans-unit id="196">
+      <source>Ratings</source>
+      <target>Ohodnocení</target>
+    </trans-unit>
+    <trans-unit id="197">
+      <source>Results</source>
+      <target>Výsledky</target>
+    </trans-unit>
+    <trans-unit id="198">
+      <source>Ratings updated successfully</source>
+      <target>Bodové hodnocení úspěšně uloženo</target>
+    </trans-unit>
+    <trans-unit id="199">
+      <source>Ratings update failed</source>
+      <target>Uložení bodového hodnocení selhalo</target>
+    </trans-unit>
+    <trans-unit id="200">
+      <source>Register till</source>
+      <target>Registrovat do</target>
+    </trans-unit>
+    <trans-unit id="201">
+      <source>event_group admin</source>
+      <target>Soutěže</target>
+    </trans-unit>
+    <trans-unit id="202">
+      <source>Event group</source>
+      <target>Soutěž</target>
+    </trans-unit>
+    <trans-unit id="203">
+      <source>Tournaments</source>
+      <target>Turnaje</target>
+    </trans-unit>
+    <trans-unit id="204">
+      <source>No active event group</source>
+      <target>Žádná aktivní soutěž</target>
+    </trans-unit>
+    <trans-unit id="205">
+      <source>Total</source>
+      <target>Celkem</target>
+    </trans-unit>
+    <trans-unit id="206">
+      <source>Playground module list</source>
+      <target>Moduly</target>
+    </trans-unit>
+    <trans-unit id="207">
+      <source>Playground user list</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="208">
+      <source>Playground must have associated at least one price category</source>
+      <target>Hřiště musí mít alespoň jednu cenovou kategorii</target>
+    </trans-unit>
+    <trans-unit id="209">
+      <source>Previous</source>
+      <target>Předchozí</target>
+    </trans-unit>
+    <trans-unit id="210">
+      <source>Next</source>
+      <target>Následující</target>
+    </trans-unit>
+    <trans-unit id="211">
+      <source>Month</source>
+      <target>Měsíc</target>
+    </trans-unit>
+    <trans-unit id="212">
+      <source>Year</source>
+      <target>Rok</target>
+    </trans-unit>
+    <trans-unit id="213">
+      <source>Week</source>
+      <target>Týden</target>
+    </trans-unit>
+    <trans-unit id="214">
+      <source>Administration</source>
+      <target>Administrace</target>
+    </trans-unit>
+    <trans-unit id="215">
+      <source>Edit</source>
+      <target>Editovat</target>
+    </trans-unit>
+    <trans-unit id="216">
+      <source>Close</source>
+      <target>Zavřít</target>
+    </trans-unit>
+    <trans-unit id="217">
+      <source>The passwords must be equal</source>
+      <target>Hesla se musejí shodovat</target>
+    </trans-unit>
+    <trans-unit id="218">
+      <source>Send password</source>
+      <target>Odeslat heslo</target>
+    </trans-unit>
+    <trans-unit id="219">
+      <source>Action</source>
+      <target>Akce</target>
+    </trans-unit>
+    <trans-unit id="220">
+      <source>of curt</source>
+      <target>Kurty</target>
+    </trans-unit>
+    <trans-unit id="221">
+      <source>of price</source>
+      <target>Ceny</target>
+    </trans-unit>
+    <trans-unit id="222">
+      <source>of price_category</source>
+      <target>Cenové kategorie</target>
+    </trans-unit>
+    <trans-unit id="223">
+      <source>of schedule</source>
+      <target>Rozvrhy</target>
+    </trans-unit>
+    <trans-unit id="224">
+      <source>of rights</source>
+      <target>Práva</target>
+    </trans-unit>
+    <trans-unit id="225">
+      <source>of user</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="226">
+      <source>of group</source>
+      <target>Skupiny uživatelů</target>
+    </trans-unit>
+    <trans-unit id="227">
+      <source>of mail</source>
+      <target>Maily</target>
+    </trans-unit>
+    <trans-unit id="228">
+      <source>Edit curt</source>
+      <target>Editace kurtu</target>
+    </trans-unit>
+    <trans-unit id="229">
+      <source>Edit price</source>
+      <target>Editace ceny</target>
+    </trans-unit>
+    <trans-unit id="230">
+      <source>Edit priceCategory</source>
+      <target>Editace cenové kategorie</target>
+    </trans-unit>
+    <trans-unit id="231">
+      <source>Edit user</source>
+      <target>Editace uživatele</target>
+    </trans-unit>
+    <trans-unit id="232">
+      <source>Edit group</source>
+      <target>Editace skupiny uživatelů</target>
+    </trans-unit>
+    <trans-unit id="233">
+      <source>Edit mail</source>
+      <target>Editace mailu</target>
+    </trans-unit>
+    <trans-unit id="234">
+      <source>New curt</source>
+      <target>Nový kurt</target>
+    </trans-unit>
+    <trans-unit id="235">
+      <source>New price</source>
+      <target>Nová cena</target>
+    </trans-unit>
+    <trans-unit id="236">
+      <source>New priceCategory</source>
+      <target>Nová cenová kategorie</target>
+    </trans-unit>
+    <trans-unit id="237">
+      <source>New schedule</source>
+      <target>Nový rozvrh</target>
+    </trans-unit>
+    <trans-unit id="238">
+      <source>New user</source>
+      <target>Nový uživatel</target>
+    </trans-unit>
+    <trans-unit id="239">
+      <source>New group</source>
+      <target>Nová skupina uživatelů</target>
+    </trans-unit>
+    <trans-unit id="240">
+      <source>New mail</source>
+      <target>Nový mail</target>
+    </trans-unit>
+    <trans-unit id="241">
+      <source>Prices</source>
+      <target>Ceny</target>
+    </trans-unit>
+    <trans-unit id="242">
+      <source>Schedule</source>
+      <target>Rozvrh</target>
+    </trans-unit>
+    <trans-unit id="243">
+      <source>Filter priceCategory</source>
+      <target>Filtrovat cenové kategorie</target>
+    </trans-unit>
+    <trans-unit id="244">
+      <source>Filter curt</source>
+      <target>Filtrovat kurty</target>
+    </trans-unit>
+    <trans-unit id="245">
+      <source>Filter price</source>
+      <target>Filtrovat ceny</target>
+    </trans-unit>
+    <trans-unit id="246">
+      <source>Filter schedule</source>
+      <target>Filtrovat rozvrhy</target>
+    </trans-unit>
+    <trans-unit id="247">
+      <source>Filter training</source>
+      <target>Filtrovat tréninky</target>
+    </trans-unit>
+    <trans-unit id="248">
+      <source>Filter tournament</source>
+      <target>Filtrovat turnaje</target>
+    </trans-unit>
+    <trans-unit id="249">
+      <source>Participations</source>
+      <target>Účastníci</target>
+    </trans-unit>
+    <trans-unit id="250">
+      <source>Edit event</source>
+      <target>Editace události</target>
+    </trans-unit>
+    <trans-unit id="251">
+      <source>No free capacity</source>
+      <target>Kapacita naplněna</target>
+    </trans-unit>
+    <trans-unit id="252">
+      <source>Reservation creation/update failed</source>
+      <target>Vytvoření/aktualizace rezervace se nezdařila</target>
+    </trans-unit>
+    <trans-unit id="253">
+      <source>Reservation repeating failed</source>
+      <target>Opakování rezervace se nezdařilo</target>
+    </trans-unit>
+    <trans-unit id="254">
+      <source>Shorted name</source>
+      <target>Název</target>
+    </trans-unit>
+    <trans-unit id="255">
+      <source>Price categories</source>
+      <target>Cenové kategorie</target>
+    </trans-unit>
+    <trans-unit id="256">
+      <source>CZK</source>
+      <target>Kč</target>
+    </trans-unit>
+    <trans-unit id="257">
+      <source>The item was updated successfully</source>
+      <target>Položka byla úspěšně aktualizována</target>
+    </trans-unit>
+    <trans-unit id="258">
+      <source>The item was created successfully</source>
+      <target>Položka byla úspěšně vytvořena</target>
+    </trans-unit>
+    <trans-unit id="259">
+      <source>The item was deleted successfully</source>
+      <target>Položka byla úspěšně smazána</target>
+    </trans-unit>
+    <trans-unit id="260">
+      <source>There must be at least one price category which is public</source>
+      <target>Alespoň jedna cenová kategorie musí byt veřejná</target>
+    </trans-unit>
+    <trans-unit id="261">
+      <source>User adding failed</source>
+      <target>Přidání uživatele selhalo</target>
+    </trans-unit>
+    <trans-unit id="262">
+      <source>Mail saved and send successfully</source>
+      <target>Mail byl úspěšně odeslán</target>
+    </trans-unit>
+    <trans-unit id="263">
+      <source>Invalid password</source>
+      <target>Špatné heslo</target>
+    </trans-unit>
+    <trans-unit id="264">
+      <source>login</source>
+      <target>přihlásit</target>
+    </trans-unit>
+    <trans-unit id="265">
+      <source>New eventGroup</source>
+      <target>Nová soutěž</target>
+    </trans-unit>
+    <trans-unit id="266">
+      <source>Edit eventGroup</source>
+      <target>Editace soutěže</target>
+    </trans-unit>
+    <trans-unit id="267">
+      <source>Filter eventGroup</source>
+      <target>Filtrovat soutěže</target>
+    </trans-unit>
+    <trans-unit id="268">
+      <source>Participate</source>
+      <target>Přihlásit</target>
+    </trans-unit>
+    <trans-unit id="269">
+      <source>Edit tournament</source>
+      <target>Editace turnaje</target>
+    </trans-unit>
+    <trans-unit id="270">
+      <source>New tournament</source>
+      <target>Nový turnaj</target>
+    </trans-unit>
+    <trans-unit id="271">
+      <source>Edit training</source>
+      <target>Editace tréninku</target>
+    </trans-unit>
+    <trans-unit id="272">
+      <source>New training</source>
+      <target>Nový trénink</target>
+    </trans-unit>
+    <trans-unit id="273">
+      <source>You must at least select one item.</source>
+      <target>Musíte vybrat alespoň jednu položku</target>
+    </trans-unit>
+    <trans-unit id="274">
+      <source>You must select an action to execute on the selected items.</source>
+      <target>Musíte vybrat akci, která se má provést</target>
+    </trans-unit>
+    <trans-unit id="275">
+      <source>Paid</source>
+      <target>Vyplaceno</target>
+    </trans-unit>
+    <trans-unit id="276">
+      <source>Yes</source>
+      <target>Ano</target>
+    </trans-unit>
+    <trans-unit id="277">
+      <source>No</source>
+      <target>Ne</target>
+    </trans-unit>
+    <trans-unit id="278">
+      <source>Invalid.</source>
+      <target>Špatný formát</target>
+    </trans-unit>
+    <trans-unit id="279">
+      <source>Booking system</source>
+      <target>Rezervační systém</target>
+    </trans-unit>
+    <trans-unit id="280">
+      <source>Send mail</source>
+      <target>Odeslat zprávu</target>
+    </trans-unit>
+    <trans-unit id="281">
+      <source>This version of Internet Explorer is deprecated and not supported. Please upgrade your Internet Explorer or switch to other browser.</source>
+      <target>Tato verse internet exploreru již není plně podporovaná. Aktualizujte si prosím svůj prohlížeč, nebo zvolte jiný.</target>
+    </trans-unit>
+    <trans-unit id="282">
+      <source>Curt %curt% is occupied at time %time%</source>
+      <target>Kurt %curt% je v %time% obsazen</target>
+    </trans-unit>
+    <trans-unit id="283">
+      <source>Reservation curt list</source>
+      <target>Kurt</target>
+    </trans-unit>
+    <trans-unit id="284">
+      <source>There are some reservation before %active_from%, maximal active from date is %limit_reservation_date%</source>
+      <target>Před datem  %active_from% existují nějaké rezervace, maximální datum “aktivní od” je %limit_reservation_date%</target>
+    </trans-unit>
+    <trans-unit id="285">
+      <source>There are some reservation after %active_to%, minimal active to date is %limit_reservation_date%</source>
+      <target>Po datu  %active_to% existují nějaké rezervace, minimální datum “aktivní do” je %limit_reservation_date%</target>
+    </trans-unit>
+    <trans-unit id="286">
+      <source>Schedule user list</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="287">
+      <source>Schedule is public</source>
+      <target>Veřejný</target>
+    </trans-unit>
+    <trans-unit id="288">
+      <source>Users groups which have credential&lt;br /&gt;to see this schedule</source>
+      <target>Uživatelé, kteří smějí vidět tento rozvrh</target>
+    </trans-unit>
+    <trans-unit id="289">
+      <source>Schedule security group list</source>
+      <target>Skupiny uživatelů</target>
+    </trans-unit>
+    <trans-unit id="290">
+      <source>There is no curt for %sport%  at %date%</source>
+      <target>Dne %date% není pro %sport% naplánovaný žádný kurt </target>
+    </trans-unit>
+    <trans-unit id="291">
+      <source>Show</source>
+      <target>Zobrazit</target>
+    </trans-unit>
+    <trans-unit id="292">
+      <source>Favorite sport</source>
+      <target>Hlavní sport</target>
+    </trans-unit>
+    <trans-unit id="293">
+      <source>Edit playground</source>
+      <target>Editace hřiště</target>
+    </trans-unit>
+    <trans-unit id="294">
+      <source>New playground</source>
+      <target>Nové hřiště</target>
+    </trans-unit>
+    <trans-unit id="295">
+      <source>Filter playground</source>
+      <target>Filtrovat hřiště</target>
+    </trans-unit>
+    <trans-unit id="296">
+      <source>of playground</source>
+      <target>Hřiště</target>
+    </trans-unit>
+    <trans-unit id="297">
+      <source>of sport</source>
+      <target>Sporty</target>
+    </trans-unit>
+    <trans-unit id="298">
+      <source>sale admin</source>
+      <target>Slevy</target>
+    </trans-unit>
+    <trans-unit id="299">
+      <source>of sale</source>
+      <target>Slevy</target>
+    </trans-unit>
+    <trans-unit id="300">
+      <source>New sale</source>
+      <target>Nová sleva</target>
+    </trans-unit>
+    <trans-unit id="301">
+      <source>Edit sale</source>
+      <target>Editace slevy</target>
+    </trans-unit>
+    <trans-unit id="302">
+      <source>Filter sale</source>
+      <target>Filtrovat slevy</target>
+    </trans-unit>
+    <trans-unit id="303">
+      <source>Sale administration</source>
+      <target>Slevy</target>
+    </trans-unit>
+    <trans-unit id="304">
+      <source>Curt count</source>
+      <target>Počet obsazených kurtů</target>
+    </trans-unit>
+    <trans-unit id="305">
+      <source>There is sale "%sale%" for curt count "%curt_count%" price "%price%" and price category "%price_category%"</source>
+      <target>Již existuje sleva "%sale%" pro počet kurtů "%curt_count%" cenu "%price%" a cenovou kategorii "%price_category%"</target>
+    </trans-unit>
+    <trans-unit id="306">
+      <source>Sale</source>
+      <target>Sleva</target>
+    </trans-unit>
+    <trans-unit id="307">
+      <source>Red</source>
+      <target>Červená</target>
+    </trans-unit>
+    <trans-unit id="308">
+      <source>Green</source>
+      <target>Zelená</target>
+    </trans-unit>
+    <trans-unit id="309">
+      <source>Blue</source>
+      <target>Modrá</target>
+    </trans-unit>
+    <trans-unit id="310">
+      <source>Light blue</source>
+      <target>Světle modrá</target>
+    </trans-unit>
+    <trans-unit id="311">
+      <source>Orange</source>
+      <target>Oranžová</target>
+    </trans-unit>
+    <trans-unit id="312">
+      <source>Reports</source>
+      <target>Reporty</target>
+    </trans-unit>
+    <trans-unit id="313">
+      <source>Report reservations</source>
+      <target>Rezervace</target>
+    </trans-unit>
+    <trans-unit id="314">
+      <source>Date from</source>
+      <target>Datum od</target>
+    </trans-unit>
+    <trans-unit id="315">
+      <source>Date to</source>
+      <target>Datum do</target>
+    </trans-unit>
+    <trans-unit id="316">
+      <source>of reservations</source>
+      <target>Rezervace</target>
+    </trans-unit>
+    <trans-unit id="317">
+      <source>Report administration</source>
+      <target>Reporty</target>
+    </trans-unit>
+    <trans-unit id="318">
+      <source>Note</source>
+      <target>Poznámka</target>
+    </trans-unit>
+    <trans-unit id="319">
+      <source>15 minute</source>
+      <target>15 minut</target>
+    </trans-unit>
+    <trans-unit id="320">
+      <source>Version of your browser is deprecated and not supported. Please upgrade your browser or switch to other browser.</source>
+      <target>Verze vašeho prohlížeče není aktuální a nemusí již být plně podporována. Pro zajištění správného fungování aplikace si prosím aktualizujte svůj prohlížeč.</target>
+    </trans-unit>
+    <trans-unit id="321">
+      <source>Create</source>
+      <target>Vytvořit</target>
+    </trans-unit>
+    <trans-unit id="322">
+      <source>Add</source>
+      <target>Přidat</target>
+    </trans-unit>
+    <trans-unit id="323">
+      <source>of creditor</source>
+      <target>věřitelé</target>
+    </trans-unit>
+    <trans-unit id="324">
+      <source>creditor admin</source>
+      <target>Věřitelé</target>
+    </trans-unit>
+    <trans-unit id="325">
+      <source>contract admin</source>
+      <target>Smlouvy</target>
+    </trans-unit>
+    <trans-unit id="326">
+      <source>of contract</source>
+      <target>smlouvy</target>
+    </trans-unit>
+    <trans-unit id="327">
+      <source>Creditor type code</source>
+      <target>Typ</target>
+    </trans-unit>
+    <trans-unit id="328">
+      <source>Identification number</source>
+      <target>IČO/Rodné číslo</target>
+    </trans-unit>
+    <trans-unit id="329">
+      <source>Lastname</source>
+      <target>Příjmení</target>
+    </trans-unit>
+    <trans-unit id="330">
+      <source>Bank account</source>
+      <target>Bankovní účet</target>
+    </trans-unit>
+    <trans-unit id="331">
+      <source>City</source>
+      <target>Město</target>
+    </trans-unit>
+    <trans-unit id="332">
+      <source>Street</source>
+      <target>Ulice</target>
+    </trans-unit>
+    <trans-unit id="333">
+      <source>Zip</source>
+      <target>PSČ</target>
+    </trans-unit>
+    <trans-unit id="334">
+      <source>Individual</source>
+      <target>Fyzická osoba</target>
+    </trans-unit>
+    <trans-unit id="335">
+      <source>Corporation</source>
+      <target>Právnická osoba</target>
+    </trans-unit>
+    <trans-unit id="336">
+      <source>New creditor</source>
+      <target>Nový věřitel</target>
+    </trans-unit>
+    <trans-unit id="337">
+      <source>New contract</source>
+      <target>Nová smlouva</target>
+    </trans-unit>
+    <trans-unit id="338">
+      <source>Edit creditor</source>
+      <target>Editace věřitele</target>
+    </trans-unit>
+    <trans-unit id="339">
+      <source>Edit contract</source>
+      <target>Editace smlouvy</target>
+    </trans-unit>
+    <trans-unit id="340">
+      <source>Filter creditor</source>
+      <target>Filtrovat věřitele</target>
+    </trans-unit>
+    <trans-unit id="341">
+      <source>Filter contract</source>
+      <target>Filtrovat smlouvy</target>
+    </trans-unit>
+    <trans-unit id="342">
+      <source>Creditor type</source>
+      <target>Typ</target>
+    </trans-unit>
+    <trans-unit id="343">
+      <source>Period</source>
+      <target>Perioda</target>
+    </trans-unit>
+    <trans-unit id="344">
+      <source>Interest rate</source>
+      <target>Úroková míra</target>
+    </trans-unit>
+    <trans-unit id="345">
+      <source>Activated at</source>
+      <target>Aktivováno</target>
+    </trans-unit>
+    <trans-unit id="346">
+      <source>Creditor</source>
+      <target>Věřitel</target>
+    </trans-unit>
+    <trans-unit id="347">
+      <source>Per annum</source>
+      <target>Roční</target>
+    </trans-unit>
+    <trans-unit id="348">
+      <source>Per semestre</source>
+      <target>Půlroční</target>
+    </trans-unit>
+    <trans-unit id="349">
+      <source>Per quartale</source>
+      <target>Čtvrtletní</target>
+    </trans-unit>
+    <trans-unit id="350">
+      <source>Per mensem</source>
+      <target>Měsíční</target>
+    </trans-unit>
+    <trans-unit id="351">
+      <source>"%value%" must be at least %min%.</source>
+      <target>Hodnota nesmí být menší než %min%</target>
+    </trans-unit>
+    <trans-unit id="352">
+      <source>"%value%" is not a number.</source>
+      <target>"%value%" není číslo</target>
+    </trans-unit>
+    <trans-unit id="353">
+      <source>Period as string</source>
+      <target>Perioda</target>
+    </trans-unit>
+    <trans-unit id="354">
+      <source>Interest rate as string</source>
+      <target>Úroková míra</target>
+    </trans-unit>
+    <trans-unit id="355">
+      <source>Interest</source>
+      <target>Úrok</target>
+    </trans-unit>
+    <trans-unit id="356">
+      <source>Capitalized</source>
+      <target>Kapitalizováno</target>
+    </trans-unit>
+    <trans-unit id="357">
+      <source>Balance</source>
+      <target>Jistina</target>
+    </trans-unit>
+    <trans-unit id="358">
+      <source>settlement admin</source>
+      <target>Vypořádání</target>
+    </trans-unit>
+    <trans-unit id="359">
+      <source>of settlement</source>
+      <target>vypořádání</target>
+    </trans-unit>
+    <trans-unit id="360">
+      <source>Unpaid</source>
+      <target>Nevyplaceno</target>
+    </trans-unit>
+    <trans-unit id="361">
+      <source>Capitalize</source>
+      <target>Kapitalizovat</target>
+    </trans-unit>
+    <trans-unit id="362">
+      <source>Pay</source>
+      <target>Vyplatit</target>
+    </trans-unit>
+    <trans-unit id="363">
+      <source>payment admin</source>
+      <target>Platby</target>
+    </trans-unit>
+    <trans-unit id="364">
+      <source>of payment</source>
+      <target>platby</target>
+    </trans-unit>
+    <trans-unit id="365">
+      <source>Payments amount</source>
+      <target>Přijaté platby</target>
+    </trans-unit>
+    <trans-unit id="366">
+      <source>Balance reduction</source>
+      <target>Ponížení jistiny</target>
+    </trans-unit>
+    <trans-unit id="367">
+      <source>Date of signature</source>
+      <target>Datum podpisu</target>
+    </trans-unit>
+    <trans-unit id="368">
+      <source>Date of payment</source>
+      <target>Datum přijetí částky</target>
+    </trans-unit>
+    <trans-unit id="369">
+      <source>security_user admin</source>
+      <target>Uživatelé</target>
+    </trans-unit>
+    <trans-unit id="370">
+      <source>of security_user</source>
+      <target>uživatelé</target>
+    </trans-unit>
+    <trans-unit id="371">
+      <source>User is not active</source>
+      <target>Neaktivní uživatel</target>
+    </trans-unit>
+    <trans-unit id="372">
+      <source>"%value%" is too short (%min_length% characters min).</source>
+      <target>"%value%" je příliš krátké ( minimálně %min_length% znaků ).</target>
+    </trans-unit>
+    <trans-unit id="373">
+      <source>Password must contain at least one lower case letter, at least one upper case letter and at least one number</source>
+      <target>Heslo musí obsahovat alespoň jedno velké a malé písmeno a alespoň jedno číslo</target>
+    </trans-unit>
+    <trans-unit id="374">
+      <source>Unsettled</source>
+      <target>Nevypořádáno</target>
+    </trans-unit>
+  </body>
+</xliff>

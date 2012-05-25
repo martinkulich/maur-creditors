@@ -1,0 +1,4 @@
+ # default values
+all:
+   default_currency_code: CZK
+

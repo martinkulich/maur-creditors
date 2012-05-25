@@ -1,0 +1,10 @@
+newSuccess:
+  layout: layoutModal
+
+editSuccess:
+  layout: layoutModal
+
+detailSuccess:
+  layout: layoutModal
+
+

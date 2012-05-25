@@ -1,0 +1,15 @@
+ # default values
+all:
+   registration:
+     mail_subject_en: '%url% registration'
+     mail_message_en: '<html><body><h3>Your acount on <a href="%url%">%url%</a> was created successfully!</h3><b>password:</b> %password%<br /><br />Best regards<br />Rezervuj.to</body></html>'
+
+     mail_subject_cs: '%url% registrace'
+     mail_message_cs: '<html><body><h3>Váš účet na <a href="%url%">%url%</a> byl úspěšně vytvořen!</h3><b>heslo:</b> %password%<br /><br />S pozdravem<br />Rezervuj.to</body></html>'
+
+   forgotten_password:
+     mail_subject_en: '%url% new password'
+     mail_message_en: '<html><body><br /><b>password:</b> %password%<br /><br />Best regards<br />Rezervuj.to</body></html>'
+
+     mail_subject_cs: '%url% nové heslo'
+     mail_message_cs: '<html><body><br /><b>heslo:</b> %password%<br /><br />S pozdravem<br />Rezervuj.to</body></html>'

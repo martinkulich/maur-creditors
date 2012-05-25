@@ -1,0 +1,14 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/08-Security
+
+default:
+  is_secure: true
+
+filter:
+  is_secure: false
+
+filters:
+  is_secure: false
+
+reset:
+  is_secure: false

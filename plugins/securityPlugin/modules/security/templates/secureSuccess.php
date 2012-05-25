@@ -1,0 +1,1 @@
+<div class="alert alert-error"><?php echo __('You are not allowed for this action') ?></div>

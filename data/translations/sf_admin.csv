@@ -1,0 +1,27 @@
+'base';'cs'
+'lang_code';'cs'
+;
+;
+'Back to list';'Zpět'
+'All reservations for this curt will be deleted, are you sure?';'Všechny případné rezervace z tohoto kurtu budou smazány, chcete opravdu pokračovat?'
+'All reservations for this schedule will be deleted, are you sure?';'Všechny případné rezervace z tohoto rozvrhu budou smazány, chcete opravdu pokračovat?'
+'The item was updated successfully';'Položka byla úspěšně aktualizována'
+'The item has not been saved due to some errors';'Položku se nepodařilo uložit'
+'All reservations for this price category will be deleted, are you sure?';'Všechny případné rezervace v této cenové kategorii budou smazány, chcete opravdu pokračovat?'
+'All reservations for this price will be deleted, are you sure?';'Všechny případné rezervace za tuto cenu budou smazány, chcete opravdu pokračovat?'
+'There must be at least one price category which is public';'Musí být alespoň jedna veřejná cenová kategorie'
+'Save and send';'Uložit a odeslat'
+'Mail saved and send successfully';'Mail úspěšně uložen a odeslán'
+'Mail saved but sending failed';'Mail uložen, deslání mailu se nezdařilo'
+'Mail saved successfully';'Mail úspěšně uložen'
+'Send mail';'Odelsat mail'
+'Delete';'Smazat'
+;
+'Filters';'Filtrovat'
+'Reset filter';'Resetovat filter'
+'Results';'Výsledky'
+'Ratings';'Body'
+'Participate';'Přihlásit'
+'Send';'Odeslat'
+;
+'Are you sure?';'Opravdu?'

@@ -1,0 +1,28 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           payment
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              payment
+    plural:                payments
+    route_prefix:          payment
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        date:
+          format_date: D
+      list:
+        display: [contract, date, amount]
+        batch_actions: []
+        sort: [date, asc]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,58 @@
+reservation list - prehled rezeraci uzivatele
+
+stylovani chybovych hlasek v schedule primo ve formulari, neni tak dulezite..
+
+PREKLADY
+
+chyby ostra
+	sladeni stylu vyskakovacich kalendaru
+	prednahravani obrazku - viz pridavani prav
+	
+	save hlasky vice customizovat
+favicon
+
+		
+Manual
+
+
+_______ telefon s honzou
+
+zobrazeni tydeniho ceniku
+
+
+////////////////////////
+odeslani info o rezervaci na mail
+
+zalohovani!
+
+Helpy
+
+zpetne mazani rezervaci
+	povolit/nepovolit - komu... atd
+
+
+nastaveni playground
+	sporty
+	promene prostredi
+		... kdo kdy muze co mazat (rezervace)
+
+
+Registracni maily apod. delat pres mail tridu
+udelat mail servisu 
+
+	
+styly
+	moznost volby vzhledu
+
+preklady
+Invalid.
+
+
+opakovane akce
+opakovane prihlaseni na akci
+
+
+----- to do ------
+V editaci price category zobrazit pouze ceny ktere jsou active (tento  atribut pridat)
+
+cenove Kategorie - priradit skupina uzivatelu

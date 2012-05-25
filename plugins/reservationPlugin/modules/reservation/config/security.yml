@@ -1,0 +1,16 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/08-Security
+
+default:
+  is_secure: true
+
+index:
+  is_secure: false
+
+detail:
+  is_secure: false
+
+sport:
+  is_secure: false
+
+

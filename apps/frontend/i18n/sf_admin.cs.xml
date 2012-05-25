@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff>
+  <body original="global" source-language="cs" datatype="plaintext">
+    <trans-unit id="1">
+      <source>lang_code</source>
+      <target>cs</target>
+    </trans-unit>
+    <trans-unit id="2">
+      <source></source>
+      <target></target>
+    </trans-unit>
+    <trans-unit id="3">
+      <source>Back to list</source>
+      <target>Zpět</target>
+    </trans-unit>
+    <trans-unit id="4">
+      <source>All reservations for this curt will be deleted, are you sure?</source>
+      <target>Všechny případné rezervace z tohoto kurtu budou smazány, chcete opravdu pokračovat?</target>
+    </trans-unit>
+    <trans-unit id="5">
+      <source>All reservations for this schedule will be deleted, are you sure?</source>
+      <target>Všechny případné rezervace z tohoto rozvrhu budou smazány, chcete opravdu pokračovat?</target>
+    </trans-unit>
+    <trans-unit id="6">
+      <source>The item was updated successfully</source>
+      <target>Položka byla úspěšně aktualizována</target>
+    </trans-unit>
+    <trans-unit id="7">
+      <source>The item has not been saved due to some errors</source>
+      <target>Položku se nepodařilo uložit</target>
+    </trans-unit>
+    <trans-unit id="8">
+      <source>All reservations for this price category will be deleted, are you sure?</source>
+      <target>Všechny případné rezervace v této cenové kategorii budou smazány, chcete opravdu pokračovat?</target>
+    </trans-unit>
+    <trans-unit id="9">
+      <source>All reservations for this price will be deleted, are you sure?</source>
+      <target>Všechny případné rezervace za tuto cenu budou smazány, chcete opravdu pokračovat?</target>
+    </trans-unit>
+    <trans-unit id="10">
+      <source>There must be at least one price category which is public</source>
+      <target>Musí být alespoň jedna veřejná cenová kategorie</target>
+    </trans-unit>
+    <trans-unit id="11">
+      <source>Save and send</source>
+      <target>Uložit a odeslat</target>
+    </trans-unit>
+    <trans-unit id="12">
+      <source>Mail saved and send successfully</source>
+      <target>Mail úspěšně uložen a odeslán</target>
+    </trans-unit>
+    <trans-unit id="13">
+      <source>Mail saved but sending failed</source>
+      <target>Mail uložen, deslání mailu se nezdařilo</target>
+    </trans-unit>
+    <trans-unit id="14">
+      <source>Mail saved successfully</source>
+      <target>Mail úspěšně uložen</target>
+    </trans-unit>
+    <trans-unit id="15">
+      <source>Send mail</source>
+      <target>Odelsat mail</target>
+    </trans-unit>
+    <trans-unit id="16">
+      <source>Delete</source>
+      <target>Smazat</target>
+    </trans-unit>
+    <trans-unit id="17">
+      <source>Filters</source>
+      <target>Filtrovat</target>
+    </trans-unit>
+    <trans-unit id="18">
+      <source>Reset filter</source>
+      <target>Resetovat filter</target>
+    </trans-unit>
+    <trans-unit id="19">
+      <source>Results</source>
+      <target>Výsledky</target>
+    </trans-unit>
+    <trans-unit id="20">
+      <source>Ratings</source>
+      <target>Body</target>
+    </trans-unit>
+    <trans-unit id="21">
+      <source>Participate</source>
+      <target>Přihlásit</target>
+    </trans-unit>
+    <trans-unit id="22">
+      <source>Send</source>
+      <target>Odeslat</target>
+    </trans-unit>
+    <trans-unit id="23">
+      <source>Are you sure?</source>
+      <target>Opravdu?</target>
+    </trans-unit>
+  </body>
+</xliff>

@@ -1,0 +1,78 @@
+
+/***************************************
+   =cluetipClass: 'rezervuj'
+-------------------------------------- */
+.cluetip-rezervuj-rounded {
+    background: transparent url(http://localhost/www/rezervuj/web/cluetip/images/bl.gif) no-repeat 0 100%;
+    margin-top: 10px;
+    margin-left: 12px;
+}
+
+.cluetip-rezervuj-rounded #cluetip-outer {
+    background: transparent url(http://localhost/www/rezervuj/web/cluetip/images/tl.gif) no-repeat 0 0;
+    margin-top: -12px;
+}
+
+.cluetip-rezervuj-rounded #cluetip-title {
+    background-color: transparent;
+    padding: 12px 12px 0;
+    margin: 0 -12px 0 0;
+    position: relative;
+}
+.cluetip-rezervuj-rounded #cluetip-extra {
+    position: absolute;
+    display: block;
+    background: transparent url(http://localhost/www/rezervuj/web/cluetip/images/tr.gif) no-repeat 100% 0;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 30px;
+    margin: -12px -12px 0 0;
+}
+.cluetip-rezervuj-rounded #cluetip-inner {
+    background: url(http://localhost/www/rezervuj/web/cluetip/images/br.gif) no-repeat 100% 100%;
+    padding: 5px 12px 12px;
+    margin: -18px -12px 0 0;
+    position: relative;
+}
+
+.cluetip-rezervuj-rounded div#cluetip-close {
+    text-align: right;
+    margin: 0 5px 5px;
+    color: #009;
+    background: transparent;
+}
+.cluetip-rezervuj-rounded div#cluetip-close a {
+    color: #777;
+}
+
+
+
+.cluetip-rezervuj {
+    background-color: #F2F3F8;
+}
+.cluetip-rezervuj #cluetip-outer {
+    border: 2px solid #ccc;
+    position: relative;
+    background-color: #fff;
+
+}
+
+.cluetip-rezervuj h3#cluetip-title {
+    margin: 0 0 5px;
+    padding: 2px 5px;
+    font-weight: bold;
+    background-color: #F2F3F8;
+    color: black;
+}
+
+.cluetip-rezervuj #cluetip-inner {
+    padding: 0 5px 5px;
+    display: inline-block;
+}
+
+.cluetip-rezervuj div#cluetip-close {
+    text-align: right;
+    margin: 0 5px 5px;
+    color: black;
+}

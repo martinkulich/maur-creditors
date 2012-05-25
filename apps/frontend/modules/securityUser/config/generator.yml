@@ -1,0 +1,25 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           securityUser
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              securityUser
+    plural:                securityUsers
+    route_prefix:          security_user
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        display: [firstname, surname, email, phone, active]
+        batch_actions: []
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

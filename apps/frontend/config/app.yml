@@ -1,0 +1,20 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  time_unit:
+    interval:       1800 #30*60
+  timetable:
+    time_start:     32400 #60*60*9
+    time_end:       79200 #60*60*22
+    days:
+      1:  mon
+      2:  tue
+      3:  wed
+      4:  thu
+      5:  fri
+      6:  sat
+      7:  sun
+  reservation:
+    time_unit_min_count:  2

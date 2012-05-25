@@ -1,0 +1,469 @@
+body {
+    padding-top: 104px;
+    padding-bottom: 400px;
+}
+
+body.without-submenu
+{
+    padding-top: 70px;
+}
+
+a:hover
+{
+    text-decoration: none
+}
+.subnav-fixed
+{
+    top: 44px;
+    position: fixed;
+}
+
+button.dropdown-toggle-caret
+{
+    padding-bottom: 11px;
+}
+
+.subnav .nav li  p
+
+{
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-right: 12px;
+}
+
+.btn-login
+{
+    margin-left:  8px;
+    margin-bottom: 9px;
+    border-color: #0055cc #0055cc #003580 !important;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) !important;
+    color: #FFFFFF !important;
+    /*    padding: 4px 6px ;*/
+}
+
+.navbar-form input, .navbar-form select, .navbar-form .radio, .navbar-form .checkbox {
+    margin-top: 7px;
+}
+.navbar .btn, .navbar .btn-group {
+    margin-top: 7px;
+}
+
+.input-login-password
+{
+    width: 130px;
+}
+
+.span-registration-form,
+.span-login-form,
+.span-form
+{
+    width: 220px;
+    margin: 0px;
+}
+
+.row-margin-top
+{
+    margin-top: 18px;
+}
+
+.no-bottom-margin,
+table.table-rights input
+{
+    margin-bottom: 0px;
+}
+
+
+.hasPlaceholder{
+    color: #777;
+}
+
+.curt_time_zone,
+.curt
+{
+    padding: 1px 2px !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    display: table-cell !important;
+
+}
+
+th.time
+{
+    text-align: center;
+}
+
+
+
+td.curt_time_zone a
+{
+    display: block;
+    margin: 0px !important;
+}
+
+table.table-admin
+{
+    margin-bottom: 0px;
+}
+.table-admin tbody tr:hover td,
+.table-admin tbody tr:hover th {
+    background-color: #f5f5f5;
+}
+
+.table-reservation th,
+.table-reservation td
+{
+    line-height: 20px;
+    padding: 4px;
+    white-space: nowrap;
+}
+
+.table-reservation
+{
+    margin-bottom: 24px;
+}
+
+.reserved
+{
+    color: white;
+    background-color: #da4f49;
+    border-color: #bd362f #bd362f #802420;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+
+.reserved a
+{
+    color: rgba(255, 255, 255, 255);
+}
+
+
+.repeated{
+    background-color: #faa732;
+}
+
+.red
+{
+    background-color: #da4f49;
+}
+
+.blue
+{
+    background-color: #0074CC;
+}
+
+.light-blue
+{
+    background-color: #49AFCD;
+}
+
+.green
+{
+    background-color: #5BB75B;
+}
+
+.orange
+{
+    background-color: #FAA732;
+}
+
+.text-red,
+.text-red a
+{
+    color: #da4f49;
+}
+
+.text-blue,
+.text-blue a
+{
+    color: #0074CC;
+}
+
+.text-light-blue,
+.text-light-blue a
+{
+    color: #49AFCD;
+}
+
+.text-green,
+.text-green a
+{
+    color: #5BB75B;
+}
+
+.text-orange,
+.text-orange a
+{
+    color: #FAA732;
+}
+
+.icon-dark
+{
+    color: #999999;
+}
+
+
+.tooltip-inner-error
+{
+    background-color: #B94A48;
+}
+.tooltip.right .tooltip-arrow-error
+{
+    border-right: 5px solid #B94A48;
+}
+
+.tooltip.top .tooltip-arrow-error
+{
+    border-top: 5px solid #B94A48;
+}
+
+.tooltip.in {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.form-login #login_password
+{
+    width: 130px;
+}
+
+.subnav-fixed .nav-reservation
+{
+    width: auto;
+}
+
+th.date
+{
+    text-align: center;
+}
+
+section
+{
+    padding-top: 0px;
+}
+
+.modal_dialog
+{
+    width: 220px;
+}
+.form-modal
+{
+    margin-bottom: 0px !important;
+}
+
+#reservation_repeating_collapse
+{
+    ;
+}
+
+/*admin*/
+img.admin_list_sort_img
+{
+    margin-bottom: 2px;
+}
+
+ul.sf_admin_list_actions,
+ul.sf_admin_actions
+{
+    list-style-type: none;
+    margin: 0px;
+}
+
+ul.sf_admin_list_actions li,
+ul.sf_admin_actions li{
+    display: inline;
+
+}
+
+ul.checkbox_list,
+ul.radio_list
+{
+    list-style-type: none;
+    margin: 0px;
+}
+
+ul.checkbox_list label,
+ul.radio_list label
+{
+    display: inline-block;
+    /*    margin: 0px;*/
+    /*    padding-top: 3px*/
+}
+
+ul.checkbox_list input,
+ul.radio_list input
+{
+    margin: 0px 8px 0px 0px;
+}
+
+.modal.modal-center
+{
+    width: auto;
+    min-width: 560px;
+    max-width: 960px;
+}
+
+.sf_admin_actions li.sf_admin_batch_actions_choice select
+{
+    margin-bottom: 0px;
+}
+
+table.table-admin td
+{
+    vertical-align: middle;
+}
+td.list_object_actions
+{
+    text-align: right;
+
+}
+
+.no-wrap-line
+{
+    white-space: nowrap;
+}
+
+sf_admin_list_actions .btn
+{
+    margin-bottom: 0;
+}
+
+.sf_admin_list_actions .btn
+{
+    margin-bottom: 0;
+    margin-left: 3px;
+}
+
+
+
+form.form-event-register input{
+    margin: 0px;
+}
+
+
+div.modal_content_event
+{
+    max-width: 560px;
+}
+
+div.modal_content_wide
+{
+    max-width: 940px;
+}
+
+td.centered-text,
+th.centered-text
+{
+    text-align: center;
+}
+
+td.event_unregister
+{
+    text-align: right;
+}
+.modal_descrip
+{
+    margin-bottom: 15px;
+}
+.event_perex
+{
+    max-width: 560px;
+}
+
+.sf_admin_list_td_name
+{
+    max-width: 200px;
+}
+
+.table-reservation-parts th,
+.table-reservation-parts td
+{
+    text-align: left;
+}
+.table-reservation-detail tr:first-child th,
+.table-reservation-detail tr:first-child td
+{
+    border: none;
+}
+.table-reservation-detail td
+{
+    collspan: 2;
+}
+
+div.control-group.price_amounts table td
+{
+    text-align: left;
+}
+div.control-group.price_amounts table td label
+{
+    /*    min-width: 200px;*/
+}
+
+td.price_amount_label label
+{
+    margin-right: 18px;
+}
+
+.paid a
+{
+    color: black;
+}
+
+.text-align-right,
+th.text-align-right,
+div.text-align-right,
+td.text-align-right
+{
+    text-align: right;
+}
+
+.text-align-center,
+th.text-align-center,
+div.text-align-center,
+td.text-align-center
+{
+    text-align: center;
+}
+
+.sf_admin_pagination .btn-toolbar
+{
+    margin-top: 4px;
+    margin-bottom: 0px;
+}
+
+.other_sport
+{
+    background-color: whitesmoke;
+    color: whitesmoke;
+}
+
+table.table-prices
+{
+    width: auto;
+}
+
+table.table-prices a
+{
+    display: block;
+}
+
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px !important;
+    }
+
+    .navbar-fixed-top
+    {
+        margin-bottom: 0px !important;
+    }
+
+    .subnav-fixed
+    {
+        margin-bottom: 18px !important;
+        position: relative;
+        top: 0px !important;
+
+    }
+}
+

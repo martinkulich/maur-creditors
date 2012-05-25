@@ -1,0 +1,1 @@
+<?php include_partial('security/login', array('form'=>$form))?>

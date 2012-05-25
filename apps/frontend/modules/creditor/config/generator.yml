@@ -1,0 +1,25 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           creditor
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              creditor
+    plural:                creditors
+    route_prefix:          creditor
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        batch_actions: []
+        display: [creditor_type, firstname, lastname, email, phone, bank_account, city, street, zip]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,35 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    #title:        symfony project
+    #description:  symfony project
+    #keywords:     symfony, project
+    #language:     en
+    #robots:       index, follow
+
+  stylesheets:
+#    - sfFormExtraPlugin/jquery.autocompleter.css
+#    - bootstrap/bootstrap-mine.css
+#    - bootstrap/bootstrap-responsive.css
+#    - bootstrap/datepicker.css
+#    - bootstrap/docs.css
+    - all.css
+    - main.css
+
+  javascripts:
+#    - jquery/jquery-1.7.2.min.js
+#    - sfFormExtraPlugin/jquery.autocompleter.js
+#    - bootstrap/bootstrap.min.js
+#    - bootstrap/bootstrap-datepicker.js
+#    - bootstrap/locales/bootstrap-datepicker.cs.js
+#    - moment/moment.js
+    - all.js
+    - init.js
+
+  has_layout:     true
+  layout:         layout

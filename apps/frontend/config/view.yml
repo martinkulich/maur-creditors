@@ -1,0 +1,17 @@
+newSuccess:
+  layout: layoutModal
+
+editSuccess:
+  layout: layoutModal
+
+filtersSuccess:
+  layout: layoutModal
+
+detailSuccess:
+  layout: layoutModal
+
+ratingsSuccess:
+  layout: layoutModal
+
+resultsSuccess:
+  layout: layoutModal

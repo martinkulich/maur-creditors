@@ -1,0 +1,52 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/04-Settings
+
+prod:
+  .settings:
+    no_script_name:         true
+    logging_enabled:        false
+
+dev:
+  .settings:
+    no_script_name:         false
+    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    web_debug:              true
+    cache:                  false
+    etag:                   false
+
+test:
+  .settings:
+    error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
+    cache:                  false
+    web_debug:              false
+    no_script_name:         false
+    etag:                   false
+
+all:
+  .settings:
+    # Form security secret (CSRF protection)
+    csrf_secret:            870467289eced7b371887f7aee57eafb8a942e59
+
+    # Output escaping settings
+    escaping_strategy:      false
+    escaping_method:        ESC_SPECIALCHARS
+
+    # Enable the database manager
+    use_database:           true
+
+    #
+    login_module:           security   # To be called when a non-authenticated user
+    login_action:           login     # Tries to access a secure page
+
+    #
+    secure_module:          security   # To be called when a user doesn't have
+    secure_action:          secure    # The credentials required for an action
+
+    enabled_modules:        [default, security, reservation]
+
+    i18n:                   true
+
+    standard_helpers: [Partial, Cache, I18N, JavascriptBase, Number, Date]
+
+    default_culture:        cs_CZ
+

@@ -1,0 +1,1 @@
+<h2 style="color:red"><?php echo __('Undefined page');?></h2>

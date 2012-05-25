@@ -1,0 +1,52 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+reservation:
+  url:   /reservation
+  param: { module: reservation, action: index }
+
+reservation_new:
+  url:   /reservation/new/:sport_slug/:date/:curt_id/:time_zone_id/:price_category_id
+  param: { module: reservation, action: new }
+
+
+reservation_create:
+  url:   /reservation/create/:sport_slug/:date/:curt_id/:time_zone_id/:price_category_id
+  param: { module: reservation, action: create }
+
+reservation_edit:
+  url:   /reservation/:id/edit
+  param: { module: reservation, action: edit }
+
+reservation_delete:
+  url:   /reservation/:id/delete
+  param: { module: reservation, action: delete }
+
+reservation_detail:
+  url:   /reservation/:id/detail
+  param: { module: reservation, action: detail }
+
+reservation_delete_all:
+  url:   /reservation/:id/delete-all
+  param: { module: reservation, action: deleteAll }
+
+reservation_cancel:
+  url:   /reservation/:id/cancel
+  param: { module: reservation, action: cancel }
+
+reservation_schedule:
+  url:   /reservation/schedule/:sport_slug
+  param: { module: reservation, action: schedule }
+
+reservation_sport:
+  url:   /reservation/sport/:sport_slug
+  param: { module: reservation, action: sport }
+
+
+reservation_update:
+  url:   /reservation/:id/update
+  param: { module: reservation, action: update }
+
+autocomplete_user:
+  url:   /autocompleteUser
+  param: { module: reservation, action: autocompleteUser }

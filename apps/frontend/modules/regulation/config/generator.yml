@@ -1,0 +1,30 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           regulation
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              regulation
+    plural:                regulations
+    route_prefix:          regulation
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        contract_id:
+          is_link: false
+        settlement_year:
+          is_link: false
+      list:
+        sort: [contract_id asc, settlement_year desc]
+        actions: []
+        batch_actions: []
+        object_actions: []
+      filter:  ~
+      form:
+        actions: []
+      edit:    ~
+      new:     ~
