@@ -19,7 +19,7 @@ generator:
         settlement_year:
           is_link: false
       list:
-        sort: [contract_id asc, settlement_year desc]
+        sort: [contract_id, asc, settlement_year, desc]
         actions: []
         batch_actions: []
         object_actions: []

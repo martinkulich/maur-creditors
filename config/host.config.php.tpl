@@ -1,8 +1,4 @@
 <?php
-
-// symfony adresare
-define('SYMFONY_LIB_DIR', '/path/to/symfony/1.4/lib');
-
 // nastaveni mailu
 define('MAILER_SMTP_HOST', 'smtp.loc.imatic.cz');
 define('MAILER_FROM_ADDRESS', 'noreplay@rezervuj.to');
