@@ -1,1 +1,0 @@
-<?php die(var_dump('works'));?>
