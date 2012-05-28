@@ -1,4 +1,5 @@
 <?php
+
 // nastaveni mailu
 define('MAILER_SMTP_HOST', 'smtp.loc.imatic.cz');
 define('MAILER_FROM_ADDRESS', 'noreplay@rezervuj.to');
