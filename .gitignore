@@ -1,3 +1,4 @@
 cache/*
 logs/*
 config/host.config.php
+web/.htaccess
