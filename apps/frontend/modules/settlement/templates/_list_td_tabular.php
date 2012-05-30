@@ -17,6 +17,9 @@
 <td class="sf_admin_text sf_admin_list_td_paid ">
     <?php echo format_currency($settlement->getPaid(), $settlement->getContract()->getCurrencyCode()) ?>
 </td>
+<td class="sf_admin_boolean sf_admin_list_td_cash ">
+  <?php echo get_partial('settlement/list_field_boolean', array('value' => $settlement->getCash())) ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_capitalized ">
     <?php echo format_currency($settlement->getCapitalized(), $settlement->getContract()->getCurrencyCode()) ?>
 </td>

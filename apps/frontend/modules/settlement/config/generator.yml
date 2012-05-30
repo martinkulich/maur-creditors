@@ -18,7 +18,7 @@ generator:
         date:
           date_format: D
       list:
-        display: [creditor, contract, date, balance, interest, paid, capitalized, balance_reduction, unsettled]
+        display: [creditor, contract, date, balance, interest, paid, cash, capitalized, balance_reduction, unsettled]
         batch_actions: []
         actions:
           _new: ~

@@ -1605,5 +1605,9 @@
       <source>Contract deactivated</source>
       <target>Smlouva deaktivována</target>
     </trans-unit>
+    <trans-unit id="402">
+      <source>Cash</source>
+      <target>Hotově</target>
+    </trans-unit>
   </body>
 </xliff>
