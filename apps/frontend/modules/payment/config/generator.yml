@@ -12,6 +12,7 @@ generator:
     actions_base_class:    sfActions
     peer_method:           doSelectJoinAll
 
+
     config:
       actions: ~
       fields:
