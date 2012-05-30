@@ -10,6 +10,7 @@ generator:
     route_prefix:          settlement
     with_propel_route:     1
     actions_base_class:    sfActions
+    peer_method:           doSelectJoinAll
 
     config:
       actions: ~
@@ -17,7 +18,7 @@ generator:
         date:
           date_format: D
       list:
-        display: [contract, date, balance, interest, paid, capitalized, balance_reduction, unsettled]
+        display: [creditor, contract, date, balance, interest, paid, capitalized, balance_reduction, unsettled]
         batch_actions: []
         actions:
           _new: ~

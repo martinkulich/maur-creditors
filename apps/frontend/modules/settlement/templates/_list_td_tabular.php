@@ -1,4 +1,7 @@
 <?php use_helper('Number') ?>
+<td class="sf_admin_text sf_admin_list_td_creditor ">
+    <?php echo $settlement->getCreditor() ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_contract ">
     <?php echo $settlement->getContract() ?>
 </td>

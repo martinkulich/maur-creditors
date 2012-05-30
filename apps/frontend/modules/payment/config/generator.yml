@@ -10,7 +10,7 @@ generator:
     route_prefix:          payment
     with_propel_route:     1
     actions_base_class:    sfActions
-    peer_method: doSelectJoinAll
+    peer_method:           doSelectJoinAll
 
     config:
       actions: ~
@@ -18,7 +18,7 @@ generator:
         date:
           format_date: D
       list:
-        display: [contract, date, amount]
+        display: [creditor, contract, date, amount]
         batch_actions: []
         sort: [date, asc]
       filter:  ~

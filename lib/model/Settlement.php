@@ -16,6 +16,10 @@ require 'lib/model/om/BaseSettlement.php';
 class Settlement extends BaseSettlement
 {
 
+    public function getCreditor()
+    {
+        return $this->getContract()->getCreditor();
+    }
     /**
      * Initializes internal state of Settlement object.
      * @see        parent::__construct()
