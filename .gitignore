@@ -1,4 +1,4 @@
 cache/*
-logs/*
+log/*
 config/host.config.php
 web/.htaccess
