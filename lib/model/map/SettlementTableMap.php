@@ -45,6 +45,9 @@ class SettlementTableMap extends TableMap {
 		$this->addColumn('CAPITALIZED', 'Capitalized', 'NUMERIC', true, 15, 0);
 		$this->addColumn('BALANCE', 'Balance', 'NUMERIC', true, 15, 0);
 		$this->addColumn('BALANCE_REDUCTION', 'BalanceReduction', 'NUMERIC', true, 15, 0);
+		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('BANK_ACCOUNT', 'BankAccount', 'VARCHAR', false, 255, null);
+		$this->addColumn('CASH', 'Cash', 'BOOLEAN', false, null, null);
 		// validators
 	} // initialize()
 

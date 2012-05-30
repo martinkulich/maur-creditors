@@ -25,7 +25,7 @@ abstract class BaseCreditorPeer {
 	const TM_CLASS = 'CreditorTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 12;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -63,6 +63,9 @@ abstract class BaseCreditorPeer {
 	/** the column name for the ZIP field */
 	const ZIP = 'creditor.ZIP';
 
+	/** the column name for the NOTE field */
+	const NOTE = 'creditor.NOTE';
+
 	/**
 	 * An identiy map to hold any loaded instances of Creditor objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -86,11 +89,11 @@ abstract class BaseCreditorPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorTypeCode', 'IdentificationNumber', 'Firstname', 'Lastname', 'Email', 'Phone', 'BankAccount', 'City', 'Street', 'Zip', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorTypeCode', 'identificationNumber', 'firstname', 'lastname', 'email', 'phone', 'bankAccount', 'city', 'street', 'zip', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_TYPE_CODE, self::IDENTIFICATION_NUMBER, self::FIRSTNAME, self::LASTNAME, self::EMAIL, self::PHONE, self::BANK_ACCOUNT, self::CITY, self::STREET, self::ZIP, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_type_code', 'identification_number', 'firstname', 'lastname', 'email', 'phone', 'bank_account', 'city', 'street', 'zip', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorTypeCode', 'IdentificationNumber', 'Firstname', 'Lastname', 'Email', 'Phone', 'BankAccount', 'City', 'Street', 'Zip', 'Note', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorTypeCode', 'identificationNumber', 'firstname', 'lastname', 'email', 'phone', 'bankAccount', 'city', 'street', 'zip', 'note', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_TYPE_CODE, self::IDENTIFICATION_NUMBER, self::FIRSTNAME, self::LASTNAME, self::EMAIL, self::PHONE, self::BANK_ACCOUNT, self::CITY, self::STREET, self::ZIP, self::NOTE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_type_code', 'identification_number', 'firstname', 'lastname', 'email', 'phone', 'bank_account', 'city', 'street', 'zip', 'note', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -100,11 +103,11 @@ abstract class BaseCreditorPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorTypeCode' => 1, 'IdentificationNumber' => 2, 'Firstname' => 3, 'Lastname' => 4, 'Email' => 5, 'Phone' => 6, 'BankAccount' => 7, 'City' => 8, 'Street' => 9, 'Zip' => 10, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorTypeCode' => 1, 'identificationNumber' => 2, 'firstname' => 3, 'lastname' => 4, 'email' => 5, 'phone' => 6, 'bankAccount' => 7, 'city' => 8, 'street' => 9, 'zip' => 10, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_TYPE_CODE => 1, self::IDENTIFICATION_NUMBER => 2, self::FIRSTNAME => 3, self::LASTNAME => 4, self::EMAIL => 5, self::PHONE => 6, self::BANK_ACCOUNT => 7, self::CITY => 8, self::STREET => 9, self::ZIP => 10, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_type_code' => 1, 'identification_number' => 2, 'firstname' => 3, 'lastname' => 4, 'email' => 5, 'phone' => 6, 'bank_account' => 7, 'city' => 8, 'street' => 9, 'zip' => 10, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorTypeCode' => 1, 'IdentificationNumber' => 2, 'Firstname' => 3, 'Lastname' => 4, 'Email' => 5, 'Phone' => 6, 'BankAccount' => 7, 'City' => 8, 'Street' => 9, 'Zip' => 10, 'Note' => 11, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorTypeCode' => 1, 'identificationNumber' => 2, 'firstname' => 3, 'lastname' => 4, 'email' => 5, 'phone' => 6, 'bankAccount' => 7, 'city' => 8, 'street' => 9, 'zip' => 10, 'note' => 11, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_TYPE_CODE => 1, self::IDENTIFICATION_NUMBER => 2, self::FIRSTNAME => 3, self::LASTNAME => 4, self::EMAIL => 5, self::PHONE => 6, self::BANK_ACCOUNT => 7, self::CITY => 8, self::STREET => 9, self::ZIP => 10, self::NOTE => 11, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_type_code' => 1, 'identification_number' => 2, 'firstname' => 3, 'lastname' => 4, 'email' => 5, 'phone' => 6, 'bank_account' => 7, 'city' => 8, 'street' => 9, 'zip' => 10, 'note' => 11, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -185,6 +188,7 @@ abstract class BaseCreditorPeer {
 		$criteria->addSelectColumn(CreditorPeer::CITY);
 		$criteria->addSelectColumn(CreditorPeer::STREET);
 		$criteria->addSelectColumn(CreditorPeer::ZIP);
+		$criteria->addSelectColumn(CreditorPeer::NOTE);
 	}
 
 	/**

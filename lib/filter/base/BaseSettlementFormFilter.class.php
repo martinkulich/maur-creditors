@@ -19,6 +19,9 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'capitalized'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'balance'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'balance_reduction' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'note'              => new sfWidgetFormFilterInput(),
+      'bank_account'      => new sfWidgetFormFilterInput(),
+      'cash'              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -29,6 +32,9 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'capitalized'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'balance'           => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'balance_reduction' => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'note'              => new sfValidatorPass(array('required' => false)),
+      'bank_account'      => new sfValidatorPass(array('required' => false)),
+      'cash'              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('settlement_filters[%s]');
@@ -54,6 +60,9 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'capitalized'       => 'Number',
       'balance'           => 'Number',
       'balance_reduction' => 'Number',
+      'note'              => 'Text',
+      'bank_account'      => 'Text',
+      'cash'              => 'Boolean',
     );
   }
 }

@@ -81,6 +81,10 @@ user:
     with_wildcard_routes: true
     collection_actions: {filters: get, filter: post, reset: get}
 
+update_contract_select:
+    url:   /:form_name/update-contract-select
+    param: { module: contract, action: updateSelect, sf_format: html }
+
 payment_contract_filter:
   url:   /payment/contract-filter/:contract_id
   param: { module: payment, action: contractFilter }

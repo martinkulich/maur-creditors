@@ -1561,5 +1561,49 @@
       <source>Filter regulation</source>
       <target>Filtrovat předpisy</target>
     </trans-unit>
+    <trans-unit id="391">
+      <source>New settlement</source>
+      <target>Nová výplata úroků</target>
+    </trans-unit>
+    <trans-unit id="392">
+      <source>Edit settlement</source>
+      <target>Editace výplaty úroků</target>
+    </trans-unit>
+    <trans-unit id="393">
+      <source>Filter settlement</source>
+      <target>Filtrovat výplaty úroků</target>
+    </trans-unit>
+    <trans-unit id="394">
+      <source>New payment</source>
+      <target>Nová přijatá platba</target>
+    </trans-unit>
+    <trans-unit id="395">
+      <source>Edit payment</source>
+      <target>Editace přijaté platby</target>
+    </trans-unit>
+    <trans-unit id="396">
+      <source>Filter payment</source>
+      <target>Filtrovat přijaté platby</target>
+    </trans-unit>
+    <trans-unit id="397">
+      <source>Contract</source>
+      <target>Smlouva</target>
+    </trans-unit>
+    <trans-unit id="398">
+      <source>EUR</source>
+      <target>Eur</target>
+    </trans-unit>
+    <trans-unit id="399">
+      <source>Currency code</source>
+      <target>Měna</target>
+    </trans-unit>
+    <trans-unit id="400">
+      <source>Contract activated</source>
+      <target>Smlouva aktivována</target>
+    </trans-unit>
+    <trans-unit id="401">
+      <source>Contract deactivated</source>
+      <target>Smlouva deaktivována</target>
+    </trans-unit>
   </body>
 </xliff>

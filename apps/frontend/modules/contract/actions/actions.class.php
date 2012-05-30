@@ -14,6 +14,11 @@ require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
 class contractActions extends autoContractActions
 {
 
+    public function executeUpdateSelect(sfWebRequest $request)
+    {
+        return $this->renderComponent('contract', 'select', array('creditor_id' => $request->getParameter('creditor_id'), 'formName' => $request->getParameter('form_name')));
+    }
+
     public function executeRequlation(sfWebRequest $request)
     {
 

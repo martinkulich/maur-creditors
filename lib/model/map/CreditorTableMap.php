@@ -48,6 +48,7 @@ class CreditorTableMap extends TableMap {
 		$this->addColumn('CITY', 'City', 'VARCHAR', false, 255, null);
 		$this->addColumn('STREET', 'Street', 'VARCHAR', false, 255, null);
 		$this->addColumn('ZIP', 'Zip', 'VARCHAR', false, 255, null);
+		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
 		// validators
 	} // initialize()
 

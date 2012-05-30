@@ -188,3 +188,18 @@ function centerModal(modal, currentWidth){
     }, 100);
 
 }
+
+function updateSelectBox(url, selector, target, paramName)
+{
+    paramValue = jQuery('#'+selector).val();
+
+    if(paramValue == '')
+    {
+        paramValue = 0;
+    }
+    url += '?' +paramName+'='+paramValue;
+    jQuery.get(url, {}, function(data){
+        jQuery('#'+target).replaceWith(data);
+    //        jQuery('#'+selector).attr('id', selector);
+    });
+}

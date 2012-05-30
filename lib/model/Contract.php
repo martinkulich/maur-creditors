@@ -16,6 +16,7 @@ require 'lib/model/om/BaseContract.php';
 class Contract extends BaseContract
 {
     protected $lastSettlement = null;
+    protected $lastPayment = null;
 
     public function __toString()
     {
@@ -105,6 +106,22 @@ class Contract extends BaseContract
         $settlements = $this->getSettlements($criteria);
 
         return reset($settlements);
+    }
+
+     /**
+     * @return Paymenty
+     */
+    public function getLastPayment()
+    {
+        if (is_null($this->lastPayment)) {
+            $criteria = new Criteria();
+            $criteria->addDescendingOrderByColumn(PaymentPeer::DATE);
+            $payments = $this->getPayments($criteria);
+
+            $this->lastPayment = reset($payments);
+        }
+
+        return $this->lastPayment;
     }
 }
 

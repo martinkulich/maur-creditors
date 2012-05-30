@@ -14,7 +14,7 @@ class ContractCopyForm extends ContractForm
         $this->updateObject();
         $this->object->setId(null);
         $this->object->save($con);
-
+        $this->object->reload();
         ServiceContainer::getContractService()->updateContractSettlements($this->object);
     }
 }

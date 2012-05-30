@@ -5,5 +5,5 @@
   <?php echo false !== strtotime($payment->getDate()) ? format_date($payment->getDate(), "f") : '&nbsp;' ?>
 </td>
         <td class="sf_admin_text sf_admin_list_td_amount ">
-  <?php echo format_currency($payment->getAmount(), 'CZK') ?>
+  <?php echo format_currency($payment->getAmount(), $payment->getContract()->getCurrencyCode()) ?>
 </td>

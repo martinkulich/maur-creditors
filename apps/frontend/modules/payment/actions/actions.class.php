@@ -14,6 +14,21 @@ require_once dirname(__FILE__) . '/../lib/paymentGeneratorHelper.class.php';
 class paymentActions extends autoPaymentActions
 {
 
+    public function executeDelete(sfWebRequest $request)
+    {
+        $payment = $this->getRoute()->getObject();
+        $contract = $payment->getContract();
+
+        $payment->delete();
+
+        $notice = 'The item was deleted successfully';
+        ServiceContainer::getMessageService()->addSuccess($notice);
+
+        ServiceContainer::getContractService()->checkContractActivation($contract);
+
+        $this->redirect('@payment');
+    }
+
     public function executeNew(sfWebRequest $request)
     {
         $this->form = $this->configuration->getForm();

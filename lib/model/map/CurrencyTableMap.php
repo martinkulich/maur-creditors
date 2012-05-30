@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'payment' table.
+ * This class defines the structure of the 'currency' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class PaymentTableMap extends TableMap {
+class CurrencyTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.PaymentTableMap';
+	const CLASS_NAME = 'lib.model.map.CurrencyTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,18 +30,13 @@ class PaymentTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('payment');
-		$this->setPhpName('Payment');
-		$this->setClassname('Payment');
+		$this->setName('currency');
+		$this->setPhpName('Currency');
+		$this->setClassname('Currency');
 		$this->setPackage('lib.model');
-		$this->setUseIdGenerator(true);
-		$this->setPrimaryKeyMethodInfo('payment_id_seq');
+		$this->setUseIdGenerator(false);
 		// columns
-		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('CONTRACT_ID', 'ContractId', 'INTEGER', 'contract', 'ID', true, null, null);
-		$this->addColumn('DATE', 'Date', 'DATE', true, null, null);
-		$this->addColumn('AMOUNT', 'Amount', 'NUMERIC', true, 15, 0);
-		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
+		$this->addPrimaryKey('CODE', 'Code', 'CHAR', true, 3, null);
 		// validators
 	} // initialize()
 
@@ -50,7 +45,7 @@ class PaymentTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Contract', 'Contract', RelationMap::MANY_TO_ONE, array('contract_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('Contract', 'Contract', RelationMap::ONE_TO_MANY, array('code' => 'currency_code', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**
@@ -67,4 +62,4 @@ class PaymentTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // PaymentTableMap
+} // CurrencyTableMap

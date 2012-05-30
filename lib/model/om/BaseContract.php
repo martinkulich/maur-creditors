@@ -73,9 +73,26 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $closed_at;
 
 	/**
+	 * The value for the note field.
+	 * @var        string
+	 */
+	protected $note;
+
+	/**
+	 * The value for the currency_code field.
+	 * @var        string
+	 */
+	protected $currency_code;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
+
+	/**
+	 * @var        Currency
+	 */
+	protected $aCurrency;
 
 	/**
 	 * @var        array Payment[] Collection to store aggregation of Payment objects.
@@ -272,6 +289,26 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [note] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getNote()
+	{
+		return $this->note;
+	}
+
+	/**
+	 * Get the [currency_code] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCurrencyCode()
+	{
+		return $this->currency_code;
 	}
 
 	/**
@@ -546,6 +583,50 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setClosedAt()
 
 	/**
+	 * Set the value of [note] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setNote($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->note !== $v) {
+			$this->note = $v;
+			$this->modifiedColumns[] = ContractPeer::NOTE;
+		}
+
+		return $this;
+	} // setNote()
+
+	/**
+	 * Set the value of [currency_code] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setCurrencyCode($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->currency_code !== $v) {
+			$this->currency_code = $v;
+			$this->modifiedColumns[] = ContractPeer::CURRENCY_CODE;
+		}
+
+		if ($this->aCurrency !== null && $this->aCurrency->getCode() !== $v) {
+			$this->aCurrency = null;
+		}
+
+		return $this;
+	} // setCurrencyCode()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -586,6 +667,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->amount = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->name = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->closed_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->note = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->currency_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -595,7 +678,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Contract object", $e);
@@ -620,6 +703,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 		if ($this->aCreditor !== null && $this->creditor_id !== $this->aCreditor->getId()) {
 			$this->aCreditor = null;
+		}
+		if ($this->aCurrency !== null && $this->currency_code !== $this->aCurrency->getCode()) {
+			$this->aCurrency = null;
 		}
 	} // ensureConsistency
 
@@ -661,6 +747,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aCreditor = null;
+			$this->aCurrency = null;
 			$this->collPayments = null;
 			$this->lastPaymentCriteria = null;
 
@@ -829,6 +916,13 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				$this->setCreditor($this->aCreditor);
 			}
 
+			if ($this->aCurrency !== null) {
+				if ($this->aCurrency->isModified() || $this->aCurrency->isNew()) {
+					$affectedRows += $this->aCurrency->save($con);
+				}
+				$this->setCurrency($this->aCurrency);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = ContractPeer::ID;
 			}
@@ -944,6 +1038,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aCurrency !== null) {
+				if (!$this->aCurrency->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aCurrency->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = ContractPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -1026,6 +1126,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 8:
 				return $this->getClosedAt();
 				break;
+			case 9:
+				return $this->getNote();
+				break;
+			case 10:
+				return $this->getCurrencyCode();
+				break;
 			default:
 				return null;
 				break;
@@ -1056,6 +1162,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[6] => $this->getAmount(),
 			$keys[7] => $this->getName(),
 			$keys[8] => $this->getClosedAt(),
+			$keys[9] => $this->getNote(),
+			$keys[10] => $this->getCurrencyCode(),
 		);
 		return $result;
 	}
@@ -1114,6 +1222,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 8:
 				$this->setClosedAt($value);
 				break;
+			case 9:
+				$this->setNote($value);
+				break;
+			case 10:
+				$this->setCurrencyCode($value);
+				break;
 		} // switch()
 	}
 
@@ -1147,6 +1261,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setAmount($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setName($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setClosedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setNote($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setCurrencyCode($arr[$keys[10]]);
 	}
 
 	/**
@@ -1167,6 +1283,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::AMOUNT)) $criteria->add(ContractPeer::AMOUNT, $this->amount);
 		if ($this->isColumnModified(ContractPeer::NAME)) $criteria->add(ContractPeer::NAME, $this->name);
 		if ($this->isColumnModified(ContractPeer::CLOSED_AT)) $criteria->add(ContractPeer::CLOSED_AT, $this->closed_at);
+		if ($this->isColumnModified(ContractPeer::NOTE)) $criteria->add(ContractPeer::NOTE, $this->note);
+		if ($this->isColumnModified(ContractPeer::CURRENCY_CODE)) $criteria->add(ContractPeer::CURRENCY_CODE, $this->currency_code);
 
 		return $criteria;
 	}
@@ -1236,6 +1354,10 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$copyObj->setName($this->name);
 
 		$copyObj->setClosedAt($this->closed_at);
+
+		$copyObj->setNote($this->note);
+
+		$copyObj->setCurrencyCode($this->currency_code);
 
 
 		if ($deepCopy) {
@@ -1349,6 +1471,55 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aCreditor;
+	}
+
+	/**
+	 * Declares an association between this object and a Currency object.
+	 *
+	 * @param      Currency $v
+	 * @return     Contract The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setCurrency(Currency $v = null)
+	{
+		if ($v === null) {
+			$this->setCurrencyCode(NULL);
+		} else {
+			$this->setCurrencyCode($v->getCode());
+		}
+
+		$this->aCurrency = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Currency object, it will not be re-added.
+		if ($v !== null) {
+			$v->addContract($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated Currency object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Currency The associated Currency object.
+	 * @throws     PropelException
+	 */
+	public function getCurrency(PropelPDO $con = null)
+	{
+		if ($this->aCurrency === null && (($this->currency_code !== "" && $this->currency_code !== null))) {
+			$this->aCurrency = CurrencyPeer::retrieveByPk($this->currency_code);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aCurrency->addContracts($this);
+			 */
+		}
+		return $this->aCurrency;
 	}
 
 	/**
@@ -1686,6 +1857,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$this->collPayments = null;
 		$this->collSettlements = null;
 			$this->aCreditor = null;
+			$this->aCurrency = null;
 	}
 
 	// symfony_behaviors behavior

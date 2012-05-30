@@ -22,6 +22,7 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
       'city'                  => new sfWidgetFormFilterInput(),
       'street'                => new sfWidgetFormFilterInput(),
       'zip'                   => new sfWidgetFormFilterInput(),
+      'note'                  => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -35,6 +36,7 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
       'city'                  => new sfValidatorPass(array('required' => false)),
       'street'                => new sfValidatorPass(array('required' => false)),
       'zip'                   => new sfValidatorPass(array('required' => false)),
+      'note'                  => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('creditor_filters[%s]');
@@ -63,6 +65,7 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
       'city'                  => 'Text',
       'street'                => 'Text',
       'zip'                   => 'Text',
+      'note'                  => 'Text',
     );
   }
 }

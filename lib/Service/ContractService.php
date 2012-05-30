@@ -3,6 +3,23 @@
 class ContractService
 {
 
+    public function checkContractActivation(Contract $contract, $con =null)
+    {
+        $paymentsAmount = $contract->getPaymentsAmount();
+        if ($paymentsAmount >= $contract->getAmount() && !$contract->getActivatedAt()) {
+            $lastPayment = $contract->getLastPayment();
+            $contract->setActivatedAt($lastPayment->getDate());
+            $translateService = ServiceContainer::getTranslateService();
+            ServiceContainer::getMessageService()->addSuccess($translateService->__('Contract activated'));
+            $contract->save($con);
+        } elseif ($paymentsAmount < $contract->getAmount() && $contract->getActivatedAt()) {
+            $translateService = ServiceContainer::getTranslateService();
+            ServiceContainer::getMessageService()->addWarning($translateService->__('Contract deactivated'));
+            $contract->setActivatedAt(null);
+            $contract->save($con);
+        }
+    }
+
     public function checkSettlements()
     {
         $query = "
@@ -74,6 +91,7 @@ class ContractService
         $settlement->setDate($this->getNextSettlementDateForContract($contract));
         $settlement->setBalance($this->getBalanceForSettlement($settlement));
         $settlement->setInterest($this->getInterestForSettlement($settlement));
+        $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
         $settlement->save();
 
         $contract->addSettlement($settlement);

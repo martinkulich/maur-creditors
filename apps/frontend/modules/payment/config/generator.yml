@@ -10,6 +10,7 @@ generator:
     route_prefix:          payment
     with_propel_route:     1
     actions_base_class:    sfActions
+    peer_method: doSelectJoinAll
 
     config:
       actions: ~

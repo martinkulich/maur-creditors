@@ -18,6 +18,7 @@ abstract class BasePaymentForm extends BaseFormPropel
       'contract_id' => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => false)),
       'date'        => new sfWidgetFormDate(),
       'amount'      => new sfWidgetFormInputText(),
+      'note'        => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -25,6 +26,7 @@ abstract class BasePaymentForm extends BaseFormPropel
       'contract_id' => new sfValidatorPropelChoice(array('model' => 'Contract', 'column' => 'id')),
       'date'        => new sfValidatorDate(),
       'amount'      => new sfValidatorNumber(),
+      'note'        => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('payment[%s]');

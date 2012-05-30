@@ -13,6 +13,7 @@ class ContractForm extends BaseContractForm
     public function configure()
     {
         $this->getWidgetSchema()->moveField('name', sfWidgetFormSchema::FIRST);
+        $this->getWidgetSchema()->moveField('currency_code', sfWidgetFormSchema::AFTER, 'amount');
         $dateFields = array(
             'activated_at',
             'created_at',
@@ -34,12 +35,11 @@ class ContractForm extends BaseContractForm
         $this->setValidator('period', new sfValidatorChoice(array('choices' => array_keys($periodChoices), 'required' => true)));
 
         $this->setWidget('interest_rate', new myWidgetFormInputPercentage());
-        $this->setWidget('amount', new myWidgetFormInputAmount(array(), array('class' => 'span2')));
 
         $this->getValidator('interest_rate')->setOption('min', 0);
         $this->getValidator('amount')->setOption('min', 0);
 
-        $fieldsToUnset = array();
+        $fieldsToUnset = array('activated_at');
 
         if(!$this->getObject()->isNew())
         {
@@ -48,7 +48,7 @@ class ContractForm extends BaseContractForm
 
         if($this->getObject()->getActivatedAt())
         {
-            $fieldsToUnset[] = 'activated_at';
+//            $fieldsToUnset[] = 'activated_at';
         }
 
         foreach($fieldsToUnset as $field)
@@ -60,7 +60,7 @@ class ContractForm extends BaseContractForm
     public function doSave($con = null)
     {
         parent::doSave($con);
-
+        $this->getObject()->reload();
         ServiceContainer::getContractService()->updateContractSettlements($this->getObject());
     }
 }

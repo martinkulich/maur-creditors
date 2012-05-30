@@ -44,6 +44,12 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	protected $amount;
 
 	/**
+	 * The value for the note field.
+	 * @var        string
+	 */
+	protected $note;
+
+	/**
 	 * @var        Contract
 	 */
 	protected $aContract;
@@ -148,6 +154,16 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	public function getAmount()
 	{
 		return $this->amount;
+	}
+
+	/**
+	 * Get the [note] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getNote()
+	{
+		return $this->note;
 	}
 
 	/**
@@ -264,6 +280,26 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	} // setAmount()
 
 	/**
+	 * Set the value of [note] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Payment The current object (for fluent API support)
+	 */
+	public function setNote($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->note !== $v) {
+			$this->note = $v;
+			$this->modifiedColumns[] = PaymentPeer::NOTE;
+		}
+
+		return $this;
+	} // setNote()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -303,6 +339,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			$this->contract_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->date = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->amount = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->note = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -312,7 +349,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Payment object", $e);
@@ -682,6 +719,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getAmount();
 				break;
+			case 4:
+				return $this->getNote();
+				break;
 			default:
 				return null;
 				break;
@@ -707,6 +747,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			$keys[1] => $this->getContractId(),
 			$keys[2] => $this->getDate(),
 			$keys[3] => $this->getAmount(),
+			$keys[4] => $this->getNote(),
 		);
 		return $result;
 	}
@@ -750,6 +791,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			case 3:
 				$this->setAmount($value);
 				break;
+			case 4:
+				$this->setNote($value);
+				break;
 		} // switch()
 	}
 
@@ -778,6 +822,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setContractId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDate($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setAmount($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setNote($arr[$keys[4]]);
 	}
 
 	/**
@@ -793,6 +838,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PaymentPeer::CONTRACT_ID)) $criteria->add(PaymentPeer::CONTRACT_ID, $this->contract_id);
 		if ($this->isColumnModified(PaymentPeer::DATE)) $criteria->add(PaymentPeer::DATE, $this->date);
 		if ($this->isColumnModified(PaymentPeer::AMOUNT)) $criteria->add(PaymentPeer::AMOUNT, $this->amount);
+		if ($this->isColumnModified(PaymentPeer::NOTE)) $criteria->add(PaymentPeer::NOTE, $this->note);
 
 		return $criteria;
 	}
@@ -852,6 +898,8 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		$copyObj->setDate($this->date);
 
 		$copyObj->setAmount($this->amount);
+
+		$copyObj->setNote($this->note);
 
 
 		$copyObj->setNew(true);

@@ -25,10 +25,6 @@ class RegulationFormFilter extends BaseRegulationFormFilter
       $this->getWidgetSchema()->moveField('contract_id', sfWidgetFormSchema::FIRST);
   }
 
-  public function doBuildCriteria(array $values)
-  {
-      return parent::doBuildCriteria($values);
-  }
   public function addContractIdColumnCriteria(Criteria $criteria, $field, $value)
   {
       $criteria->add(RegulationPeer::CONTRACT_ID, $value);

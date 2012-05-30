@@ -20,6 +20,8 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'amount'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'name'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'closed_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'note'          => new sfWidgetFormFilterInput(),
+      'currency_code' => new sfWidgetFormPropelChoice(array('model' => 'Currency', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -31,6 +33,8 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'amount'        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'name'          => new sfValidatorPass(array('required' => false)),
       'closed_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'note'          => new sfValidatorPass(array('required' => false)),
+      'currency_code' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Currency', 'column' => 'code')),
     ));
 
     $this->widgetSchema->setNameFormat('contract_filters[%s]');
@@ -57,6 +61,8 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'amount'        => 'Number',
       'name'          => 'Text',
       'closed_at'     => 'Date',
+      'note'          => 'Text',
+      'currency_code' => 'ForeignKey',
     );
   }
 }
