@@ -1431,11 +1431,11 @@
     </trans-unit>
     <trans-unit id="358">
       <source>settlement admin</source>
-      <target>Vypořádání</target>
+      <target>Výplaty úroků</target>
     </trans-unit>
     <trans-unit id="359">
       <source>of settlement</source>
-      <target>vypořádání</target>
+      <target>výplaty úroků</target>
     </trans-unit>
     <trans-unit id="360">
       <source>Unpaid</source>
@@ -1451,11 +1451,11 @@
     </trans-unit>
     <trans-unit id="363">
       <source>payment admin</source>
-      <target>Platby</target>
+      <target>Přijaté platby</target>
     </trans-unit>
     <trans-unit id="364">
       <source>of payment</source>
-      <target>platby</target>
+      <target>přijaté platby</target>
     </trans-unit>
     <trans-unit id="365">
       <source>Payments amount</source>
@@ -1496,6 +1496,70 @@
     <trans-unit id="374">
       <source>Unsettled</source>
       <target>Nevypořádáno</target>
+    </trans-unit>
+    <trans-unit id="375">
+      <source>Closed at</source>
+      <target>datum ukončení</target>
+    </trans-unit>
+    <trans-unit id="376">
+      <source>Copy</source>
+      <target>Kopírovat</target>
+    </trans-unit>
+    <trans-unit id="377">
+      <source>regulation admin</source>
+      <target>Předpisy</target>
+    </trans-unit>
+    <trans-unit id="378">
+      <source>of regulation</source>
+      <target>předpisy</target>
+    </trans-unit>
+    <trans-unit id="379">
+      <source>Creditor firstname</source>
+      <target>Jméno</target>
+    </trans-unit>
+    <trans-unit id="380">
+      <source>Creditor lastname</source>
+      <target>Příjmení</target>
+    </trans-unit>
+    <trans-unit id="381">
+      <source>Contract name</source>
+      <target>Smlouva</target>
+    </trans-unit>
+    <trans-unit id="382">
+      <source>Settlement year</source>
+      <target>Rok</target>
+    </trans-unit>
+    <trans-unit id="383">
+      <source>Start balance</source>
+      <target>Jistina k 1.1.</target>
+    </trans-unit>
+    <trans-unit id="384">
+      <source>Contract activated at</source>
+      <target>Datum podpisu</target>
+    </trans-unit>
+    <trans-unit id="385">
+      <source>Contract balance</source>
+      <target>Jistina</target>
+    </trans-unit>
+    <trans-unit id="386">
+      <source>Regulation</source>
+      <target>Předpis</target>
+    </trans-unit>
+    <trans-unit id="387">
+      <source>Paid for current year</source>
+      <target>Úroky vyplacené za příslušný rok</target>
+    </trans-unit>
+    <trans-unit id="388">
+      <source>Teoretically to pay in current year</source>
+      <target>Teoreticky dovyplatit v daném roce</target>
+    </trans-unit>
+    <trans-unit id="389">
+      <source>End balance</source>
+      <target>Jistina k 31.12</target>
+    </trans-unit>
+    <trans-unit id="390">
+      <source>Filter regulation</source>
+      <target>Filtrovat předpisy</target>
     </trans-unit>
   </body>
 </xliff>

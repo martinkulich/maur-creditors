@@ -25,10 +25,13 @@ abstract class BaseRegulationPeer {
 	const TM_CLASS = 'RegulationTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 14;
+	const NUM_COLUMNS = 15;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
+
+	/** the column name for the ID field */
+	const ID = 'regulation.ID';
 
 	/** the column name for the CREDITOR_FIRSTNAME field */
 	const CREDITOR_FIRSTNAME = 'regulation.CREDITOR_FIRSTNAME';
@@ -95,11 +98,11 @@ abstract class BaseRegulationPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('CreditorFirstname', 'CreditorLastname', 'ContractId', 'ContractName', 'SettlementYear', 'StartBalance', 'ContractActivatedAt', 'ContractBalance', 'Requlation', 'Pid', 'PaidForCurrentYear', 'Capitalized', 'TeoreticallyToPayInCurrentYear', 'EndBalance', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('creditorFirstname', 'creditorLastname', 'contractId', 'contractName', 'settlementYear', 'startBalance', 'contractActivatedAt', 'contractBalance', 'requlation', 'pid', 'paidForCurrentYear', 'capitalized', 'teoreticallyToPayInCurrentYear', 'endBalance', ),
-		BasePeer::TYPE_COLNAME => array (self::CREDITOR_FIRSTNAME, self::CREDITOR_LASTNAME, self::CONTRACT_ID, self::CONTRACT_NAME, self::SETTLEMENT_YEAR, self::START_BALANCE, self::CONTRACT_ACTIVATED_AT, self::CONTRACT_BALANCE, self::REGULATION, self::PAID, self::PAID_FOR_CURRENT_YEAR, self::CAPITALIZED, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR, self::END_BALANCE, ),
-		BasePeer::TYPE_FIELDNAME => array ('creditor_firstname', 'creditor_lastname', 'contract_id', 'contract_name', 'settlement_year', 'start_balance', 'contract_activated_at', 'contract_balance', 'regulation', 'paid', 'paid_for_current_year', 'capitalized', 'teoretically_to_pay_in_current_year', 'end_balance', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorFirstname', 'CreditorLastname', 'ContractId', 'ContractName', 'SettlementYear', 'StartBalance', 'ContractActivatedAt', 'ContractBalance', 'Requlation', 'Pid', 'PaidForCurrentYear', 'Capitalized', 'TeoreticallyToPayInCurrentYear', 'EndBalance', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorFirstname', 'creditorLastname', 'contractId', 'contractName', 'settlementYear', 'startBalance', 'contractActivatedAt', 'contractBalance', 'requlation', 'pid', 'paidForCurrentYear', 'capitalized', 'teoreticallyToPayInCurrentYear', 'endBalance', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_FIRSTNAME, self::CREDITOR_LASTNAME, self::CONTRACT_ID, self::CONTRACT_NAME, self::SETTLEMENT_YEAR, self::START_BALANCE, self::CONTRACT_ACTIVATED_AT, self::CONTRACT_BALANCE, self::REGULATION, self::PAID, self::PAID_FOR_CURRENT_YEAR, self::CAPITALIZED, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR, self::END_BALANCE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_firstname', 'creditor_lastname', 'contract_id', 'contract_name', 'settlement_year', 'start_balance', 'contract_activated_at', 'contract_balance', 'regulation', 'paid', 'paid_for_current_year', 'capitalized', 'teoretically_to_pay_in_current_year', 'end_balance', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	/**
@@ -109,11 +112,11 @@ abstract class BaseRegulationPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('CreditorFirstname' => 0, 'CreditorLastname' => 1, 'ContractId' => 2, 'ContractName' => 3, 'SettlementYear' => 4, 'StartBalance' => 5, 'ContractActivatedAt' => 6, 'ContractBalance' => 7, 'Requlation' => 8, 'Pid' => 9, 'PaidForCurrentYear' => 10, 'Capitalized' => 11, 'TeoreticallyToPayInCurrentYear' => 12, 'EndBalance' => 13, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('creditorFirstname' => 0, 'creditorLastname' => 1, 'contractId' => 2, 'contractName' => 3, 'settlementYear' => 4, 'startBalance' => 5, 'contractActivatedAt' => 6, 'contractBalance' => 7, 'requlation' => 8, 'pid' => 9, 'paidForCurrentYear' => 10, 'capitalized' => 11, 'teoreticallyToPayInCurrentYear' => 12, 'endBalance' => 13, ),
-		BasePeer::TYPE_COLNAME => array (self::CREDITOR_FIRSTNAME => 0, self::CREDITOR_LASTNAME => 1, self::CONTRACT_ID => 2, self::CONTRACT_NAME => 3, self::SETTLEMENT_YEAR => 4, self::START_BALANCE => 5, self::CONTRACT_ACTIVATED_AT => 6, self::CONTRACT_BALANCE => 7, self::REGULATION => 8, self::PAID => 9, self::PAID_FOR_CURRENT_YEAR => 10, self::CAPITALIZED => 11, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR => 12, self::END_BALANCE => 13, ),
-		BasePeer::TYPE_FIELDNAME => array ('creditor_firstname' => 0, 'creditor_lastname' => 1, 'contract_id' => 2, 'contract_name' => 3, 'settlement_year' => 4, 'start_balance' => 5, 'contract_activated_at' => 6, 'contract_balance' => 7, 'regulation' => 8, 'paid' => 9, 'paid_for_current_year' => 10, 'capitalized' => 11, 'teoretically_to_pay_in_current_year' => 12, 'end_balance' => 13, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorFirstname' => 1, 'CreditorLastname' => 2, 'ContractId' => 3, 'ContractName' => 4, 'SettlementYear' => 5, 'StartBalance' => 6, 'ContractActivatedAt' => 7, 'ContractBalance' => 8, 'Requlation' => 9, 'Pid' => 10, 'PaidForCurrentYear' => 11, 'Capitalized' => 12, 'TeoreticallyToPayInCurrentYear' => 13, 'EndBalance' => 14, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorFirstname' => 1, 'creditorLastname' => 2, 'contractId' => 3, 'contractName' => 4, 'settlementYear' => 5, 'startBalance' => 6, 'contractActivatedAt' => 7, 'contractBalance' => 8, 'requlation' => 9, 'pid' => 10, 'paidForCurrentYear' => 11, 'capitalized' => 12, 'teoreticallyToPayInCurrentYear' => 13, 'endBalance' => 14, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_FIRSTNAME => 1, self::CREDITOR_LASTNAME => 2, self::CONTRACT_ID => 3, self::CONTRACT_NAME => 4, self::SETTLEMENT_YEAR => 5, self::START_BALANCE => 6, self::CONTRACT_ACTIVATED_AT => 7, self::CONTRACT_BALANCE => 8, self::REGULATION => 9, self::PAID => 10, self::PAID_FOR_CURRENT_YEAR => 11, self::CAPITALIZED => 12, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR => 13, self::END_BALANCE => 14, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_firstname' => 1, 'creditor_lastname' => 2, 'contract_id' => 3, 'contract_name' => 4, 'settlement_year' => 5, 'start_balance' => 6, 'contract_activated_at' => 7, 'contract_balance' => 8, 'regulation' => 9, 'paid' => 10, 'paid_for_current_year' => 11, 'capitalized' => 12, 'teoretically_to_pay_in_current_year' => 13, 'end_balance' => 14, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	/**
@@ -183,6 +186,7 @@ abstract class BaseRegulationPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
+		$criteria->addSelectColumn(RegulationPeer::ID);
 		$criteria->addSelectColumn(RegulationPeer::CREDITOR_FIRSTNAME);
 		$criteria->addSelectColumn(RegulationPeer::CREDITOR_LASTNAME);
 		$criteria->addSelectColumn(RegulationPeer::CONTRACT_ID);
@@ -332,7 +336,7 @@ abstract class BaseRegulationPeer {
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
-				$key = serialize(array((string) $obj->getContractId(), (string) $obj->getSettlementYear()));
+				$key = (string) $obj->getId();
 			} // if key === null
 			self::$instances[$key] = $obj;
 		}
@@ -352,10 +356,10 @@ abstract class BaseRegulationPeer {
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof Regulation) {
-				$key = serialize(array((string) $value->getContractId(), (string) $value->getSettlementYear()));
-			} elseif (is_array($value) && count($value) === 2) {
+				$key = (string) $value->getId();
+			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
-				$key = serialize(array((string) $value[0], (string) $value[1]));
+				$key = (string) $value;
 			} else {
 				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Regulation object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
@@ -416,10 +420,10 @@ abstract class BaseRegulationPeer {
 	public static function getPrimaryKeyHashFromRow($row, $startcol = 0)
 	{
 		// If the PK cannot be derived from the row, return NULL.
-		if ($row[$startcol + 2] === null && $row[$startcol + 4] === null) {
+		if ($row[$startcol] === null) {
 			return null;
 		}
-		return serialize(array((string) $row[$startcol + 2], (string) $row[$startcol + 4]));
+		return (string) $row[$startcol];
 	}
 
 	/**
@@ -576,11 +580,8 @@ abstract class BaseRegulationPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(RegulationPeer::CONTRACT_ID);
-			$selectCriteria->add(RegulationPeer::CONTRACT_ID, $criteria->remove(RegulationPeer::CONTRACT_ID), $comparison);
-
-			$comparison = $criteria->getComparison(RegulationPeer::SETTLEMENT_YEAR);
-			$selectCriteria->add(RegulationPeer::SETTLEMENT_YEAR, $criteria->remove(RegulationPeer::SETTLEMENT_YEAR), $comparison);
+			$comparison = $criteria->getComparison(RegulationPeer::ID);
+			$selectCriteria->add(RegulationPeer::ID, $criteria->remove(RegulationPeer::ID), $comparison);
 
 		} else { // $values is Regulation object
 			$criteria = $values->buildCriteria(); // gets full criteria
@@ -661,18 +662,10 @@ abstract class BaseRegulationPeer {
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey values
-			if (count($values) == count($values, COUNT_RECURSIVE)) {
-				// array is not multi-dimensional
-				$values = array($values);
-			}
-			foreach ($values as $value) {
-				$criterion = $criteria->getNewCriterion(RegulationPeer::CONTRACT_ID, $value[0]);
-				$criterion->addAnd($criteria->getNewCriterion(RegulationPeer::SETTLEMENT_YEAR, $value[1]));
-				$criteria->addOr($criterion);
-				// we can invalidate the cache for this single PK
-				RegulationPeer::removeInstanceFromPool($value);
+			$criteria->add(RegulationPeer::ID, (array) $values, Criteria::IN);
+			// invalidate the cache for this object(s)
+			foreach ((array) $values as $singleval) {
+				RegulationPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -734,28 +727,56 @@ abstract class BaseRegulationPeer {
 	}
 
 	/**
-	 * Retrieve object using using composite pkey values.
-	 * @param      int $contract_id
-	 * @param      string $settlement_year
-	 * @param      PropelPDO $con
+	 * Retrieve a single object by pkey.
+	 *
+	 * @param      string $pk the primary key.
+	 * @param      PropelPDO $con the connection to use
 	 * @return     Regulation
 	 */
-	public static function retrieveByPK($contract_id, $settlement_year, PropelPDO $con = null) {
-		$key = serialize(array((string) $contract_id, (string) $settlement_year));
- 		if (null !== ($obj = RegulationPeer::getInstanceFromPool($key))) {
- 			return $obj;
+	public static function retrieveByPK($pk, PropelPDO $con = null)
+	{
+
+		if (null !== ($obj = RegulationPeer::getInstanceFromPool((string) $pk))) {
+			return $obj;
 		}
 
 		if ($con === null) {
 			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
+
 		$criteria = new Criteria(RegulationPeer::DATABASE_NAME);
-		$criteria->add(RegulationPeer::CONTRACT_ID, $contract_id);
-		$criteria->add(RegulationPeer::SETTLEMENT_YEAR, $settlement_year);
+		$criteria->add(RegulationPeer::ID, $pk);
+
 		$v = RegulationPeer::doSelect($criteria, $con);
 
-		return !empty($v) ? $v[0] : null;
+		return !empty($v) > 0 ? $v[0] : null;
 	}
+
+	/**
+	 * Retrieve multiple objects by pkey.
+	 *
+	 * @param      array $pks List of primary keys
+	 * @param      PropelPDO $con the connection to use
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function retrieveByPKs($pks, PropelPDO $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria(RegulationPeer::DATABASE_NAME);
+			$criteria->add(RegulationPeer::ID, $pks, Criteria::IN);
+			$objs = RegulationPeer::doSelect($criteria, $con);
+		}
+		return $objs;
+	}
+
 	// symfony behavior
 	
 	/**

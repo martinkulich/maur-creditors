@@ -22,6 +22,7 @@ abstract class BaseContractForm extends BaseFormPropel
       'interest_rate' => new sfWidgetFormInputText(),
       'amount'        => new sfWidgetFormInputText(),
       'name'          => new sfWidgetFormInputText(),
+      'closed_at'     => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
@@ -33,6 +34,7 @@ abstract class BaseContractForm extends BaseFormPropel
       'interest_rate' => new sfValidatorNumber(),
       'amount'        => new sfValidatorNumber(),
       'name'          => new sfValidatorString(array('max_length' => 255)),
+      'closed_at'     => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('contract[%s]');

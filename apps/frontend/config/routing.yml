@@ -4,8 +4,9 @@ regulation:
     model:                regulation
     module:               regulation
     prefix_path:          /regulation
-    column:               contract_id
+    column:               id
     with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
 
 security_user:
   class: sfPropelRouteCollection
@@ -56,6 +57,7 @@ contract:
     prefix_path:          /contract
     column:               id
     with_wildcard_routes: true
+    object_actions: {copy: get, duplicate: post}
     collection_actions: {filters: get, filter: post, reset: get, regulation: get}
 
 group:

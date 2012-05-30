@@ -72,6 +72,10 @@ table.table-rights input
     margin-bottom: 0px;
 }
 
+input.date_input
+{
+    width: 78px;
+}
 
 .hasPlaceholder{
     color: #777;

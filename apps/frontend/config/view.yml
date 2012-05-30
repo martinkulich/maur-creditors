@@ -4,6 +4,9 @@ newSuccess:
 editSuccess:
   layout: layoutModal
 
+copySuccess:
+  layout: layoutModal
+
 filtersSuccess:
   layout: layoutModal
 

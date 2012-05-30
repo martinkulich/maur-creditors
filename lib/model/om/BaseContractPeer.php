@@ -25,7 +25,7 @@ abstract class BaseContractPeer {
 	const TM_CLASS = 'ContractTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,9 @@ abstract class BaseContractPeer {
 	/** the column name for the NAME field */
 	const NAME = 'contract.NAME';
 
+	/** the column name for the CLOSED_AT field */
+	const CLOSED_AT = 'contract.CLOSED_AT';
+
 	/**
 	 * An identiy map to hold any loaded instances of Contract objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -77,11 +80,11 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', 'ClosedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', 'closedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, self::CLOSED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', 'closed_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -91,11 +94,11 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, 'ClosedAt' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, 'closedAt' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, self::CLOSED_AT => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, 'closed_at' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -173,6 +176,7 @@ abstract class BaseContractPeer {
 		$criteria->addSelectColumn(ContractPeer::INTEREST_RATE);
 		$criteria->addSelectColumn(ContractPeer::AMOUNT);
 		$criteria->addSelectColumn(ContractPeer::NAME);
+		$criteria->addSelectColumn(ContractPeer::CLOSED_AT);
 	}
 
 	/**

@@ -19,6 +19,12 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	protected static $peer;
 
 	/**
+	 * The value for the id field.
+	 * @var        string
+	 */
+	protected $id;
+
+	/**
 	 * The value for the creditor_firstname field.
 	 * @var        string
 	 */
@@ -119,6 +125,16 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'RegulationPeer';
+
+	/**
+	 * Get the [id] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
 	/**
 	 * Get the [creditor_firstname] column value.
@@ -282,6 +298,26 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		return $this->end_balance;
 	}
+
+	/**
+	 * Set the value of [id] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Regulation The current object (for fluent API support)
+	 */
+	public function setId($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->id !== $v) {
+			$this->id = $v;
+			$this->modifiedColumns[] = RegulationPeer::ID;
+		}
+
+		return $this;
+	} // setId()
 
 	/**
 	 * Set the value of [creditor_firstname] column.
@@ -624,20 +660,21 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->creditor_firstname = ($row[$startcol + 0] !== null) ? (string) $row[$startcol + 0] : null;
-			$this->creditor_lastname = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->contract_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->contract_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->settlement_year = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->start_balance = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->contract_activated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->contract_balance = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->regulation = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->paid = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->paid_for_current_year = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->capitalized = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->teoretically_to_pay_in_current_year = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->end_balance = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->id = ($row[$startcol + 0] !== null) ? (string) $row[$startcol + 0] : null;
+			$this->creditor_firstname = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->creditor_lastname = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->contract_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->contract_name = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->settlement_year = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->start_balance = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->contract_activated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->contract_balance = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->regulation = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->paid = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->paid_for_current_year = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->capitalized = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->teoretically_to_pay_in_current_year = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->end_balance = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -647,7 +684,7 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 14; // 14 = RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Regulation object", $e);
@@ -973,45 +1010,48 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getCreditorFirstname();
+				return $this->getId();
 				break;
 			case 1:
-				return $this->getCreditorLastname();
+				return $this->getCreditorFirstname();
 				break;
 			case 2:
-				return $this->getContractId();
+				return $this->getCreditorLastname();
 				break;
 			case 3:
-				return $this->getContractName();
+				return $this->getContractId();
 				break;
 			case 4:
-				return $this->getSettlementYear();
+				return $this->getContractName();
 				break;
 			case 5:
-				return $this->getStartBalance();
+				return $this->getSettlementYear();
 				break;
 			case 6:
-				return $this->getContractActivatedAt();
+				return $this->getStartBalance();
 				break;
 			case 7:
-				return $this->getContractBalance();
+				return $this->getContractActivatedAt();
 				break;
 			case 8:
-				return $this->getRequlation();
+				return $this->getContractBalance();
 				break;
 			case 9:
-				return $this->getPid();
+				return $this->getRequlation();
 				break;
 			case 10:
-				return $this->getPaidForCurrentYear();
+				return $this->getPid();
 				break;
 			case 11:
-				return $this->getCapitalized();
+				return $this->getPaidForCurrentYear();
 				break;
 			case 12:
-				return $this->getTeoreticallyToPayInCurrentYear();
+				return $this->getCapitalized();
 				break;
 			case 13:
+				return $this->getTeoreticallyToPayInCurrentYear();
+				break;
+			case 14:
 				return $this->getEndBalance();
 				break;
 			default:
@@ -1035,20 +1075,21 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		$keys = RegulationPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getCreditorFirstname(),
-			$keys[1] => $this->getCreditorLastname(),
-			$keys[2] => $this->getContractId(),
-			$keys[3] => $this->getContractName(),
-			$keys[4] => $this->getSettlementYear(),
-			$keys[5] => $this->getStartBalance(),
-			$keys[6] => $this->getContractActivatedAt(),
-			$keys[7] => $this->getContractBalance(),
-			$keys[8] => $this->getRequlation(),
-			$keys[9] => $this->getPid(),
-			$keys[10] => $this->getPaidForCurrentYear(),
-			$keys[11] => $this->getCapitalized(),
-			$keys[12] => $this->getTeoreticallyToPayInCurrentYear(),
-			$keys[13] => $this->getEndBalance(),
+			$keys[0] => $this->getId(),
+			$keys[1] => $this->getCreditorFirstname(),
+			$keys[2] => $this->getCreditorLastname(),
+			$keys[3] => $this->getContractId(),
+			$keys[4] => $this->getContractName(),
+			$keys[5] => $this->getSettlementYear(),
+			$keys[6] => $this->getStartBalance(),
+			$keys[7] => $this->getContractActivatedAt(),
+			$keys[8] => $this->getContractBalance(),
+			$keys[9] => $this->getRequlation(),
+			$keys[10] => $this->getPid(),
+			$keys[11] => $this->getPaidForCurrentYear(),
+			$keys[12] => $this->getCapitalized(),
+			$keys[13] => $this->getTeoreticallyToPayInCurrentYear(),
+			$keys[14] => $this->getEndBalance(),
 		);
 		return $result;
 	}
@@ -1081,45 +1122,48 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setCreditorFirstname($value);
+				$this->setId($value);
 				break;
 			case 1:
-				$this->setCreditorLastname($value);
+				$this->setCreditorFirstname($value);
 				break;
 			case 2:
-				$this->setContractId($value);
+				$this->setCreditorLastname($value);
 				break;
 			case 3:
-				$this->setContractName($value);
+				$this->setContractId($value);
 				break;
 			case 4:
-				$this->setSettlementYear($value);
+				$this->setContractName($value);
 				break;
 			case 5:
-				$this->setStartBalance($value);
+				$this->setSettlementYear($value);
 				break;
 			case 6:
-				$this->setContractActivatedAt($value);
+				$this->setStartBalance($value);
 				break;
 			case 7:
-				$this->setContractBalance($value);
+				$this->setContractActivatedAt($value);
 				break;
 			case 8:
-				$this->setRequlation($value);
+				$this->setContractBalance($value);
 				break;
 			case 9:
-				$this->setPid($value);
+				$this->setRequlation($value);
 				break;
 			case 10:
-				$this->setPaidForCurrentYear($value);
+				$this->setPid($value);
 				break;
 			case 11:
-				$this->setCapitalized($value);
+				$this->setPaidForCurrentYear($value);
 				break;
 			case 12:
-				$this->setTeoreticallyToPayInCurrentYear($value);
+				$this->setCapitalized($value);
 				break;
 			case 13:
+				$this->setTeoreticallyToPayInCurrentYear($value);
+				break;
+			case 14:
 				$this->setEndBalance($value);
 				break;
 		} // switch()
@@ -1146,20 +1190,21 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		$keys = RegulationPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setCreditorFirstname($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setCreditorLastname($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setContractId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setContractName($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setSettlementYear($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setStartBalance($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setContractActivatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setContractBalance($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setRequlation($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setPid($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setPaidForCurrentYear($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setCapitalized($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setTeoreticallyToPayInCurrentYear($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEndBalance($arr[$keys[13]]);
+		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setCreditorFirstname($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setCreditorLastname($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setContractId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setContractName($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setSettlementYear($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setStartBalance($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setContractActivatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setContractBalance($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setRequlation($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPid($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPaidForCurrentYear($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCapitalized($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setTeoreticallyToPayInCurrentYear($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setEndBalance($arr[$keys[14]]);
 	}
 
 	/**
@@ -1171,6 +1216,7 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(RegulationPeer::DATABASE_NAME);
 
+		if ($this->isColumnModified(RegulationPeer::ID)) $criteria->add(RegulationPeer::ID, $this->id);
 		if ($this->isColumnModified(RegulationPeer::CREDITOR_FIRSTNAME)) $criteria->add(RegulationPeer::CREDITOR_FIRSTNAME, $this->creditor_firstname);
 		if ($this->isColumnModified(RegulationPeer::CREDITOR_LASTNAME)) $criteria->add(RegulationPeer::CREDITOR_LASTNAME, $this->creditor_lastname);
 		if ($this->isColumnModified(RegulationPeer::CONTRACT_ID)) $criteria->add(RegulationPeer::CONTRACT_ID, $this->contract_id);
@@ -1201,41 +1247,29 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(RegulationPeer::DATABASE_NAME);
 
-		$criteria->add(RegulationPeer::CONTRACT_ID, $this->contract_id);
-		$criteria->add(RegulationPeer::SETTLEMENT_YEAR, $this->settlement_year);
+		$criteria->add(RegulationPeer::ID, $this->id);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns the composite primary key for this object.
-	 * The array elements will be in same order as specified in XML.
-	 * @return     array
+	 * Returns the primary key for this object (row).
+	 * @return     string
 	 */
 	public function getPrimaryKey()
 	{
-		$pks = array();
-
-		$pks[0] = $this->getContractId();
-
-		$pks[1] = $this->getSettlementYear();
-
-		return $pks;
+		return $this->getId();
 	}
 
 	/**
-	 * Set the [composite] primary key.
+	 * Generic method to set the primary key (id column).
 	 *
-	 * @param      array $keys The elements of the composite key (order must match the order in XML file).
+	 * @param      string $key Primary key.
 	 * @return     void
 	 */
-	public function setPrimaryKey($keys)
+	public function setPrimaryKey($key)
 	{
-
-		$this->setContractId($keys[0]);
-
-		$this->setSettlementYear($keys[1]);
-
+		$this->setId($key);
 	}
 
 	/**
@@ -1250,6 +1284,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setId($this->id);
 
 		$copyObj->setCreditorFirstname($this->creditor_firstname);
 

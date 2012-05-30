@@ -42,6 +42,7 @@ class defaultComponents extends sfComponents
             'payment',
             'settlement',
             'security_user',
+            'regulation',
         );
         $pattern = '%s.admin';
         $user = $this->getUser();

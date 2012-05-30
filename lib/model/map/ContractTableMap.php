@@ -45,6 +45,7 @@ class ContractTableMap extends TableMap {
 		$this->addColumn('INTEREST_RATE', 'InterestRate', 'NUMERIC', true, 5, null);
 		$this->addColumn('AMOUNT', 'Amount', 'NUMERIC', true, 15, null);
 		$this->addColumn('NAME', 'Name', 'VARCHAR', true, 255, null);
+		$this->addColumn('CLOSED_AT', 'ClosedAt', 'DATE', false, null, null);
 		// validators
 	} // initialize()
 

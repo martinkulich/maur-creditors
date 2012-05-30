@@ -23,6 +23,12 @@ generator:
       list:
         batch_actions: []
         display: [name, creditor, amount, payments_amount, interest_rate_as_string, period_as_string, created_at, activated_at]
+        object_actions:
+          _edit: ~
+          copy:
+            action: copy
+            label: Copy
+          _delete: ~
       filter:  ~
       form:
         actions:

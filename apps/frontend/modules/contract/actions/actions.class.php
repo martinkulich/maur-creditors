@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/contractGeneratorConfiguration.class.php';
-require_once dirname(__FILE__).'/../lib/contractGeneratorHelper.class.php';
+require_once dirname(__FILE__) . '/../lib/contractGeneratorConfiguration.class.php';
+require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
 
 /**
  * contract actions.
@@ -13,8 +13,23 @@ require_once dirname(__FILE__).'/../lib/contractGeneratorHelper.class.php';
  */
 class contractActions extends autoContractActions
 {
+
     public function executeRequlation(sfWebRequest $request)
     {
-        
+
+    }
+
+    public function executeCopy(sfWebRequest $request)
+    {
+        $this->contract = $this->getRoute()->getObject();
+        $this->form = new ContractCopyForm($this->contract);
+    }
+
+    public function executeDuplicate(sfWebRequest $request)
+    {
+        $this->executeCopy($request);
+        $this->processForm($request, $this->form);
+
+        $this->setTemplate('copy');
     }
 }

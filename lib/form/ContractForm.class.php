@@ -16,15 +16,18 @@ class ContractForm extends BaseContractForm
         $dateFields = array(
             'activated_at',
             'created_at',
+            'closed_at',
         );
 
         foreach ($dateFields as $dateField) {
             $this->setWidget($dateField, new myJQueryDateWidget());
             $this->setValidator($dateField, new myValidatorDate());
         }
+
         $this->getWidget('created_at')->setLabel('Date of signature');
         $this->getWidget('activated_at')->setLabel('Date of payment');
         $this->getValidator('activated_at')->setOption('required', false);
+        $this->getValidator('closed_at')->setOption('required', false);
 
         $periodChoices = Contract::getPeriods();
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
@@ -41,9 +44,6 @@ class ContractForm extends BaseContractForm
         if(!$this->getObject()->isNew())
         {
             $fieldsToUnset[] = 'period';
-            $fieldsToUnset[] = 'interest_rate';
-            $fieldsToUnset[] = 'created_at';
-            $fieldsToUnset[] = 'amount';
         }
 
         if($this->getObject()->getActivatedAt())
@@ -55,5 +55,12 @@ class ContractForm extends BaseContractForm
         {
             $this->unsetField($field);
         }
+    }
+
+    public function doSave($con = null)
+    {
+        parent::doSave($con);
+
+        ServiceContainer::getContractService()->updateContractSettlements($this->getObject());
     }
 }

@@ -67,6 +67,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $name;
 
 	/**
+	 * The value for the closed_at field.
+	 * @var        string
+	 */
+	protected $closed_at;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
@@ -233,6 +239,39 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	public function getName()
 	{
 		return $this->name;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [closed_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getClosedAt($format = 'Y-m-d')
+	{
+		if ($this->closed_at === null) {
+			return null;
+		}
+
+
+
+		try {
+			$dt = new DateTime($this->closed_at);
+		} catch (Exception $x) {
+			throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->closed_at, true), $x);
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -458,6 +497,55 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setName()
 
 	/**
+	 * Sets the value of [closed_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setClosedAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->closed_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->closed_at !== null && $tmpDt = new DateTime($this->closed_at)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->closed_at = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = ContractPeer::CLOSED_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setClosedAt()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -497,6 +585,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->interest_rate = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->amount = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->name = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->closed_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -506,7 +595,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Contract object", $e);
@@ -934,6 +1023,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getName();
 				break;
+			case 8:
+				return $this->getClosedAt();
+				break;
 			default:
 				return null;
 				break;
@@ -963,6 +1055,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[5] => $this->getInterestRate(),
 			$keys[6] => $this->getAmount(),
 			$keys[7] => $this->getName(),
+			$keys[8] => $this->getClosedAt(),
 		);
 		return $result;
 	}
@@ -1018,6 +1111,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 7:
 				$this->setName($value);
 				break;
+			case 8:
+				$this->setClosedAt($value);
+				break;
 		} // switch()
 	}
 
@@ -1050,6 +1146,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setInterestRate($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setAmount($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setName($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setClosedAt($arr[$keys[8]]);
 	}
 
 	/**
@@ -1069,6 +1166,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::INTEREST_RATE)) $criteria->add(ContractPeer::INTEREST_RATE, $this->interest_rate);
 		if ($this->isColumnModified(ContractPeer::AMOUNT)) $criteria->add(ContractPeer::AMOUNT, $this->amount);
 		if ($this->isColumnModified(ContractPeer::NAME)) $criteria->add(ContractPeer::NAME, $this->name);
+		if ($this->isColumnModified(ContractPeer::CLOSED_AT)) $criteria->add(ContractPeer::CLOSED_AT, $this->closed_at);
 
 		return $criteria;
 	}
@@ -1136,6 +1234,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$copyObj->setAmount($this->amount);
 
 		$copyObj->setName($this->name);
+
+		$copyObj->setClosedAt($this->closed_at);
 
 
 		if ($deepCopy) {

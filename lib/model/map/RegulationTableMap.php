@@ -36,11 +36,12 @@ class RegulationTableMap extends TableMap {
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(false);
 		// columns
+		$this->addPrimaryKey('ID', 'Id', 'VARCHAR', true, 255, null);
 		$this->addColumn('CREDITOR_FIRSTNAME', 'CreditorFirstname', 'VARCHAR', false, 255, null);
 		$this->addColumn('CREDITOR_LASTNAME', 'CreditorLastname', 'VARCHAR', false, 255, null);
-		$this->addPrimaryKey('CONTRACT_ID', 'ContractId', 'INTEGER', true, null, null);
+		$this->addColumn('CONTRACT_ID', 'ContractId', 'INTEGER', false, null, null);
 		$this->addColumn('CONTRACT_NAME', 'ContractName', 'VARCHAR', false, 255, null);
-		$this->addPrimaryKey('SETTLEMENT_YEAR', 'SettlementYear', 'VARCHAR', true, 255, null);
+		$this->addColumn('SETTLEMENT_YEAR', 'SettlementYear', 'VARCHAR', false, 255, null);
 		$this->addColumn('START_BALANCE', 'StartBalance', 'NUMERIC', false, 15, null);
 		$this->addColumn('CONTRACT_ACTIVATED_AT', 'ContractActivatedAt', 'DATE', false, null, null);
 		$this->addColumn('CONTRACT_BALANCE', 'ContractBalance', 'NUMERIC', false, 15, null);

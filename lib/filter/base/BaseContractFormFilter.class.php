@@ -19,6 +19,7 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'interest_rate' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'amount'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'name'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'closed_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(
@@ -29,6 +30,7 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'interest_rate' => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'amount'        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'name'          => new sfValidatorPass(array('required' => false)),
+      'closed_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('contract_filters[%s]');
@@ -54,6 +56,7 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'interest_rate' => 'Number',
       'amount'        => 'Number',
       'name'          => 'Text',
+      'closed_at'     => 'Date',
     );
   }
 }

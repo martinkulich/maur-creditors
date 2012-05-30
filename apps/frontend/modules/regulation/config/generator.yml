@@ -18,9 +18,18 @@ generator:
           is_link: false
         settlement_year:
           is_link: false
+        contract_activated_at:
+          date_format: D
       list:
         sort: [contract_id, asc, settlement_year, desc]
-        actions: []
+        display: [creditor_firstname, creditor_lastname, contract_name, settlement_year, start_balance, contract_activated_at, contract_balance, regulation, paid, paid_for_current_year, capitalized, teoretically_to_pay_in_current_year, end_balance]
+        actions:
+          filters:
+            action: filters
+            label: Filters
+          reset:
+            action: reset
+            label: Reset
         batch_actions: []
         object_actions: []
       filter:  ~

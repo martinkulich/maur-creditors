@@ -13,6 +13,37 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
     public function setup()
     {
         $this->disableCSRFProtection();
+        $this->disableEmptyCheckbox();
+        $this->convertDateFields();
+    }
+
+    protected function disableEmptyCheckbox()
+    {
+        foreach($this->getWidgetSchema()->getFields() as $field=>$widget)
+        {
+            if($widget->hasOption('with_empty'))
+            {
+                $widget->setOption('with_empty', false);
+            }
+        }
+    }
+
+    protected function convertDateFields()
+    {
+        foreach($this->getWidgetSchema()->getFields() as $field=>$widget)
+        {
+            if($widget instanceof sfWidgetFormFilterDate)
+            {
+                $this->setWidget($field, new MyJQueryFormFilterDate());
+
+                $validator = $this->getValidator($field);
+                $validatorOptions = $validator->getOptions();
+                $validatorMessages = $validator->getMessages();
+                $this->setValidator($field, new MyValidatorDateRange($validatorOptions, $validatorMessages));
+
+
+            }
+        }
     }
 
     public function unsetField($field)

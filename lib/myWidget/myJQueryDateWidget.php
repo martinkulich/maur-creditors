@@ -19,7 +19,7 @@ class myJQueryDateWidget extends sfWidgetFormInput
 
         $this->setOption('type', 'text');
 //        $this->setAttribute('readonly', 'readonly');
-        $this->setAttribute('class', 'span2');
+        $this->setAttribute('class', 'date_input');
     }
 
     public function render($name, $value = null, $attributes = array(), $errors = array())

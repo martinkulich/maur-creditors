@@ -6,7 +6,7 @@ class ContractService
     public function checkSettlements()
     {
         $query = "
-            select id from contract c where activated_at IS NOT NULL AND
+            select id from contract c where closed_at IS NOT NULL AND activated_at IS NOT NULL AND
                 (
                     (
                          (((select max(s.date) from settlement s where s.contract_id = c.id) + (12/c.period || ' month')::interval) <= now()::DATE)
@@ -40,12 +40,16 @@ class ContractService
 
     public function updateContractSettlements(contract $contract)
     {
-        foreach ($contract->getSettlements() as $settlement) {
-            $settlement->setBalance($this->getBalanceForSettlement($settlement));
-            $settlement->setInterest($this->getInterestForSettlement($settlement));
-            $settlement->save();
-            $settlement->reload();
+        if (!$contract->getClosedAt()) {
+            foreach ($contract->getSettlements() as $settlement) {
+                $settlement->setBalance($this->getBalanceForSettlement($settlement));
+                $settlement->setInterest($this->getInterestForSettlement($settlement));
+                $settlement->save();
+                $settlement->reload();
+            }
         }
+
+        $this->checkSettlements();
     }
 
     public function generateSettlementsForContract(Contract $contract)
