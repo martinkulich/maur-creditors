@@ -1,1 +1,1 @@
-<?php echo $widget->render(sprintf('%s[contract_id]', $formName));?>
+<?php echo $widget->render(sprintf('%s[contract_id]', $formName), $contractId);?>

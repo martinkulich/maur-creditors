@@ -191,13 +191,21 @@ function centerModal(modal, currentWidth){
 
 function updateSelectBox(url, selector, target, paramName)
 {
+    var defaultValue = jQuery('#'+target).val();
+    if(defaultValue == '')
+    {
+        defaultValue = 0;
+    }
+
     paramValue = jQuery('#'+selector).val();
 
     if(paramValue == '')
     {
         paramValue = 0;
     }
-    url += '?' +paramName+'='+paramValue;
+
+
+    url += '?' +paramName+'='+paramValue+'&default='+defaultValue;
     jQuery.get(url, {}, function(data){
         jQuery('#'+target).replaceWith(data);
     //        jQuery('#'+selector).attr('id', selector);

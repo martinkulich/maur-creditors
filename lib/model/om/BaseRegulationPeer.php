@@ -33,11 +33,8 @@ abstract class BaseRegulationPeer {
 	/** the column name for the ID field */
 	const ID = 'regulation.ID';
 
-	/** the column name for the CREDITOR_FIRSTNAME field */
-	const CREDITOR_FIRSTNAME = 'regulation.CREDITOR_FIRSTNAME';
-
-	/** the column name for the CREDITOR_LASTNAME field */
-	const CREDITOR_LASTNAME = 'regulation.CREDITOR_LASTNAME';
+	/** the column name for the CREDITOR_FULLNAME field */
+	const CREDITOR_FULLNAME = 'regulation.CREDITOR_FULLNAME';
 
 	/** the column name for the CONTRACT_ID field */
 	const CONTRACT_ID = 'regulation.CONTRACT_ID';
@@ -45,8 +42,8 @@ abstract class BaseRegulationPeer {
 	/** the column name for the CONTRACT_NAME field */
 	const CONTRACT_NAME = 'regulation.CONTRACT_NAME';
 
-	/** the column name for the SETTLEMENT_YEAR field */
-	const SETTLEMENT_YEAR = 'regulation.SETTLEMENT_YEAR';
+	/** the column name for the REGULATION_YEAR field */
+	const REGULATION_YEAR = 'regulation.REGULATION_YEAR';
 
 	/** the column name for the START_BALANCE field */
 	const START_BALANCE = 'regulation.START_BALANCE';
@@ -71,6 +68,9 @@ abstract class BaseRegulationPeer {
 
 	/** the column name for the TEORETICALLY_TO_PAY_IN_CURRENT_YEAR field */
 	const TEORETICALLY_TO_PAY_IN_CURRENT_YEAR = 'regulation.TEORETICALLY_TO_PAY_IN_CURRENT_YEAR';
+
+	/** the column name for the UNPAID field */
+	const UNPAID = 'regulation.UNPAID';
 
 	/** the column name for the END_BALANCE field */
 	const END_BALANCE = 'regulation.END_BALANCE';
@@ -98,10 +98,10 @@ abstract class BaseRegulationPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorFirstname', 'CreditorLastname', 'ContractId', 'ContractName', 'SettlementYear', 'StartBalance', 'ContractActivatedAt', 'ContractBalance', 'Requlation', 'Pid', 'PaidForCurrentYear', 'Capitalized', 'TeoreticallyToPayInCurrentYear', 'EndBalance', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorFirstname', 'creditorLastname', 'contractId', 'contractName', 'settlementYear', 'startBalance', 'contractActivatedAt', 'contractBalance', 'requlation', 'pid', 'paidForCurrentYear', 'capitalized', 'teoreticallyToPayInCurrentYear', 'endBalance', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_FIRSTNAME, self::CREDITOR_LASTNAME, self::CONTRACT_ID, self::CONTRACT_NAME, self::SETTLEMENT_YEAR, self::START_BALANCE, self::CONTRACT_ACTIVATED_AT, self::CONTRACT_BALANCE, self::REGULATION, self::PAID, self::PAID_FOR_CURRENT_YEAR, self::CAPITALIZED, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR, self::END_BALANCE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_firstname', 'creditor_lastname', 'contract_id', 'contract_name', 'settlement_year', 'start_balance', 'contract_activated_at', 'contract_balance', 'regulation', 'paid', 'paid_for_current_year', 'capitalized', 'teoretically_to_pay_in_current_year', 'end_balance', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorFirstname', 'ContractId', 'ContractName', 'RegulationYear', 'StartBalance', 'ContractActivatedAt', 'ContractBalance', 'Requlation', 'Paid', 'PaidForCurrentYear', 'Capitalized', 'TeoreticallyToPayInCurrentYear', 'Unpaid', 'EndBalance', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorFirstname', 'contractId', 'contractName', 'regulationYear', 'startBalance', 'contractActivatedAt', 'contractBalance', 'requlation', 'paid', 'paidForCurrentYear', 'capitalized', 'teoreticallyToPayInCurrentYear', 'unpaid', 'endBalance', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_FULLNAME, self::CONTRACT_ID, self::CONTRACT_NAME, self::REGULATION_YEAR, self::START_BALANCE, self::CONTRACT_ACTIVATED_AT, self::CONTRACT_BALANCE, self::REGULATION, self::PAID, self::PAID_FOR_CURRENT_YEAR, self::CAPITALIZED, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR, self::UNPAID, self::END_BALANCE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_fullname', 'contract_id', 'contract_name', 'regulation_year', 'start_balance', 'contract_activated_at', 'contract_balance', 'regulation', 'paid', 'paid_for_current_year', 'capitalized', 'teoretically_to_pay_in_current_year', 'unpaid', 'end_balance', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
@@ -112,10 +112,10 @@ abstract class BaseRegulationPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorFirstname' => 1, 'CreditorLastname' => 2, 'ContractId' => 3, 'ContractName' => 4, 'SettlementYear' => 5, 'StartBalance' => 6, 'ContractActivatedAt' => 7, 'ContractBalance' => 8, 'Requlation' => 9, 'Pid' => 10, 'PaidForCurrentYear' => 11, 'Capitalized' => 12, 'TeoreticallyToPayInCurrentYear' => 13, 'EndBalance' => 14, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorFirstname' => 1, 'creditorLastname' => 2, 'contractId' => 3, 'contractName' => 4, 'settlementYear' => 5, 'startBalance' => 6, 'contractActivatedAt' => 7, 'contractBalance' => 8, 'requlation' => 9, 'pid' => 10, 'paidForCurrentYear' => 11, 'capitalized' => 12, 'teoreticallyToPayInCurrentYear' => 13, 'endBalance' => 14, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_FIRSTNAME => 1, self::CREDITOR_LASTNAME => 2, self::CONTRACT_ID => 3, self::CONTRACT_NAME => 4, self::SETTLEMENT_YEAR => 5, self::START_BALANCE => 6, self::CONTRACT_ACTIVATED_AT => 7, self::CONTRACT_BALANCE => 8, self::REGULATION => 9, self::PAID => 10, self::PAID_FOR_CURRENT_YEAR => 11, self::CAPITALIZED => 12, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR => 13, self::END_BALANCE => 14, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_firstname' => 1, 'creditor_lastname' => 2, 'contract_id' => 3, 'contract_name' => 4, 'settlement_year' => 5, 'start_balance' => 6, 'contract_activated_at' => 7, 'contract_balance' => 8, 'regulation' => 9, 'paid' => 10, 'paid_for_current_year' => 11, 'capitalized' => 12, 'teoretically_to_pay_in_current_year' => 13, 'end_balance' => 14, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorFirstname' => 1, 'ContractId' => 2, 'ContractName' => 3, 'RegulationYear' => 4, 'StartBalance' => 5, 'ContractActivatedAt' => 6, 'ContractBalance' => 7, 'Requlation' => 8, 'Paid' => 9, 'PaidForCurrentYear' => 10, 'Capitalized' => 11, 'TeoreticallyToPayInCurrentYear' => 12, 'Unpaid' => 13, 'EndBalance' => 14, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorFirstname' => 1, 'contractId' => 2, 'contractName' => 3, 'regulationYear' => 4, 'startBalance' => 5, 'contractActivatedAt' => 6, 'contractBalance' => 7, 'requlation' => 8, 'paid' => 9, 'paidForCurrentYear' => 10, 'capitalized' => 11, 'teoreticallyToPayInCurrentYear' => 12, 'unpaid' => 13, 'endBalance' => 14, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_FULLNAME => 1, self::CONTRACT_ID => 2, self::CONTRACT_NAME => 3, self::REGULATION_YEAR => 4, self::START_BALANCE => 5, self::CONTRACT_ACTIVATED_AT => 6, self::CONTRACT_BALANCE => 7, self::REGULATION => 8, self::PAID => 9, self::PAID_FOR_CURRENT_YEAR => 10, self::CAPITALIZED => 11, self::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR => 12, self::UNPAID => 13, self::END_BALANCE => 14, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_fullname' => 1, 'contract_id' => 2, 'contract_name' => 3, 'regulation_year' => 4, 'start_balance' => 5, 'contract_activated_at' => 6, 'contract_balance' => 7, 'regulation' => 8, 'paid' => 9, 'paid_for_current_year' => 10, 'capitalized' => 11, 'teoretically_to_pay_in_current_year' => 12, 'unpaid' => 13, 'end_balance' => 14, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
@@ -187,11 +187,10 @@ abstract class BaseRegulationPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 		$criteria->addSelectColumn(RegulationPeer::ID);
-		$criteria->addSelectColumn(RegulationPeer::CREDITOR_FIRSTNAME);
-		$criteria->addSelectColumn(RegulationPeer::CREDITOR_LASTNAME);
+		$criteria->addSelectColumn(RegulationPeer::CREDITOR_FULLNAME);
 		$criteria->addSelectColumn(RegulationPeer::CONTRACT_ID);
 		$criteria->addSelectColumn(RegulationPeer::CONTRACT_NAME);
-		$criteria->addSelectColumn(RegulationPeer::SETTLEMENT_YEAR);
+		$criteria->addSelectColumn(RegulationPeer::REGULATION_YEAR);
 		$criteria->addSelectColumn(RegulationPeer::START_BALANCE);
 		$criteria->addSelectColumn(RegulationPeer::CONTRACT_ACTIVATED_AT);
 		$criteria->addSelectColumn(RegulationPeer::CONTRACT_BALANCE);
@@ -200,6 +199,7 @@ abstract class BaseRegulationPeer {
 		$criteria->addSelectColumn(RegulationPeer::PAID_FOR_CURRENT_YEAR);
 		$criteria->addSelectColumn(RegulationPeer::CAPITALIZED);
 		$criteria->addSelectColumn(RegulationPeer::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR);
+		$criteria->addSelectColumn(RegulationPeer::UNPAID);
 		$criteria->addSelectColumn(RegulationPeer::END_BALANCE);
 	}
 

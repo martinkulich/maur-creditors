@@ -14,6 +14,8 @@ generator:
     config:
       actions: ~
       fields:
+        regulation_year:
+          label: Year
         contract_id:
           is_link: false
         settlement_year:
@@ -22,7 +24,7 @@ generator:
           date_format: D
       list:
         sort: [contract_id, asc, settlement_year, desc]
-        display: [creditor_firstname, creditor_lastname, contract_name, settlement_year, start_balance, contract_activated_at, contract_balance, regulation, paid, paid_for_current_year, capitalized, teoretically_to_pay_in_current_year, end_balance]
+        display: [creditor_fullname, contract_name, regulation_year, start_balance, contract_activated_at, contract_balance, regulation, paid, paid_for_current_year, capitalized, teoretically_to_pay_in_current_year, unpaid, end_balance]
         actions:
           filters:
             action: filters
@@ -32,6 +34,7 @@ generator:
             label: Reset
         batch_actions: []
         object_actions: []
+        sort: [contract_id, asc, regulation_year, asc]
       filter:  ~
       form:
         actions: []

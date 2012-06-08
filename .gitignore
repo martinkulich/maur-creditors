@@ -1,4 +1,5 @@
-cache/*
-log/*
+/cache/*
+/log/*
+/log/frontend_dev.log
 config/host.config.php
 web/.htaccess

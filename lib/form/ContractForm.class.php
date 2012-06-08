@@ -33,6 +33,7 @@ class ContractForm extends BaseContractForm
         $periodChoices = Contract::getPeriods();
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
         $this->setValidator('period', new sfValidatorChoice(array('choices' => array_keys($periodChoices), 'required' => true)));
+        $this->getWidgetSchema()->setDefault('period', 2);
 
         $this->setWidget('interest_rate', new myWidgetFormInputPercentage());
 
@@ -59,8 +60,15 @@ class ContractForm extends BaseContractForm
 
     public function doSave($con = null)
     {
+        $contract = $this->getObject();
+        $closed = $contract->getClosedAt();
         parent::doSave($con);
-        $this->getObject()->reload();
-        ServiceContainer::getContractService()->updateContractSettlements($this->getObject());
+        $contract->reload();
+        ServiceContainer::getContractService()->checkContractActivation($contract);
+        ServiceContainer::getContractService()->updateContractSettlements($contract);
+        if(!$closed && $contract->getClosedAt())
+        {
+            ServiceContainer::getContractService()->addClosingSettlementForContract($contract);
+        }
     }
 }

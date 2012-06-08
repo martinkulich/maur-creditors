@@ -37,19 +37,19 @@ class RegulationTableMap extends TableMap {
 		$this->setUseIdGenerator(false);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'VARCHAR', true, 255, null);
-		$this->addColumn('CREDITOR_FIRSTNAME', 'CreditorFirstname', 'VARCHAR', false, 255, null);
-		$this->addColumn('CREDITOR_LASTNAME', 'CreditorLastname', 'VARCHAR', false, 255, null);
+		$this->addColumn('CREDITOR_FULLNAME', 'CreditorFirstname', 'VARCHAR', false, 255, null);
 		$this->addColumn('CONTRACT_ID', 'ContractId', 'INTEGER', false, null, null);
 		$this->addColumn('CONTRACT_NAME', 'ContractName', 'VARCHAR', false, 255, null);
-		$this->addColumn('SETTLEMENT_YEAR', 'SettlementYear', 'VARCHAR', false, 255, null);
+		$this->addColumn('REGULATION_YEAR', 'RegulationYear', 'VARCHAR', false, 255, null);
 		$this->addColumn('START_BALANCE', 'StartBalance', 'NUMERIC', false, 15, null);
 		$this->addColumn('CONTRACT_ACTIVATED_AT', 'ContractActivatedAt', 'DATE', false, null, null);
 		$this->addColumn('CONTRACT_BALANCE', 'ContractBalance', 'NUMERIC', false, 15, null);
 		$this->addColumn('REGULATION', 'Requlation', 'NUMERIC', false, 15, null);
-		$this->addColumn('PAID', 'Pid', 'NUMERIC', false, 15, null);
+		$this->addColumn('PAID', 'Paid', 'NUMERIC', false, 15, null);
 		$this->addColumn('PAID_FOR_CURRENT_YEAR', 'PaidForCurrentYear', 'NUMERIC', false, 15, null);
 		$this->addColumn('CAPITALIZED', 'Capitalized', 'NUMERIC', false, 15, null);
 		$this->addColumn('TEORETICALLY_TO_PAY_IN_CURRENT_YEAR', 'TeoreticallyToPayInCurrentYear', 'NUMERIC', false, 15, null);
+		$this->addColumn('UNPAID', 'Unpaid', 'NUMERIC', false, 15, null);
 		$this->addColumn('END_BALANCE', 'EndBalance', 'NUMERIC', false, 15, null);
 		// validators
 	} // initialize()

@@ -34,6 +34,8 @@ class PaymentForm extends BasePaymentForm
     {
         parent::doSave($con);
         $this->getObject()->reload();
-        ServiceContainer::getContractService()->checkContractActivation($this->getObject()->getContract(), $con);
+        $contractService = ServiceContainer::getContractService();
+        $contract = $this->getObject()->getContract();
+        $contractService->checkContractActivation($contract, $con);
     }
 }

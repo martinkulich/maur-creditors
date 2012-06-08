@@ -22,7 +22,7 @@ generator:
           label: Date of payment
       list:
         batch_actions: []
-        display: [name, creditor, amount, payments_amount, interest_rate_as_string, period_as_string, created_at, activated_at]
+        display: [name, creditor, amount, payments_amount, interest_rate_as_string, period_as_string, created_at, activated_at, closed_at]
         object_actions:
           _edit: ~
           copy:

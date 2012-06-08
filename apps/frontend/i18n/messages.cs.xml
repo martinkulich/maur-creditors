@@ -1535,7 +1535,7 @@
     </trans-unit>
     <trans-unit id="384">
       <source>Contract activated at</source>
-      <target>Datum podpisu</target>
+      <target>Datum přijetí částky</target>
     </trans-unit>
     <trans-unit id="385">
       <source>Contract balance</source>
@@ -1608,6 +1608,18 @@
     <trans-unit id="402">
       <source>Cash</source>
       <target>Hotově</target>
+    </trans-unit>
+    <trans-unit id="403">
+      <source>Creditor fullname</source>
+      <target>Věřitel</target>
+    </trans-unit>
+    <trans-unit id="404">
+      <source>Activated</source>
+      <target>Aktivováno</target>
+    </trans-unit>
+    <trans-unit id="405">
+      <source>Closed</source>
+      <target>Ukončeno</target>
     </trans-unit>
   </body>
 </xliff>

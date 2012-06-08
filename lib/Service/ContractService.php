@@ -3,27 +3,32 @@
 class ContractService
 {
 
-    public function checkContractActivation(Contract $contract, $con =null)
+    public function checkContractActivation(Contract $contract, $con = null)
     {
         $paymentsAmount = $contract->getPaymentsAmount();
-        if ($paymentsAmount >= $contract->getAmount() && !$contract->getActivatedAt()) {
+        if ($paymentsAmount >= $contract->getAmount()) {
+            $activatedAt = $contract->getActivatedAt();
             $lastPayment = $contract->getLastPayment();
-            $contract->setActivatedAt($lastPayment->getDate());
-            $translateService = ServiceContainer::getTranslateService();
-            ServiceContainer::getMessageService()->addSuccess($translateService->__('Contract activated'));
-            $contract->save($con);
+            if ($activatedAt != $lastPayment->getDate()) {
+                $contract->setActivatedAt($lastPayment->getDate());
+                $translateService = ServiceContainer::getTranslateService();
+                ServiceContainer::getMessageService()->addSuccess($translateService->__('Contract activated'));
+                $contract->save($con);
+            }
         } elseif ($paymentsAmount < $contract->getAmount() && $contract->getActivatedAt()) {
             $translateService = ServiceContainer::getTranslateService();
             ServiceContainer::getMessageService()->addWarning($translateService->__('Contract deactivated'));
             $contract->setActivatedAt(null);
             $contract->save($con);
         }
+
+        $this->updateContractSettlements($contract);
     }
 
     public function checkSettlements()
     {
         $query = "
-            select id from contract c where closed_at IS NOT NULL AND activated_at IS NOT NULL AND
+            select id from contract c where activated_at IS NOT NULL AND
                 (
                     (
                          (((select max(s.date) from settlement s where s.contract_id = c.id) + (12/c.period || ' month')::interval) <= now()::DATE)
@@ -40,6 +45,7 @@ class ContractService
                 )";
 
         $connection = Propel::getConnection();
+
         $statement = $connection->prepare($query);
         $statement->execute();
         $contractIds = array();
@@ -57,13 +63,11 @@ class ContractService
 
     public function updateContractSettlements(contract $contract)
     {
-        if (!$contract->getClosedAt()) {
-            foreach ($contract->getSettlements() as $settlement) {
-                $settlement->setBalance($this->getBalanceForSettlement($settlement));
-                $settlement->setInterest($this->getInterestForSettlement($settlement));
-                $settlement->save();
-                $settlement->reload();
-            }
+        foreach ($contract->getSettlements() as $settlement) {
+            $settlement->setBalance($this->getBalanceForSettlement($settlement));
+            $settlement->setInterest($this->getInterestForSettlement($settlement));
+            $settlement->save();
+            $settlement->reload();
         }
 
         $this->checkSettlements();
@@ -74,21 +78,34 @@ class ContractService
         $newSettlement = $this->addSettlementForContract($contract);
         $nextSettlementDate = $this->getNextSettlementDateForContract($contract);
         $today = new DateTime();
-        if ($nextSettlementDate < $today) {
+        $closedAt = new DateTime($contract->getClosedAt());
+        if ((!$closedAt || $closedAt && $closedAt >= $nextSettlementDate) && ($nextSettlementDate < $today)) {
             $this->generateSettlementsForContract($contract);
         }
     }
 
-    public function addSettlementForContract(Contract $contract)
+    public function addClosingSettlementForContract(Contract $contract)
+    {
+        $contractClosedAt = $contract->getClosedAt();
+        if (!$contractClosedAt) {
+            throw new Exception('Contract is not closed');
+        }
+
+        $closingSettlementDate = new DateTime($contractClosedAt);
+        $closingSettlementDate->modify('-1 day');
+
+        return $this->addSettlementForContract($contract, $closingSettlementDate);
+    }
+
+    public function addSettlementForContract(Contract $contract, DateTime $date = null)
     {
         $settlement = new Settlement();
         $settlement->setContract($contract);
-        $date = $this->getNextSettlementDateForContract($contract);
-        $today = new DateTime('now');
-        if ($date > $today) {
-            throw new Exception('Settlement date must be less or equal today');
+        if ($date === null) {
+            $date = $this->getNextSettlementDateForContract($contract);
         }
-        $settlement->setDate($this->getNextSettlementDateForContract($contract));
+
+        $settlement->setDate($date);
         $settlement->setBalance($this->getBalanceForSettlement($settlement));
         $settlement->setInterest($this->getInterestForSettlement($settlement));
         $settlement->setBankAccount($contract->getCreditor()->getBankAccount());

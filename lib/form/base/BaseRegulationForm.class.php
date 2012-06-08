@@ -15,11 +15,10 @@ abstract class BaseRegulationForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                                  => new sfWidgetFormInputHidden(),
-      'creditor_firstname'                  => new sfWidgetFormInputText(),
-      'creditor_lastname'                   => new sfWidgetFormInputText(),
+      'creditor_fullname'                   => new sfWidgetFormInputText(),
       'contract_id'                         => new sfWidgetFormInputText(),
       'contract_name'                       => new sfWidgetFormInputText(),
-      'settlement_year'                     => new sfWidgetFormInputText(),
+      'regulation_year'                     => new sfWidgetFormInputText(),
       'start_balance'                       => new sfWidgetFormInputText(),
       'contract_activated_at'               => new sfWidgetFormDate(),
       'contract_balance'                    => new sfWidgetFormInputText(),
@@ -28,16 +27,16 @@ abstract class BaseRegulationForm extends BaseFormPropel
       'paid_for_current_year'               => new sfWidgetFormInputText(),
       'capitalized'                         => new sfWidgetFormInputText(),
       'teoretically_to_pay_in_current_year' => new sfWidgetFormInputText(),
+      'unpaid'                              => new sfWidgetFormInputText(),
       'end_balance'                         => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'                                  => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'creditor_firstname'                  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'creditor_lastname'                   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'creditor_fullname'                   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'contract_id'                         => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'contract_name'                       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'settlement_year'                     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'regulation_year'                     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'start_balance'                       => new sfValidatorNumber(array('required' => false)),
       'contract_activated_at'               => new sfValidatorDate(array('required' => false)),
       'contract_balance'                    => new sfValidatorNumber(array('required' => false)),
@@ -46,6 +45,7 @@ abstract class BaseRegulationForm extends BaseFormPropel
       'paid_for_current_year'               => new sfValidatorNumber(array('required' => false)),
       'capitalized'                         => new sfValidatorNumber(array('required' => false)),
       'teoretically_to_pay_in_current_year' => new sfValidatorNumber(array('required' => false)),
+      'unpaid'                              => new sfValidatorNumber(array('required' => false)),
       'end_balance'                         => new sfValidatorNumber(array('required' => false)),
     ));
 

@@ -19,10 +19,8 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
 
     protected function disableEmptyCheckbox()
     {
-        foreach($this->getWidgetSchema()->getFields() as $field=>$widget)
-        {
-            if($widget->hasOption('with_empty'))
-            {
+        foreach ($this->getWidgetSchema()->getFields() as $field => $widget) {
+            if ($widget->hasOption('with_empty')) {
                 $widget->setOption('with_empty', false);
             }
         }
@@ -30,18 +28,14 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
 
     protected function convertDateFields()
     {
-        foreach($this->getWidgetSchema()->getFields() as $field=>$widget)
-        {
-            if($widget instanceof sfWidgetFormFilterDate)
-            {
+        foreach ($this->getWidgetSchema()->getFields() as $field => $widget) {
+            if ($widget instanceof sfWidgetFormFilterDate) {
                 $this->setWidget($field, new MyJQueryFormFilterDate());
 
                 $validator = $this->getValidator($field);
                 $validatorOptions = $validator->getOptions();
                 $validatorMessages = $validator->getMessages();
                 $this->setValidator($field, new MyValidatorDateRange($validatorOptions, $validatorMessages));
-
-
             }
         }
     }
@@ -52,4 +46,11 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
         unset($this->widgetSchema[$field]);
     }
 
+    public function setYesNoField($fieldName, $required=false)
+    {
+        $yesNoWidget = new myWidgetFormChoiceYesNo();
+        $yesNoChoices = $yesNoWidget->getChoices();
+        $this->setWidget($fieldName, $yesNoWidget);
+        $this->setValidator($fieldName, new sfValidatorChoice(array('choices' => array_keys($yesNoChoices), 'required'=>$required)));
+    }
 }
