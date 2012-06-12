@@ -70,6 +70,11 @@ class Settlement extends BaseSettlement
         $unsettled = round($this->getInterest() - $this->getPaid() - $this->getCapitalized(), 2);
         return $unsettled > 0 ? $unsettled : 0;
     }
+
+    public function getTranslatedSettlementType()
+    {
+        return sfContext::getInstance()->getI18N()->__($this->getSettlementType());
+    }
 }
 
 // Settlement

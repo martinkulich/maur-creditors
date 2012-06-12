@@ -7,6 +7,9 @@ editSuccess:
 copySuccess:
   layout: layoutModal
 
+closeSuccess:
+  layout: layoutModal
+
 filtersSuccess:
   layout: layoutModal
 

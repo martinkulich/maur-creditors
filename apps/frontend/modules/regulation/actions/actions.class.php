@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/regulationGeneratorConfiguration.class.php';
-require_once dirname(__FILE__).'/../lib/regulationGeneratorHelper.class.php';
+require_once dirname(__FILE__) . '/../lib/regulationGeneratorConfiguration.class.php';
+require_once dirname(__FILE__) . '/../lib/regulationGeneratorHelper.class.php';
 
 /**
  * regulation actions.

@@ -30,3 +30,7 @@
 <td class="sf_admin_text sf_admin_list_td_unsettled ">
         <?php echo format_currency($settlement->getUnsettled(), $settlement->getContract()->getCurrencyCode()) ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_settlement_type ">
+        <?php echo $sf_context->getI18n()->__($settlement->getSettlementType()); ?>
+</td>
+

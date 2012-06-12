@@ -15,10 +15,12 @@ generator:
     config:
       actions: ~
       fields:
+        translated_settlement_type:
+          label: Settlement type
         date:
           date_format: D
       list:
-        display: [creditor, contract, date, balance, interest, paid, cash, capitalized, balance_reduction, unsettled]
+        display: [creditor, contract, date, balance, interest, paid, cash, capitalized, balance_reduction, unsettled, translated_settlement_type]
         batch_actions: []
         actions:
           _new: ~

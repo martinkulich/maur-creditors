@@ -46,11 +46,6 @@ class settlementActions extends autoSettlementActions
         return $this->redirect('@settlement');
     }
 
-    public function executeIndex(sfWebRequest $request)
-    {
-        ServiceContainer::getContractService()->checkSettlements();
-        parent::executeIndex($request);
-    }
 
     protected function processForm(sfWebRequest $request, sfForm $form)
     {
@@ -82,7 +77,7 @@ class settlementActions extends autoSettlementActions
         $notice = 'The item was deleted successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);
 
-        ServiceContainer::getContractService()->updateContractSettlements($contract);
+        ServiceContainer::getContractService()->checkContractChanges($contract);
 
         return $this->redirect('@settlement');
     }
@@ -92,7 +87,7 @@ class settlementActions extends autoSettlementActions
         $settlement = $this->getRoute()->getObject();
         $settlement->setCapitalized($settlement->getUnsettled() + $settlement->getCapitalized());
         $settlement->save();
-        ServiceContainer::getContractService()->updateContractSettlements($settlement->getContract());
+        ServiceContainer::getContractService()->checkContractChanges($settlement->getContract());
 
         return $this->redirect('@settlement');
     }
@@ -102,7 +97,7 @@ class settlementActions extends autoSettlementActions
         $settlement = $this->getRoute()->getObject();
         $settlement->setPaid($settlement->getUnsettled() + $settlement->getPaid());
         $settlement->save();
-        ServiceContainer::getContractService()->updateContractSettlements($settlement->getContract());
+        ServiceContainer::getContractService()->checkContractChanges($settlement->getContract());
 
         return $this->redirect('@settlement');
     }

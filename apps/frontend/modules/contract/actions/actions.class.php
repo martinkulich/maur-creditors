@@ -37,4 +37,15 @@ class contractActions extends autoContractActions
 
         $this->setTemplate('copy');
     }
+
+    public function executeClose(sfWebRequest $request)
+    {
+        $this->contract = $this->getRoute()->getObject();
+        $this->form = new ContractCloseForm($this->contract);
+
+        if($request->isMethod('post'))
+        {
+            $this->processForm($request, $this->form);
+        }
+    }
 }

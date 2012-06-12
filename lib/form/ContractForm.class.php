@@ -40,7 +40,10 @@ class ContractForm extends BaseContractForm
         $this->getValidator('interest_rate')->setOption('min', 0);
         $this->getValidator('amount')->setOption('min', 0);
 
-        $fieldsToUnset = array('activated_at');
+        $fieldsToUnset = array(
+            'activated_at',
+            'closed_at',
+            );
 
         if(!$this->getObject()->isNew())
         {
@@ -61,14 +64,8 @@ class ContractForm extends BaseContractForm
     public function doSave($con = null)
     {
         $contract = $this->getObject();
-        $closed = $contract->getClosedAt();
         parent::doSave($con);
         $contract->reload();
-        ServiceContainer::getContractService()->checkContractActivation($contract);
-        ServiceContainer::getContractService()->updateContractSettlements($contract);
-        if(!$closed && $contract->getClosedAt())
-        {
-            ServiceContainer::getContractService()->addClosingSettlementForContract($contract);
-        }
+        ServiceContainer::getContractService()->checkContractChanges($contract);
     }
 }

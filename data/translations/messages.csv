@@ -442,3 +442,13 @@
 'Creditor fullname';'Věřitel'
 'Activated';'Aktivováno'
 'Closed';'Ukončeno'
+'Settlement type';'Typ'
+'in_period';'Řádné'
+'closing';'Při uzavření smlouvy'
+'manual';'Ručně zadané'
+'end_of_first_year';'Konec prvního roku'
+;
+'Copy contract';'Kopírovat smlouvu'
+'Close contract';'Ukončit smlouvu'
+'Terminate';'Ukončit'
+'Closing settlement';'Vypořádání'

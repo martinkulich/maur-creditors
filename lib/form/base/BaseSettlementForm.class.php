@@ -25,6 +25,7 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'note'              => new sfWidgetFormTextarea(),
       'bank_account'      => new sfWidgetFormInputText(),
       'cash'              => new sfWidgetFormInputCheckbox(),
+      'settlement_type'   => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -38,7 +39,8 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'balance_reduction' => new sfValidatorNumber(),
       'note'              => new sfValidatorString(array('required' => false)),
       'bank_account'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'cash'              => new sfValidatorBoolean(array('required' => false)),
+      'cash'              => new sfValidatorBoolean(),
+      'settlement_type'   => new sfValidatorString(array('max_length' => 255)),
     ));
 
     $this->widgetSchema->setNameFormat('settlement[%s]');

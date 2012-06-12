@@ -57,7 +57,7 @@ contract:
     prefix_path:          /contract
     column:               id
     with_wildcard_routes: true
-    object_actions: {copy: get, duplicate: post}
+    object_actions: {copy: get, duplicate: post, close: [get, post]}
     collection_actions: {filters: get, filter: post, reset: get, regulation: get}
 
 group:

@@ -84,9 +84,17 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the cash field.
+	 * Note: this column has a database default value of: false
 	 * @var        boolean
 	 */
 	protected $cash;
+
+	/**
+	 * The value for the settlement_type field.
+	 * Note: this column has a database default value of: 'in_period'
+	 * @var        string
+	 */
+	protected $settlement_type;
 
 	/**
 	 * @var        Contract
@@ -123,6 +131,8 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$this->capitalized = '0';
 		$this->balance = '0';
 		$this->balance_reduction = '0';
+		$this->cash = false;
+		$this->settlement_type = 'in_period';
 	}
 
 	/**
@@ -266,6 +276,16 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	public function getCash()
 	{
 		return $this->cash;
+	}
+
+	/**
+	 * Get the [settlement_type] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSettlementType()
+	{
+		return $this->settlement_type;
 	}
 
 	/**
@@ -513,13 +533,33 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$v = (boolean) $v;
 		}
 
-		if ($this->cash !== $v) {
+		if ($this->cash !== $v || $this->isNew()) {
 			$this->cash = $v;
 			$this->modifiedColumns[] = SettlementPeer::CASH;
 		}
 
 		return $this;
 	} // setCash()
+
+	/**
+	 * Set the value of [settlement_type] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Settlement The current object (for fluent API support)
+	 */
+	public function setSettlementType($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->settlement_type !== $v || $this->isNew()) {
+			$this->settlement_type = $v;
+			$this->modifiedColumns[] = SettlementPeer::SETTLEMENT_TYPE;
+		}
+
+		return $this;
+	} // setSettlementType()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -544,6 +584,14 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			if ($this->balance_reduction !== '0') {
+				return false;
+			}
+
+			if ($this->cash !== false) {
+				return false;
+			}
+
+			if ($this->settlement_type !== 'in_period') {
 				return false;
 			}
 
@@ -580,6 +628,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$this->note = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->bank_account = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->cash = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
+			$this->settlement_type = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -589,7 +638,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Settlement object", $e);
@@ -980,6 +1029,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 10:
 				return $this->getCash();
 				break;
+			case 11:
+				return $this->getSettlementType();
+				break;
 			default:
 				return null;
 				break;
@@ -1012,6 +1064,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$keys[8] => $this->getNote(),
 			$keys[9] => $this->getBankAccount(),
 			$keys[10] => $this->getCash(),
+			$keys[11] => $this->getSettlementType(),
 		);
 		return $result;
 	}
@@ -1076,6 +1129,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 10:
 				$this->setCash($value);
 				break;
+			case 11:
+				$this->setSettlementType($value);
+				break;
 		} // switch()
 	}
 
@@ -1111,6 +1167,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setNote($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setBankAccount($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setCash($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setSettlementType($arr[$keys[11]]);
 	}
 
 	/**
@@ -1133,6 +1190,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SettlementPeer::NOTE)) $criteria->add(SettlementPeer::NOTE, $this->note);
 		if ($this->isColumnModified(SettlementPeer::BANK_ACCOUNT)) $criteria->add(SettlementPeer::BANK_ACCOUNT, $this->bank_account);
 		if ($this->isColumnModified(SettlementPeer::CASH)) $criteria->add(SettlementPeer::CASH, $this->cash);
+		if ($this->isColumnModified(SettlementPeer::SETTLEMENT_TYPE)) $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $this->settlement_type);
 
 		return $criteria;
 	}
@@ -1206,6 +1264,8 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$copyObj->setBankAccount($this->bank_account);
 
 		$copyObj->setCash($this->cash);
+
+		$copyObj->setSettlementType($this->settlement_type);
 
 
 		$copyObj->setNew(true);

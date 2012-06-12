@@ -15,7 +15,6 @@ require 'lib/model/om/BaseContract.php';
  */
 class Contract extends BaseContract
 {
-    protected $lastSettlement = null;
     protected $lastPayment = null;
 
     public function __toString()
@@ -26,8 +25,7 @@ class Contract extends BaseContract
     public function getPaymentsAmount()
     {
         $paymentsAmount = 0;
-        foreach($this->getPayments() as $payment)
-        {
+        foreach ($this->getPayments() as $payment) {
             $paymentsAmount +=$payment->getAmount();
         }
         return $paymentsAmount;
@@ -62,53 +60,31 @@ class Contract extends BaseContract
         return (12 / $this->getPeriod());
     }
 
+    public function getSettlementsInYear($year)
+    {
+        $firstDate = new DateTime($year . '-01-01');
+        $lastDate = new DateTime($year . '-12-31');
+        $criteria = new Criteria;
+        $criteria->add(SettlementPeer::DATE, $firstDate, Criteria::GREATER_EQUAL);
+        $criteria->add(SettlementPeer::DATE, $lastDate, Criteria::LESS_EQUAL);
+
+        return $this->getSettlements($criteria);
+    }
+
     /**
      * @return Settlement
      */
-    public function getLastSettlement()
+    public function getLastSettlement($settlementType = SettlementPeer::IN_PERIOD)
     {
-        if (is_null($this->lastSettlement)) {
             $criteria = new Criteria();
             $criteria->addDescendingOrderByColumn(SettlementPeer::DATE);
+            $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $settlementType);
             $settlements = $this->getSettlements($criteria);
 
-            $this->lastSettlement = reset($settlements);
-        }
-
-        return $this->lastSettlement;
+        return reset($settlements);;
     }
-
-    public function addSettlement(Settlement $settlement)
-    {
-        parent::addSettlement($settlement);
-
-        if ($settlement->getDate()) {
-            $criteria = new Criteria();
-            $criteria->add(SettlementPeer::DATE, $settlement->getDate(), Criteria::GREATER_THAN);
-
-            if ($this->countSettlements($criteria) == 0) {
-                $this->lastSettlement = $settlement;
-            }
-        }
-    }
-
 
     /**
-     * @return Settlement
-     */
-
-    public function getFirstSettlement()
-    {
-        $criteria = new Criteria();
-        $criteria->addAscendingOrderByColumn(SettlementPeer::DATE);
-        $criteria->setLimit(1);
-
-        $settlements = $this->getSettlements($criteria);
-
-        return reset($settlements);
-    }
-
-     /**
      * @return Paymenty
      */
     public function getLastPayment()
@@ -122,6 +98,18 @@ class Contract extends BaseContract
         }
 
         return $this->lastPayment;
+    }
+
+    public function getSettlements($criteria = null, PropelPDO $con = null)
+    {
+        if(is_null($criteria))
+        {
+            $criteria = new Criteria();
+        }
+
+        $criteria->addAscendingOrderByColumn(SettlementPeer::DATE);
+
+        return parent::getSettlements($criteria, $con);
     }
 }
 

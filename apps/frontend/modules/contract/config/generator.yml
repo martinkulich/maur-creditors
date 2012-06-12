@@ -28,6 +28,9 @@ generator:
           copy:
             action: copy
             label: Copy
+          close:
+            action: close
+            label: Terminate
           _delete: ~
       filter:  ~
       form:

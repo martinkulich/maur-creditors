@@ -21,6 +21,7 @@ class SettlementForm extends BaseSettlementForm
         $fieldsToUnset = array(
             'balance',
             'interest',
+            'settlement_type',
         );
 
 
@@ -59,6 +60,7 @@ class SettlementForm extends BaseSettlementForm
 
     public function doSave($con = null)
     {
+        die(var_dump('xxx'));
         $contractService = ServiceContainer::getContractService();
         $settlement = $this->getObject();
         if ($settlement->isNew()) {
@@ -73,6 +75,6 @@ class SettlementForm extends BaseSettlementForm
         }
         parent::doSave($con);
         $settlement->reload();
-        $contractService->updateContractSettlements($settlement->getContract());
+        $contractService->checkContractChanges($settlement->getContract());
     }
 }

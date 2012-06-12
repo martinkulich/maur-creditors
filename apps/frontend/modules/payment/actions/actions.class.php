@@ -24,7 +24,7 @@ class paymentActions extends autoPaymentActions
         $notice = 'The item was deleted successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);
 
-        ServiceContainer::getContractService()->checkContractActivation($contract);
+        ServiceContainer::getContractService()->checkContractChanges($contract);
 
         $this->redirect('@payment');
     }

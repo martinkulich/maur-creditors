@@ -1621,5 +1621,41 @@
       <source>Closed</source>
       <target>Ukončeno</target>
     </trans-unit>
+    <trans-unit id="406">
+      <source>Settlement type</source>
+      <target>Typ</target>
+    </trans-unit>
+    <trans-unit id="407">
+      <source>in_period</source>
+      <target>Řádné</target>
+    </trans-unit>
+    <trans-unit id="408">
+      <source>closing</source>
+      <target>Při uzavření smlouvy</target>
+    </trans-unit>
+    <trans-unit id="409">
+      <source>manual</source>
+      <target>Ručně zadané</target>
+    </trans-unit>
+    <trans-unit id="410">
+      <source>end_of_first_year</source>
+      <target>Konec prvního roku</target>
+    </trans-unit>
+    <trans-unit id="411">
+      <source>Copy contract</source>
+      <target>Kopírovat smlouvu</target>
+    </trans-unit>
+    <trans-unit id="412">
+      <source>Close contract</source>
+      <target>Ukončit smlouvu</target>
+    </trans-unit>
+    <trans-unit id="413">
+      <source>Terminate</source>
+      <target>Ukončit</target>
+    </trans-unit>
+    <trans-unit id="414">
+      <source>Closing settlement</source>
+      <target>Vypořádání</target>
+    </trans-unit>
   </body>
 </xliff>

@@ -23,7 +23,6 @@ generator:
         contract_activated_at:
           date_format: D
       list:
-        sort: [contract_id, asc, settlement_year, desc]
         display: [creditor_fullname, contract_name, regulation_year, start_balance, contract_activated_at, contract_balance, regulation, paid, paid_for_current_year, capitalized, teoretically_to_pay_in_current_year, unpaid, end_balance]
         actions:
           filters:
@@ -34,7 +33,7 @@ generator:
             label: Reset
         batch_actions: []
         object_actions: []
-        sort: [contract_id, asc, regulation_year, asc]
+        sort: [regulation_year, desc]
       filter:  ~
       form:
         actions: []

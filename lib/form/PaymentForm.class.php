@@ -26,6 +26,8 @@ class PaymentForm extends BasePaymentForm
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {
             $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
+
+            $this->unsetField('date');
         }
         $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=payment'), 'payment_creditor_id', 'payment_contract_id', 'creditor_id'));
     }
@@ -36,6 +38,6 @@ class PaymentForm extends BasePaymentForm
         $this->getObject()->reload();
         $contractService = ServiceContainer::getContractService();
         $contract = $this->getObject()->getContract();
-        $contractService->checkContractActivation($contract, $con);
+        $contractService->checkContractChanges($contract);
     }
 }
