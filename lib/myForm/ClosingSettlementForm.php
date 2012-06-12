@@ -11,7 +11,7 @@ class ClosingSettlementForm extends SettlementForm
         );
 
 
-//        $this->setWidget('contract_id', new sfWidgetFormInputHidden());
+        $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
