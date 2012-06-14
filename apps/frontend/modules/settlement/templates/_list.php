@@ -25,7 +25,6 @@
               <th>
               </th>
               <th>
-                      <?php echo format_currency($sums['balance'], $currencyCode) ?>
               </th>
               <th>
                       <?php echo format_currency($sums['interest'], $currencyCode) ?>

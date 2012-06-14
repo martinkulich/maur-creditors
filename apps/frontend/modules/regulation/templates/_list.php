@@ -23,12 +23,10 @@
               <th>
               </th>
               <th>
-                  <?php echo format_currency($sums['start_balance'], $currencyCode) ?>
               </th>
               <th>
               </th>
               <th>
-                  <?php echo format_currency($sums['contract_balance'], $currencyCode) ?>
               </th>
               <th>
                       <?php echo format_currency($sums['regulation'], $currencyCode) ?>
@@ -49,7 +47,6 @@
                   <?php echo format_currency($sums['unpaid'], $currencyCode) ?>
               </th>
               <th>
-                  <?php echo format_currency($sums['end_balance'], $currencyCode) ?>
               </th>
           </tr>
       </tfoot>
