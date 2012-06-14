@@ -40,7 +40,7 @@ class CreditorTableMap extends TableMap {
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('CREDITOR_TYPE_CODE', 'CreditorTypeCode', 'VARCHAR', true, 255, null);
 		$this->addColumn('IDENTIFICATION_NUMBER', 'IdentificationNumber', 'VARCHAR', true, 255, null);
-		$this->addColumn('FIRSTNAME', 'Firstname', 'VARCHAR', true, 255, null);
+		$this->addColumn('FIRSTNAME', 'Firstname', 'VARCHAR', false, 255, null);
 		$this->addColumn('LASTNAME', 'Lastname', 'VARCHAR', true, 255, null);
 		$this->addColumn('EMAIL', 'Email', 'VARCHAR', false, 255, null);
 		$this->addColumn('PHONE', 'Phone', 'VARCHAR', false, 255, null);

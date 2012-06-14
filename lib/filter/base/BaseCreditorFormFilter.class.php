@@ -14,7 +14,7 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'creditor_type_code'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'identification_number' => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'firstname'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'firstname'             => new sfWidgetFormFilterInput(),
       'lastname'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'email'                 => new sfWidgetFormFilterInput(),
       'phone'                 => new sfWidgetFormFilterInput(),

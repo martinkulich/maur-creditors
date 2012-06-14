@@ -32,7 +32,7 @@ abstract class BaseCreditorForm extends BaseFormPropel
       'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'creditor_type_code'    => new sfValidatorString(array('max_length' => 255)),
       'identification_number' => new sfValidatorString(array('max_length' => 255)),
-      'firstname'             => new sfValidatorString(array('max_length' => 255)),
+      'firstname'             => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'lastname'              => new sfValidatorString(array('max_length' => 255)),
       'email'                 => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'phone'                 => new sfValidatorString(array('max_length' => 255, 'required' => false)),

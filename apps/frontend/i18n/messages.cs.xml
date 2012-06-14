@@ -363,7 +363,7 @@
     </trans-unit>
     <trans-unit id="91">
       <source>Surname</source>
-      <target>Příjmení</target>
+      <target>Příjmení/Firma</target>
     </trans-unit>
     <trans-unit id="92">
       <source>Phone</source>
@@ -1315,7 +1315,7 @@
     </trans-unit>
     <trans-unit id="329">
       <source>Lastname</source>
-      <target>Příjmení</target>
+      <target>Příjmení/Firma</target>
     </trans-unit>
     <trans-unit id="330">
       <source>Bank account</source>
@@ -1656,6 +1656,10 @@
     <trans-unit id="414">
       <source>Closing settlement</source>
       <target>Vypořádání</target>
+    </trans-unit>
+    <trans-unit id="415">
+      <source>Settlment Date</source>
+      <target>Datum vyplacení úroků</target>
     </trans-unit>
   </body>
 </xliff>

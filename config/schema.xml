@@ -24,7 +24,7 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="creditor_type_code" phpName="CreditorTypeCode" type="VARCHAR" required="true"/>
     <column name="identification_number" phpName="IdentificationNumber" type="VARCHAR" required="true"/>
-    <column name="firstname" phpName="Firstname" type="VARCHAR" required="true"/>
+    <column name="firstname" phpName="Firstname" type="VARCHAR" required="false"/>
     <column name="lastname" phpName="Lastname" type="VARCHAR" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" required="false"/>
     <column name="phone" phpName="Phone" type="VARCHAR" required="false"/>

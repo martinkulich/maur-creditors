@@ -25,4 +25,7 @@ CREATE OR REPLACE VIEW regulation AS
    LEFT JOIN last_settlement_of_year lsocf ON lsocf.contract_id = c.id AND lsocf.year = sy.year
   GROUP BY s.contract_id, c.id, c.name, c.activated_at, c.amount, cr.firstname, cr.lastname, lsopf.id, lsopf.date, lsopf.year, c.interest_rate, lsopf.balance, lsocf.id, sy.year;
 
+
+ALTER TABLE creditor ALTER COLUMN firstname DROP NOT NULL;
+
 COMMIT;
