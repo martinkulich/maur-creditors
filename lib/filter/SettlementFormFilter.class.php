@@ -57,6 +57,19 @@ class SettlementFormFilter extends BaseSettlementFormFilter
         return $criteria;
     }
 
+    public function addCashColumnCriteria(Criteria $criteria, $field, $value)
+    {
+        if($value == 1)
+        {
+            $criteria->add(SettlementPeer::CASH, true);
+        }
+        elseif($value == 0)
+        {
+            $criteria->add(SettlementPeer::CASH, false);
+        }
+        return $criteria;
+    }
+
     protected function getSettlementTypeChoices()
     {
         $settlementTypes = array(

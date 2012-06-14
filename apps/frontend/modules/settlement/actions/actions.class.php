@@ -14,6 +14,11 @@ require_once dirname(__FILE__) . '/../lib/settlementGeneratorHelper.class.php';
 class settlementActions extends autoSettlementActions
 {
 
+    public function executeIndex(sfWebRequest $request)
+    {
+        parent::executeIndex($request);
+        $this->sums = $this->getSums();
+    }
     public function executeNew(sfWebRequest $request)
     {
         $this->form = $this->configuration->getForm();
@@ -45,7 +50,6 @@ class settlementActions extends autoSettlementActions
 
         return $this->redirect('@settlement');
     }
-
 
     protected function processForm(sfWebRequest $request, sfForm $form)
     {
@@ -100,5 +104,37 @@ class settlementActions extends autoSettlementActions
         ServiceContainer::getContractService()->checkContractChanges($settlement->getContract());
 
         return $this->redirect('@settlement');
+    }
+
+    protected function getPager()
+    {
+        $pager = $this->configuration->getPager('settlement');
+        $criteria = $this->buildCriteria();
+        $pager->setCriteria($criteria);
+        $pager->setPage($this->getPage());
+        $pager->setPeerMethod($this->configuration->getPeerMethod());
+        $pager->setPeerCountMethod($this->configuration->getPeerCountMethod());
+        $pager->init();
+        return $pager;
+    }
+
+    protected function getSums()
+    {
+        $sumPager = $this->getPager();
+        $criteria = $sumPager->getCriteria();
+        $criteria->clearSelectColumns();
+        $criteria->addSelectColumn(sprintf('sum(%s) as interest', SettlementPeer::INTEREST));
+        $criteria->addSelectColumn(sprintf('sum(%s) as balance', SettlementPeer::BALANCE));
+        $criteria->addSelectColumn(sprintf('sum(%s) as balance_reduction', SettlementPeer::BALANCE_REDUCTION));
+        $criteria->addSelectColumn(sprintf('sum(%s) as paid', SettlementPeer::PAID));
+        $criteria->addSelectColumn(sprintf('sum(%s) as capitalized', SettlementPeer::CAPITALIZED));
+        $criteria->addSelectColumn('CASE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0)) < 0 WHEN TRUE THEN 0 ELSE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0))  END  as unsettled');
+        $criteria->clearOrderByColumns();
+        $sumPager->setCriteria($criteria);
+        $sumPager->init();
+
+        $statement = SettlementPeer::doSelectStmt($sumPager->getCriteria());
+        return $statement->fetch(PDO::FETCH_ASSOC);
+        return $sumPager;
     }
 }

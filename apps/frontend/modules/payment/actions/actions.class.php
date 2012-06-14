@@ -14,6 +14,27 @@ require_once dirname(__FILE__) . '/../lib/paymentGeneratorHelper.class.php';
 class paymentActions extends autoPaymentActions
 {
 
+    public function executeIndex(sfWebRequest $request)
+    {
+        parent::executeIndex($request);
+        $this->sums = $this->getSums();
+    }
+
+    protected function getSums()
+    {
+        $sumPager = $this->getPager();
+        $criteria = $sumPager->getCriteria();
+        $criteria->clearSelectColumns();
+        $criteria->addSelectColumn(sprintf('sum(%s) as amount', PaymentPeer::AMOUNT));
+        $criteria->clearOrderByColumns();
+        $sumPager->setCriteria($criteria);
+        $sumPager->init();
+
+        $statement = RegulationPeer::doSelectStmt($sumPager->getCriteria());
+        return $statement->fetch(PDO::FETCH_ASSOC);
+        return $sumPager;
+    }
+
     public function executeDelete(sfWebRequest $request)
     {
         $payment = $this->getRoute()->getObject();
