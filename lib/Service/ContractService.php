@@ -107,12 +107,12 @@ class ContractService
 
     public function generateSettlementsForContract(Contract $contract)
     {
-        $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD);
         $nextSettlementDate = $this->getNextSettlementDateForContract($contract);
         $today = new DateTime();
         $closedAt = new DateTime($contract->getClosedAt());
         if ((!$closedAt || $closedAt && $closedAt >= $nextSettlementDate) && ($nextSettlementDate < $today)) {
-            $this->generateSettlementsForContract($contract, $nextSettlementDate);
+            $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD, $nextSettlementDate);
+            $this->generateSettlementsForContract($contract);
         }
     }
 
@@ -150,7 +150,7 @@ class ContractService
         return $this->addSettlementForContract($contract, SettlementPeer::CLOSING, $closingSettlementDate);
     }
 
-    public function addSettlementForContract(Contract $contract, $settlementType = SettlementPeer::IN_PERIOD, DateTime $date = null)
+    public function addSettlementForContract(Contract $contract, $settlementType = SettlementPeer::IN_PERIOD, DateTime $date = null, $save = true)
     {
         $settlement = new Settlement();
         $settlement->setContract($contract);
@@ -213,7 +213,19 @@ class ContractService
 
         $dateFrom = $this->getPreviousDateForSettlement($settlement);
         $dateTo = new DateTime($settlement->getDate());
-        return $balance * $contract->getInterestRate() / 100 * $dateTo->diff($dateFrom)->days / 365;
+
+        $interest = $balance * $contract->getInterestRate() / 100 * $dateTo->diff($dateFrom)->days / 365;
+        $criteria = new Criteria();
+        $criteria->add(SettlementPeer::DATE, $settlement->getDate());
+        $criteria->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
+        if(SettlementPeer::doCount($criteria))
+        {
+            foreach(SettlementPeer::doSelect($criteria) as $settlement)
+            {
+                $interest -= $settlement->getInterest();
+            }
+        }
+        return $interest;
     }
 
     /**

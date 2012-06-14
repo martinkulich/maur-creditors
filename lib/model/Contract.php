@@ -108,8 +108,37 @@ class Contract extends BaseContract
         }
 
         $criteria->addAscendingOrderByColumn(SettlementPeer::DATE);
+        $criteria->addAscendingOrderByColumn(SettlementPeer::ID);
 
         return parent::getSettlements($criteria, $con);
+    }
+
+    public function getUnsettled(DateTime $dateTo = null)
+    {
+        $unsettled = 0;
+        $criteria = new Criteria();
+
+        if($dateTo)
+        {
+            $criteria->add(SettlementPeer::DATE, $dateTo, Criteria::LESS_EQUAL);
+        }
+        foreach($this->getSettlements($criteria) as $settlement)
+        {
+            $unsettled += $settlement->getUnsettled();
+        }
+
+        return $unsettled;
+    }
+
+    public function getLastSettlementDate($ormat = 'Y-m-d')
+    {
+        $lastSettlementDate = $this->getActivatedAt($ormat);
+        if($lastSettlement = $this->getLastSettlement())
+        {
+            $lastSettlementDate = $lastSettlement->getDate($ormat);
+        }
+
+        return $lastSettlementDate;
     }
 }
 

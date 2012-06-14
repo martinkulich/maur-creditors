@@ -19,5 +19,11 @@ class SettlementPeer extends BaseSettlementPeer {
     const MANUAL = 'manual';
     const CLOSING = 'closing';
     const END_OF_FIRST_YEAR = 'end_of_first_year';
-    
+
+
+    public static function doSelect(Criteria $criteria, PropelPDO $con = null)
+    {
+        $criteria->addAscendingOrderByColumn(self::ID);
+        return parent::doSelect($criteria, $con);
+    }
 } // SettlementPeer

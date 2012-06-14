@@ -81,6 +81,10 @@ user:
     with_wildcard_routes: true
     collection_actions: {filters: get, filter: post, reset: get}
 
+unsettled_amount:
+    url:   /:id/unsettled_amount.json
+    param: { module: contract, action: unsettledAmount, sf_format: json }
+
 update_contract_select:
     url:   /:form_name/update-contract-select
     param: { module: contract, action: updateSelect, sf_format: html }

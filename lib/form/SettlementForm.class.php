@@ -60,7 +60,6 @@ class SettlementForm extends BaseSettlementForm
 
     public function doSave($con = null)
     {
-        die(var_dump('xxx'));
         $contractService = ServiceContainer::getContractService();
         $settlement = $this->getObject();
         if ($settlement->isNew()) {

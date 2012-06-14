@@ -15,6 +15,7 @@ class ContractCloseForm extends ContractForm
             'amount',
             'name',
             'currency_code',
+            'note',
         );
 
         foreach ($fieldsToUnset as $field) {

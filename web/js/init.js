@@ -211,3 +211,19 @@ function updateSelectBox(url, selector, target, paramName)
     //        jQuery('#'+selector).attr('id', selector);
     });
 }
+
+function calculateUnsettledAmount(selector,target, url)
+{
+    var date = $(selector).val();
+
+    $result = $.get(
+        url,
+        {
+            date: date
+        },
+        function(data) {
+        });
+    $result.success(function(data, textStatus, xhr){
+        $(target).val(data.unsettled);
+    });
+}
