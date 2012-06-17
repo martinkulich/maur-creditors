@@ -150,7 +150,7 @@ class ContractService
         return $this->addSettlementForContract($contract, SettlementPeer::CLOSING, $closingSettlementDate);
     }
 
-    public function addSettlementForContract(Contract $contract, $settlementType = SettlementPeer::IN_PERIOD, DateTime $date = null, $save = true)
+    public function addSettlementForContract(Contract $contract, $settlementType = SettlementPeer::IN_PERIOD, DateTime $date = null)
     {
         $settlement = new Settlement();
         $settlement->setContract($contract);
@@ -218,12 +218,10 @@ class ContractService
         $criteria = new Criteria();
         $criteria->add(SettlementPeer::DATE, $settlement->getDate());
         $criteria->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
-        if(SettlementPeer::doCount($criteria))
-        {
-            foreach(SettlementPeer::doSelect($criteria) as $settlement)
-            {
-                $interest -= $settlement->getInterest();
-            }
+        $otherSettlements = $contract->getSettlements($criteria);
+
+        foreach ($otherSettlements as $settlement) {
+            $interest -= $settlement->getInterest();
         }
         return $interest;
     }
