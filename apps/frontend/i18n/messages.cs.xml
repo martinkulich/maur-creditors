@@ -1661,5 +1661,13 @@
       <source>Settlment Date</source>
       <target>Datum vyplacení úroků</target>
     </trans-unit>
+    <trans-unit id="416">
+      <source>Contract interest rate</source>
+      <target>Úroková míra</target>
+    </trans-unit>
+    <trans-unit id="417">
+      <source>Unsettled cumulative</source>
+      <target>Nevypořádáno kumulativně</target>
+    </trans-unit>
   </body>
 </xliff>

@@ -24,6 +24,11 @@ class SettlementForm extends BaseSettlementForm
             'settlement_type',
         );
 
+        if($this->getObject()->getSettlementType() == SettlementPeer::END_OF_FIRST_YEAR)
+        {
+            $fieldsToUnset[] = 'date';
+
+        }
 
         if (!$this->getObject()->isNew()) {
 //            $fieldsToUnset[] = 'date';
@@ -56,6 +61,8 @@ class SettlementForm extends BaseSettlementForm
             $this->getWidgetSchema()->setDefault('bank_account', $contract->getCreditor()->getBankAccount());
         }
         $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=settlement'), 'settlement_creditor_id', 'settlement_contract_id', 'creditor_id'));
+
+
     }
 
     public function doSave($con = null)
@@ -68,6 +75,7 @@ class SettlementForm extends BaseSettlementForm
                 $settlement->setContract($contract);
             }
 
+            $settlement->setSettlementType(SettlementPeer::MANUAL);
             $settlement->setDate($this->getValue('date'));
             $settlement->setBalance($contractService->getBalanceForSettlement($settlement));
             $settlement->setInterest($contractService->getInterestForSettlement($settlement));

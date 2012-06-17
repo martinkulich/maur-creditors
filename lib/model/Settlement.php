@@ -75,6 +75,16 @@ class Settlement extends BaseSettlement
     {
         return sfContext::getInstance()->getI18N()->__($this->getSettlementType());
     }
+
+    public function getContractInterestRate()
+    {
+        return $this->getContract()->getInterestRateAsString();
+    }
+
+    public function getUnsettledCumulative()
+    {
+        return $this->getContract()->getUnsettled(new DateTime($this->getDate()));
+    }
 }
 
 // Settlement

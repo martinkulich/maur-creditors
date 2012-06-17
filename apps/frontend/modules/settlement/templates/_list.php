@@ -27,6 +27,8 @@
               <th>
               </th>
               <th>
+              </th>
+              <th>
                       <?php echo format_currency($sums['interest'], $currencyCode) ?>
               </th>
               <th>
@@ -42,6 +44,8 @@
               </th>
               <th>
                   <?php echo format_currency($sums['unsettled'], $currencyCode) ?>
+              </th>
+              <th>
               </th>
               <th>
               </th>

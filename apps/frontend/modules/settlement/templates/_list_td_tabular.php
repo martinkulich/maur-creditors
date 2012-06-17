@@ -1,9 +1,12 @@
 <?php use_helper('Number') ?>
-<td class="sf_admin_text sf_admin_list_td_creditor ">
+<td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $settlement->getCreditor() ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_contract ">
+<td class="sf_admin_text sf_admin_list_td_contract no-wrap-line">
     <?php echo $settlement->getContract() ?>
+</td>
+<td class="sf_admin_text sf_admin_list_td_contract_interest_rate ">
+  <?php echo $settlement->getContractInterestRate() ?>
 </td>
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_date ">
     <?php echo false !== strtotime($settlement->getDate()) ? format_date($settlement->getDate(), "D") : '&nbsp;' ?>
@@ -29,6 +32,9 @@
 
 <td class="sf_admin_text sf_admin_list_td_unsettled ">
         <?php echo format_currency($settlement->getUnsettled(), $settlement->getContract()->getCurrencyCode()) ?>
+</td>
+<td class="sf_admin_text sf_admin_list_td_unsettled_cumulative ">
+  <?php echo $settlement->getUnsettledCumulative() ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_settlement_type ">
         <?php echo $sf_context->getI18n()->__($settlement->getSettlementType()); ?>
