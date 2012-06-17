@@ -16,9 +16,9 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
         $this->disableEmptyCheckbox();
         $this->convertDateFields();
 
-        $perPageChoices = $this->getPerPageChoices();
-        $this->setWidget('per_page', new sfWidgetFormChoice(array('choices' => $perPageChoices)));
-        $this->setValidator('per_page', new sfValidatorChoice(array('choices' => array_keys($perPageChoices), 'required' => false)));
+//        $perPageChoices = $this->getPerPageChoices();
+//        $this->setWidget('per_page', new sfWidgetFormChoice(array('choices' => $perPageChoices)));
+//        $this->setValidator('per_page', new sfValidatorChoice(array('choices' => array_keys($perPageChoices), 'required' => false)));
     }
 
     protected function addPerPageColumnCriteria(Criteria $criteria, $field, $value)
