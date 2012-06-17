@@ -25,7 +25,7 @@ abstract class BasePaymentPeer {
 	const TM_CLASS = 'PaymentTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,12 @@ abstract class BasePaymentPeer {
 
 	/** the column name for the NOTE field */
 	const NOTE = 'payment.NOTE';
+
+	/** the column name for the CASH field */
+	const CASH = 'payment.CASH';
+
+	/** the column name for the BANK_ACCOUNT field */
+	const BANK_ACCOUNT = 'payment.BANK_ACCOUNT';
 
 	/**
 	 * An identiy map to hold any loaded instances of Payment objects.
@@ -68,11 +74,11 @@ abstract class BasePaymentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ContractId', 'Date', 'Amount', 'Note', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'contractId', 'date', 'amount', 'note', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CONTRACT_ID, self::DATE, self::AMOUNT, self::NOTE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'contract_id', 'date', 'amount', 'note', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ContractId', 'Date', 'Amount', 'Note', 'Cash', 'BankAccount', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'contractId', 'date', 'amount', 'note', 'cash', 'bankAccount', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CONTRACT_ID, self::DATE, self::AMOUNT, self::NOTE, self::CASH, self::BANK_ACCOUNT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'contract_id', 'date', 'amount', 'note', 'cash', 'bank_account', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -82,11 +88,11 @@ abstract class BasePaymentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ContractId' => 1, 'Date' => 2, 'Amount' => 3, 'Note' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'contractId' => 1, 'date' => 2, 'amount' => 3, 'note' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CONTRACT_ID => 1, self::DATE => 2, self::AMOUNT => 3, self::NOTE => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'contract_id' => 1, 'date' => 2, 'amount' => 3, 'note' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ContractId' => 1, 'Date' => 2, 'Amount' => 3, 'Note' => 4, 'Cash' => 5, 'BankAccount' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'contractId' => 1, 'date' => 2, 'amount' => 3, 'note' => 4, 'cash' => 5, 'bankAccount' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CONTRACT_ID => 1, self::DATE => 2, self::AMOUNT => 3, self::NOTE => 4, self::CASH => 5, self::BANK_ACCOUNT => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'contract_id' => 1, 'date' => 2, 'amount' => 3, 'note' => 4, 'cash' => 5, 'bank_account' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -161,6 +167,8 @@ abstract class BasePaymentPeer {
 		$criteria->addSelectColumn(PaymentPeer::DATE);
 		$criteria->addSelectColumn(PaymentPeer::AMOUNT);
 		$criteria->addSelectColumn(PaymentPeer::NOTE);
+		$criteria->addSelectColumn(PaymentPeer::CASH);
+		$criteria->addSelectColumn(PaymentPeer::BANK_ACCOUNT);
 	}
 
 	/**

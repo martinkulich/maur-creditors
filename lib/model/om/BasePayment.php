@@ -50,6 +50,19 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	protected $note;
 
 	/**
+	 * The value for the cash field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $cash;
+
+	/**
+	 * The value for the bank_account field.
+	 * @var        string
+	 */
+	protected $bank_account;
+
+	/**
 	 * @var        Contract
 	 */
 	protected $aContract;
@@ -81,6 +94,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->amount = '0';
+		$this->cash = false;
 	}
 
 	/**
@@ -164,6 +178,26 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	public function getNote()
 	{
 		return $this->note;
+	}
+
+	/**
+	 * Get the [cash] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getCash()
+	{
+		return $this->cash;
+	}
+
+	/**
+	 * Get the [bank_account] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getBankAccount()
+	{
+		return $this->bank_account;
 	}
 
 	/**
@@ -300,6 +334,46 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	} // setNote()
 
 	/**
+	 * Set the value of [cash] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Payment The current object (for fluent API support)
+	 */
+	public function setCash($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->cash !== $v || $this->isNew()) {
+			$this->cash = $v;
+			$this->modifiedColumns[] = PaymentPeer::CASH;
+		}
+
+		return $this;
+	} // setCash()
+
+	/**
+	 * Set the value of [bank_account] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Payment The current object (for fluent API support)
+	 */
+	public function setBankAccount($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->bank_account !== $v) {
+			$this->bank_account = $v;
+			$this->modifiedColumns[] = PaymentPeer::BANK_ACCOUNT;
+		}
+
+		return $this;
+	} // setBankAccount()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -310,6 +384,10 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			if ($this->amount !== '0') {
+				return false;
+			}
+
+			if ($this->cash !== false) {
 				return false;
 			}
 
@@ -340,6 +418,8 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			$this->date = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->amount = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->note = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->cash = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->bank_account = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -349,7 +429,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Payment object", $e);
@@ -722,6 +802,12 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getNote();
 				break;
+			case 5:
+				return $this->getCash();
+				break;
+			case 6:
+				return $this->getBankAccount();
+				break;
 			default:
 				return null;
 				break;
@@ -748,6 +834,8 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			$keys[2] => $this->getDate(),
 			$keys[3] => $this->getAmount(),
 			$keys[4] => $this->getNote(),
+			$keys[5] => $this->getCash(),
+			$keys[6] => $this->getBankAccount(),
 		);
 		return $result;
 	}
@@ -794,6 +882,12 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			case 4:
 				$this->setNote($value);
 				break;
+			case 5:
+				$this->setCash($value);
+				break;
+			case 6:
+				$this->setBankAccount($value);
+				break;
 		} // switch()
 	}
 
@@ -823,6 +917,8 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setDate($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setAmount($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setNote($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCash($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setBankAccount($arr[$keys[6]]);
 	}
 
 	/**
@@ -839,6 +935,8 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PaymentPeer::DATE)) $criteria->add(PaymentPeer::DATE, $this->date);
 		if ($this->isColumnModified(PaymentPeer::AMOUNT)) $criteria->add(PaymentPeer::AMOUNT, $this->amount);
 		if ($this->isColumnModified(PaymentPeer::NOTE)) $criteria->add(PaymentPeer::NOTE, $this->note);
+		if ($this->isColumnModified(PaymentPeer::CASH)) $criteria->add(PaymentPeer::CASH, $this->cash);
+		if ($this->isColumnModified(PaymentPeer::BANK_ACCOUNT)) $criteria->add(PaymentPeer::BANK_ACCOUNT, $this->bank_account);
 
 		return $criteria;
 	}
@@ -900,6 +998,10 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		$copyObj->setAmount($this->amount);
 
 		$copyObj->setNote($this->note);
+
+		$copyObj->setCash($this->cash);
+
+		$copyObj->setBankAccount($this->bank_account);
 
 
 		$copyObj->setNew(true);

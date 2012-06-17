@@ -81,7 +81,7 @@ class Contract extends BaseContract
             $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $settlementType);
             $settlements = $this->getSettlements($criteria);
 
-        return reset($settlements);;
+        return reset($settlements);
     }
 
     /**

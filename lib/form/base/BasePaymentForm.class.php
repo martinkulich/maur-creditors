@@ -14,19 +14,23 @@ abstract class BasePaymentForm extends BaseFormPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'id'          => new sfWidgetFormInputHidden(),
-      'contract_id' => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => false)),
-      'date'        => new sfWidgetFormDate(),
-      'amount'      => new sfWidgetFormInputText(),
-      'note'        => new sfWidgetFormTextarea(),
+      'id'           => new sfWidgetFormInputHidden(),
+      'contract_id'  => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => false)),
+      'date'         => new sfWidgetFormDate(),
+      'amount'       => new sfWidgetFormInputText(),
+      'note'         => new sfWidgetFormTextarea(),
+      'cash'         => new sfWidgetFormInputCheckbox(),
+      'bank_account' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'contract_id' => new sfValidatorPropelChoice(array('model' => 'Contract', 'column' => 'id')),
-      'date'        => new sfValidatorDate(),
-      'amount'      => new sfValidatorNumber(),
-      'note'        => new sfValidatorString(array('required' => false)),
+      'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
+      'contract_id'  => new sfValidatorPropelChoice(array('model' => 'Contract', 'column' => 'id')),
+      'date'         => new sfValidatorDate(),
+      'amount'       => new sfValidatorNumber(),
+      'note'         => new sfValidatorString(array('required' => false)),
+      'cash'         => new sfValidatorBoolean(),
+      'bank_account' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('payment[%s]');

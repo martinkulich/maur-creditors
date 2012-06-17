@@ -26,7 +26,7 @@ class PaymentForm extends BasePaymentForm
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {
             $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
-
+            $this->getWidgetSchema()->setDefault('bank_account', $contract->getCreditor()->getBankAccount());
             if (!$this->getObject()->isNew()) {
                 $this->unsetField('date');
             }
