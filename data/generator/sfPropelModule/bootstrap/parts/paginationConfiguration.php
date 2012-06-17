@@ -5,7 +5,10 @@
   }
 
   public function getPagerMaxPerPage()
-  {
-    return <?php echo isset($this->config['list']['max_per_page']) ? (integer) $this->config['list']['max_per_page'] : 20 ?>;
-<?php unset($this->config['list']['max_per_page']) ?>
-  }
+    {
+        $request = sfContext::getInstance()->getRequest();
+        $filters = sfContext::getInstance()->getUser()->getAttribute('<?php echo $this->getModuleName()?>.filters', array(), 'admin_module');
+        $perPage = isset($filters['per_page']) ? $filters['per_page'] : 20;
+        $perPage = $request->getParameter('per_page',$perPage);
+        return $perPage;
+    }

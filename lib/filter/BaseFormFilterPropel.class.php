@@ -15,6 +15,29 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
         $this->disableCSRFProtection();
         $this->disableEmptyCheckbox();
         $this->convertDateFields();
+
+        $perPageChoices = $this->getPerPageChoices();
+        $this->setWidget('per_page', new sfWidgetFormChoice(array('choices' => $perPageChoices)));
+        $this->setValidator('per_page', new sfValidatorChoice(array('choices' => array_keys($perPageChoices), 'required' => false)));
+    }
+
+    protected function addPerPageColumnCriteria(Criteria $criteria, $field, $value)
+    {
+        return $criteria;
+    }
+
+    protected function getPerPageChoices()
+    {
+        $i18n = sfContext::getInstance()->getI18N();
+        return array(
+            20 => 20,
+            50 => 50,
+            100 => 100,
+            200 => 200,
+            500 => 500,
+            1000 => 1000,
+            'all' => $i18n->__('All'),
+        );
     }
 
     protected function disableEmptyCheckbox()
@@ -51,6 +74,6 @@ abstract class BaseFormFilterPropel extends sfFormFilterPropel
         $yesNoWidget = new myWidgetFormChoiceYesNo();
         $yesNoChoices = $yesNoWidget->getChoices();
         $this->setWidget($fieldName, $yesNoWidget);
-        $this->setValidator($fieldName, new sfValidatorChoice(array('choices' => array_keys($yesNoChoices), 'required'=>$required)));
+        $this->setValidator($fieldName, new sfValidatorChoice(array('choices' => array_keys($yesNoChoices), 'required' => $required)));
     }
 }
