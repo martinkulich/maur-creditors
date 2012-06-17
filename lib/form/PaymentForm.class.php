@@ -27,7 +27,9 @@ class PaymentForm extends BasePaymentForm
         if ($contract) {
             $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
 
-            $this->unsetField('date');
+            if (!$this->getObject()->isNew()) {
+                $this->unsetField('date');
+            }
         }
         $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=payment'), 'payment_creditor_id', 'payment_contract_id', 'creditor_id'));
     }
