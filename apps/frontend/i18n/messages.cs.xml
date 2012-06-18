@@ -1669,5 +1669,9 @@
       <source>Unsettled cumulative</source>
       <target>Nevypořádáno kumulativně</target>
     </trans-unit>
+    <trans-unit id="418">
+      <source>PrintList</source>
+      <target>Tisk</target>
+    </trans-unit>
   </body>
 </xliff>

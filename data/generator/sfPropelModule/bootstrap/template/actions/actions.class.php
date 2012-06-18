@@ -57,4 +57,6 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends <?ph
 <?php include dirname(__FILE__).'/../../parts/paginationAction.php' ?>
 
 <?php include dirname(__FILE__).'/../../parts/sortingAction.php' ?>
+
+<?php include dirname(__FILE__).'/../../parts/printListAction.php' ?>
 }

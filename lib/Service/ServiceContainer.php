@@ -84,5 +84,14 @@ class ServiceContainer
         return self::getService('contract');
     }
 
+    /**
+     *
+     * @return PdfService
+     */
+    public static function getPdfService()
+    {
+        return self::getService('pdf');
+    }
+
 
 }

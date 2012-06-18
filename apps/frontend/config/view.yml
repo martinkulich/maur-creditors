@@ -21,3 +21,8 @@ ratingsSuccess:
 
 resultsSuccess:
   layout: layoutModal
+
+
+
+printListSuccess:
+  layout: layoutPdf

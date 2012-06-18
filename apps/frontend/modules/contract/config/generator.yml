@@ -32,6 +32,13 @@ generator:
             action: close
             label: Terminate
           _delete: ~
+        actions:
+          _new: ~
+          filters: ~
+          reset: ~
+          printList:
+            action: printList
+            Label: Print list
       filter:  ~
       form:
         actions:

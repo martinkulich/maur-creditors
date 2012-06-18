@@ -113,6 +113,11 @@ table.table-admin
     background-color: #f5f5f5;
 }
 
+.table-admin td
+{
+    white-space: nowrap;
+}
+
 .table-reservation th,
 .table-reservation td
 {

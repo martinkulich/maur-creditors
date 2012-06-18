@@ -1,0 +1,81 @@
+
+table, th, td
+{
+    border-style: solid;
+    border-width: 1px;
+    padding: 1px;
+    margin: 5px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+th, td
+{
+    padding: 1px 3px;
+
+}
+
+
+div.page
+{
+    width: 650px;
+    /*    border-style: solid;*/
+    border-width: 1px;
+    border: none;
+    position: relative;
+    float: left;
+}
+
+
+div.pdf_header
+{
+    border-style: none;
+    border-width: 1px;
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+div.header_image
+{
+    width: 320px;
+    position: relative;
+    float: left;
+}
+
+div.header_text
+{
+    width: 270px;
+    height: 80px;
+    float:right;
+    padding: 0;
+    font-size: 0.8em;
+}
+div.header_text div
+{
+    margin: 1px;
+}
+
+hr.header_separator
+{
+    height: 5px;
+    width: 100%;
+    color:darkblue;
+    position:relative;
+    float: left;
+    background: darkblue;
+}
+div.content
+{
+}
+
+.no-print
+{
+    display: none !important;
+    visibility: hidden;
+}
+
+table.table-list-print
+{
+    white-space: nowrap;
+}

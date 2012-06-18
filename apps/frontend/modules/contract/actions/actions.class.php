@@ -14,6 +14,13 @@ require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
 class contractActions extends autoContractActions
 {
 
+    public function executePrintList(sfWebRequest $request)
+    {
+        $this->pager = $this->getPager();
+        $this->sort = $this->getSort();
+        ServiceContainer::getPdfService()->generatePdf('contractList.pdf','contract', 'printList', array('pager'=>$this->pager, 'sort'=>$this->sort, 'helper'=>$this->helper));
+    }
+
     public function executeUpdateSelect(sfWebRequest $request)
     {
         return $this->renderComponent('contract', 'select', array('creditor_id' => $request->getParameter('creditor_id'), 'formName' => $request->getParameter('form_name')));

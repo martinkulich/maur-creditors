@@ -17,6 +17,13 @@ generator:
       list:
         batch_actions: []
         display: [creditor_type, firstname, lastname, email, phone, bank_account, city, street, zip]
+        actions:
+          _new: ~
+          filters: ~
+          reset: ~
+          printList:
+            action: printList
+            Label: Print list
       filter:  ~
       form:
         actions:

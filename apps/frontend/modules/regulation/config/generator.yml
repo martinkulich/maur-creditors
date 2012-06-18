@@ -25,12 +25,12 @@ generator:
       list:
         display: [creditor_fullname, contract_name, regulation_year, start_balance, contract_activated_at, contract_balance, regulation, paid, paid_for_current_year, capitalized, teoretically_to_pay_in_current_year, unpaid, end_balance]
         actions:
-          filters:
-            action: filters
-            label: Filters
-          reset:
-            action: reset
-            label: Reset
+          _new: ~
+          filters: ~
+          reset: ~
+          printList:
+            action: printList
+            Label: Print list
         batch_actions: []
         object_actions: []
         sort: [regulation_year, desc]

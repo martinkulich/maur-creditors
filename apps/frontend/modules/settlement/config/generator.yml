@@ -24,12 +24,11 @@ generator:
         batch_actions: []
         actions:
           _new: ~
-          filters:
-            action: filters
-            label: Filters
-          reset:
-            action: reset
-            label: Reset
+          filters: ~
+          reset: ~
+          printList:
+            action: printList
+            Label: Print list
 
         sort: [date, asc]
         object_actions:
