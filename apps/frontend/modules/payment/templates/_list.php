@@ -15,7 +15,7 @@
           </tr>
         <?php endforeach; ?>
       </tbody>
-      <tfoot>
+      <tfoot class="no-wrap-line">
           <tr class="sf_admin_row">
               <th>
               </th>
