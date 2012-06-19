@@ -46,7 +46,7 @@ all:
 
     i18n:                   true
 
-    standard_helpers: [Partial, Cache, I18N, JavascriptBase, Number, Date]
+    standard_helpers: [Partial, Cache, I18N, JavascriptBase, Number, Date, MyNumber]
 
     default_culture:        cs_CZ
 

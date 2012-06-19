@@ -23,8 +23,8 @@
               </th>
               <th>
               </th>
-              <th>
-                  <?php echo format_currency($sums['amount'], $payment->getContract()->getCurrencyCode()) ?>
+              <th class="text-align-right">
+                  <?php echo my_format_currency($sums['amount'], $payment->getContract()->getCurrencyCode()) ?>
               </th>
               <th>
               </th>

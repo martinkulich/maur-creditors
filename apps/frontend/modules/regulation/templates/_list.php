@@ -14,7 +14,7 @@
           </tr>
         <?php endforeach; ?>
       </tbody>
-      <tfoot>
+      <tfoot class="no-wrap-line">
           <tr class="sf_admin_row">
               <th>
               </th>
@@ -28,23 +28,23 @@
               </th>
               <th>
               </th>
-              <th>
-                      <?php echo format_currency($sums['regulation'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['regulation'], $currencyCode) ?>
               </th>
-              <th>
-                      <?php echo format_currency($sums['paid'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['paid'], $currencyCode) ?>
               </th>
-              <th>
-                      <?php echo format_currency($sums['paid_for_current_year'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['paid_for_current_year'], $currencyCode) ?>
               </th>
-              <th>
-                      <?php echo format_currency($sums['capitalized'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['capitalized'], $currencyCode) ?>
               </th>
-              <th>
-                      <?php echo format_currency($sums['teoreticaly_to_pay_in_current_year'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['teoreticaly_to_pay_in_current_year'], $currencyCode) ?>
               </th>
-              <th>
-                  <?php echo format_currency($sums['unpaid'], $currencyCode) ?>
+              <th class="text-align-right">
+                  <?php echo my_format_currency($sums['unpaid'], $currencyCode) ?>
               </th>
               <th>
               </th>

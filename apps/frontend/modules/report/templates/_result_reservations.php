@@ -44,13 +44,13 @@
                 <?php echo $row['paid'] ? image_tag(sfConfig::get('sf_admin_module_web_dir').'/images/tick.png') : ''?>
             </td>
             <td class="text-align-right">
-                <?php echo format_currency($row['amount'], 'CZK')?>
+                <?php echo my_format_currency($row['amount'], 'CZK')?>
             </td>
             <td class="text-align-right">
-                <?php echo format_currency($row['sale'], 'CZK')?>
+                <?php echo my_format_currency($row['sale'], 'CZK')?>
             </td>
             <td class="text-align-right">
-                <?php echo format_currency($row['total_amount'], 'CZK')?>
+                <?php echo my_format_currency($row['total_amount'], 'CZK')?>
             </td>
         </tr>
         <?php } ?>
@@ -61,13 +61,13 @@
                 <?php echo __('Total')?>
             </th>
             <th class="text-align-right">
-                <?php echo format_currency($data['total']['amount'], 'CZK')?>
+                <?php echo my_format_currency($data['total']['amount'], 'CZK')?>
             </th>
             <th class="text-align-right">
-                <?php echo format_currency($data['total']['sale'], 'CZK')?>
+                <?php echo my_format_currency($data['total']['sale'], 'CZK')?>
             </th>
             <th class="text-align-right">
-                <?php echo format_currency($data['total']['total_amount'], 'CZK')?>
+                <?php echo my_format_currency($data['total']['total_amount'], 'CZK')?>
             </th>
         </tr>
     </tfoot>

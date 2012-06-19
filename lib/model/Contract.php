@@ -52,7 +52,7 @@ class Contract extends BaseContract
 
     public function getInterestRateAsString()
     {
-        return sprintf('%s%%', parent::getInterestRate());
+        return sprintf('%s %%', parent::getInterestRate());
     }
 
     public function getPeriodInMonths()

@@ -1470,8 +1470,8 @@
       <target>Datum podpisu</target>
     </trans-unit>
     <trans-unit id="368">
-      <source>Date of payment</source>
-      <target>Datum přijetí částky</target>
+      <source>Date of activation</source>
+      <target>Datum aktivace</target>
     </trans-unit>
     <trans-unit id="369">
       <source>security_user admin</source>
@@ -1535,7 +1535,7 @@
     </trans-unit>
     <trans-unit id="384">
       <source>Contract activated at</source>
-      <target>Datum přijetí částky</target>
+      <target>Datum aktivace</target>
     </trans-unit>
     <trans-unit id="385">
       <source>Contract balance</source>

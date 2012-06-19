@@ -3,73 +3,6 @@
 class ContractService
 {
 
-//    public function checkSettlements()
-//    {
-//        $this->checkSettlementsInPeriod();
-//        $this->checkSettlementsEndOfFirstYear();
-//    }
-//
-//    public function checkSettlementsInPeriod()
-//    {
-//        $query = "
-//            select id from contract c where activated_at IS NOT NULL AND
-//                (
-//                    (
-//                         (((select max(s.date) from settlement s where s.contract_id = c.id) + (12/c.period || ' month')::interval) <= now()::DATE)
-//                        AND
-//                        ((select count(*) from settlement s where  s.contract_id = c.id) > 0)
-//                    )
-//                    OR
-//                    (
-//                        (c.activated_at + (12/c.period || ' month')::interval <= now()::DATE)
-//                        AND
-//                        ((select count(*) from settlement s where  s.contract_id = c.id) = 0)
-//                    )
-//
-//                )";
-//
-//        $connection = Propel::getConnection();
-//
-//        $statement = $connection->prepare($query);
-//        $statement->execute();
-//        $contractIds = array();
-//        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
-//            $contractIds[] = $row['id'];
-//        }
-//
-//        $criteria = new Criteria();
-//        $criteria->add(ContractPeer::ID, $contractIds, Criteria::IN);
-//        $today = new DateTime('now');
-//        foreach (ContractPeer::doSelect($criteria) as $contract) {
-//            $newSettlement = $this->generateSettlementsForContract($contract);
-//        }
-//    }
-//
-//    public function checkSettlementsEndOfFirstYear()
-//    {
-//        $query = "
-//            select id from contract c where activated_at IS NOT NULL AND
-//                    (
-//                        (
-//                            select count(*) from settlement s where  s.contract_id = c.id AND s.date = (year(c.activated_at) || '-12-31')::date
-//                        ) = 0
-//                    )
-//            ";
-//
-//        $connection = Propel::getConnection();
-//
-//        $statement = $connection->prepare($query);
-//        $statement->execute();
-//        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
-//            $contract = ContractPeer::retrieveByPK($row['id']);
-//            if($contract)
-//            {
-//                $this->addEndOfFirstyearSettlementForContract($contract);
-//            }
-//        }
-//
-//    }
-
     public function checkContractChanges(Contract $contract)
     {
         $this->checkContractActivation($contract);
@@ -85,14 +18,34 @@ class ContractService
         $paymentsAmount = $contract->getPaymentsAmount();
         if ($paymentsAmount >= $contract->getAmount()) {
             $activatedAt = $contract->getActivatedAt();
-            $lastPayment = $contract->getLastPayment();
-            if ($activatedAt != $lastPayment->getDate()) {
-                $contract->setActivatedAt($lastPayment->getDate());
+            $activationDate = $this->getActivationDate($contract);
+            if ($activatedAt != $activationDate) {
+                $contract->setActivatedAt($activationDate);
                 $translateService = ServiceContainer::getTranslateService();
                 ServiceContainer::getMessageService()->addSuccess($translateService->__('Contract activated'));
                 $contract->save();
             }
         }
+    }
+
+    protected function getActivationDate(Contract $contract)
+    {
+        $activationDate = null;
+        $lastPayment = $contract->getLastPayment();
+        if($lastPayment)
+        {
+            $lastPaymentDate = new DateTime($lastPayment->getDate());
+            $contractSignedDate = new DateTime($contract->getCreatedAt());
+            $activationDate = $lastPaymentDate > $contractSignedDate ? $lastPaymentDate : $contractSignedDate;
+            $activationDate->modify('+1 day');
+        }
+
+        if($activationDate === null)
+        {
+            throw new Exception('Contract could not be activated');
+        }
+
+        return $activationDate;
     }
 
     public function updateContractSettlements(contract $contract)
@@ -108,9 +61,15 @@ class ContractService
     public function generateSettlementsForContract(Contract $contract)
     {
         $nextSettlementDate = $this->getNextSettlementDateForContract($contract);
-        $today = new DateTime();
-        $closedAt = new DateTime($contract->getClosedAt());
-        if ((!$closedAt || $closedAt && $closedAt >= $nextSettlementDate) && ($nextSettlementDate < $today)) {
+        $lastDayOfThisYear = new DateTime();
+        $lastDayOfThisYear->setDate($lastDayOfThisYear->format('Y'), '12', '31');
+        $closedAt = null;
+        if($contract->getClosedAt())
+        {
+            $closedAt = new DateTime($contract->getClosedAt());
+        }
+
+        if ((!$closedAt || $closedAt && $closedAt >= $nextSettlementDate) && ($nextSettlementDate < $lastDayOfThisYear)) {
             $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD, $nextSettlementDate);
             $this->generateSettlementsForContract($contract);
         }
@@ -214,7 +173,7 @@ class ContractService
         $dateFrom = $this->getPreviousDateForSettlement($settlement);
         $dateTo = new DateTime($settlement->getDate());
 
-        $interest = $balance * $contract->getInterestRate() / 100 * $dateTo->diff($dateFrom)->days / 365;
+        $interest = $balance * $contract->getInterestRate() / 100 * $this->getDaysDiff($dateFrom, $dateTo) / 360;
         $criteria = new Criteria();
         $criteria->add(SettlementPeer::DATE, $settlement->getDate());
         $criteria->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
@@ -226,6 +185,18 @@ class ContractService
         return $interest;
     }
 
+    public function getDaysDiff(DateTime $dateFrom, DateTime $dateTo)
+    {
+        $yearDiff = $dateTo->format('Y') - $dateFrom->format('Y');
+        $monthDiff = $dateTo->format('m') - $dateFrom->format('m');
+        $dayFrom = $dateFrom->format('d');
+        $dayFrom  = $dayFrom == 31 ? 30 : $dayFrom;
+        $dayTo = $dateTo->format('d');
+        $dayTo  = $dayTo == 31 ? 30 : $dayTo;
+        $dayDiff = $dayTo - $dayFrom;
+
+        return $yearDiff*360+$monthDiff*30+$dayDiff;
+    }
     /**
      * @param Settlement $settlement
      * @return DateTime
@@ -242,9 +213,4 @@ class ContractService
         return new DateTime($previousDate);
     }
 
-    protected function getDaysCount(DateTime $dateFrom, DateTime $dateTo)
-    {
-        $diff = $dateTo->diff($dateFrom);
-        return $diff->days;
-    }
 }

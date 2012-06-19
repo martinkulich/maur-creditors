@@ -16,7 +16,7 @@
           </tr>
         <?php endforeach; ?>
       </tbody>
-      <tfoot>
+      <tfoot class="no-wrap-line">
           <tr class="sf_admin_row">
               <th>
               </th>
@@ -28,22 +28,22 @@
               </th>
               <th>
               </th>
-              <th>
-                      <?php echo format_currency($sums['interest'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['interest'], $currencyCode) ?>
+              </th>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['paid'], $currencyCode) ?>
               </th>
               <th>
-                      <?php echo format_currency($sums['paid'], $currencyCode) ?>
               </th>
-              <th>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['capitalized'], $currencyCode) ?>
               </th>
-              <th>
-                      <?php echo format_currency($sums['capitalized'], $currencyCode) ?>
+              <th class="text-align-right">
+                      <?php echo my_format_currency($sums['balance_reduction'], $currencyCode) ?>
               </th>
-              <th>
-                      <?php echo format_currency($sums['balance_reduction'], $currencyCode) ?>
-              </th>
-              <th>
-                  <?php echo format_currency($sums['unsettled'], $currencyCode) ?>
+              <th class="text-align-right">
+                  <?php echo my_format_currency($sums['unsettled'], $currencyCode) ?>
               </th>
               <th>
               </th>

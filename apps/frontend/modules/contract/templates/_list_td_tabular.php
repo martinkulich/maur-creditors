@@ -4,26 +4,26 @@
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $contract->getCreditor() ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_amount ">
-    <?php echo format_currency($contract->getAmount(), 'CZK') ?>
+<td class="sf_admin_text sf_admin_list_td_amount text-align-right">
+    <?php echo my_format_currency($contract->getAmount(), 'CZK') ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_payments_amount ">
-    <?php echo link_to(format_currency($contract->getPaymentsAmount(), 'CZK'), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
+<td class="sf_admin_text sf_admin_list_td_payments_amount text-align-right">
+    <?php echo link_to(my_format_currency($contract->getPaymentsAmount(), 'CZK'), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
 </td>
 
-<td class="sf_admin_text sf_admin_list_td_interest_rate_as_string ">
+<td class="sf_admin_text sf_admin_list_td_interest_rate_as_string text-align-right">
     <?php echo $contract->getInterestRateAsString() ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_period_as_string ">
     <?php echo $contract->getPeriodAsString() ?>
 </td>
-<td class="sf_admin_date no-wrap-line sf_admin_list_td_created_at ">
+<td class="sf_admin_date no-wrap-line sf_admin_list_td_created_at text-align-right">
     <?php echo false !== strtotime($contract->getCreatedAt()) ? format_date($contract->getCreatedAt(), "D") : '&nbsp;' ?>
 </td>
-<td class="sf_admin_date no-wrap-line sf_admin_list_td_activated_at ">
+<td class="sf_admin_date no-wrap-line sf_admin_list_td_activated_at text-align-right">
     <?php echo false !== strtotime($contract->getActivatedAt()) ? format_date($contract->getActivatedAt(), "D") : '&nbsp;' ?>
 </td>
-<td class="sf_admin_date no-wrap-line sf_admin_list_td_closed_at ">
+<td class="sf_admin_date no-wrap-line sf_admin_list_td_closed_at text-align-right">
     <?php echo false !== strtotime($contract->getClosedAt()) ? format_date($contract->getClosedAt(), "D") : '&nbsp;' ?>
 </td>
 
