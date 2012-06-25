@@ -18,3 +18,5 @@ all:
       7:  sun
   reservation:
     time_unit_min_count:  2
+
+  ssl: false
