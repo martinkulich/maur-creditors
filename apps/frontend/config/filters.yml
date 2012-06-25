@@ -7,5 +7,7 @@ security:  ~
 # insert your own filters here
 sslFilter:
   class: SslFilter
+ipAddressFilter:
+  class: IpAddressFilter
 cache:     ~
 execution: ~

@@ -456,3 +456,11 @@
 'Contract interest rate';'Úroková míra'
 'Unsettled cumulative';'Nevypořádáno kumulativně'
 'PrintList';'Tisk'
+;
+'New ipAddress';'Nová IP adresa'
+'Edit ipAddress';'Editace IP adresy'
+'filter ipAddress';'Filtrovat IP adresy'
+'Ip address';'IP adresa'
+'Invalid IP address';'Neplatná IP adresa'
+'ip_address admin';'IP adresy'
+'of ip_address';'IP adresy'

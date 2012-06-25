@@ -21,6 +21,7 @@ class defaultComponents extends sfComponents
 
         switch ($moduleName) {
             case 'securityUser':
+            case 'ipAddress':
                 $activeLink = sfInflector::underscore($moduleName);
                 break;
             case 'security':
@@ -43,6 +44,7 @@ class defaultComponents extends sfComponents
             'settlement',
             'security_user',
             'regulation',
+            'ip_address'
         );
         $pattern = '%s.admin';
         $user = $this->getUser();

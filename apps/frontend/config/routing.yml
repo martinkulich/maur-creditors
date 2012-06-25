@@ -1,3 +1,13 @@
+ip_address:
+  class: sfPropelRouteCollection
+  options:
+    model:                ipAddress
+    module:               ipAddress
+    prefix_path:          /ipAddress
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
 regulation:
   class: sfPropelRouteCollection
   options:

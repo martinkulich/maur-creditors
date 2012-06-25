@@ -1,0 +1,29 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           ipAddress
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ipAddress
+    plural:                ipAddresss
+    route_prefix:          ip_address
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        display: [ip_address]
+        batch_actions: []
+        actions:
+          _new: ~
+        object_actions:
+          _delete: ~
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

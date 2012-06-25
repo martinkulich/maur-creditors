@@ -37,6 +37,13 @@
   <table name="currency" phpName="Currency">
     <column name="code" phpName="Code" type="CHAR" size="3" primaryKey="true" required="true"/>
   </table>
+  <table name="ip_address" phpName="IpAddress">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="ip_address" phpName="IpAddress" type="VARCHAR" required="true"/>
+    <unique name="ip_address_ip_address_uidx">
+      <unique-column name="ip_address"/>
+    </unique>
+  </table>
   <table name="payment" phpName="Payment">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="contract_id" phpName="ContractId" type="INTEGER" required="true"/>

@@ -1673,5 +1673,33 @@
       <source>PrintList</source>
       <target>Tisk</target>
     </trans-unit>
+    <trans-unit id="419">
+      <source>New ipAddress</source>
+      <target>Nová IP adresa</target>
+    </trans-unit>
+    <trans-unit id="420">
+      <source>Edit ipAddress</source>
+      <target>Editace IP adresy</target>
+    </trans-unit>
+    <trans-unit id="421">
+      <source>filter ipAddress</source>
+      <target>Filtrovat IP adresy</target>
+    </trans-unit>
+    <trans-unit id="422">
+      <source>Ip address</source>
+      <target>IP adresa</target>
+    </trans-unit>
+    <trans-unit id="423">
+      <source>Invalid IP address</source>
+      <target>Neplatná IP adresa</target>
+    </trans-unit>
+    <trans-unit id="424">
+      <source>ip_address admin</source>
+      <target>IP adresy</target>
+    </trans-unit>
+    <trans-unit id="425">
+      <source>of ip_address</source>
+      <target>IP adresy</target>
+    </trans-unit>
   </body>
 </xliff>

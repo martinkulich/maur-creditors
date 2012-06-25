@@ -11,3 +11,6 @@ define('DB_NAME', 'rezervuj');
 define('DB_USER', 'developer');
 define('DB_PASS', 'developer');
 define('DB_PORT', '5432');
+
+
+define('SSL_PROTECTION', false);

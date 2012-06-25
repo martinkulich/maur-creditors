@@ -19,4 +19,4 @@ all:
   reservation:
     time_unit_min_count:  2
 
-  ssl: false
+  ssl: <?php echo ((defined('SSL_PROTECTION') && SSL_PROTECTION)  ? 'true' : 'false') ?>
