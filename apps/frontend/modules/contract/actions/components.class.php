@@ -9,7 +9,7 @@ class contractComponents extends sfComponents
     {
         $criteria = new Criteria();
         $criteria->add(ContractPeer::CREDITOR_ID, $request->getParameter('creditor_id'));
-        $criteria->add(ContractPeer::ACTIVATED_AT, null, Criteria::ISNOTNULL);
+//        $criteria->add(ContractPeer::ACTIVATED_AT, null, Criteria::ISNOTNULL);
         $this->contractId = $request->getParameter('default', 0);
         $this->widget = new sfWidgetFormPropelChoice(array('model' => 'Contract', 'criteria' => $criteria, 'add_empty'=>true));
     }
