@@ -1701,5 +1701,17 @@
       <source>of ip_address</source>
       <target>IP adresy</target>
     </trans-unit>
+    <trans-unit id="426">
+      <source>Days count</source>
+      <target>Počet dní</target>
+    </trans-unit>
+    <trans-unit id="427">
+      <source>To pay</source>
+      <target>Vyplatit</target>
+    </trans-unit>
+    <trans-unit id="428">
+      <source>Contract activation changed from: %from% to: %to%</source>
+      <target>Datum aktivace smlouvy změněno z: %from% na: %to%</target>
+    </trans-unit>
   </body>
 </xliff>

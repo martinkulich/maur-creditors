@@ -6,22 +6,25 @@ class IpAddressFilter extends sfFilter
     public function execute($filterChain)
     {
         $context = $this->getContext();
-        if ($context->getUser()->isAuthenticated()) {
-            $moduleName = $context->getModuleName();
 
-            $route = $context->getRouting()->getCurrentRouteName();
+        if (!defined('DEBUG_MODE') || (defined('DEBUG_MODE') && DEBUG_MODE == false)) {
+            if ($context->getUser()->isAuthenticated()) {
+                $moduleName = $context->getModuleName();
 
-            $uncheckedRoutes = array('login', 'logout', 'ip_address');
+                $route = $context->getRouting()->getCurrentRouteName();
 
-            if ($moduleName != 'ipAddress' && !in_array($route, $uncheckedRoutes)) {
-                $ipAddressValue = $_SERVER['REMOTE_ADDR'];
-                $criteria = new Criteria();
-                $criteria->add(IpAddressPeer::IP_ADDRESS, $ipAddressValue);
-                $ipAddressExists = IpAddressPeer::doCount($criteria) == 1;
-                if (!$ipAddressExists) {
-                    $error = ServiceContainer::getTranslateService()->__('Invalid IP address');
-                    ServiceContainer::getMessageService()->addError($error . ' ' . $ipAddressValue);
-                    return self::doRedirect($context);
+                $uncheckedRoutes = array('login', 'logout', 'ip_address');
+
+                if ($moduleName != 'ipAddress' && !in_array($route, $uncheckedRoutes)) {
+                    $ipAddressValue = $_SERVER['REMOTE_ADDR'];
+                    $criteria = new Criteria();
+                    $criteria->add(IpAddressPeer::IP_ADDRESS, $ipAddressValue);
+                    $ipAddressExists = IpAddressPeer::doCount($criteria) == 1;
+                    if (!$ipAddressExists) {
+                        $error = ServiceContainer::getTranslateService()->__('Invalid IP address');
+                        ServiceContainer::getMessageService()->addError($error . ' ' . $ipAddressValue);
+                        return self::doRedirect($context);
+                    }
                 }
             }
         }

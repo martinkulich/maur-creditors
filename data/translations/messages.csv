@@ -464,3 +464,6 @@
 'Invalid IP address';'Neplatná IP adresa'
 'ip_address admin';'IP adresy'
 'of ip_address';'IP adresy'
+'Days count';'Počet dní'
+'To pay';'Vyplatit'
+'Contract activation changed from: %from% to: %to%';'Datum aktivace smlouvy změněno z: %from% na: %to%'

@@ -23,6 +23,7 @@ class settlementActions extends autoSettlementActions
     {
         $this->form = $this->configuration->getForm();
         $this->settlement = $this->form->getObject();
+        $this->settlement->setSettlementType(SettlementPeer::MANUAL);
         $filters = $this->getFilters();
 
         if (array_key_exists('contract_id', $filters)) {

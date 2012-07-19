@@ -124,7 +124,7 @@ class Contract extends BaseContract
         }
         foreach($this->getSettlements($criteria) as $settlement)
         {
-            $unsettled += $settlement->getUnsettled();
+            $unsettled += $settlement->getUnsettled(false);
         }
 
         return $unsettled;

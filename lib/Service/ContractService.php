@@ -17,12 +17,19 @@ class ContractService
     {
         $paymentsAmount = $contract->getPaymentsAmount();
         if ($paymentsAmount >= $contract->getAmount()) {
-            $activatedAt = $contract->getActivatedAt();
+            $activatedAt = $contract->getActivatedAt() ? new DateTime($contract->getActivatedAt()) : null;
             $activationDate = $this->getActivationDate($contract);
             if ($activatedAt != $activationDate) {
                 $contract->setActivatedAt($activationDate);
                 $translateService = ServiceContainer::getTranslateService();
-                ServiceContainer::getMessageService()->addSuccess($translateService->__('Contract activated'));
+
+                if (!$activatedAt) {
+                    $success = $translateService->__('Contract activated');
+                } else {
+                    $format = 'd.m.Y';
+                    $success = $translateService->__('Contract activation changed from: %from% to: %to%', array('%from%'=>$activatedAt->format($format), '%to%'=>$activationDate->format($format)));
+                }
+                    ServiceContainer::getMessageService()->addSuccess($success);
                 $contract->save();
             }
         }
@@ -32,16 +39,14 @@ class ContractService
     {
         $activationDate = null;
         $lastPayment = $contract->getLastPayment();
-        if($lastPayment)
-        {
+        if ($lastPayment) {
             $lastPaymentDate = new DateTime($lastPayment->getDate());
             $contractSignedDate = new DateTime($contract->getCreatedAt());
             $activationDate = $lastPaymentDate > $contractSignedDate ? $lastPaymentDate : $contractSignedDate;
             $activationDate->modify('+1 day');
         }
 
-        if($activationDate === null)
-        {
+        if ($activationDate === null) {
             throw new Exception('Contract could not be activated');
         }
 
@@ -51,10 +56,12 @@ class ContractService
     public function updateContractSettlements(contract $contract)
     {
         foreach ($contract->getSettlements() as $settlement) {
-            $settlement->setBalance($this->getBalanceForSettlement($settlement));
-            $settlement->setInterest($this->getInterestForSettlement($settlement));
-            $settlement->save();
-            $settlement->reload();
+            if ($settlement->getSettlementType() != SettlementPeer::MANUAL) {
+                $settlement->setBalance($this->getBalanceForSettlement($settlement));
+                $settlement->setInterest($this->getInterestForSettlement($settlement));
+                $settlement->save();
+                $settlement->reload();
+            }
         }
     }
 
@@ -64,12 +71,11 @@ class ContractService
         $lastDayOfThisYear = new DateTime();
         $lastDayOfThisYear->setDate($lastDayOfThisYear->format('Y'), '12', '31');
         $closedAt = null;
-        if($contract->getClosedAt())
-        {
+        if ($contract->getClosedAt()) {
             $closedAt = new DateTime($contract->getClosedAt());
         }
 
-        if ((!$closedAt || $closedAt && $closedAt >= $nextSettlementDate) && ($nextSettlementDate < $lastDayOfThisYear)) {
+        if ((!$closedAt || $closedAt && $closedAt > $nextSettlementDate) && ($nextSettlementDate < $lastDayOfThisYear)) {
             $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD, $nextSettlementDate);
             $this->generateSettlementsForContract($contract);
         }
@@ -190,13 +196,19 @@ class ContractService
         $yearDiff = $dateTo->format('Y') - $dateFrom->format('Y');
         $monthDiff = $dateTo->format('m') - $dateFrom->format('m');
         $dayFrom = $dateFrom->format('d');
-        $dayFrom  = $dayFrom == 31 ? 30 : $dayFrom;
+        $dayFrom = $dayFrom == 31 ? 30 : $dayFrom;
         $dayTo = $dateTo->format('d');
-        $dayTo  = $dayTo == 31 ? 30 : $dayTo;
+        $dayTo = $dayTo == 31 ? 30 : $dayTo;
         $dayDiff = $dayTo - $dayFrom;
 
-        return $yearDiff*360+$monthDiff*30+$dayDiff;
+        return $yearDiff * 360 + $monthDiff * 30 + $dayDiff;
     }
+
+    public function getDaysCount(Settlement $settlement)
+    {
+        return $this->getDaysDiff($this->getPreviousDateForSettlement($settlement), new DateTime($settlement->getDate()));
+    }
+
     /**
      * @param Settlement $settlement
      * @return DateTime
@@ -212,5 +224,4 @@ class ContractService
 
         return new DateTime($previousDate);
     }
-
 }

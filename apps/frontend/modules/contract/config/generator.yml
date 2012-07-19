@@ -43,5 +43,10 @@ generator:
       form:
         actions:
           _save: ~
-      edit:    ~
+      edit:
+        actions:
+          _save: ~
+#          _save_and_pay_other_contract:
+#            Label: Save and pay other contract
+#            action: SaveAndPayOtherContract
       new:     ~

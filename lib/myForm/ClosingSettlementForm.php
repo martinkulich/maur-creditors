@@ -10,6 +10,7 @@ class ClosingSettlementForm extends SettlementForm
             'creditor_id',
         );
 
+        $this->getWidget('paid')->setLabel('To pay');
 
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
@@ -17,7 +18,6 @@ class ClosingSettlementForm extends SettlementForm
 
         $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         $contract = $this->getObject()->getContract();
-        var_dump($contract->getId());
         $this->setDefault('contract_id', $contract->getId());
         $unsettled = $contract->getUnsettled();
         $lastDate = $contract->getLastSettlementDate();

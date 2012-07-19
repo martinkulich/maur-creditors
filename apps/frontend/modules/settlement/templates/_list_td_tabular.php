@@ -12,6 +12,9 @@
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_date text-align-right">
     <?php echo false !== strtotime($settlement->getDate()) ? format_date($settlement->getDate(), "D") : '&nbsp;' ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_days_count text-align-right">
+    <?php echo ServiceContainer::getContractService()->getDaysCount($settlement) ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_balance text-align-right">
     <?php echo my_format_currency($settlement->getBalance(), $currencyCode) ?>
 </td>

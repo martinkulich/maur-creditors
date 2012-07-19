@@ -60,6 +60,7 @@ class contractActions extends autoContractActions
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $notice = $form->getObject()->isNew() ? 'The item was created successfully' : 'The item was updated successfully';
+            ServiceContainer::getMessageService()->addSuccess($notice);
 
             $contract = $form->save();
 
@@ -67,22 +68,15 @@ class contractActions extends autoContractActions
 
             $redirect = array('sf_route' => 'contract_edit', 'sf_subject' => $contract);
 
-            if ($request->hasParameter('_save_and_add')) {
-                $notice .=' You can add another one below.';
-                $redirect = '@contract_new';
+            if ($request->hasParameter('save_and_pay_other_contract')) {
+               // to do
             }
 
-            ServiceContainer::getMessageService()->addSuccess($notice);
 
             return $this->redirect($redirect, 205);
         } else {
-            ServiceContainer::getMessageService()->addFromErrors($form, true);
+            ServiceContainer::getMessageService()->addFromErrors($form);
             ServiceContainer::getMessageService()->addFromErrors($form->getEmbeddedForm('closing_settlement'), true);
-            foreach($form->getErrorSchema()->getErrors() as $key=>$error)
-            {
-                var_dump($key, $error->getMessage());
-            }
-
         }
     }
 

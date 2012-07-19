@@ -10,7 +10,7 @@
           <?php if($key != 'closing_settlement'){ ?>
             <?php include_partial('contract/form_field_horizontal', array( 'form' => $form, 'key' => $key)) ?>
           <?php }else{ ?>
-              <?php include_partial('contract/closing_settlement', array( 'form' => $form)) ?> ?>
+              <?php include_partial('contract/closing_settlement', array( 'form' => $form)) ?>
           <?php } ?>
         <?php } ?>
     <?php endforeach; ?>

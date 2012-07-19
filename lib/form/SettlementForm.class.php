@@ -14,15 +14,25 @@ class SettlementForm extends BaseSettlementForm
     {
         sfProjectConfiguration::getActive()->loadHelpers('Url');
 
+        $this->getWidgetSchema()->moveField('balance', sfWidgetFormSchema::AFTER, 'date');
+        $this->getWidgetSchema()->moveField('interest', sfWidgetFormSchema::AFTER, 'balance');
+        $this->getWidgetSchema()->moveField('note', sfWidgetFormSchema::LAST);
+
+        $this->getWidget('note')->setAttribute('rows', 2);
 
         $this->setWidget('date', new myJQueryDateWidget());
         $this->setValidator('date', new myValidatorDate());
 
         $fieldsToUnset = array(
-            'balance',
-            'interest',
             'settlement_type',
         );
+
+        if($this->getObject()->getSettlementType() != SettlementPeer::MANUAL)
+        {
+            $fieldsToUnset[] = 'interest';
+            $fieldsToUnset[] = 'balance';
+
+        }
 
         if($this->getObject()->getSettlementType() == SettlementPeer::END_OF_FIRST_YEAR)
         {
@@ -50,7 +60,14 @@ class SettlementForm extends BaseSettlementForm
             }
         }
 
-        $this->getWidget('contract_id')->setOption('add_empty', true);
+        $contractCriteria = new Criteria();
+        $contractCriteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID);
+        $contractCriteria->add(ContractPeer::ACTIVATED_AT, null, Criteria::ISNOTNULL);
+
+        $contractWidget = $this->getWidget('contract_id');
+        $contractWidget->setOption('add_empty', true);
+        $contractWidget->setOption('criteria', $contractCriteria);
+        $this->getValidator('contract_id')->setOption('criteria', $contractCriteria);
 
         $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
         $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Creditor', 'required' => true)));

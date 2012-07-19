@@ -20,6 +20,7 @@ class Settlement extends BaseSettlement
     {
         return $this->getContract()->getCreditor();
     }
+
     /**
      * Initializes internal state of Settlement object.
      * @see        parent::__construct()
@@ -65,10 +66,10 @@ class Settlement extends BaseSettlement
         return $nextSettlements;
     }
 
-    public function getUnsettled()
+    public function getUnsettled($onlyPositive = true)
     {
         $unsettled = round($this->getInterest() - $this->getPaid() - $this->getCapitalized(), 2);
-        return $unsettled > 0 ? $unsettled : 0;
+        return $unsettled > 0 ? $unsettled : ($onlyPositive ? 0 : $unsettled);
     }
 
     public function getTranslatedSettlementType()
