@@ -1,0 +1,126 @@
+teoreticky dovyplatit do konce roku
+
+
+predpis
+filter
+	rok
+	veritel
+	
+radek = 1 smlouva
+sloupce
+	jistina k 1.1. (muze byt nula pokud jde o prvni rok)
+
+	jistina (k datu pripsani pokud je prvni rok jinak prazdne)
+	datum připsání jistiny (pokud nejde o prvni rok bude prazdne)
+
+	predpis
+		jistina urokova mira * pocet dni trvani smlouvy (pokud neni prvni rok tak je to 365) /365
+	uroky vyplacene (celkova castka proklik do seznamu vyporadani)
+	uroky vyplacene za prislusny rok
+		 = uroky vyplacene - nevyplacene z predchoziho roku (datum posledni platby/kapitalizace az konec roku v nemz byla tato platba/kapitalizace)
+		 
+	kapitalizovano v danem roce
+	teoreticky dovyplatit v tomto roce
+		posledni vyporadani az konec roku 
+		
+	jistina k 31.12 (kontrola na jistina k 1.1 nasledujiciho roku
+		
+kontrola
+	predpis = vyplaceno + kapitalizovano +  teoreticky dovyplatit - nevyplaceno z predchoziho rok
+
+\------------------------
+//smlouvu aktivovat po zaplaceni- activated at nebude editovatelne
+
+//vytvoreni platby dvoustupnovy vyber smlouvy - dle veritele. stejne tak i u vyporadani
+//filter platby/vyplaty pridat veritele
+
+//vyplaty uroku editovatelne datum
+
+//pole poznamky pridat - u vseho
+
+//vyplata uroku na jaky ucet to bylo/ defaultne vybrat creditor bank account / moznost vyplatit hotove
+
+//mena - jenom jako priznak
+//vstahuje se ke smlouve, vsechny castky budou v dane mene
+uz jen predpisy
+
+
+predpisy
+//odstranit jmeno
+//datum podpisu zamnenit za datum aktivace
+//radit podle roku a podle smlouvy
+
+//predit je vzdy pocitan az ke konci roku. cili bud od zalozeni nebo cely rok podle toho v jakem roce bylo aktivovano
+//predpis
+	uroky vyplacene za prislusny rok ponizit o nevyporadane uroky
+	
+	
+radit smlouvy podle datumu
+//vyplaty a platby ediace pozor va conract id
+
+smlouvy razeni dle veritele
+
+chyba pri razeni
+	
+tisky
+	//seznam veritelu vcetne adress
+	//predpisy tisk listu
+	
+	//sumaci predpisu
+	
+	//vyporadani tisk
+	
+	//do vyplat pridat veritele i do plateb
+	
+	veritele cid
+
+	//sumace u vsecho / platby/ vyplaty/predpisy
+
+	sumace vzdy pro vsechny meny
+	administrace men.
+	
+	
+predpisy filtrace 
+//a sumace pro uzivatele
+//filter na smlouvy 
+//	aktivovany ano ne
+//	uzavreny ano ne
+
+
+
+generovani vyplat i po ukonceni kontrola
+//jmeno vs prijmeni/firma
+//pri uzavreni ukazat kolik je nevyporadano
+
+predpisy filtr na rok - obecne filtrovani
+
+
+vyplata uroku
+	//pridat sloupce nevyporadano celkem a urokova mira
+	zkontrolovat typy vyplat (plus rucnizadavi]
+//poitani uroku
+//zobrazeni catek na jednotky
+//predpisy datum prijeti castky k 1.1
+
+prijate platby
+	//pri vyfiltrovani platby nelze zadat datum chyba
+	//pridat cislo uclu - defoulte brat z veritele
+ 	//a boolean hotove
+
+
+//per page
+
+
+/////
+//dogenerovat vyporadani az do konce prviho roku
+
+
+//pokud je datum podpisu vetsi nez prijeti penez, aktivovat smlouvu k tomuto datu
+
+
+///////
+dotazat se pred ukoncenim smlouvy
+
+pri uzavreni smlouvy pouzit vyplacenou castku jako platbu jine smlouvy
+
+
