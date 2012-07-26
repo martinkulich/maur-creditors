@@ -244,10 +244,13 @@ class ContractService
     /**
      * @param Contract $contract
      */
-    public function getContractClosingAmount(Contract $contract)
+    public function getContractClosingAmount(Contract $contract, Datetime $date = null)
     {
-        $date = $contract->getClosedAt() ? $contract->getClosedAt() : 'now';
-        $closingAmount = $contract->getUnsettled(new DateTime($date));
+        if ($date == null) {
+            $clossingSettlement = $contract->getLastSettlement(SettlementPeer::CLOSING);
+            $date = $clossingSettlement ? new Datetime($clossingSettlement->getDate()) : new DateTime('now');
+        }
+        $closingAmount = $contract->getUnsettled($date);
         $settlement = new Settlement();
         $settlement->setContract($contract);
         $settlement->setDate($date);
