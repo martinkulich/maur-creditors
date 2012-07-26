@@ -91,9 +91,9 @@ user:
     with_wildcard_routes: true
     collection_actions: {filters: get, filter: post, reset: get}
 
-unsettled_amount:
-    url:   /:id/unsettled_amount.json
-    param: { module: contract, action: unsettledAmount, sf_format: json }
+contact_closing_amount:
+    url:   /:id/contract-closing-amount.json
+    param: { module: contract, action: closingAmount, sf_format: json }
 
 update_contract_select:
     url:   /:form_name/update-contract-select
@@ -107,6 +107,14 @@ settlement_contract_filter:
   url:   /settlement/contract-filter/:contract_id
   param: { module: settlement, action: contractFilter }
 
+
+settlement_interest:
+    url:   /settlement-interest.json
+    param: { module: settlement, action: interest, sf_format: json }
+
+settlement_balance:
+    url:   /settlement-balance.json
+    param: { module: settlement, action: balance, sf_format: json }
 
 report_filters:
   url:   /report/:report_type/filters

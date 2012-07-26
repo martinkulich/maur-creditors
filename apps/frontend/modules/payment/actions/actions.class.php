@@ -50,6 +50,18 @@ class paymentActions extends autoPaymentActions
         $this->redirect('@payment');
     }
 
+    public function executeNewReactivation(sfWebRequest $request)
+    {
+        $this->executeNew($request);
+        $this->payment->setPaymentType(PaymentService::REACTIONVATION);
+        $contract = ContractPeer::retrieveByPK($request->getParameter('contract_id'));
+        if ($contract) {
+            $this->payment->setAmount(ServiceContainer::getContractService()->getContractClosingAmount($contract));
+        }
+        $this->form = $this->configuration->getForm($this->payment);
+        $this->setTemplate('new');
+    }
+
     public function executeNew(sfWebRequest $request)
     {
         $this->form = $this->configuration->getForm();

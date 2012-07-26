@@ -26,6 +26,9 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'bank_account'      => new sfWidgetFormInputText(),
       'cash'              => new sfWidgetFormInputCheckbox(),
       'settlement_type'   => new sfWidgetFormInputText(),
+      'manual_interest'   => new sfWidgetFormInputCheckbox(),
+      'manual_balance'    => new sfWidgetFormInputCheckbox(),
+      'date_of_payment'   => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
@@ -41,6 +44,9 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'bank_account'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'cash'              => new sfValidatorBoolean(),
       'settlement_type'   => new sfValidatorString(array('max_length' => 255)),
+      'manual_interest'   => new sfValidatorBoolean(),
+      'manual_balance'    => new sfValidatorBoolean(),
+      'date_of_payment'   => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('settlement[%s]');

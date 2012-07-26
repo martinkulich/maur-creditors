@@ -1499,7 +1499,7 @@
     </trans-unit>
     <trans-unit id="375">
       <source>Closed at</source>
-      <target>datum ukončení</target>
+      <target>datum ukončení smlouvy</target>
     </trans-unit>
     <trans-unit id="376">
       <source>Copy</source>
@@ -1712,6 +1712,46 @@
     <trans-unit id="428">
       <source>Contract activation changed from: %from% to: %to%</source>
       <target>Datum aktivace smlouvy změněno z: %from% na: %to%</target>
+    </trans-unit>
+    <trans-unit id="429">
+      <source>Closing Settlment Date</source>
+      <target>Datum vypořádání úroků</target>
+    </trans-unit>
+    <trans-unit id="430">
+      <source>Date of payment</source>
+      <target>Datum vyplacení</target>
+    </trans-unit>
+    <trans-unit id="431">
+      <source>Date of settlement</source>
+      <target>Datum vypořádání úroků</target>
+    </trans-unit>
+    <trans-unit id="432">
+      <source>Closing payment</source>
+      <target>Platba</target>
+    </trans-unit>
+    <trans-unit id="433">
+      <source>Pay out</source>
+      <target>Vyplatit</target>
+    </trans-unit>
+    <trans-unit id="434">
+      <source>Reuse</source>
+      <target>Použít k reaktivaci</target>
+    </trans-unit>
+    <trans-unit id="435">
+      <source>payment</source>
+      <target>Platba</target>
+    </trans-unit>
+    <trans-unit id="436">
+      <source>reactivation</source>
+      <target>Reaktivace</target>
+    </trans-unit>
+    <trans-unit id="437">
+      <source>Payment type</source>
+      <target>Typ platby</target>
+    </trans-unit>
+    <trans-unit id="438">
+      <source>Save and reuse</source>
+      <target>Uložit a reaktivovat</target>
     </trans-unit>
   </body>
 </xliff>

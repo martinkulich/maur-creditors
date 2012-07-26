@@ -21,6 +21,7 @@ abstract class BasePaymentForm extends BaseFormPropel
       'note'         => new sfWidgetFormTextarea(),
       'cash'         => new sfWidgetFormInputCheckbox(),
       'bank_account' => new sfWidgetFormInputText(),
+      'payment_type' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -31,6 +32,7 @@ abstract class BasePaymentForm extends BaseFormPropel
       'note'         => new sfValidatorString(array('required' => false)),
       'cash'         => new sfValidatorBoolean(),
       'bank_account' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'payment_type' => new sfValidatorString(array('max_length' => 255)),
     ));
 
     $this->widgetSchema->setNameFormat('payment[%s]');

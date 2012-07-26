@@ -189,7 +189,7 @@ function centerModal(modal, currentWidth){
 
 }
 
-function updateSelectBox(url, selector, target, paramName)
+function updateSelectBox(url, selector, target, paramName, filter)
 {
     var defaultValue = jQuery('#'+target).val();
     if(defaultValue == '')
@@ -206,13 +206,19 @@ function updateSelectBox(url, selector, target, paramName)
 
 
     url += '?' +paramName+'='+paramValue+'&default='+defaultValue;
+
+    if(filter != undefined)
+    {
+        url += '&filter='+filter;
+    }
+
     jQuery.get(url, {}, function(data){
         jQuery('#'+target).replaceWith(data);
     //        jQuery('#'+selector).attr('id', selector);
     });
 }
 
-function calculateUnsettledAmount(selector,target, url)
+function calculateContractClosingAmount(selector,target, url)
 {
     var date = $(selector).val();
 
@@ -226,4 +232,52 @@ function calculateUnsettledAmount(selector,target, url)
     $result.success(function(data, textStatus, xhr){
         $(target).val(data.unsettled);
     });
+}
+
+
+function calculateSettlement(settlement_id, contractSelector, contract_id, dateSelector,target, url, checkboxSelector)
+{
+    var date = $(dateSelector).val();
+    if($(contractSelector).length !=0)
+    {
+        contract_id = $(contractSelector).val();
+    }
+
+    var checked = false;
+    if($(checkboxSelector).length !=0)
+    {
+        checked = $(checkboxSelector).is(':checked');
+    }
+
+    if(!checked)
+    {
+        $result = $.get(
+            url,
+            {
+                date: date,
+                contract_id: contract_id,
+                settlement_id: settlement_id
+            }
+            );
+
+        $result.success(function(data, textStatus, xhr){
+            $(target).val(data.amount);
+        });
+    }
+}
+
+function closingActionUpdate()
+{
+    var action  = $('#contract_action').val();
+    if(action == 'payment')
+    {
+        $('#settlement').hide();
+        $('#payment').show()
+    }
+    else
+    {
+        $('#settlement').show();
+        $('#payment').hide()
+    }
+
 }

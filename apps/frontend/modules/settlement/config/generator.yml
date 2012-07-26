@@ -20,7 +20,7 @@ generator:
         date:
           date_format: D
       list:
-        display: [creditor, contract, contract_interest_rate,  date, daysCount,  balance, interest, paid, cash, capitalized, balance_reduction, unsettled, unsettled_cumulative, translated_settlement_type]
+        display: [creditor, contract, contract_interest_rate,  date, date_of_payment, daysCount,  balance, interest, paid, cash, capitalized, balance_reduction, unsettled, unsettled_cumulative, translated_settlement_type]
         batch_actions: []
         actions:
           _new: ~

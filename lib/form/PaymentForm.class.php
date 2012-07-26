@@ -18,20 +18,29 @@ class PaymentForm extends BasePaymentForm
         $this->setValidator('date', new myValidatorDate());
 
 
-        $this->getWidget('contract_id')->setOption('add_empty', true);
 
         $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
         $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Creditor', 'required' => true)));
         $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {
-            $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
+            $this->getWidget('creditor_id')->setDefault($contract->getCreditorId());
             $this->getWidgetSchema()->setDefault('bank_account', $contract->getCreditor()->getBankAccount());
-            if (!$this->getObject()->isNew()) {
-                $this->unsetField('date');
-            }
         }
-        $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=payment'), 'payment_creditor_id', 'payment_contract_id', 'creditor_id'));
+
+        $this->getWidget('contract_id')->setOption('add_empty', true);
+        $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s', 'with_inactive');", url_for('@update_contract_select?form_name=payment'), 'payment_creditor_id', 'payment_contract_id', 'creditor_id', true));
+
+        $paymemtTypeChoices = ServiceContainer::getPaymentService()->getPaymentTypeChoices(false);
+        $this->setWidget('payment_type', new sfWidgetFormChoice(array('choices' => $paymemtTypeChoices)));
+        $this->setValidator('payment_type', new sfValidatorChoice(array('choices' => array_keys($paymemtTypeChoices))));
+        $this->getWidgetSchema()->moveField('payment_type', sfWidgetFormSchema::FIRST);
+
+        if (!$this->getObject()->isNew()) {
+            $this->unsetField('date');
+            $this->unsetField('contract_id');
+            $this->unsetField('creditor_id');
+        }
     }
 
     public function doSave($con = null)

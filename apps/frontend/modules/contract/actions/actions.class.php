@@ -18,7 +18,7 @@ class contractActions extends autoContractActions
     {
         $this->pager = $this->getPager();
         $this->sort = $this->getSort();
-        ServiceContainer::getPdfService()->generatePdf('contractList.pdf','contract', 'printList', array('pager'=>$this->pager, 'sort'=>$this->sort, 'helper'=>$this->helper));
+        ServiceContainer::getPdfService()->generatePdf('contractList.pdf', 'contract', 'printList', array('pager' => $this->pager, 'sort' => $this->sort, 'helper' => $this->helper));
     }
 
     public function executeUpdateSelect(sfWebRequest $request)
@@ -48,6 +48,7 @@ class contractActions extends autoContractActions
     public function executeClose(sfWebRequest $request)
     {
         $this->contract = $this->getRoute()->getObject();
+        $this->contract->setClosedAt('now');
         $this->form = new ContractCloseForm($this->contract);
 
         if ($request->isMethod('post')) {
@@ -68,8 +69,10 @@ class contractActions extends autoContractActions
 
             $redirect = array('sf_route' => 'contract_edit', 'sf_subject' => $contract);
 
-            if ($request->hasParameter('save_and_pay_other_contract')) {
-               // to do
+            if ($request->getParameter('save_and_reuse', false)) {
+                $request->setParameter('contract_id', $contract->getId());
+
+                return $this->forward('payment', 'newReactivation');
             }
 
 
@@ -80,27 +83,17 @@ class contractActions extends autoContractActions
         }
     }
 
-    public function executeUnsettledAmount(sfWebRequest $request)
+    public function executeClosingAmount(sfWebRequest $request)
     {
-        $unsettled = 0;
+        $closingAmount = 0;
         $contract = ContractPeer::retrieveByPK($request->getParameter('id'));
         $date = $request->getParameter('date');
-
+        $contract->setClosedAt($date);
         if ($contract) {
-            $contractService = ServiceContainer::getContractService();
-            $unsettled = $contract->getUnsettled(new DateTime($date));
-            $settlement = new Settlement();
-            $settlement->setContract($contract);
-            $settlement->setDate($date);
-            $settlement->setBalance($contractService->getBalanceForSettlement($settlement));
-
-            $interest = $contractService->getInterestForSettlement($settlement);
-            $settlement->setInterest($interest);
-
-            $unsettled += $settlement->getUnsettled();
+            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract);
         }
         $result = array(
-            'unsettled' => $unsettled,
+            'unsettled' => $closingAmount,
         );
 
         $this->data = json_encode($result);

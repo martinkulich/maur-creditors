@@ -19,6 +19,7 @@ class settlementActions extends autoSettlementActions
         parent::executeIndex($request);
         $this->sums = $this->getSums();
     }
+
     public function executeNew(sfWebRequest $request)
     {
         $this->form = $this->configuration->getForm();
@@ -29,7 +30,10 @@ class settlementActions extends autoSettlementActions
         if (array_key_exists('contract_id', $filters)) {
             $contract = ContractPeer::retrieveByPK($filters['contract_id']);
             if ($contract) {
+                $contractService = ServiceContainer::getContractService();
                 $this->settlement->setContract($contract);
+                $this->settlement->setBalance($contractService->getBalanceForSettlement($this->settlement));
+                $this->settlement->setInterest($contractService->getInterestForSettlement($this->settlement));
             }
         }
         $this->form = $this->configuration->getForm($this->settlement);
@@ -105,6 +109,69 @@ class settlementActions extends autoSettlementActions
         ServiceContainer::getContractService()->checkContractChanges($settlement->getContract());
 
         return $this->redirect('@settlement');
+    }
+
+    public function executeInterest(sfWebRequest $request)
+    {
+        $this->calculate($request, 'interest');
+        $this->setTemplate('calculate');
+    }
+
+    public function executeBalance(sfWebRequest $request)
+    {
+        $this->calculate($request, 'balance');
+        $this->setTemplate('calculate');
+    }
+
+    public function calculate(sfWebRequest $request, $what = 'interest')
+    {
+        $this->data = null;
+
+        $contract = ContractPeer::retrieveByPK($request->getParameter('contract_id'));
+
+        if ($contract) {
+            $date = new Datetime($request->getParameter('date'));
+
+            $contractService = ServiceContainer::getContractService();
+            $settlement = SettlementPeer::retrieveByPK($request->getParameter('settlement_id'));
+            if (!$settlement) {
+                $settlement = new Settlement();
+                $settlement->setDate($date);
+                $settlementDate = $date;
+            }else
+            {
+                $settlementDate = new DateTime($settlement->getDate());
+            }
+            $settlement->setContract($contract);
+
+            $format = 'Y-m-d';
+            $calculate = $settlementDate->format($format) != $date->format($format) || $settlement->isNew();
+            if($calculate)
+            {
+                $settlement->setDate($date);
+            }
+            if ($what == 'interest') {
+                if ($calculate) {
+                    $amount = $contractService->getInterestForSettlement($settlement);
+                } else {
+                    $amount = $settlement->getInterest();
+                }
+            } else {
+                if ($calculate) {
+                    $amount = $contractService->getBalanceForSettlement($settlement);
+                } else {
+                    $amount = $settlement->getBalance();
+                }
+            }
+
+
+            $result = array(
+                'amount' => round($amount, 2),
+                'calculate'=>$calculate,
+            );
+
+            $this->data = json_encode($result);
+        }
     }
 
     protected function getPager()

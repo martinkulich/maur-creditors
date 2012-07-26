@@ -9,6 +9,11 @@
 </th>
 <?php end_slot(); ?>
 <?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
+<th class="sf_admin_text sf_admin_list_th_payment_type">
+  <?php echo __('Payment type', array(), 'messages') ?>
+</th>
+<?php end_slot(); ?>
+<?php include_slot('sf_admin.current_header') ?><?php slot('sf_admin.current_header') ?>
 <th class="sf_admin_date sf_admin_list_th_date span1">
   <?php if ('date' == $sort[0]): ?>
     <?php echo link_to(__('Date', array(), 'messages'), '@payment', array('query_string' => 'sort=date&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc'))) ?>

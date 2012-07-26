@@ -5,7 +5,7 @@ predpis
 filter
 	rok
 	veritel
-	
+
 radek = 1 smlouva
 sloupce
 	jistina k 1.1. (muze byt nula pokud jde o prvni rok)
@@ -18,13 +18,13 @@ sloupce
 	uroky vyplacene (celkova castka proklik do seznamu vyporadani)
 	uroky vyplacene za prislusny rok
 		 = uroky vyplacene - nevyplacene z predchoziho roku (datum posledni platby/kapitalizace az konec roku v nemz byla tato platba/kapitalizace)
-		 
+
 	kapitalizovano v danem roce
 	teoreticky dovyplatit v tomto roce
-		posledni vyporadani az konec roku 
-		
+		posledni vyporadani az konec roku
+
 	jistina k 31.12 (kontrola na jistina k 1.1 nasledujiciho roku
-		
+
 kontrola
 	predpis = vyplaceno + kapitalizovano +  teoreticky dovyplatit - nevyplaceno z predchoziho rok
 
@@ -53,36 +53,36 @@ predpisy
 //predit je vzdy pocitan az ke konci roku. cili bud od zalozeni nebo cely rok podle toho v jakem roce bylo aktivovano
 //predpis
 	uroky vyplacene za prislusny rok ponizit o nevyporadane uroky
-	
-	
+
+
 radit smlouvy podle datumu
 //vyplaty a platby ediace pozor va conract id
 
 smlouvy razeni dle veritele
 
 chyba pri razeni
-	
+
 tisky
 	//seznam veritelu vcetne adress
 	//predpisy tisk listu
-	
+
 	//sumaci predpisu
-	
+
 	//vyporadani tisk
-	
+
 	//do vyplat pridat veritele i do plateb
-	
+
 	veritele cid
 
 	//sumace u vsecho / platby/ vyplaty/predpisy
 
 	sumace vzdy pro vsechny meny
 	administrace men.
-	
-	
-predpisy filtrace 
+
+
+predpisy filtrace
 //a sumace pro uzivatele
-//filter na smlouvy 
+//filter na smlouvy
 //	aktivovany ano ne
 //	uzavreny ano ne
 
@@ -123,4 +123,23 @@ dotazat se pred ukoncenim smlouvy
 
 pri uzavreni smlouvy pouzit vyplacenou castku jako platbu jine smlouvy
 
+///
+//pri uzavreni smlouvy smazat vsechny nasledne vyporadani
+
+
+//zvyraznit pouze zmenene cislo
+//zvetsit modularni okno - veritele a smlouvu do nadpisu
+//pridat datum platby u vyplaty uroku, nemusi korespondovat s datumem vypoctu uroku
+
+//skryvani neaktivnich smluv ne u plateb
+
+//v den pripsani od toho dne aktivovat smlouvu
+
+filtrovat ve vyporadani uroku
+
+//typy platby
+
+//menu zjednodusit
+
+proverit vsechny formulare a optimalizovat pomoci javascript
 

@@ -14,7 +14,6 @@ class ServiceContainer
         return self::$services[$serviceName];
     }
 
-
     /**
      * @return CurrencyService
      */
@@ -22,7 +21,6 @@ class ServiceContainer
     {
         return self::getService('currency');
     }
-
 
     /**
      * @return DateTimeService
@@ -40,7 +38,6 @@ class ServiceContainer
         return self::getService('translate');
     }
 
-
     /**
      * @return MessageService
      */
@@ -48,8 +45,6 @@ class ServiceContainer
     {
         return self::getService('message');
     }
-
-
 
     /**
      * @return SecurityService
@@ -66,7 +61,6 @@ class ServiceContainer
     {
         return self::getService('request');
     }
-
 
     /**
      * @return ReportService
@@ -93,5 +87,12 @@ class ServiceContainer
         return self::getService('pdf');
     }
 
-
+    /**
+     *
+     * @return PaymentService
+     */
+    public static function getPaymentService()
+    {
+        return self::getService('payment');
+    }
 }

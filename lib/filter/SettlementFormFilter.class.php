@@ -17,12 +17,17 @@ class SettlementFormFilter extends BaseSettlementFormFilter
         $this->setWidget('date', new MyJQueryFormFilterDate());
         $this->setValidator('date', new MyValidatorDateRange(array('required' => false)));
 
+        $this->getWidgetSchema()->moveField('date_of_payment', sfWidgetFormSchema::AFTER, 'date');
+        $this->getWidget('date')->setLabel('Date of settlement');
+        
         $fieldsToUnset = array(
             'balance',
             'interest',
             'capitalized',
             'balance',
             'paid',
+            'manual_interest',
+            'manual_balance',
         );
 
         foreach ($fieldsToUnset as $field) {

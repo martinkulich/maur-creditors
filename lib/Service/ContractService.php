@@ -27,9 +27,9 @@ class ContractService
                     $success = $translateService->__('Contract activated');
                 } else {
                     $format = 'd.m.Y';
-                    $success = $translateService->__('Contract activation changed from: %from% to: %to%', array('%from%'=>$activatedAt->format($format), '%to%'=>$activationDate->format($format)));
+                    $success = $translateService->__('Contract activation changed from: %from% to: %to%', array('%from%' => $activatedAt->format($format), '%to%' => $activationDate->format($format)));
                 }
-                    ServiceContainer::getMessageService()->addSuccess($success);
+                ServiceContainer::getMessageService()->addSuccess($success);
                 $contract->save();
             }
         }
@@ -43,7 +43,7 @@ class ContractService
             $lastPaymentDate = new DateTime($lastPayment->getDate());
             $contractSignedDate = new DateTime($contract->getCreatedAt());
             $activationDate = $lastPaymentDate > $contractSignedDate ? $lastPaymentDate : $contractSignedDate;
-            $activationDate->modify('+1 day');
+//            $activationDate->modify('+1 day');
         }
 
         if ($activationDate === null) {
@@ -57,11 +57,27 @@ class ContractService
     {
         foreach ($contract->getSettlements() as $settlement) {
             if ($settlement->getSettlementType() != SettlementPeer::MANUAL) {
-                $settlement->setBalance($this->getBalanceForSettlement($settlement));
-                $settlement->setInterest($this->getInterestForSettlement($settlement));
-                $settlement->save();
-                $settlement->reload();
+
+                if ($contract->getClosedAt()) {
+                    $closedAt = new DateTime($contract->getClosedAt());
+                    $settlementDate = new DateTime($settlement->getDate());
+                    if ($closedAt < $settlementDate) {
+                        $settlement->delete();
+                        continue;
+                    }
+                }
             }
+
+            if (!$settlement->getManualBalance()) {
+                $settlement->setBalance($this->getBalanceForSettlement($settlement));
+            }
+
+            if (!$settlement->getManualInterest()) {
+                $settlement->setInterest($this->getInterestForSettlement($settlement));
+            }
+
+            $settlement->save();
+            $settlement->reload();
         }
     }
 
@@ -223,5 +239,24 @@ class ContractService
         }
 
         return new DateTime($previousDate);
+    }
+
+    /**
+     * @param Contract $contract
+     */
+    public function getContractClosingAmount(Contract $contract)
+    {
+        $date = $contract->getClosedAt() ? $contract->getClosedAt() : 'now';
+        $closingAmount = $contract->getUnsettled(new DateTime($date));
+        $settlement = new Settlement();
+        $settlement->setContract($contract);
+        $settlement->setDate($date);
+        $settlement->setBalance($this->getBalanceForSettlement($settlement));
+
+        $interest = $this->getInterestForSettlement($settlement);
+        $settlement->setInterest($interest);
+
+        $closingAmount += $settlement->getUnsettled() + $settlement->getBalance();
+        return $closingAmount;
     }
 }

@@ -8,6 +8,9 @@ class ClosingSettlementForm extends SettlementForm
         parent::configure($options, $attributes);
         $fieldsToUnset = array(
             'creditor_id',
+            'capitalized',
+            'balance_reduction',
+            'contract_id',
         );
 
         $this->getWidget('paid')->setLabel('To pay');
@@ -16,13 +19,12 @@ class ClosingSettlementForm extends SettlementForm
             $this->unsetField($field);
         }
 
-        $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         $contract = $this->getObject()->getContract();
-        $this->setDefault('contract_id', $contract->getId());
-        $unsettled = $contract->getUnsettled();
+        $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract);
         $lastDate = $contract->getLastSettlementDate();
+        $this->getObject()->setPaid($closingAmount);
         $this->getWidget('date')->setLabel('Settlment Date');
-        $this->getWidget('date')->setAttribute('onChange', sprintf("calculateUnsettledAmount('#contract_closing_settlement_date_date','#contract_closing_settlement_paid', '%s')", url_for('@unsettled_amount?id='.$contract->getId())));
+        $this->getWidget('date')->setAttribute('onChange', sprintf("calculateContractClosingAmount('#contract_closing_settlement_date_date','#contract_closing_settlement_paid', '%s')", url_for('@contact_closing_amount?id='.$contract->getId())));
 
     }
 }

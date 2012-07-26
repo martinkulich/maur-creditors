@@ -18,6 +18,7 @@ abstract class BasePaymentFormFilter extends BaseFormFilterPropel
       'note'         => new sfWidgetFormFilterInput(),
       'cash'         => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'bank_account' => new sfWidgetFormFilterInput(),
+      'payment_type' => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ abstract class BasePaymentFormFilter extends BaseFormFilterPropel
       'note'         => new sfValidatorPass(array('required' => false)),
       'cash'         => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'bank_account' => new sfValidatorPass(array('required' => false)),
+      'payment_type' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('payment_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BasePaymentFormFilter extends BaseFormFilterPropel
       'note'         => 'Text',
       'cash'         => 'Boolean',
       'bank_account' => 'Text',
+      'payment_type' => 'Text',
     );
   }
 }

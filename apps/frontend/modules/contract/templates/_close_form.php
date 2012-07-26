@@ -17,6 +17,9 @@
 
 </div>
 <div class="modal-footer">
-    <?php include_partial('contract/form_actions', array('contract' => $contract, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
+    <ul class="sf_admin_actions">
+        <?php echo $helper->linkToSave($form->getObject(), array(  'params' =>   array(  ),  'class_suffix' => 'save',  'label' => 'Save',)) ?>
+        <?php echo $helper->linkToSaveAndReuse($form->getObject(), array(  'params' =>   array(  ),  'class_suffix' => 'save',  'label' => 'Save and reuse',)) ?>
+    </ul>
 </div>
 </form>

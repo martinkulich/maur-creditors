@@ -44,6 +44,7 @@ class PaymentTableMap extends TableMap {
 		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('CASH', 'Cash', 'BOOLEAN', true, null, false);
 		$this->addColumn('BANK_ACCOUNT', 'BankAccount', 'VARCHAR', false, 255, null);
+		$this->addColumn('PAYMENT_TYPE', 'PaymentType', 'VARCHAR', true, 255, 'payment');
 		// validators
 	} // initialize()
 

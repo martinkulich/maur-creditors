@@ -37,19 +37,28 @@ class defaultComponents extends sfComponents
 
         $this->activeLink = $activeLink;
         $this->route = sfContext::getInstance()->getRouting()->getCurrentRouteName();
-        $this->adminLinks = array(
+        $this->mainLinks = array(
             'creditor',
             'contract',
             'payment',
             'settlement',
-            'security_user',
             'regulation',
-            'ip_address'
+        );
+        $this->adminLinks = array(
+            'security_user',
+            'ip_address',
         );
         $pattern = '%s.admin';
         $user = $this->getUser();
-        foreach ($this->adminLinks as $key => $adminLink) {
-            $credential = sprintf($pattern, $adminLink);
+        foreach ($this->adminLinks as $key => $link) {
+            $credential = sprintf($pattern, $link);
+            if (!$user->hasCredential($credential)) {
+//                unset($this->adminLinks[$key]);
+            }
+        }
+
+        foreach ($this->mainLinks as $link) {
+            $credential = sprintf($pattern, $link);
             if (!$user->hasCredential($credential)) {
 //                unset($this->adminLinks[$key]);
             }

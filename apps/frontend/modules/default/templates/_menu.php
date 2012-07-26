@@ -2,6 +2,15 @@
     <div class="navbar-inner">
         <div class="container">
             <?php if($userIsAuthenticated){?>
+                <?php if(count($mainLinks)> 0){?>
+                    <ul class="nav nav-pills visible-desktop">
+                    <?php foreach($mainLinks as $link){?>
+                        <li class=" <?php if($activeLink == $link ) echo 'active' ?>">
+                            <?php echo link_to(__($link . ' admin'), '@' . $link) ?>
+                        </li>
+                    <?php }?>
+                    </ul>
+                <?php }?>
                 <?php if(count($adminLinks)> 0){?>
                     <ul class="nav nav-pills visible-desktop">
                         <li class="dropdown <?php if($activeLinkIsAdministrationLink ) echo 'active' ?>" id="administration_menu">

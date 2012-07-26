@@ -52,6 +52,7 @@
     <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
     <column name="cash" phpName="Cash" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="bank_account" phpName="BankAccount" type="VARCHAR" required="false"/>
+    <column name="payment_type" phpName="PaymentType" type="VARCHAR" required="true" defaultValue="payment"/>
     <foreign-key foreignTable="contract" name="payment_contract_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
     </foreign-key>
@@ -141,6 +142,9 @@
     <column name="bank_account" phpName="BankAccount" type="VARCHAR" required="false"/>
     <column name="cash" phpName="Cash" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="settlement_type" phpName="SettlementType" type="VARCHAR" required="true" defaultValue="in_period"/>
+    <column name="manual_interest" phpName="ManualInterest" type="BOOLEAN" required="true" defaultValue="false"/>
+    <column name="manual_balance" phpName="ManualBalance" type="BOOLEAN" required="true" defaultValue="false"/>
+    <column name="date_of_payment" phpName="DateOfPayment" type="DATE" required="false"/>
     <foreign-key foreignTable="contract" name="settlement_contract_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
     </foreign-key>

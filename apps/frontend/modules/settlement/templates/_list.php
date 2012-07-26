@@ -10,19 +10,7 @@
       <tbody>
         <?php foreach ($pager->getResults() as $i => $settlement): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                 <?php $currencyCode = $settlement->getContract()->getCurrencyCode()?>
-          <tr class="sf_admin_row
-            <?php echo $odd.' ';
-                switch ($settlement->getSettlementType()) {
-                  case SettlementPeer::MANUAL:
-                      echo 'red';
-                      break;
-                  case SettlementPeer::END_OF_FIRST_YEAR:
-                  case SettlementPeer::CLOSING:
-                      echo 'orange';
-                      break;
-                }
-            ?>
-         ">
+          <tr class="sf_admin_row <?php echo $odd.' ';?>">
             <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement)) ?>
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>
@@ -30,6 +18,8 @@
       </tbody>
       <tfoot class="no-wrap-line">
           <tr class="sf_admin_row">
+              <th>
+              </th>
               <th>
               </th>
               <th>

@@ -11,13 +11,13 @@
 class contractGeneratorHelper extends BaseContractGeneratorHelper
 {
 
-    public function linkTo_saveAndPayOtherContract($object, $params)
+    public function linkToSaveAndReuse($object, $params)
   {
-    return '<li class="sf_admin_action_save">
-                <input type="hidden" id="save_and_pay_other_contract" name="save_and_pay_other_contract" value="0">
-                <button type="submit" class="btn btn-primary" onClick="jQuery(\'#save_and_pay_other_contract\').val(1)">
+    return '<li class="sf_admin_action_save_and_reuse">
+                <input type="hidden" id="save_and_reuse" name="save_and_reuse" value="0">
+                <button type="submit" class="btn btn-primary" onClick="jQuery(\'#save_and_reuse\').val(1)">
                     <i class="icon-ok icon-white">
-                    </i> '.' '.__($params['label'], array(), 'sf_admin').
+                    </i> '.' '.__($params['label']).
                 '</button>
             </li>';
 

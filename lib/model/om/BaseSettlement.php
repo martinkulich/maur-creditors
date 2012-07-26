@@ -97,6 +97,26 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	protected $settlement_type;
 
 	/**
+	 * The value for the manual_interest field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $manual_interest;
+
+	/**
+	 * The value for the manual_balance field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $manual_balance;
+
+	/**
+	 * The value for the date_of_payment field.
+	 * @var        string
+	 */
+	protected $date_of_payment;
+
+	/**
 	 * @var        Contract
 	 */
 	protected $aContract;
@@ -133,6 +153,8 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$this->balance_reduction = '0';
 		$this->cash = false;
 		$this->settlement_type = 'in_period';
+		$this->manual_interest = false;
+		$this->manual_balance = false;
 	}
 
 	/**
@@ -286,6 +308,59 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	public function getSettlementType()
 	{
 		return $this->settlement_type;
+	}
+
+	/**
+	 * Get the [manual_interest] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getManualInterest()
+	{
+		return $this->manual_interest;
+	}
+
+	/**
+	 * Get the [manual_balance] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getManualBalance()
+	{
+		return $this->manual_balance;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [date_of_payment] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getDateOfPayment($format = 'Y-m-d')
+	{
+		if ($this->date_of_payment === null) {
+			return null;
+		}
+
+
+
+		try {
+			$dt = new DateTime($this->date_of_payment);
+		} catch (Exception $x) {
+			throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->date_of_payment, true), $x);
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -562,6 +637,95 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	} // setSettlementType()
 
 	/**
+	 * Set the value of [manual_interest] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Settlement The current object (for fluent API support)
+	 */
+	public function setManualInterest($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->manual_interest !== $v || $this->isNew()) {
+			$this->manual_interest = $v;
+			$this->modifiedColumns[] = SettlementPeer::MANUAL_INTEREST;
+		}
+
+		return $this;
+	} // setManualInterest()
+
+	/**
+	 * Set the value of [manual_balance] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Settlement The current object (for fluent API support)
+	 */
+	public function setManualBalance($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->manual_balance !== $v || $this->isNew()) {
+			$this->manual_balance = $v;
+			$this->modifiedColumns[] = SettlementPeer::MANUAL_BALANCE;
+		}
+
+		return $this;
+	} // setManualBalance()
+
+	/**
+	 * Sets the value of [date_of_payment] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Settlement The current object (for fluent API support)
+	 */
+	public function setDateOfPayment($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->date_of_payment !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->date_of_payment !== null && $tmpDt = new DateTime($this->date_of_payment)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->date_of_payment = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = SettlementPeer::DATE_OF_PAYMENT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setDateOfPayment()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -592,6 +756,14 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			if ($this->settlement_type !== 'in_period') {
+				return false;
+			}
+
+			if ($this->manual_interest !== false) {
+				return false;
+			}
+
+			if ($this->manual_balance !== false) {
 				return false;
 			}
 
@@ -629,6 +801,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$this->bank_account = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->cash = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
 			$this->settlement_type = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->manual_interest = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
+			$this->manual_balance = ($row[$startcol + 13] !== null) ? (boolean) $row[$startcol + 13] : null;
+			$this->date_of_payment = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -638,7 +813,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Settlement object", $e);
@@ -1032,6 +1207,15 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 11:
 				return $this->getSettlementType();
 				break;
+			case 12:
+				return $this->getManualInterest();
+				break;
+			case 13:
+				return $this->getManualBalance();
+				break;
+			case 14:
+				return $this->getDateOfPayment();
+				break;
 			default:
 				return null;
 				break;
@@ -1065,6 +1249,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$keys[9] => $this->getBankAccount(),
 			$keys[10] => $this->getCash(),
 			$keys[11] => $this->getSettlementType(),
+			$keys[12] => $this->getManualInterest(),
+			$keys[13] => $this->getManualBalance(),
+			$keys[14] => $this->getDateOfPayment(),
 		);
 		return $result;
 	}
@@ -1132,6 +1319,15 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 11:
 				$this->setSettlementType($value);
 				break;
+			case 12:
+				$this->setManualInterest($value);
+				break;
+			case 13:
+				$this->setManualBalance($value);
+				break;
+			case 14:
+				$this->setDateOfPayment($value);
+				break;
 		} // switch()
 	}
 
@@ -1168,6 +1364,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setBankAccount($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setCash($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setSettlementType($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setManualInterest($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setManualBalance($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDateOfPayment($arr[$keys[14]]);
 	}
 
 	/**
@@ -1191,6 +1390,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SettlementPeer::BANK_ACCOUNT)) $criteria->add(SettlementPeer::BANK_ACCOUNT, $this->bank_account);
 		if ($this->isColumnModified(SettlementPeer::CASH)) $criteria->add(SettlementPeer::CASH, $this->cash);
 		if ($this->isColumnModified(SettlementPeer::SETTLEMENT_TYPE)) $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $this->settlement_type);
+		if ($this->isColumnModified(SettlementPeer::MANUAL_INTEREST)) $criteria->add(SettlementPeer::MANUAL_INTEREST, $this->manual_interest);
+		if ($this->isColumnModified(SettlementPeer::MANUAL_BALANCE)) $criteria->add(SettlementPeer::MANUAL_BALANCE, $this->manual_balance);
+		if ($this->isColumnModified(SettlementPeer::DATE_OF_PAYMENT)) $criteria->add(SettlementPeer::DATE_OF_PAYMENT, $this->date_of_payment);
 
 		return $criteria;
 	}
@@ -1266,6 +1468,12 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$copyObj->setCash($this->cash);
 
 		$copyObj->setSettlementType($this->settlement_type);
+
+		$copyObj->setManualInterest($this->manual_interest);
+
+		$copyObj->setManualBalance($this->manual_balance);
+
+		$copyObj->setDateOfPayment($this->date_of_payment);
 
 
 		$copyObj->setNew(true);
