@@ -7,10 +7,7 @@ define('MAILER_FROM_NAME', 'REZERVUJ.TO');
 
 // nastaveni databaze
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'maur-creditors');
+define('DB_NAME', 'artemis');
 define('DB_USER', 'developer');
 define('DB_PASS', 'developer');
 define('DB_PORT', '5432');
-
-define('DEBUG_MODE', true);
-
