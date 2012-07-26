@@ -11,3 +11,5 @@ define('DB_NAME', 'maur-creditors');
 define('DB_USER', 'developer');
 define('DB_PASS', 'developer');
 define('DB_PORT', '5432');
+
+define('DEBUG_MODE', true);
