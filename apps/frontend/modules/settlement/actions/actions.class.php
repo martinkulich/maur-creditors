@@ -32,6 +32,7 @@ class settlementActions extends autoSettlementActions
             if ($contract) {
                 $contractService = ServiceContainer::getContractService();
                 $this->settlement->setContract($contract);
+                $this->settlement->setDate('now');
                 $this->settlement->setBalance($contractService->getBalanceForSettlement($this->settlement));
                 $this->settlement->setInterest($contractService->getInterestForSettlement($this->settlement));
             }
