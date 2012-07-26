@@ -11,7 +11,7 @@ class contractComponents extends sfComponents
         $criteria = new Criteria();
         $criteria->add(ContractPeer::CREDITOR_ID, $request->getParameter('creditor_id'));
         $filter = $request->getParameter('filter');
-        if (in_array($filter, array('with_inactive', 'all'))) {
+        if (!in_array($filter, array('with_inactive', 'all'))) {
             $criteria->add(ContractPeer::ACTIVATED_AT, null, Criteria::ISNOTNULL);
         }
 
