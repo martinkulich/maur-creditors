@@ -53,6 +53,7 @@ class contractActions extends autoContractActions
 
         if ($request->isMethod('post')) {
             $this->processForm($request, $this->form);
+            ServiceContainer::getMessageService()->addFromErrors($this->form->getEmbeddedForm('closing_settlement'), true);
         }
     }
 
@@ -64,6 +65,7 @@ class contractActions extends autoContractActions
             ServiceContainer::getMessageService()->addSuccess($notice);
 
             $contract = $form->save();
+            $contract->reload();
 
             $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $contract)));
 
@@ -79,7 +81,6 @@ class contractActions extends autoContractActions
             return $this->redirect($redirect, 205);
         } else {
             ServiceContainer::getMessageService()->addFromErrors($form);
-            ServiceContainer::getMessageService()->addFromErrors($form->getEmbeddedForm('closing_settlement'), true);
         }
     }
 
@@ -87,10 +88,10 @@ class contractActions extends autoContractActions
     {
         $closingAmount = 0;
         $contract = ContractPeer::retrieveByPK($request->getParameter('id'));
-        $date = $request->getParameter('date');
-        $contract->setClosedAt($date);
+        $date = new DateTime($request->getParameter('date'));
+
         if ($contract) {
-            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract);
+            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, $date);
         }
         $result = array(
             'unsettled' => $closingAmount,
