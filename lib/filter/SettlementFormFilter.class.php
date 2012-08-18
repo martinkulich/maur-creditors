@@ -19,7 +19,7 @@ class SettlementFormFilter extends BaseSettlementFormFilter
 
         $this->getWidgetSchema()->moveField('date_of_payment', sfWidgetFormSchema::AFTER, 'date');
         $this->getWidget('date')->setLabel('Date of settlement');
-        
+
         $fieldsToUnset = array(
             'balance',
             'interest',
@@ -42,7 +42,7 @@ class SettlementFormFilter extends BaseSettlementFormFilter
         if ($contract) {
             $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
         }
-        $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=settlement_filters'), 'settlement_filters_creditor_id', 'settlement_filters_contract_id', 'creditor_id'));
+        $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s', 'all'); ;", url_for('@update_contract_select?form_name=settlement_filters'), 'settlement_filters_creditor_id', 'settlement_filters_contract_id', 'creditor_id'));
 
         $settlementTypeChoices = $this->getSettlementTypeChoices();
         $this->setWidget('settlement_type', new sfWidgetFormChoice(array('choices'=>$settlementTypeChoices)));

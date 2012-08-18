@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseSettlement.php';
+require_once 'lib/model/om/BaseSettlement.php';
 
 /**
  * Skeleton subclass for representing a row from the 'settlement' table.

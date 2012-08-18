@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseContract.php';
+require_once 'lib/model/om/BaseContract.php';
 
 /**
  * Skeleton subclass for representing a row from the 'contract' table.

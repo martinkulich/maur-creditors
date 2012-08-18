@@ -218,7 +218,7 @@ function updateSelectBox(url, selector, target, paramName, filter)
     });
 }
 
-function calculateContractClosingAmount(selector,target, url)
+function calculateContractClosingAmount(selector,unsettled_target, balance_reduction_target, url)
 {
     var date = $(selector).val();
 
@@ -230,7 +230,8 @@ function calculateContractClosingAmount(selector,target, url)
         function(data) {
         });
     $result.success(function(data, textStatus, xhr){
-        $(target).val(data.unsettled);
+        $(unsettled_target).val(data.unsettled);
+        $(balance_reduction_target).val(data.balance_reduction);
     });
 }
 

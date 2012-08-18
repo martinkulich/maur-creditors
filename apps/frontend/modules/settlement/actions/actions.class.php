@@ -139,16 +139,14 @@ class settlementActions extends autoSettlementActions
                 $settlement = new Settlement();
                 $settlement->setDate($date);
                 $settlementDate = $date;
-            }else
-            {
+            } else {
                 $settlementDate = new DateTime($settlement->getDate());
             }
             $settlement->setContract($contract);
 
             $format = 'Y-m-d';
             $calculate = $settlementDate->format($format) != $date->format($format) || $settlement->isNew();
-            if($calculate)
-            {
+            if ($calculate) {
                 $settlement->setDate($date);
             }
             if ($what == 'interest') {
@@ -168,7 +166,7 @@ class settlementActions extends autoSettlementActions
 
             $result = array(
                 'amount' => round($amount, 2),
-                'calculate'=>$calculate,
+                'calculate' => $calculate,
             );
 
             $this->data = json_encode($result);
@@ -205,5 +203,25 @@ class settlementActions extends autoSettlementActions
         $statement = SettlementPeer::doSelectStmt($sumPager->getCriteria());
         return $statement->fetch(PDO::FETCH_ASSOC);
         return $sumPager;
+    }
+
+    protected function getFilters()
+    {
+        $filters = $this->getUser()->getAttribute('settlement.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+        if(!isset($filters['date']['from']))
+        {
+            $date = new DateTime('now');
+            $date->modify('-1 month');
+            $filters['date']['from'] = $date->format('Y-m-d');
+        }
+
+        if(!isset($filters['date']['to']))
+        {
+            $date = new DateTime('now');
+            $date->modify('+1 month');
+            $filters['date']['to'] = $date->format('Y-m-d');
+        }
+
+        return $filters;
     }
 }

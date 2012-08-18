@@ -57,6 +57,7 @@ class paymentActions extends autoPaymentActions
         $contract = ContractPeer::retrieveByPK($request->getParameter('contract_id'));
         if ($contract) {
             $this->payment->setAmount(ServiceContainer::getContractService()->getContractClosingAmount($contract));
+            $this->payment->setContract($contract);
         }
         $this->form = $this->configuration->getForm($this->payment);
         $this->setTemplate('new');

@@ -244,22 +244,37 @@ class ContractService
     /**
      * @param Contract $contract
      */
-    public function getContractClosingAmount(Contract $contract, Datetime $date = null)
+    public function getContractClosingAmount(Contract $contract, Datetime $date = null, $separately = false)
     {
+        $clossingSettlement = null;
         if ($date == null) {
             $clossingSettlement = $contract->getLastSettlement(SettlementPeer::CLOSING);
             $date = $clossingSettlement ? new Datetime($clossingSettlement->getDate()) : new DateTime('now');
         }
-        $closingAmount = $contract->getUnsettled($date);
-        $settlement = new Settlement();
-        $settlement->setContract($contract);
-        $settlement->setDate($date);
-        $settlement->setBalance($this->getBalanceForSettlement($settlement));
+        $unsettled = $contract->getUnsettled($date);
+        if (!$clossingSettlement) {
+            $settlement = new Settlement();
+            $settlement->setContract($contract);
+            $settlement->setDate($date);
+            $settlement->setBalance($this->getBalanceForSettlement($settlement));
 
-        $interest = $this->getInterestForSettlement($settlement);
-        $settlement->setInterest($interest);
+            $interest = $this->getInterestForSettlement($settlement);
+            $settlement->setInterest($interest);
+            $unsettled += $settlement->getUnsettled();
+        } else {
+            $settlement = $clossingSettlement;
+        }
 
-        $closingAmount += $settlement->getUnsettled() + $settlement->getBalance();
-        return $closingAmount;
+        $closingAmount = array(
+            'unsettled' => $unsettled,
+            'balance_reduction' => $settlement->getBalance() - $settlement->getBalanceReduction(),
+        );
+
+        if ($separately) {
+            $return = $closingAmount;
+        } else {
+            $return = $closingAmount['unsettled'] + $closingAmount['balance_reduction'];
+        }
+        return $return;
     }
 }

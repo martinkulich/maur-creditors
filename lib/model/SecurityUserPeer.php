@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseSecurityUserPeer.php';
+require_once 'lib/model/om/BaseSecurityUserPeer.php';
 
 /**
  * Skeleton subclass for performing query and update operations on the 'security_user' table.

@@ -1,12 +1,12 @@
 <?php
 
-require 'lib/model/om/BaseSecurityUserGroupPeer.php';
+require_once 'lib/model/om/BaseSecurityUserGroupPeer.php';
 
 
 /**
  * Skeleton subclass for performing query and update operations on the 'security_user_group' table.
  *
- * 
+ *
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as

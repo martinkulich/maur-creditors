@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseCurrency.php';
+require_once 'lib/model/om/BaseCurrency.php';
 
 
 /**

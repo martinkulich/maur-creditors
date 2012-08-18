@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BasePayment.php';
+require_once 'lib/model/om/BasePayment.php';
 
 /**
  * Skeleton subclass for representing a row from the 'payment' table.

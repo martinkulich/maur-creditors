@@ -36,7 +36,7 @@ abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper 
 
   public function linkToReset($params)
   {
-    return '<li class="sf_admin_action_filters">'.link_to(__($params['label'], array(), 'sf_admin'), '@'.$this->getUrlForAction('reset'), array('class'=>'')).'</li>';
+    return '<li class="sf_admin_action_filters text-red">'.link_to(__($params['label'], array(), 'sf_admin'), '@'.$this->getUrlForAction('reset'), array('class'=>'')).'</li>';
   }
 
 

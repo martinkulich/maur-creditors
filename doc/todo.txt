@@ -123,13 +123,14 @@ dotazat se pred ukoncenim smlouvy
 
 pri uzavreni smlouvy pouzit vyplacenou castku jako platbu jine smlouvy
 
+
 ///
 //pri uzavreni smlouvy smazat vsechny nasledne vyporadani
 
 
 //zvyraznit pouze zmenene cislo
 //zvetsit modularni okno - veritele a smlouvu do nadpisu
-//pridat datum platby u vyplaty uroku, nemusi korespondovat s datumem vypoctu uroku
+//pridat datumq platby u vyplaty uroku, nemusi korespondovat s datumem vypoctu uroku
 
 //skryvani neaktivnich smluv ne u plateb
 
@@ -143,3 +144,11 @@ filtrovat ve vyporadani uroku
 
 proverit vsechny formulare a optimalizovat pomoci javascript
 
+settlement unikatni na datum a smlouvu
+//vyplaty uroku sumacni radek posunuty
+//pri ukonceni smlouvy pouze smlouvy daneho veritele
+//pri ukoncovani rozdelit castku na ponizeni jistiny a kumulativne nevyporadano
+//default filter settlement mesic tam i zpet
+//tlacitko filter zvyraznit, aby bylo videt ze bylo filtrovano
+
+//filtrovat proveril...???

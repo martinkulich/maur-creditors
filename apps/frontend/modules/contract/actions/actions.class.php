@@ -86,17 +86,18 @@ class contractActions extends autoContractActions
 
     public function executeClosingAmount(sfWebRequest $request)
     {
-        $closingAmount = 0;
+        $closingAmount = array(
+            'unsettled' => 0,
+            'balance_reduction' => 0,
+        );
+
         $contract = ContractPeer::retrieveByPK($request->getParameter('id'));
         $date = new DateTime($request->getParameter('date'));
 
         if ($contract) {
-            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, $date);
+            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, $date, true);
         }
-        $result = array(
-            'unsettled' => $closingAmount,
-        );
 
-        $this->data = json_encode($result);
+        $this->data = json_encode($closingAmount);
     }
 }

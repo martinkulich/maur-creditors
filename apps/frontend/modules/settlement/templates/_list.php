@@ -30,6 +30,8 @@
               </th>
               <th>
               </th>
+              <th>
+              </th>
               <th class="text-align-right">
                       <?php echo my_format_currency($sums['interest'], $currencyCode) ?>
               </th>

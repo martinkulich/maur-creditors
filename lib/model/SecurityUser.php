@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseSecurityUser.php';
+require_once 'lib/model/om/BaseSecurityUser.php';
 
 /**
  * Skeleton subclass for representing a row from the 'security_user' table.

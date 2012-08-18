@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BasePaymentPeer.php';
+require_once 'lib/model/om/BasePaymentPeer.php';
 
 /**
  * Skeleton subclass for performing query and update operations on the 'payment' table.

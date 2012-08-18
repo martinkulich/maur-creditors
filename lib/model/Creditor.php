@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseCreditor.php';
+require_once 'lib/model/om/BaseCreditor.php';
 
 /**
  * Skeleton subclass for representing a row from the 'creditor' table.
