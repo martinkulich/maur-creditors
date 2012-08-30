@@ -132,7 +132,7 @@ class settlementActions extends autoSettlementActions
 
         if ($contract) {
             $date = new Datetime($request->getParameter('date'));
-
+            $requestHasDate = $request->hasParameter('date');
             $contractService = ServiceContainer::getContractService();
             $settlement = SettlementPeer::retrieveByPK($request->getParameter('settlement_id'));
             if (!$settlement) {
@@ -141,6 +141,10 @@ class settlementActions extends autoSettlementActions
                 $settlementDate = $date;
             } else {
                 $settlementDate = new DateTime($settlement->getDate());
+                if(!$requestHasDate)
+                {
+                    $date = $settlementDate;
+                }
             }
             $settlement->setContract($contract);
 

@@ -16,7 +16,7 @@ generator:
       fields:  ~
       list:
         batch_actions: []
-        display: [creditor_type, firstname, lastname, email, phone, bank_account, city, street, zip]
+        display: [creditor_type, firstname, lastname, birth_date, email, phone, bank_account, city, street, zip]
         actions:
           _new: ~
           filters: ~

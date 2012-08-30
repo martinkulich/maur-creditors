@@ -26,6 +26,7 @@ abstract class BaseCreditorForm extends BaseFormPropel
       'street'                => new sfWidgetFormInputText(),
       'zip'                   => new sfWidgetFormInputText(),
       'note'                  => new sfWidgetFormTextarea(),
+      'birth_date'            => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -41,6 +42,7 @@ abstract class BaseCreditorForm extends BaseFormPropel
       'street'                => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'zip'                   => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'note'                  => new sfValidatorString(array('required' => false)),
+      'birth_date'            => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('creditor[%s]');

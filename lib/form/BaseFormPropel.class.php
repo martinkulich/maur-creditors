@@ -21,4 +21,20 @@ abstract class BaseFormPropel extends sfFormPropel
         unset($this->widgetSchema[$field]);
     }
 
+    public function getParentFormName()
+    {
+        return null;
+    }
+
+
+    public function getFullFormName()
+    {
+        $fullFormName = $this->getName();
+        if($parentFormName = $this->getParentFormName())
+        {
+            $fullFormName = $parentFormName.'_'.$fullFormName;
+        }
+
+        return $fullFormName;
+    }
 }

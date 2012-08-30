@@ -152,3 +152,18 @@ settlement unikatni na datum a smlouvu
 //tlacitko filter zvyraznit, aby bylo videt ze bylo filtrovano
 
 //filtrovat proveril...???
+
+//Moznost vzdy rucne zadat uroky/jistinu
+
+pokud je smlouva ukoncena predpis pocitat pouze k datu posledniho vyporadani.
+pozor na rucne zadany urok, aby se pocitalo spravne
+
+rucne zadane uroky v predpisech zvyraznit stejne jako u vyplat uroku
+
+filtrovani podle roku vyporadani v predpisech
+
+pri ukonceni se zeptat zda opravdu ukoncit nebo ukoncit a reaktivovat
+
+pri kliknuti na nazev smlouvy overit spravnost filtru v tabulce settlement
+
+pri reaktivaci pouzit castu suma vyplatit a ponizeni jistiny tzn. castka vyplaty = vyplaceno + ponizeni jistiny

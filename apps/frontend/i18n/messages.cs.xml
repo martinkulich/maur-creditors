@@ -1753,5 +1753,9 @@
       <source>Save and reuse</source>
       <target>Uložit a reaktivovat</target>
     </trans-unit>
+    <trans-unit id="439">
+      <source>Birth date</source>
+      <target>Datum narození</target>
+    </trans-unit>
   </body>
 </xliff>

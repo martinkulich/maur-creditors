@@ -34,8 +34,7 @@ class SettlementForm extends BaseSettlementForm
 
         $contractId = $this->getObject()->getContractId() ? $this->getObject()->getContractId() : 0;
 
-        if($contractId)
-        {
+        if ($contractId) {
             $now = new DateTime('now');
             $this->getWidget('date')->setDefault($now->format('Y-m-d'));
         }
@@ -46,14 +45,22 @@ class SettlementForm extends BaseSettlementForm
             $this->getObject()->setDate($now);
         }
 
+        $fullFormName = $this->getFullFormName();
+
         $dateOnChange = "
-            calculateSettlement(%settlement_id%, '#settlement_contract_id', %contract_id%, '#settlement_date_date','#settlement_interest', '%interest_url%', '#settlement_manual_interest');
-            calculateSettlement(%settlement_id%, '#settlement_contract_id', %contract_id%, '#settlement_date_date','#settlement_balance', '%balance_url%', '#settlement_manual_balance');
+            calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%','%interest_field_selector%', '%interest_url%', '%manual_interest_field_selector%');
+            calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%','%balance_field_selector%', '%balance_url%', '%manual_balance_field_selector%');
             ";
         $replacements = array(
             '%contract_id%' => $contractId,
             '%interest_url%' => url_for('@settlement_interest'),
             '%balance_url%' => url_for('@settlement_balance'),
+            '%date_field_selector%' => '#' . $fullFormName . '_date_date',
+            '%contract_field_selector%' => '#' . $fullFormName . '_contract_id',
+            '%interest_field_selector%' => '#' . $fullFormName . '_interest',
+            '%balance_field_selector%' => '#' . $fullFormName . '_balance',
+            '%manual_interest_field_selector%' => '#' . $fullFormName . '_manual_interest',
+            '%manual_balance_field_selector%' => '#' . $fullFormName . '_manual_balance',
             '%settlement_id%' => $this->getObject()->isNew() ? 0 : $this->getObject()->getId(),
         );
         $dateOnChange = str_replace(array_keys($replacements), $replacements, $dateOnChange);
@@ -95,34 +102,38 @@ class SettlementForm extends BaseSettlementForm
             'settlement_type',
         );
 
-        if ($this->getObject()->getSettlementType() != SettlementPeer::MANUAL) {
+        $activableFields = array(
+            'interest',
+            'balance'
+        );
+
+
+        foreach ($activableFields as $field) {
+            $onUncheck = "calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%','#%selector%', '%url%');";
+            $replacements = array(
+                '%contract_id%' => $contractId,
+                '%url%' => url_for('@settlement_' . $field),
+                '%selector%' => $fullFormName . '_' . $field,
+                '%contract_field_selector%' => '#' . $fullFormName . '_contract_id',
+                '%date_field_selector%' => '#' . $fullFormName . '_date_date',
+                '%settlement_id%' => $this->getObject()->isNew() ? 0 : $this->getObject()->getId(),
+            );
+            $onUncheck = str_replace(array_keys($replacements), $replacements, $onUncheck);
+
+            $checkboxWidgetName = 'manual_' . $field;
+            $getter = sfInflector::camelize('get_' . $checkboxWidgetName);
+            $this->setWidget($field, new myWidgetFormActivableInput(array('on_uncheck' => $onUncheck, 'checked' => $this->getObject()->$getter(), 'widget_name' => $checkboxWidgetName, 'widget' => $this->getWidget($checkboxWidgetName), 'form_name'=>$this->getName(), 'parent_form_name'=>$this->getParentFormName())));
+
+            $widgetSchema = $this->getWidgetSchema();
+            unset($widgetSchema[$checkboxWidgetName]);
+        }
+
+        //zatim nechat moznost vzdy editovat
+        if ($this->getObject()->getSettlementType() != SettlementPeer::MANUAL && false) {
             $fieldsToUnset[] = 'interest';
             $fieldsToUnset[] = 'balance';
             $fieldsToUnset[] = 'manual_balance';
             $fieldsToUnset[] = 'manual_interest';
-        } else {
-            $activableFields = array(
-                'interest',
-                'balance'
-            );
-
-            foreach ($activableFields as $field) {
-                $onUncheck = "calculateSettlement(%settlement_id%, '#settlement_contract_id', %contract_id%, '#settlement_date_date','#%selector%', '%url%');";
-                $replacements = array(
-                    '%contract_id%' => $contractId,
-                    '%url%' => url_for('@settlement_'.$field),
-                    '%selector%'=>'settlement_'.$field,
-                    '%settlement_id%' => $this->getObject()->isNew() ? 0 : $this->getObject()->getId(),
-                );
-                $onUncheck = str_replace(array_keys($replacements), $replacements, $onUncheck);
-                $checkboxWidgetName = 'manual_' . $field;
-                $getter = sfInflector::camelize('get_' . $checkboxWidgetName);
-                $checkboxWidgetNameRenderName = 'settlement[' . $checkboxWidgetName . ']';
-                $this->setWidget($field, new myWidgetFormActivableInput(array('on_uncheck'=>$onUncheck,'checked' => $this->getObject()->$getter(), 'checkbox_widget_render_name' => $checkboxWidgetNameRenderName, 'checkbox_widget' => $this->getWidget($checkboxWidgetName))));
-
-                $widgetSchema = $this->getWidgetSchema();
-                unset($widgetSchema[$checkboxWidgetName]);
-            }
         }
 
         if (!in_array($this->getObject()->getSettlementType(), array(SettlementPeer::MANUAL, SettlementPeer::CLOSING))) {
@@ -139,6 +150,7 @@ class SettlementForm extends BaseSettlementForm
         }
     }
 
+
     public function doSave($con = null)
     {
         $contractService = ServiceContainer::getContractService();
@@ -149,10 +161,19 @@ class SettlementForm extends BaseSettlementForm
                 $settlement->setContract($contract);
             }
 
-            $settlement->setSettlementType(SettlementPeer::MANUAL);
+            $settlementType = $this->getValue('settlement_type');
+            if (!$settlementType) {
+                $settlementType = SettlementPeer::MANUAL;
+            }
+            $settlement->setSettlementType($settlementType);
             $settlement->setDate($this->getValue('date'));
-            $settlement->setBalance($contractService->getBalanceForSettlement($settlement));
-            $settlement->setInterest($contractService->getInterestForSettlement($settlement));
+            if (!$this->getValue('manual_balance')) {
+                $settlement->setBalance($contractService->getBalanceForSettlement($settlement));
+            }
+
+            if (!$this->getValue('manual_interest')) {
+                $settlement->setInterest($contractService->getInterestForSettlement($settlement));
+            }
         }
         parent::doSave($con);
         $settlement->reload();

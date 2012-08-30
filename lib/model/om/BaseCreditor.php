@@ -91,6 +91,12 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	protected $note;
 
 	/**
+	 * The value for the birth_date field.
+	 * @var        string
+	 */
+	protected $birth_date;
+
+	/**
 	 * @var        array Contract[] Collection to store aggregation of Contract objects.
 	 */
 	protected $collContracts;
@@ -236,6 +242,39 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function getNote()
 	{
 		return $this->note;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [birth_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getBirthDate($format = 'Y-m-d H:i:s')
+	{
+		if ($this->birth_date === null) {
+			return null;
+		}
+
+
+
+		try {
+			$dt = new DateTime($this->birth_date);
+		} catch (Exception $x) {
+			throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->birth_date, true), $x);
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -479,6 +518,55 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	} // setNote()
 
 	/**
+	 * Sets the value of [birth_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Creditor The current object (for fluent API support)
+	 */
+	public function setBirthDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->birth_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->birth_date !== null && $tmpDt = new DateTime($this->birth_date)) ? $tmpDt->format('Y-m-d\\TH:i:sO') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d\\TH:i:sO') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->birth_date = ($dt ? $dt->format('Y-m-d\\TH:i:sO') : null);
+				$this->modifiedColumns[] = CreditorPeer::BIRTH_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setBirthDate()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -522,6 +610,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			$this->street = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->zip = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->note = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->birth_date = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -531,7 +620,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 13; // 13 = CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Creditor object", $e);
@@ -916,6 +1005,9 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			case 11:
 				return $this->getNote();
 				break;
+			case 12:
+				return $this->getBirthDate();
+				break;
 			default:
 				return null;
 				break;
@@ -949,6 +1041,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			$keys[9] => $this->getStreet(),
 			$keys[10] => $this->getZip(),
 			$keys[11] => $this->getNote(),
+			$keys[12] => $this->getBirthDate(),
 		);
 		return $result;
 	}
@@ -1016,6 +1109,9 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			case 11:
 				$this->setNote($value);
 				break;
+			case 12:
+				$this->setBirthDate($value);
+				break;
 		} // switch()
 	}
 
@@ -1052,6 +1148,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setStreet($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setZip($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setNote($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setBirthDate($arr[$keys[12]]);
 	}
 
 	/**
@@ -1075,6 +1172,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(CreditorPeer::STREET)) $criteria->add(CreditorPeer::STREET, $this->street);
 		if ($this->isColumnModified(CreditorPeer::ZIP)) $criteria->add(CreditorPeer::ZIP, $this->zip);
 		if ($this->isColumnModified(CreditorPeer::NOTE)) $criteria->add(CreditorPeer::NOTE, $this->note);
+		if ($this->isColumnModified(CreditorPeer::BIRTH_DATE)) $criteria->add(CreditorPeer::BIRTH_DATE, $this->birth_date);
 
 		return $criteria;
 	}
@@ -1150,6 +1248,8 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		$copyObj->setZip($this->zip);
 
 		$copyObj->setNote($this->note);
+
+		$copyObj->setBirthDate($this->birth_date);
 
 
 		if ($deepCopy) {

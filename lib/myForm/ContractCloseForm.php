@@ -38,11 +38,10 @@ class ContractCloseForm extends ContractForm
         $contractService = ServiceContainer::getContractService();
         $closingSettlementValues = $this->getValue('closing_settlement');
         $closingSettlementForm = $this->getEmbeddedForm('closing_settlement');
-        $closingSettlement = $closingSettlementForm->getObject();
 
-        $closingSettlement->setDate($closingSettlementValues['date']);
-        $closingSettlement->setBalance($contractService->getBalanceForSettlement($closingSettlement));
-        $closingSettlement->setInterest($contractService->getInterestForSettlement($closingSettlement));
-    parent::doSave($con);
+        $closingSettlementForm->updateObject($closingSettlementValues);
+        $closingSettlement = $closingSettlementForm->getObject();
+        $closingSettlement->save($con);
+        parent::doSave($con);
     }
 }

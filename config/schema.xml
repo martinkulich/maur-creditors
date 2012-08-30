@@ -33,6 +33,7 @@
     <column name="street" phpName="Street" type="VARCHAR" required="false"/>
     <column name="zip" phpName="Zip" type="VARCHAR" required="false"/>
     <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
+    <column name="birth_date" phpName="BirthDate" type="TIMESTAMP" required="false"/>
   </table>
   <table name="currency" phpName="Currency">
     <column name="code" phpName="Code" type="CHAR" size="3" primaryKey="true" required="true"/>
