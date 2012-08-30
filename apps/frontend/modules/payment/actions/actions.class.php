@@ -56,8 +56,12 @@ class paymentActions extends autoPaymentActions
         $this->payment->setPaymentType(PaymentService::REACTIONVATION);
         $contract = ContractPeer::retrieveByPK($request->getParameter('contract_id'));
         if ($contract) {
-            $this->payment->setAmount(ServiceContainer::getContractService()->getContractClosingAmount($contract));
             $this->payment->setContract($contract);
+
+            $closingSettlement = $contract->getLastSettlement(SettlementPeer::CLOSING);
+            if ($closingSettlement) {
+                $this->payment->setAmount($closingSettlement->getPaid()+$closingSettlement->getBalanceReduction());
+            }
         }
         $this->form = $this->configuration->getForm($this->payment);
         $this->setTemplate('new');
