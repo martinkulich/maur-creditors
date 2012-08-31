@@ -53,7 +53,7 @@ class contractActions extends autoContractActions
 
         if ($request->isMethod('post')) {
             $this->processForm($request, $this->form);
-            ServiceContainer::getMessageService()->addFromErrors($this->form->getEmbeddedForm('closing_settlement'), true);
+            ServiceContainer::getMessageService()->addFromErrors($this->form);
         }
     }
 

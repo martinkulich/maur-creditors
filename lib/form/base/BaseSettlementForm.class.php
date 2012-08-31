@@ -49,6 +49,10 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'date_of_payment'   => new sfValidatorDate(array('required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Settlement', 'column' => array('contract_id', 'date')))
+    );
+
     $this->widgetSchema->setNameFormat('settlement[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

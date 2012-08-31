@@ -50,10 +50,14 @@ class settlementActions extends autoSettlementActions
 
     public function executeContractFilter(sfWebRequest $request)
     {
-        $filters = $this->getFilters();
-        $filters['contract_id'] = $request->getParameter('contract_id');
-        $this->setFilters($filters);
-
+        $contractId = $request->getParameter('contract_id');
+        $contract = ContractPeer::retrieveByPK($contractId);
+        if ($contract) {
+            $filters = $this->getFilters();
+            $filters['contract_id'] = $contractId;
+            $filters['creditor_id'] = $contract->getCreditorId();
+            $this->setFilters($filters);
+        }
         return $this->redirect('@settlement');
     }
 
@@ -141,8 +145,7 @@ class settlementActions extends autoSettlementActions
                 $settlementDate = $date;
             } else {
                 $settlementDate = new DateTime($settlement->getDate());
-                if(!$requestHasDate)
-                {
+                if (!$requestHasDate) {
                     $date = $settlementDate;
                 }
             }
@@ -212,15 +215,13 @@ class settlementActions extends autoSettlementActions
     protected function getFilters()
     {
         $filters = $this->getUser()->getAttribute('settlement.filters', $this->configuration->getFilterDefaults(), 'admin_module');
-        if(!isset($filters['date']['from']))
-        {
+        if (!isset($filters['date']['from'])) {
             $date = new DateTime('now');
             $date->modify('-1 month');
             $filters['date']['from'] = $date->format('Y-m-d');
         }
 
-        if(!isset($filters['date']['to']))
-        {
+        if (!isset($filters['date']['to'])) {
             $date = new DateTime('now');
             $date->modify('+1 month');
             $filters['date']['to'] = $date->format('Y-m-d');

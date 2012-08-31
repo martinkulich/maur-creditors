@@ -1757,5 +1757,13 @@
       <source>Birth date</source>
       <target>Datum narození</target>
     </trans-unit>
+    <trans-unit id="440">
+      <source>Regulation year</source>
+      <target>Rok</target>
+    </trans-unit>
+    <trans-unit id="441">
+      <source>An object with the same "contract_id, date" already exist.</source>
+      <target>Vypořádání úroků pro tuto smlouvu a datum již existue</target>
+    </trans-unit>
   </body>
 </xliff>

@@ -1048,7 +1048,7 @@ abstract class BaseSettlementPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('contract_id', 'date'));
 	}
 
 	// symfony_behaviors behavior

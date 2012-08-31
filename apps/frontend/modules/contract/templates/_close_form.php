@@ -5,10 +5,21 @@
 <div class="modal-body">
     <?php include_component('default','flashes') ?>
     <?php echo $form->renderHiddenFields(false) ?>
+    <?php echo $form->renderGlobalErrors() ?>
+    <?php $renderOptions = array()?>
+    <?php $error = $form['closing_settlement']->hasError() ?  $form['closing_settlement']->getError() : null?>
+    <?php if($error && $error instanceof sfValidatorErrorSchema){?>
+        <?php foreach($error->getErrors() as $suberror){?>
+            <div class="alert alert-error" >
+                <a class="close" data-dismiss="alert">×</a>
+                <?php echo __($suberror->getMessage(), $error->getArguments()); ?>
+            </div>
+        <?php }?>
+    <?php }?>
     <?php foreach ($form as $key=>$field): ?>
         <?php if(!$field->isHidden()){ ?>
           <?php if($key != 'closing_settlement'){ ?>
-            <?php include_partial('contract/form_field_horizontal', array( 'form' => $form, 'key' => $key)) ?>
+              <?php include_partial('contract/form_field_horizontal', array( 'form' => $form, 'key' => $key)) ?>
           <?php }else{ ?>
               <?php include_partial('contract/closing_settlement', array( 'form' => $form)) ?>
           <?php } ?>
@@ -18,8 +29,7 @@
 </div>
 <div class="modal-footer">
     <ul class="sf_admin_actions">
-        <?php echo $helper->linkToSave($form->getObject(), array(  'params' =>   array(  ),  'class_suffix' => 'save',  'label' => 'Save',)) ?>
-        <?php echo $helper->linkToSaveAndReuse($form->getObject(), array(  'params' =>   array(  ),  'class_suffix' => 'save',  'label' => 'Save and reuse',)) ?>
+        <?php echo $helper->linkToSaveOrReuse() ?>
     </ul>
 </div>
 </form>

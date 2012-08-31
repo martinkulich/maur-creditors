@@ -9,7 +9,6 @@ class ClosingSettlementForm extends SettlementForm
         $fieldsToUnset = array(
             'creditor_id',
             'capitalized',
-            'contract_id',
         );
 
         $this->getWidget('paid')->setLabel('To pay');
@@ -17,6 +16,9 @@ class ClosingSettlementForm extends SettlementForm
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
+
+
+        $this->setWidget('contract_id', new sfWidgetFormInputHidden());
 
         $contract = $this->getObject()->getContract();
         $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, null, true);

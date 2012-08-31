@@ -478,3 +478,5 @@
 'Payment type';'Typ platby'
 'Save and reuse';'Uložit a reaktivovat'
 'Birth date';'Datum narození'
+'Regulation year';'Rok'
+'An object with the same "contract_id, date" already exist.';'Vypořádání úroků pro tuto smlouvu a datum již existue'

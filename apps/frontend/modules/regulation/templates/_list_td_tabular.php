@@ -14,10 +14,10 @@
         <td class="sf_admin_date no-wrap-line sf_admin_list_td_contract_activated_at text-align-right">
   <?php echo false !== strtotime($regulation->getContractActivatedAt()) ? format_date($regulation->getContractActivatedAt(), "D") : '&nbsp;' ?>
 </td>
-        <td class="sf_admin_text sf_admin_list_td_contract_balance text-align-right">
+        <td class="sf_admin_text sf_admin_list_td_contract_balance text-align-right <?php if($regulation->hasManualBalance()) echo ' text-red ' ?>">
   <?php echo my_format_currency($regulation->getContractBalance(), $currencyCode) ?>
 </td>
-        <td class="sf_admin_text sf_admin_list_td_regulation text-align-center">
+        <td class="sf_admin_text sf_admin_list_td_regulation text-align-center <?php if($regulation->hasManualInterest()) echo ' text-red ' ?>">
   <?php echo my_format_currency($regulation->getRequlation(), $currencyCode) ?>
 </td>
         <td class="sf_admin_text sf_admin_list_td_paid text-align-right">

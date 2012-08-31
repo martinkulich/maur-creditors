@@ -59,7 +59,7 @@ class MessageService
             $this->addError($i18n->__($error->getMessageFormat(), $error->getArguments()));
         }
         foreach ($form->getEmbeddedForms() as $embeddedForm) {
-            $this->addFromErrors($embeddedForm);
+            $this->addFromErrors($embeddedForm, $debug);
         }
 
         if ($debug) {

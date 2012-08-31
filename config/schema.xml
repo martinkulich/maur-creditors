@@ -149,5 +149,9 @@
     <foreign-key foreignTable="contract" name="settlement_contract_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
     </foreign-key>
+    <unique name="settlement_date_contract_id_uidx">
+      <unique-column name="contract_id"/>
+      <unique-column name="date"/>
+    </unique>
   </table>
 </database>

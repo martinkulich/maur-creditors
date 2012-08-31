@@ -61,7 +61,7 @@ class ContractService
                 if ($contract->getClosedAt()) {
                     $closedAt = new DateTime($contract->getClosedAt());
                     $settlementDate = new DateTime($settlement->getDate());
-                    if ($closedAt < $settlementDate) {
+                    if ($closedAt < $settlementDate && $settlement->getSettlementType() !=SettlementPeer::CLOSING) {
                         $settlement->delete();
                         continue;
                     }
