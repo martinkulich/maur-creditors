@@ -25,7 +25,6 @@ generator:
       list:
         display: [creditor_fullname, contract_name, regulation_year, start_balance, contract_activated_at, contract_balance, regulation, paid, paid_for_current_year, capitalized, teoretically_to_pay_in_current_year, unpaid, end_balance]
         actions:
-          _new: ~
           filters: ~
           reset: ~
           printList:

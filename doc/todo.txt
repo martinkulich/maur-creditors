@@ -167,3 +167,24 @@ settlement unikatni na datum a smlouvu
 //pri kliknuti na nazev smlouvy overit spravnost filtru v tabulce settlement
 
 //pri reaktivaci pouzit castu suma vyplatit a ponizeni jistiny tzn. castka vyplaty = vyplaceno + ponizeni jistiny
+
+////////////
+zarovnani na velky display u vyplat uroku
+
+31.3 - 1.7 ma byt 90 dni a je to 91
+
+teoreticky dovyplatit
+
+role
+    admin
+    ucetni
+        vydi
+            predpisy
+            vyplaty uroku
+            prijate platby
+
+        nemuze zadavat manualni veci
+    sprace dane
+        zobrazit a filtrovat predpisy
+
+zalohy - DB

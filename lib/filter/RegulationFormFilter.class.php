@@ -54,8 +54,7 @@ class RegulationFormFilter extends BaseRegulationFormFilter
 
     public function addRegulationYearColumnCriteria(Criteria $criteria, $field, $value)
     {
-        if ($value) {
-//            die(var_dump($value, (integer) $value));
+        if ($value && $value['text']) {
             $criteria->add(RegulationPeer::REGULATION_YEAR, $value['text']);
         }
         return $criteria;
