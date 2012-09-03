@@ -13,7 +13,9 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        birth_date:
+          date_format: D
       list:
         batch_actions: []
         display: [creditor_type, firstname, lastname, birth_date, email, phone, bank_account, city, street, zip]
