@@ -129,7 +129,7 @@ class SettlementForm extends BaseSettlementForm
         }
 
         //zatim nechat moznost vzdy editovat
-        if ($this->getObject()->getSettlementType() != SettlementPeer::MANUAL && false) {
+        if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
             $fieldsToUnset[] = 'interest';
             $fieldsToUnset[] = 'balance';
             $fieldsToUnset[] = 'manual_balance';

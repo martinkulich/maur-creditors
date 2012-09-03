@@ -1,8 +1,0 @@
-newSuccess:
-  layout: layoutModal
-
-editSuccess:
-  layout: layoutModal
-
-BatchSend_mailSuccess:
-  layout: layoutModal

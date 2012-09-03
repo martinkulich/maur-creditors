@@ -12,7 +12,6 @@ class ProjectConfiguration extends sfProjectConfiguration
         $this->enablePlugins(array(
             'sfPropelPlugin',
             'securityPlugin',
-            'reservationPlugin',
             ));
     }
 

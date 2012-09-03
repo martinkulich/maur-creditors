@@ -47,30 +47,25 @@ class defaultComponents extends sfComponents
         $this->adminLinks = array(
             'security_user',
             'ip_address',
+            'rights',
         );
         $pattern = '%s.admin';
         $user = $this->getUser();
         foreach ($this->adminLinks as $key => $link) {
             $credential = sprintf($pattern, $link);
             if (!$user->hasCredential($credential)) {
-//                unset($this->adminLinks[$key]);
+                unset($this->adminLinks[$key]);
             }
         }
 
-        foreach ($this->mainLinks as $link) {
+        foreach ($this->mainLinks as $key=>$link) {
             $credential = sprintf($pattern, $link);
             if (!$user->hasCredential($credential)) {
-//                unset($this->adminLinks[$key]);
+                unset($this->mainLinks[$key]);
             }
         }
         $this->activeLinkIsAdministrationLink = in_array($this->activeLink, $this->adminLinks) || $this->activeLink == 'rights';
 
-        $this->userHasCredentialForReports = $user->hasCredential('report.admin');
-        $this->reportLinks = array(
-            'reservations'
-        );
-
-        $this->activeLinkIsReportLink = in_array($this->activeLink, $this->reportLinks);
     }
 
     public function executeFlashes()

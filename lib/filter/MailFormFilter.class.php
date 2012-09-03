@@ -16,7 +16,6 @@ class MailFormFilter extends BaseMailFormFilter
         $fieldsToUnset = array(
             'created_at',
             'created_by_user_id',
-            'playground_id',
         );
 
         foreach($fieldsToUnset as $field)
@@ -25,14 +24,6 @@ class MailFormFilter extends BaseMailFormFilter
         }
 
         $this->getWidget('send')->setLabel('Sended');
-    }
-
-    public function doBuildCriteria(array $values)
-    {
-        $criteria = parent::doBuildCriteria($values);
-        $criteria->add(MailPeer::PLAYGROUND_ID, ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId());
-
-        return $criteria;
     }
 
 }

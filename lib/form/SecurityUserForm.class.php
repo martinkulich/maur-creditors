@@ -122,7 +122,6 @@ class SecurityUserForm extends BaseSecurityUserForm
         $criteria->add(SecurityUserPeer::ID, $this->object->getPrimaryKey());
         $criteria->addJoin(SecurityUserPeer::ID, SecurityUserGroupPeer::USER_ID);
         $criteria->addJoin(SecurityUserGroupPeer::GROUP_ID, SecurityGroupPeer::ID);
-        $criteria->add(SecurityGroupPeer::PLAYGROUND_ID, ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId());
         foreach (SecurityUserGroupPeer::doSelect($criteria, $con) as $securityUserGroup) {
             $securityUserGroup->delete($con);
         }

@@ -42,7 +42,7 @@ all:
     secure_module:          security   # To be called when a user doesn't have
     secure_action:          secure    # The credentials required for an action
 
-    enabled_modules:        [default, security, reservation]
+    enabled_modules:        [default, security]
 
     i18n:                   true
 

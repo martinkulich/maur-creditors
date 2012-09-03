@@ -36,8 +36,6 @@ class ReportForm extends BaseForm
             'paid' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
         ));
 
-        $playgroundId = ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId();
-
         $sportCriteria = $this->getSportCriteria();
         $sportsCount = SportPeer::doCount($sportCriteria);
         if ($sportsCount > 1) {
@@ -48,7 +46,6 @@ class ReportForm extends BaseForm
         }
 
         $priceCategoryCriteria = new Criteria();
-        $priceCategoryCriteria->add(PriceCategoryPeer::PLAYGROUND_ID, $playgroundId);
         $priceCategoryCriteria->addAscendingOrderByColumn(PriceCategoryPeer::NAME);
         $priceCategoriesCount = PriceCategoryPeer::doCount($priceCategoryCriteria);
         if ($priceCategoriesCount > 1) {
@@ -88,15 +85,5 @@ class ReportForm extends BaseForm
         }
 
         return $usedFields;
-    }
-
-    protected function getSportCriteria()
-    {
-        $sportCriteria = new Criteria();
-        $sportCriteria->add(PlaygroundSportPeer::PLAYGROUND_ID, ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId());
-        $sportCriteria->addJoin(PlaygroundSportPeer::SPORT_ID, SportPeer::ID);
-        $sportCriteria->addAscendingOrderByColumn(SportPeer::NAME);
-
-        return $sportCriteria;
     }
 }
