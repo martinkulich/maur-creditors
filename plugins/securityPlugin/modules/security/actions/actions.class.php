@@ -3,47 +3,30 @@
 class securityActions extends sfActions
 {
 
+    protected function onRightsChange()
+    {
+        $this->getUser()->reauthenticate();
+    }
+
     public function executeRights(sfWebRequest $request)
     {
-        $playgroundId = ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId();
         $criteria = new Criteria();
-        if (!$this->getUser()->hasCredential('show_non_public_perms')) {
-            $criteria->add(SecurityPermPeer::IS_PUBLIC, true);
-        }
         $this->perms = SecurityPermPeer::doSelect($criteria);
 
-        $criteria = new Criteria();
-
-        $criteria->add(SecurityRolePeer::PLAYGROUND_ID, $playgroundId);
         $this->roles = SecurityRolePeer::doSelect($criteria);
 
-        $criteria = new Criteria();
-        $criteria->addJoin(PlaygroundUserPeer::USER_ID, SecurityUserPeer::ID);
-        $criteria->add(PlaygroundUserPeer::PLAYGROUND_ID, $playgroundId);
         $this->users = SecurityUserPeer::doSelect($criteria);
 
-        $criteria = new Criteria();
-        $criteria->add(SecurityRolePeer::PLAYGROUND_ID, $playgroundId);
-        $criteria->addJoin(SecurityRolePeer::ID, SecurityRolePermPeer::ROLE_ID);
         $this->rolePerms = array();
         foreach (SecurityRolePermPeer::doSelectJoinAll($criteria) as $rolePerm) {
             $this->rolePerms[$rolePerm->getRoleId()][$rolePerm->getPermId()] = $rolePerm;
         }
 
-        $criteria = new Criteria();
-        $criteria->addJoin(SecurityRolePeer::ID, SecurityUserRolePeer::ROLE_ID);
-        $criteria->add(SecurityRolePeer::PLAYGROUND_ID, $playgroundId);
-        $criteria->addJoin(PlaygroundUserPeer::USER_ID, SecurityUserRolePeer::USER_ID);
-        $criteria->add(PlaygroundUserPeer::PLAYGROUND_ID, $playgroundId);
         $this->userRoles = array();
         foreach (SecurityUserRolePeer::doSelectJoinAll($criteria) as $userRole) {
             $this->userRoles[$userRole->getUserId()][$userRole->getRoleId()] = $userRole;
         }
 
-        $criteria = new Criteria();
-        $criteria->addJoin(PlaygroundUserPeer::USER_ID, SecurityUserPermPeer::USER_ID);
-        $criteria->add(PlaygroundUserPeer::PLAYGROUND_ID, $playgroundId);
-        $criteria->add(SecurityUserPermPeer::PLAYGROUND_ID, $playgroundId);
         $this->userPerms = array();
         foreach (SecurityUserPermPeer::doSelectJoinAll($criteria) as $userPerm) {
             $this->userPerms[$userPerm->getUserId()][$userPerm->getPermId()] = $userPerm;
@@ -51,30 +34,16 @@ class securityActions extends sfActions
 
         $this->roleForm = new SecurityRoleForm();
 
-
-        $this->playgroundUserForm = $this->getPlaygroundForm();
-
         if ($request->isMethod('post')) {
-            $requestedRole = $request->getParameter($this->roleForm->getName());
-            $requestedPlaygroundUser = $request->getParameter($this->playgroundUserForm->getName());
-            if ($requestedRole) {
-                $this->roleForm->bind($requestedRole);
-            }
-
-            if ($requestedPlaygroundUser) {
-                $this->playgroundUserForm->bind($requestedPlaygroundUser);
-            }
+            $this->roleForm->bind($request->getParameter($this->roleForm->getName()));
         }
     }
 
     public function executeDeleteRole(sfWebRequest $request)
     {
         $roleId = $request->getParameter('id');
-        $role = SecurityRolePeer::retrieveByPK($roleId);
-        $this->checkObjectEditCredential($role->getPlayground());
-        $role->delete();
-        $notice = 'Role deleted successfully';
-        ServiceContainer::getMessageService()->addSuccess($notice);
+        $role = SecurityRolePeer::doDelete($roleId);
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -87,74 +56,10 @@ class securityActions extends sfActions
             $this->roleForm->save();
             $notice = 'Role created successfully';
             ServiceContainer::getMessageService()->addSuccess($notice);
+            $this->onRightsChange();
             return $this->redirect('@rights');
         } else {
             $error = 'Role creating failed';
-            ServiceContainer::getMessageService()->addError($error);
-        }
-
-        return $this->forward('security', 'rights');
-    }
-
-    public function executeDeletePlaygroundUser(sfWebRequest $request)
-    {
-        $userId = $request->getParameter('user_id');
-        $user = SecurityUserPeer::retrieveByPK($userId);
-        $this->forward404Unless($user);
-
-        $playgroundId = ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId();
-
-        $criteria = new Criteria();
-        $criteria->add(PlaygroundUserPeer::USER_ID, $userId);
-        $criteria->add(PlaygroundUserPeer::PLAYGROUND_ID, $playgroundId);
-        $playgroundUser = PlaygroundUserPeer::doSelectOne($criteria);
-        if ($playgroundUser) {
-            $playgroundUser->delete();
-        }
-
-        //smazani jeho roly a prav na dane hriste
-        $criteria = new Criteria();
-        $criteria->addJoin(SecurityRolePeer::ID, SecurityUserRolePeer::ROLE_ID);
-        $criteria->add(SecurityRolePeer::PLAYGROUND_ID, $playgroundId);
-        $criteria->add(SecurityUserRolePeer::USER_ID, $userId);
-
-        foreach (SecurityUserRolePeer::doSelect($criteria) as $userRole) {
-            $userRole->delete();
-        }
-
-
-        $criteria = new Criteria();
-        $criteria->add(SecurityUserPermPeer::PLAYGROUND_ID, $playgroundId);
-        $criteria->add(SecurityUserPermPeer::USER_ID, $userId);
-
-        foreach (SecurityUserPermPeer::doSelect($criteria) as $userPerm) {
-            $userPerm->delete();
-        }
-
-        $notice = 'User deleted successfully';
-        ServiceContainer::getMessageService()->addSuccess($notice);
-
-        return $this->redirect('@rights');
-    }
-
-    public function executeCreatePlaygroundUser(sfWebRequest $request)
-    {
-        $this->playgroundUserForm = $this->getPlaygroundForm();
-
-        $this->playgroundUserForm->bind($request->getParameter($this->playgroundUserForm->getName()));
-        if ($this->playgroundUserForm->isValid()) {
-            try {
-                $this->playgroundUserForm->save();
-            } catch (Exception $exc) {
-                $error = $exc->getMessage();
-                $error = 'Unable to add user';
-                ServiceContainer::getMessageService()->addError($error);
-            }
-            $notice = 'Users added succesfully';
-            ServiceContainer::getMessageService()->addSuccess($notice);
-            return $this->redirect('@rights');
-        } else {
-            $error = 'User adding failed';
             ServiceContainer::getMessageService()->addError($error);
         }
 
@@ -165,24 +70,23 @@ class securityActions extends sfActions
     {
         $userId = $request->getParameter('user_id');
         $permId = $request->getParameter('perm_id');
-        $playgroundId = ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId();
 
         $criteria = new Criteria();
         $criteria->add(SecurityUserPermPeer::USER_ID, $userId);
         $criteria->add(SecurityUserPermPeer::PERM_ID, $permId);
-        $criteria->add(SecurityUserPermPeer::PLAYGROUND_ID, $playgroundId);
 
         if (!SecurityUserPermPeer::doSelectOne($criteria)) {
             $userPerm = new SecurityUserPerm();
             $userPerm->setUserId($userId);
             $userPerm->setPermId($permId);
-            $userPerm->setPlaygroundId($playgroundId);
 
             $userPerm->save();
 
             $notice = 'Perm added successfully';
             ServiceContainer::getMessageService()->addSuccess($notice);
         }
+
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -190,18 +94,16 @@ class securityActions extends sfActions
     {
         $userId = $request->getParameter('user_id');
         $permId = $request->getParameter('perm_id');
-        $playgroundId = ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId();
 
         $criteria = new Criteria();
         $criteria->add(SecurityUserPermPeer::USER_ID, $userId);
         $criteria->add(SecurityUserPermPeer::PERM_ID, $permId);
-        $criteria->add(SecurityUserPermPeer::PLAYGROUND_ID, $playgroundId);
 
         SecurityUserPermPeer::doDelete($criteria);
 
         $notice = 'Perm deleted successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);
-
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -209,10 +111,6 @@ class securityActions extends sfActions
     {
         $userId = $request->getParameter('user_id');
         $roleId = $request->getParameter('role_id');
-        $role = SecurityRolePeer::retrieveByPK($roleId);
-        $this->forward404Unless($role);
-        $this->checkObjectEditCredential($role->getPlayground());
-
 
         $criteria = new Criteria();
         $criteria->add(SecurityUserRolePeer::USER_ID, $userId);
@@ -228,6 +126,7 @@ class securityActions extends sfActions
             $notice = 'Role added successfully';
             ServiceContainer::getMessageService()->addSuccess($notice);
         }
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -237,7 +136,6 @@ class securityActions extends sfActions
         $roleId = $request->getParameter('role_id');
         $role = SecurityRolePeer::retrieveByPK($roleId);
         $this->forward404Unless($role);
-        $this->checkObjectEditCredential($role->getPlayground());
 
         $criteria = new Criteria();
         $criteria->add(SecurityUserRolePeer::USER_ID, $userId);
@@ -248,6 +146,7 @@ class securityActions extends sfActions
         $notice = 'Role removed successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);
 
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -256,7 +155,6 @@ class securityActions extends sfActions
         $roleId = $request->getParameter('role_id');
         $role = SecurityRolePeer::retrieveByPK($roleId);
         $this->forward404Unless($role);
-        $this->checkObjectEditCredential($role->getPlayground());
 
         $permId = $request->getParameter('perm_id');
 
@@ -274,6 +172,8 @@ class securityActions extends sfActions
             $notice = 'Perm added successfully';
             ServiceContainer::getMessageService()->addSuccess($notice);
         }
+
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -281,7 +181,6 @@ class securityActions extends sfActions
     {
         $roleId = $request->getParameter('role_id');
         $role = SecurityRolePeer::retrieveByPK($roleId);
-        $this->checkObjectEditCredential($role->getPlayground());
 
         $permId = $request->getParameter('perm_id');
 
@@ -294,6 +193,7 @@ class securityActions extends sfActions
         $notice = 'Perm deleted successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);
 
+        $this->onRightsChange();
         return $this->redirect('@rights');
     }
 
@@ -324,7 +224,7 @@ class securityActions extends sfActions
                     ServiceContainer::getMessageService()->addError($error);
                 }
             } else {
-                ServiceContainer::getMessageService()->addFromErrors($this->form);
+                ServiceContainer::getMessageService()->addFormErrors($this->form);
             }
         }
 
@@ -362,21 +262,6 @@ class securityActions extends sfActions
         }
     }
 
-    public function executeRegistration($request)
-    {
-        if ($this->getUser()->isAuthenticated()) {
-            return $this->redirect('@homepage');
-        }
-
-        $this->form = new RegistrationForm();
-
-        if ($request->isMethod('post')) {
-            $this->processRegistrationForm($request, $this->form);
-        }
-
-        $this->loginForm = new LoginForm();
-    }
-
     public function executeForgottenPassword($request)
     {
         $this->form = new ForgottenPasswordForm();
@@ -402,33 +287,6 @@ class securityActions extends sfActions
             ServiceContainer::getMessageService()->addSuccess($success);
 
             return $this->redirect('@account');
-        }
-    }
-
-    protected function processRegistrationForm(sfWebRequest $request, sfForm $form)
-    {
-        $translationService = ServiceContainer::getTranslateService();
-
-        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-        if ($form->isValid()) {
-            $form->save();
-            $notice = $translationService->__('registration_successfull');
-            ServiceContainer::getMessageService()->addSuccess($notice);
-
-            $user = $form->getObject();
-            if ($this->sendRegistrationMail($form)) {
-                $notice = $translationService->__('registration_mail_send');
-                ServiceContainer::getMessageService()->addSuccess($notice);
-
-                $login['email'] = $form->getValue('email');
-//                $this->getUser()->login($login, false);
-                return $this->redirect('@login');
-            } else {
-                $error = $translationService->__('registration_mail_send_failed');
-                ServiceContainer::getMessageService()->addError($error);
-            }
-        } else {
-            ServiceContainer::getMessageService()->addFromErrors($form);
         }
     }
 
@@ -476,48 +334,10 @@ class securityActions extends sfActions
         return $send;
     }
 
-    protected function sendRegistrationMail(securityUserForm $form)
-    {
-        $culture = ServiceContainer::getTranslateService()->getCulture();
-
-        $replacements['%password%'] = $form->getValue('password');
-        $replacements['%url%'] = $this->getHomepageUrl();
-
-
-        $registrationMailSubject = sfConfig::get('app_registration_mail_subject_' . $culture);
-        $registrationMailSubject = str_replace(array_keys($replacements), $replacements, $registrationMailSubject);
-
-        $registrationMailMessage = sfConfig::get('app_registration_mail_message_' . $culture);
-        $registrationMailMessage = str_replace(array_keys($replacements), $replacements, $registrationMailMessage);
-
-        $send = $this->getMailer()->composeAndSend(array(MAILER_FROM_ADDRESS => MAILER_FROM_NAME), $form->getValue('email'), $registrationMailSubject, $registrationMailMessage);
-
-        return $send;
-    }
-
-    protected function getHomepageUrl($withPlayground = false)
+    protected function getHomepageUrl()
     {
         $url = $this->generateUrl('homepage', array(), true);
 
-        if (!$withPlayground) {
-            $slug = ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getSlug();
-            $url = str_replace($slug . '.', '', $url);
-        }
-
         return $url;
-    }
-
-    protected function getPlaygroundForm()
-    {
-        $playgroundUser = new PlaygroundUser();
-        $playgroundUser->setPlayground(ServiceContainer::getPlaygroundService()->getCurrentPlayground());
-        return new PlaygroundUserForm($playgroundUser);
-    }
-
-    protected function checkObjectEditCredential(Playground $playground)
-    {
-        if ($playground->getId() != ServiceContainer::getPlaygroundService()->getCurrentPlayground()->getId()) {
-            return $this->forward('security', 'secure');
-        }
     }
 }

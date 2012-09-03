@@ -65,6 +65,13 @@ class mySecurityUser extends sfBasicSecurityUser
         $this->setAuthenticated(true);
     }
 
+    public function reauthenticate()
+    {
+        $securityUser = $this->getSecurityUser();
+        $this->logout();
+        $this->authenticate($securityUser);
+    }
+
     public function getId()
     {
         return $this->getAttribute('security_user_id');

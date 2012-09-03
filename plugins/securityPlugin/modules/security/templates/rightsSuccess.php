@@ -69,10 +69,7 @@
     </tr>
     <?php foreach($users as $user){?>
         <tr>
-            <td class="delete_playground_user">
-                    <?php echo link_to('<i class="icon-trash icon-white"></i>', '@delete_playground_user?user_id='.$user->getId(), array('title'=>__('Delete playground user'), 'class'=>'btn btn-mini btn-danger'));?>
-            </td>
-            <td>
+            <td colspan="2">
                 <?php echo $user->getFullName();?>
             </td>
         <?php foreach($roles as $role){?>
@@ -95,18 +92,5 @@
         <?php }?>
         </tr>
     <?php }?>
-    <tr>
-        <form action="<?php echo url_for('@create_playground_user')?>" method="post">
-        <td >
-            <button title="<?php echo __('Add playground user')?>" class="btn btn-mini btn-success">
-                 <i class="icon-plus icon-white"></i>
-            </button>
-        </td>
-        <td>
-            <?php include_partial('default/form', array('form'=>$playgroundUserForm))?>
-        </td>
-        </form>
-        <td colspan="<?php echo count($perms)+count($roles)?>"></td>
-    </tr>
     </tbody>
 </table>
