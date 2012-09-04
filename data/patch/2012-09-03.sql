@@ -47,6 +47,30 @@ $BODY$
   LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
   COST 100;
 
+
+CREATE OR REPLACE FUNCTION interest_to_end_of_year(_settlement_id integer)
+  RETURNS numeric AS
+$BODY$
+  DECLARE
+    _interest numeric(15,2);
+    _is_closing_settlement bool;
+  BEGIN
+    SELECT settlement_type = 'closing' FROM settlement WHERE id = _settlement_id INTO _is_closing_settlement;
+
+    IF _is_closing_settlement THEN
+        _interest = 0;
+    ELSE
+        select  ((settlement_year(s.id) || '-12-31' )::date - s.date)::numeric/365::numeric * c.interest_rate/100 * s.balance
+        from settlement s JOIN contract c ON c.id = s.contract_id
+        where s.id = _settlement_id INTO _interest;
+     END IF;
+
+  RETURN _interest;
+  END;
+  $BODY$
+  LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
+  COST 100;
+
 CREATE OR REPLACE VIEW regulation AS
  SELECT (sy.year || '_'::text) || c.id AS id, (cr.lastname::text || ' '::text) || cr.firstname::text AS creditor_fullname, c.name AS contract_name, c.id AS contract_id, sy.year AS regulation_year,
         CASE date_part('year'::text, c.activated_at)
@@ -77,27 +101,3 @@ CREATE OR REPLACE VIEW regulation AS
    LEFT JOIN last_settlement_of_year lsocy ON lsocy.contract_id = c.id AND lsocy.year = sy.year
   GROUP BY s.contract_id, c.id, c.name, c.activated_at, c.amount, cr.firstname, cr.lastname, lsopy.id, lsopy.date, lsopy.year, c.interest_rate, lsopy.balance, lsocy.id, sy.year;
 
-
-
-CREATE OR REPLACE FUNCTION interest_to_end_of_year(_settlement_id integer)
-  RETURNS numeric AS
-$BODY$
-  DECLARE
-    _interest numeric(15,2);
-    _is_closing_settlement bool;
-  BEGIN
-    SELECT settlement_type = 'closing' FROM settlement WHERE id = _settlement_id INTO _is_closing_settlement;
-
-    IF _is_closing_settlement THEN
-        _interest = 0;
-    ELSE
-        select  ((settlement_year(s.id) || '-12-31' )::date - s.date)::numeric/365::numeric * c.interest_rate/100 * s.balance
-        from settlement s JOIN contract c ON c.id = s.contract_id
-        where s.id = _settlement_id INTO _interest;
-     END IF;
-
-  RETURN _interest;
-  END;
-  $BODY$
-  LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
-  COST 100;

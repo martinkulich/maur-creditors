@@ -13,6 +13,7 @@
                 <?php echo $closingSettlementForm[$key]->renderLabel(null, array('class'=>'control-label'))?>
             <div class="controls">
                 <?php echo $closingSettlementForm[$key]->render($renderOptions)?>
+                <i><?php echo $closingSettlementForm[$key]->renderHelp();?></i>
             </div>
         </div>
     <?php }?>

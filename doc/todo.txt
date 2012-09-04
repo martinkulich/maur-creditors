@@ -174,3 +174,7 @@ zarovnani na velky display u vyplat uroku
 zalohy - DB
 
 vypocet predpisu nezahrnuje rucne upravene uroky
+
+rucni zadani datumu u ukonceni smlouvy
+
+oddelit po tisicich
