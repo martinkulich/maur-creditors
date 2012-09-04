@@ -171,20 +171,6 @@ settlement unikatni na datum a smlouvu
 ////////////
 zarovnani na velky display u vyplat uroku
 
-31.3 - 1.7 ma byt 90 dni a je to 91
-
-teoreticky dovyplatit
-
-role
-    admin
-    ucetni
-        vydi
-            predpisy
-            vyplaty uroku
-            prijate platby
-
-        nemuze zadavat manualni veci
-    sprace dane
-        zobrazit a filtrovat predpisy
-
 zalohy - DB
+
+vypocet predpisu nezahrnuje rucne upravene uroky
