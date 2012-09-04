@@ -47,7 +47,13 @@ $(document).ready(function(){
                             $('body').addClass('without-submenu');
                         }
 
-                        $(target).modal('show');
+                        $(target).modal(
+                            {
+                                'show': true,
+                                'backdrop': false,
+                                'keyboard':false
+                            }
+                        );
                     }
                 }
 
