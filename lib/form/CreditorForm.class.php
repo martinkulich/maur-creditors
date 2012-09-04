@@ -19,6 +19,6 @@ class CreditorForm extends BaseCreditorForm
         $this->setValidator('creditor_type_code', new sfValidatorChoice(array('choices' => array_keys($typeChoices), 'required' => true)));
 
         $this->setWidget('birth_date', new myJQueryDateWidget());
-        $this->setValidator('birth_date', new myValidatorDate());
+        $this->setValidator('birth_date', new myValidatorDate(array('required'=>false)));
     }
 }
