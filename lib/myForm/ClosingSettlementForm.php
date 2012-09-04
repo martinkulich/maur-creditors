@@ -35,7 +35,7 @@ class ClosingSettlementForm extends SettlementForm
         }
         $this->getWidget('date')->setAttribute('onChange', $onChange);
 
-        $this->getWidgetSchema()->setHelp('date', 'Datum použité k výpočtu úroků. Při rekativaci smlouvy nastavit na datum aktivace nové smlouvy.');
+        $this->getWidgetSchema()->setHelp('date', 'Datum použité k výpočtu úroků.<br />Při rekativaci smlouvy nastavit na datum aktivace nové smlouvy.');
         $this->getWidgetSchema()->setHelp('date_of_payment', 'Datum odchazí platby.');
 
     }
