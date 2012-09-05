@@ -1769,5 +1769,9 @@
       <source>An object with the same "date, contract_id" already exist.</source>
       <target>Vypořádání úroků pro tuto smlouvu a datum již existue</target>
     </trans-unit>
+    <trans-unit id="443">
+      <source>Reuse as reactivation</source>
+      <target>Ukončit smlouvu reaktivací</target>
+    </trans-unit>
   </body>
 </xliff>
