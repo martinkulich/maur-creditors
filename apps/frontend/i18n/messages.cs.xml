@@ -1765,5 +1765,9 @@
       <source>An object with the same "contract_id, date" already exist.</source>
       <target>Vypořádání úroků pro tuto smlouvu a datum již existue</target>
     </trans-unit>
+    <trans-unit id="442">
+      <source>An object with the same "date, contract_id" already exist.</source>
+      <target>Vypořádání úroků pro tuto smlouvu a datum již existue</target>
+    </trans-unit>
   </body>
 </xliff>

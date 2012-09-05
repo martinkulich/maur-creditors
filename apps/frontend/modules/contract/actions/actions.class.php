@@ -52,12 +52,12 @@ class contractActions extends autoContractActions
         $this->form = new ContractCloseForm($this->contract);
 
         if ($request->isMethod('post')) {
-            $this->processForm($request, $this->form);
+            $this->processClosingForm($request, $this->form);
             ServiceContainer::getMessageService()->addFromErrors($this->form);
         }
     }
 
-    protected function processForm(sfWebRequest $request, sfForm $form)
+    protected function processClosingForm(sfWebRequest $request, sfForm $form)
     {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
@@ -69,11 +69,11 @@ class contractActions extends autoContractActions
 
             $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $contract)));
 
-            $redirect = array('sf_route' => 'contract_edit', 'sf_subject' => $contract);
+            $redirect = '@contract';
 
-            if ($request->getParameter('save_and_reuse', false)) {
-                $request->setParameter('contract_id', $contract->getId());
+            $closingSettlement = $contract->getLastSettlement(SettlementPeer::CLOSING);
 
+            if ($closingSettlement && $closingSettlement->getCalculateFirstDate()) {
                 return $this->forward('payment', 'newReactivation');
             }
 
@@ -90,12 +90,12 @@ class contractActions extends autoContractActions
             'unsettled' => 0,
             'balance_reduction' => 0,
         );
-
+        $contractService = ServiceContainer::getContractService();
         $contract = ContractPeer::retrieveByPK($request->getParameter('id'));
         $date = new DateTime($request->getParameter('date'));
 
         if ($contract) {
-            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, $date, true);
+            $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, $date, $request->getParameter('calculate_first_date'));
         }
 
         $this->data = json_encode($closingAmount);

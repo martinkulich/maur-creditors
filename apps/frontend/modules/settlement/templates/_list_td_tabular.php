@@ -15,7 +15,7 @@
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_date_of_payment text-align-right">
     <?php echo false !== strtotime($settlement->getDateOfPayment()) ? format_date($settlement->getDateOfPayment(), "D") : '&nbsp;' ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_days_count text-align-right">
+<td class="sf_admin_text sf_admin_list_td_days_count text-align-right <?php echo $settlement->getCalculateFirstDate() ? ' text-red ' : '' ?>">
     <?php echo ServiceContainer::getContractService()->getDaysCount($settlement) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_balance text-align-right <?php echo $settlement->getManualBalance() ? ' text-red ' : '' ?>">

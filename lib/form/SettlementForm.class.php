@@ -47,25 +47,6 @@ class SettlementForm extends BaseSettlementForm
 
         $fullFormName = $this->getFullFormName();
 
-        $dateOnChange = "
-            calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%','%interest_field_selector%', '%interest_url%', '%manual_interest_field_selector%');
-            calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%','%balance_field_selector%', '%balance_url%', '%manual_balance_field_selector%');
-            ";
-        $replacements = array(
-            '%contract_id%' => $contractId,
-            '%interest_url%' => url_for('@settlement_interest'),
-            '%balance_url%' => url_for('@settlement_balance'),
-            '%date_field_selector%' => '#' . $fullFormName . '_date_date',
-            '%contract_field_selector%' => '#' . $fullFormName . '_contract_id',
-            '%interest_field_selector%' => '#' . $fullFormName . '_interest',
-            '%balance_field_selector%' => '#' . $fullFormName . '_balance',
-            '%manual_interest_field_selector%' => '#' . $fullFormName . '_manual_interest',
-            '%manual_balance_field_selector%' => '#' . $fullFormName . '_manual_balance',
-            '%settlement_id%' => $this->getObject()->isNew() ? 0 : $this->getObject()->getId(),
-        );
-        $dateOnChange = str_replace(array_keys($replacements), $replacements, $dateOnChange);
-        $this->getWidget('date')->setAttribute('onChange', $dateOnChange);
-
         if (!$this->getObject()->isNew()) {
             $amountFields = array(
                 'paid',
@@ -97,6 +78,7 @@ class SettlementForm extends BaseSettlementForm
         }
         $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=settlement'), 'settlement_creditor_id', 'settlement_contract_id', 'creditor_id'));
 
+        $this->setWidget('calculate_first_date', new sfWidgetFormInputHidden());
 
         $fieldsToUnset = array(
             'settlement_type',
@@ -107,26 +89,32 @@ class SettlementForm extends BaseSettlementForm
             'balance'
         );
 
+        $calculateSettlement = '';
 
         foreach ($activableFields as $field) {
-            $onUncheck = "calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%','#%selector%', '%url%');";
+            $onUncheck = "calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%', '%calculate_first_date_field_selector%','%selector%', '%url%', '%manual_field_selector%');";
             $replacements = array(
                 '%contract_id%' => $contractId,
                 '%url%' => url_for('@settlement_' . $field),
-                '%selector%' => $fullFormName . '_' . $field,
+                '%selector%' => '#' . $fullFormName . '_' . $field,
                 '%contract_field_selector%' => '#' . $fullFormName . '_contract_id',
                 '%date_field_selector%' => '#' . $fullFormName . '_date_date',
+                '%calculate_first_date_field_selector%' => '#' . $fullFormName . '_calculate_first_date',
                 '%settlement_id%' => $this->getObject()->isNew() ? 0 : $this->getObject()->getId(),
+                '%manual_field_selector%' => '#' . $fullFormName . '_manual_' . $field,
             );
             $onUncheck = str_replace(array_keys($replacements), $replacements, $onUncheck);
+            $calculateSettlement .= ' ' . $onUncheck;
 
             $checkboxWidgetName = 'manual_' . $field;
             $getter = sfInflector::camelize('get_' . $checkboxWidgetName);
-            $this->setWidget($field, new myWidgetFormActivableInput(array('on_uncheck' => $onUncheck, 'checked' => $this->getObject()->$getter(), 'widget_name' => $checkboxWidgetName, 'widget' => $this->getWidget($checkboxWidgetName), 'form_name'=>$this->getName(), 'parent_form_name'=>$this->getParentFormName())));
+            $this->setWidget($field, new myWidgetFormActivableInput(array('on_uncheck' => $onUncheck, 'checked' => $this->getObject()->$getter(), 'widget_name' => $checkboxWidgetName, 'widget' => $this->getWidget($checkboxWidgetName), 'form_name' => $this->getName(), 'parent_form_name' => $this->getParentFormName())));
 
             $widgetSchema = $this->getWidgetSchema();
             unset($widgetSchema[$checkboxWidgetName]);
         }
+        $this->getWidget('date')->setAttribute('onChange', $calculateSettlement);
+        $this->getWidget('calculate_first_date')->setAttribute('onChange', $calculateSettlement);
 
         //zatim nechat moznost vzdy editovat
         if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
@@ -142,14 +130,18 @@ class SettlementForm extends BaseSettlementForm
 
         if (!$this->getObject()->isNew()) {
             $fieldsToUnset[] = 'creditor_id';
-            $fieldsToUnset[] = 'contract_id';
+
+            $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         }
 
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
-    }
 
+        $this->validatorSchema->setPostValidator(
+            new sfValidatorPropelUnique(array('model' => 'Settlement', 'column' => array('date', 'contract_id')), array('invalid'=>'An object with the same "date, contract_id" already exist.'))
+        );
+    }
 
     public function doSave($con = null)
     {

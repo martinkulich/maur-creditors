@@ -48,11 +48,11 @@ $(document).ready(function(){
                         }
 
                         $(target).modal(
-                            {
-                                'show': true,
-                                'backdrop': false,
-                                'keyboard':false
-                            }
+                        {
+                            'show': true,
+                            'backdrop': false,
+                            'keyboard':false
+                        }
                         );
                     }
                 }
@@ -224,14 +224,29 @@ function updateSelectBox(url, selector, target, paramName, filter)
     });
 }
 
-function calculateContractClosingAmount(selector,unsettled_target, balance_reduction_target, url)
+function calculateContractClosingAmount(selector,unsettled_target, balance_reduction_target, calculateFirstDateSelector, url)
 {
     var date = $(selector).val();
+
+    var calculateFirstDate = false;
+    if($(calculateFirstDateSelector).length !=0)
+    {
+        if($(calculateFirstDateSelector).is(':checked'))
+        {
+            calculateFirstDate = 1;
+        }
+        else
+        {
+            calculateFirstDate = 0;
+        }
+
+    }
 
     $result = $.get(
         url,
         {
-            date: date
+            date: date,
+            calculate_first_date: calculateFirstDate
         },
         function(data) {
         });
@@ -242,7 +257,7 @@ function calculateContractClosingAmount(selector,unsettled_target, balance_reduc
 }
 
 
-function calculateSettlement(settlement_id, contractSelector, contract_id, dateSelector,target, url, checkboxSelector)
+function calculateSettlement(settlement_id, contractSelector, contract_id, dateSelector, calculateFirstDateSelector, target, url, checkboxSelector)
 {
     var date = $(dateSelector).val();
     if($(contractSelector).length !=0)
@@ -256,6 +271,20 @@ function calculateSettlement(settlement_id, contractSelector, contract_id, dateS
         checked = $(checkboxSelector).is(':checked');
     }
 
+    var calculateFirstDate = false;
+    if($(calculateFirstDateSelector).length !=0)
+    {
+        if($(calculateFirstDateSelector).is(':checked'))
+        {
+            calculateFirstDate = 1;
+        }
+        else
+        {
+            calculateFirstDate = 0;
+        }
+
+    }
+
     if(!checked)
     {
         $result = $.get(
@@ -263,7 +292,8 @@ function calculateSettlement(settlement_id, contractSelector, contract_id, dateS
             {
                 date: date,
                 contract_id: contract_id,
-                settlement_id: settlement_id
+                settlement_id: settlement_id,
+                calculate_first_date: calculateFirstDate
             }
             );
 

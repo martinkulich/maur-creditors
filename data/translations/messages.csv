@@ -480,3 +480,4 @@
 'Birth date';'Datum narození'
 'Regulation year';'Rok'
 'An object with the same "contract_id, date" already exist.';'Vypořádání úroků pro tuto smlouvu a datum již existue'
+'An object with the same "date, contract_id" already exist.';'Vypořádání úroků pro tuto smlouvu a datum již existue'

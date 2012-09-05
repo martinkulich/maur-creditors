@@ -176,6 +176,7 @@ table.table-admin
     background-color: #FAA732;
 }
 
+.text-red label,
 .text-red,
 .text-red a
 {
@@ -455,6 +456,7 @@ table.table-prices a
 {
     display: block;
 }
+
 
 @media (max-width: 979px) {
     body {

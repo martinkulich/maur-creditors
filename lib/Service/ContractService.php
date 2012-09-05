@@ -97,6 +97,11 @@ class ContractService
         }
     }
 
+    public function generateEndOfYearsSettlements(Contract $contract)
+    {
+
+    }
+
     public function addEndOfFirstyearSettlementForContractIfNotExists(Contract $contract)
     {
         $contractActivatedAt = $contract->getActivatedAt();
@@ -116,19 +121,6 @@ class ContractService
         }
 
         return $endOfFirstyearSettlement;
-    }
-
-    public function addClosingSettlementForContract(Contract $contract)
-    {
-        $contractClosedAt = $contract->getClosedAt();
-        if (!$contractClosedAt) {
-            throw new Exception('Contract is not closed');
-        }
-
-        $closingSettlementDate = new DateTime($contractClosedAt);
-        $closingSettlementDate->modify('-1 day');
-
-        return $this->addSettlementForContract($contract, SettlementPeer::CLOSING, $closingSettlementDate);
     }
 
     public function addSettlementForContract(Contract $contract, $settlementType = SettlementPeer::IN_PERIOD, DateTime $date = null)
@@ -195,10 +187,7 @@ class ContractService
             $balance = $this->getBalanceForSettlement($settlement);
         }
 
-        $dateFrom = $this->getPreviousDateForSettlement($settlement);
-        $dateTo = new DateTime($settlement->getDate());
-
-        $interest = $balance * $contract->getInterestRate() / 100 * $this->getDaysDiff($dateFrom, $dateTo) / 360;
+        $interest = $balance * $contract->getInterestRate() / 100 * $this->getDaysCount($settlement) / 360;
         $criteria = new Criteria();
         $criteria->add(SettlementPeer::DATE, $settlement->getDate());
         $criteria->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
@@ -210,7 +199,7 @@ class ContractService
         return $interest;
     }
 
-    public function getDaysDiff(DateTime $dateFrom, DateTime $dateTo)
+    public function getDaysDiff(DateTime $dateFrom, DateTime $dateTo, $calculateFirstDate = false)
     {
         $yearDiff = $dateTo->format('Y') - $dateFrom->format('Y');
         $monthDiff = $dateTo->format('m') - $dateFrom->format('m');
@@ -220,12 +209,12 @@ class ContractService
         $dayTo = $dayTo == 31 ? 30 : $dayTo;
         $dayDiff = $dayTo - $dayFrom;
 
-        return $yearDiff * 360 + $monthDiff * 30 + $dayDiff;
+        return $yearDiff * 360 + $monthDiff * 30 + $dayDiff + ($calculateFirstDate ? 1 : 0);
     }
 
     public function getDaysCount(Settlement $settlement)
     {
-        return $this->getDaysDiff($this->getPreviousDateForSettlement($settlement), new DateTime($settlement->getDate()));
+        return $this->getDaysDiff($this->getPreviousDateForSettlement($settlement), new DateTime($settlement->getDate()), $settlement->getCalculateFirstDate());
     }
 
     /**
@@ -247,7 +236,7 @@ class ContractService
     /**
      * @param Contract $contract
      */
-    public function getContractClosingAmount(Contract $contract, Datetime $date = null, $separately = false)
+    public function getContractClosingAmount(Contract $contract, Datetime $date = null, $calculateFirstDate = false)
     {
         $clossingSettlement = null;
         if ($date == null) {
@@ -260,7 +249,7 @@ class ContractService
             $settlement->setContract($contract);
             $settlement->setDate($date);
             $settlement->setBalance($this->getBalanceForSettlement($settlement));
-
+            $settlement->setCalculateFirstDate($calculateFirstDate);
             $interest = $this->getInterestForSettlement($settlement);
             $settlement->setInterest($interest);
             $unsettled += $settlement->getUnsettled();
@@ -273,11 +262,6 @@ class ContractService
             'balance_reduction' => $settlement->getBalance() - $settlement->getBalanceReduction(),
         );
 
-        if ($separately) {
-            $return = $closingAmount;
-        } else {
-            $return = $closingAmount['unsettled'] + $closingAmount['balance_reduction'];
-        }
-        return $return;
+        return $closingAmount;
     }
 }

@@ -52,6 +52,7 @@ class SettlementTableMap extends TableMap {
 		$this->addColumn('MANUAL_INTEREST', 'ManualInterest', 'BOOLEAN', true, null, false);
 		$this->addColumn('MANUAL_BALANCE', 'ManualBalance', 'BOOLEAN', true, null, false);
 		$this->addColumn('DATE_OF_PAYMENT', 'DateOfPayment', 'DATE', false, null, null);
+		$this->addColumn('CALCULATE_FIRST_DATE', 'CalculateFirstDate', 'BOOLEAN', false, null, false);
 		// validators
 	} // initialize()
 

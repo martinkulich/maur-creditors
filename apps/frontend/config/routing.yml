@@ -91,7 +91,7 @@ user:
     with_wildcard_routes: true
     collection_actions: {filters: get, filter: post, reset: get}
 
-contact_closing_amount:
+contract_closing_amount:
     url:   /:id/contract-closing-amount.json
     param: { module: contract, action: closingAmount, sf_format: json }
 

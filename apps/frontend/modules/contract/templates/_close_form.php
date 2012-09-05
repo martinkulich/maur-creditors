@@ -29,7 +29,7 @@
 </div>
 <div class="modal-footer">
     <ul class="sf_admin_actions">
-        <?php echo $helper->linkToSaveOrReuse() ?>
+        <?php echo $helper->linkToSave($contract, array('label'=>'Save')) ?>
     </ul>
 </div>
 </form>
