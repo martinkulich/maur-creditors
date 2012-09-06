@@ -56,15 +56,12 @@ class ContractService
     public function updateContractSettlements(contract $contract)
     {
         foreach ($contract->getSettlements() as $settlement) {
-            if ($settlement->getSettlementType() != SettlementPeer::MANUAL) {
-
-                if ($contract->getClosedAt()) {
-                    $closedAt = new DateTime($contract->getClosedAt());
-                    $settlementDate = new DateTime($settlement->getDate());
-                    if ($closedAt < $settlementDate && $settlement->getSettlementType() != SettlementPeer::CLOSING) {
-                        $settlement->delete();
-                        continue;
-                    }
+            if ($contract->getClosedAt()) {
+                $closedAt = new DateTime($contract->getClosedAt());
+                $settlementDate = new DateTime($settlement->getDate());
+                if ($closedAt < $settlementDate && $settlement->getSettlementType() != SettlementPeer::CLOSING) {
+                    $settlement->delete();
+                    continue;
                 }
             }
 

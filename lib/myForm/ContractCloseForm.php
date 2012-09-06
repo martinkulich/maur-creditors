@@ -42,6 +42,8 @@ class ContractCloseForm extends ContractForm
         $closingSettlementForm->updateObject($closingSettlementValues);
         $closingSettlement = $closingSettlementForm->getObject();
         $closingSettlement->save($con);
+        $closingSettlementForm->deleteSettlementOfSameDay();
+
         parent::doSave($con);
     }
 }

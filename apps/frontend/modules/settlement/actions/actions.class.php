@@ -16,7 +16,7 @@ class settlementActions extends autoSettlementActions
 
     public function executeIndex(sfWebRequest $request)
     {
-        //$this->checkContracts();
+//        $this->checkContracts();
         parent::executeIndex($request);
         $this->sums = $this->getSums();
     }
@@ -136,13 +136,27 @@ class settlementActions extends autoSettlementActions
         $contract = ContractPeer::retrieveByPK($request->getParameter('contract_id'));
 
         if ($contract) {
+            $calculate = false;
             $date = new Datetime($request->getParameter('date'));
             $requestHasDate = $request->hasParameter('date');
             $contractService = ServiceContainer::getContractService();
             $settlement = SettlementPeer::retrieveByPK($request->getParameter('settlement_id'));
             if (!$settlement) {
+                $criteria = new Criteria();
+                $criteria
+                    ->add(SettlementPeer::DATE, $date)
+                    ->add(SettlementPeer::CONTRACT_ID, $contract->getId());
+                $settlement = SettlementPeer::doSelectOne($criteria);
+                if ($settlement) {
+                    $settlement->setManualBalance(false);
+                    $settlement->setManualInterest(false);
+                    $calculate = true;
+                }
+            }
+            if (!$settlement) {
                 $settlement = new Settlement();
                 $settlement->setDate($date);
+                $settlement->setContract($contract);
                 $settlementDate = $date;
             } else {
                 $settlementDate = new DateTime($settlement->getDate());
@@ -150,15 +164,17 @@ class settlementActions extends autoSettlementActions
                     $date = $settlementDate;
                 }
             }
-            $settlement->setContract($contract);
 
             $format = 'Y-m-d';
-            $calculate = $settlementDate->format($format) != $date->format($format) || $settlement->isNew();
+            if (!$calculate) {
+                $calculate = $settlementDate->format($format) != $date->format($format) || $settlement->isNew();
+            }
             if ($calculate) {
                 $settlement->setDate($date);
             }
             if ($what == 'interest') {
                 if ($calculate) {
+
                     $amount = $contractService->getInterestForSettlement($settlement);
                 } else {
                     $amount = $settlement->getInterest();
@@ -234,8 +250,7 @@ class settlementActions extends autoSettlementActions
     protected function checkContracts()
     {
         $contractService = ServiceContainer::getContractService();
-        foreach(ContractPeer::doSelect(new Criteria()) as $contract)
-        {
+        foreach (ContractPeer::doSelect(new Criteria()) as $contract) {
             $contractService->checkContractChanges($contract);
         }
     }

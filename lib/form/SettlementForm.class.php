@@ -137,16 +137,13 @@ class SettlementForm extends BaseSettlementForm
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
-
-        $this->validatorSchema->setPostValidator(
-            new sfValidatorPropelUnique(array('model' => 'Settlement', 'column' => array('date', 'contract_id')), array('invalid'=>'An object with the same "date, contract_id" already exist.'))
-        );
     }
 
     public function doSave($con = null)
     {
         $contractService = ServiceContainer::getContractService();
         $settlement = $this->getObject();
+
         if ($settlement->isNew()) {
             $contract = ContractPeer::retrieveByPK($this->getValue('contract_id'));
             if ($contract) {
@@ -167,8 +164,24 @@ class SettlementForm extends BaseSettlementForm
                 $settlement->setInterest($contractService->getInterestForSettlement($settlement));
             }
         }
+        $this->deleteSettlementOfSameDay();
+        
         parent::doSave($con);
         $settlement->reload();
         $contractService->checkContractChanges($settlement->getContract());
+    }
+
+    public function deleteSettlementOfSameDay()
+    {
+        $settlement = $this->getObject();
+        $criteria = new Criteria();
+        $criteria
+            ->add(SettlementPeer::CONTRACT_ID, $settlement->getContract()->getId())
+            ->add(SettlementPeer::DATE, $settlement->getDate())
+        ->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
+        foreach(SettlementPeer::doSelect($criteria) as $settlementOfTheSameDay)
+        {
+            $settlementOfTheSameDay->delete($con);
+        }
     }
 }

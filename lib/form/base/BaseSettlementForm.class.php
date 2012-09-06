@@ -51,7 +51,6 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'calculate_first_date' => new sfValidatorBoolean(array('required' => false)),
     ));
 
-
     $this->widgetSchema->setNameFormat('settlement[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
