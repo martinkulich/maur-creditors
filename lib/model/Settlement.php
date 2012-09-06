@@ -86,6 +86,11 @@ class Settlement extends BaseSettlement
     {
         return $this->getContract()->getUnsettled(new DateTime($this->getDate()));
     }
+
+    public function isSettlementType($settlementType)
+    {
+        return $this->getSettlementType() == $settlementType;
+    }
 }
 
 // Settlement

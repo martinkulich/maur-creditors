@@ -16,6 +16,7 @@ class settlementActions extends autoSettlementActions
 
     public function executeIndex(sfWebRequest $request)
     {
+        //$this->checkContracts();
         parent::executeIndex($request);
         $this->sums = $this->getSums();
     }
@@ -228,5 +229,14 @@ class settlementActions extends autoSettlementActions
         }
 
         return $filters;
+    }
+
+    protected function checkContracts()
+    {
+        $contractService = ServiceContainer::getContractService();
+        foreach(ContractPeer::doSelect(new Criteria()) as $contract)
+        {
+            $contractService->checkContractChanges($contract);
+        }
     }
 }

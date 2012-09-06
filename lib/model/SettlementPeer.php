@@ -19,6 +19,7 @@ class SettlementPeer extends BaseSettlementPeer {
     const MANUAL = 'manual';
     const CLOSING = 'closing';
     const END_OF_FIRST_YEAR = 'end_of_first_year';
+    const END_OF_YEAR = 'end_of_year';
 
 
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)

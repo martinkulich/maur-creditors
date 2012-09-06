@@ -10,7 +10,7 @@
       <tbody>
         <?php foreach ($pager->getResults() as $i => $settlement): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                 <?php $currencyCode = $settlement->getContract()->getCurrencyCode()?>
-          <tr class="sf_admin_row <?php echo $odd.' ';?>">
+          <tr class="sf_admin_row <?php echo $odd.' '; echo ($settlement->isSettlementType(SettlementPeer::END_OF_YEAR) ? ' text-light-blue ' : '')?>">
             <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement)) ?>
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>

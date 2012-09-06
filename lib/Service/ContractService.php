@@ -7,7 +7,7 @@ class ContractService
     {
         $this->checkContractActivation($contract);
         if ($contract->getActivatedAt()) {
-            $this->addEndOfFirstyearSettlementForContractIfNotExists($contract);
+            $this->generateEndOfYearsSettlements($contract);
             $this->generateSettlementsForContract($contract);
             $this->updateContractSettlements($contract);
         }
@@ -99,7 +99,16 @@ class ContractService
 
     public function generateEndOfYearsSettlements(Contract $contract)
     {
-
+        foreach ($this->getYearsOfContract($contract) as $year) {
+            $lastDateOfYear = new DateTime($year . '-12-31');
+            $criteria = new Criteria();
+            $criteria
+                ->add(SettlementPeer::DATE, $lastDateOfYear)
+                ->add(SettlementPeer::CONTRACT_ID, $contract->getId());
+            if (SettlementPeer::doCount($criteria) == 0) {
+                $this->addSettlementForContract($contract, SettlementPeer::END_OF_YEAR, $lastDateOfYear);
+            }
+        }
     }
 
     public function addEndOfFirstyearSettlementForContractIfNotExists(Contract $contract)
@@ -121,6 +130,24 @@ class ContractService
         }
 
         return $endOfFirstyearSettlement;
+    }
+
+    protected function getYearsOfContract(Contract $contract)
+    {
+        $years = array();
+        if ($contract->getActivatedAt()) {
+            $yearFormat = 'Y';
+            $activatedAt = new DateTime($contract->getActivatedAt());
+            $year = $firstYear = (integer) $activatedAt->format($yearFormat);
+            $today = new DateTime('now');
+            $currentYear = $today->format($yearFormat);
+            while ($year <= $currentYear) {
+                $years[] = $year;
+                $year++;
+            }
+        }
+
+        return $years;
     }
 
     public function addSettlementForContract(Contract $contract, $settlementType = SettlementPeer::IN_PERIOD, DateTime $date = null)
