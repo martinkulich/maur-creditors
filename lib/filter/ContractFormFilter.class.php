@@ -30,6 +30,8 @@ class ContractFormFilter extends BaseContractFormFilter
         $periodChoices = array_merge(array(''=>''), Contract::getPeriods());
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
         $this->setValidator('period', new sfValidatorChoice(array('choices' => array_keys($periodChoices), 'required' => false)));
+
+        $this->getWidget('creditor_id')->setOption('order_by', array('Lastname', 'asc'));
     }
 
     public function addActivatedColumnCriteria(Criteria $criteria, $field, $value)
