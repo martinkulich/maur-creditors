@@ -40,6 +40,8 @@ class ContractForm extends BaseContractForm
         $this->getValidator('interest_rate')->setOption('min', 0);
         $this->getValidator('amount')->setOption('min', 0);
 
+        $this->getWidget('creditor_id')->setOption('order_by', array('Lastname', 'asc'));
+
         $fieldsToUnset = array(
             'activated_at',
             'closed_at',
