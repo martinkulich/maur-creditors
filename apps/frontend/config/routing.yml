@@ -47,7 +47,7 @@ settlement:
     column:               id
     with_wildcard_routes: true
     object_actions: {capitalize: get, pay: get}
-    collection_actions: {filters: get, filter: post, reset: get}
+    collection_actions: {filters: get, filter: post, reset: get, checkContracts: get}
 
 creditor:
   class: sfPropelRouteCollection

@@ -14,9 +14,19 @@ require_once dirname(__FILE__) . '/../lib/settlementGeneratorHelper.class.php';
 class settlementActions extends autoSettlementActions
 {
 
+    public function executeCheckContracts(sfWebRequest $request)
+    {
+        $contractService = ServiceContainer::getContractService();
+        foreach (ContractPeer::doSelect(new Criteria()) as $contract) {
+            $contractService->checkContractChanges($contract);
+        }
+
+        return $this->redirect('@settlement');
+    }
+
     public function executeIndex(sfWebRequest $request)
     {
-//        $this->checkContracts();
+//        $this->executeCheckContracts();
         parent::executeIndex($request);
         $this->sums = $this->getSums();
     }
@@ -277,13 +287,5 @@ class settlementActions extends autoSettlementActions
         }
 
         return $filters;
-    }
-
-    protected function checkContracts()
-    {
-        $contractService = ServiceContainer::getContractService();
-        foreach (ContractPeer::doSelect(new Criteria()) as $contract) {
-            $contractService->checkContractChanges($contract);
-        }
     }
 }
