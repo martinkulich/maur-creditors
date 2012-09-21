@@ -146,7 +146,6 @@
     <column name="manual_interest" phpName="ManualInterest" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="manual_balance" phpName="ManualBalance" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="date_of_payment" phpName="DateOfPayment" type="DATE" required="false"/>
-    <column name="calculate_first_date" phpName="CalculateFirstDate" type="BOOLEAN" required="false" defaultValue="false"/>
     <foreign-key foreignTable="contract" name="settlement_contract_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
     </foreign-key>

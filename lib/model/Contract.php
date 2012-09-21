@@ -76,10 +76,10 @@ class Contract extends BaseContract
      */
     public function getLastSettlement($settlementType = SettlementPeer::IN_PERIOD)
     {
-            $criteria = new Criteria();
-            $criteria->addDescendingOrderByColumn(SettlementPeer::DATE);
-            $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $settlementType);
-            $settlements = $this->getSettlements($criteria);
+        $criteria = new Criteria();
+        $criteria->addDescendingOrderByColumn(SettlementPeer::DATE);
+        $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $settlementType);
+        $settlements = $this->getSettlements($criteria);
 
         return reset($settlements);
     }
@@ -102,8 +102,7 @@ class Contract extends BaseContract
 
     public function getSettlements($criteria = null, PropelPDO $con = null)
     {
-        if(is_null($criteria))
-        {
+        if (is_null($criteria)) {
             $criteria = new Criteria();
         }
 
@@ -118,12 +117,10 @@ class Contract extends BaseContract
         $unsettled = 0;
         $criteria = new Criteria();
 
-        if($dateTo)
-        {
+        if ($dateTo) {
             $criteria->add(SettlementPeer::DATE, $dateTo, Criteria::LESS_EQUAL);
         }
-        foreach($this->getSettlements($criteria) as $settlement)
-        {
+        foreach ($this->getSettlements($criteria) as $settlement) {
             $unsettled += $settlement->getUnsettled(false);
         }
 
@@ -133,12 +130,27 @@ class Contract extends BaseContract
     public function getLastSettlementDate($ormat = 'Y-m-d')
     {
         $lastSettlementDate = $this->getActivatedAt($ormat);
-        if($lastSettlement = $this->getLastSettlement())
-        {
+        if ($lastSettlement = $this->getLastSettlement()) {
             $lastSettlementDate = $lastSettlement->getDate($ormat);
         }
 
         return $lastSettlementDate;
+    }
+
+    public function getSettlementForDate(DateTime $date, Criteria $criteria = null)
+    {
+        if (is_null($criteria)) {
+            $criteria = new Criteria();
+        }
+        $criteria->add(SettlementPeer::DATE, $date);
+        $settlementsForDate = $this->getSettlements($criteria);
+
+        $settlementForDate = null;
+        if (count($settlementsForDate) > 0) {
+            $settlementForDate = reset($settlementsForDate);
+        }
+
+        return $settlementForDate;
     }
 }
 

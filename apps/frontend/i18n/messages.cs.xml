@@ -1630,152 +1630,172 @@
       <target>Řádné</target>
     </trans-unit>
     <trans-unit id="408">
-      <source>closing</source>
-      <target>Při ukončení smlouvy</target>
+      <source>closing_by_reactivation</source>
+      <target>Ukončení – reaktivace</target>
     </trans-unit>
     <trans-unit id="409">
+      <source>closing</source>
+      <target>Ukončení smlouvy</target>
+    </trans-unit>
+    <trans-unit id="410">
       <source>manual</source>
       <target>Ručně zadané</target>
     </trans-unit>
-    <trans-unit id="410">
+    <trans-unit id="411">
       <source>end_of_first_year</source>
       <target>Konec prvního roku</target>
     </trans-unit>
-    <trans-unit id="411">
+    <trans-unit id="412">
       <source>Copy contract</source>
       <target>Kopírovat smlouvu</target>
     </trans-unit>
-    <trans-unit id="412">
+    <trans-unit id="413">
       <source>Close contract</source>
       <target>Ukončit smlouvu</target>
     </trans-unit>
-    <trans-unit id="413">
+    <trans-unit id="414">
       <source>Terminate</source>
       <target>Ukončit</target>
     </trans-unit>
-    <trans-unit id="414">
+    <trans-unit id="415">
       <source>Closing settlement</source>
       <target>Vypořádání</target>
     </trans-unit>
-    <trans-unit id="415">
+    <trans-unit id="416">
       <source>Settlment Date</source>
       <target>Datum vyplacení úroků</target>
     </trans-unit>
-    <trans-unit id="416">
+    <trans-unit id="417">
       <source>Contract interest rate</source>
       <target>Úroková míra</target>
     </trans-unit>
-    <trans-unit id="417">
+    <trans-unit id="418">
       <source>Unsettled cumulative</source>
       <target>Nevypořádáno kumulativně</target>
     </trans-unit>
-    <trans-unit id="418">
+    <trans-unit id="419">
       <source>PrintList</source>
       <target>Tisk</target>
     </trans-unit>
-    <trans-unit id="419">
+    <trans-unit id="420">
       <source>New ipAddress</source>
       <target>Nová IP adresa</target>
     </trans-unit>
-    <trans-unit id="420">
+    <trans-unit id="421">
       <source>Edit ipAddress</source>
       <target>Editace IP adresy</target>
     </trans-unit>
-    <trans-unit id="421">
+    <trans-unit id="422">
       <source>filter ipAddress</source>
       <target>Filtrovat IP adresy</target>
     </trans-unit>
-    <trans-unit id="422">
+    <trans-unit id="423">
       <source>Ip address</source>
       <target>IP adresa</target>
     </trans-unit>
-    <trans-unit id="423">
+    <trans-unit id="424">
       <source>Invalid IP address</source>
       <target>Neplatná IP adresa</target>
     </trans-unit>
-    <trans-unit id="424">
+    <trans-unit id="425">
       <source>ip_address admin</source>
       <target>IP adresy</target>
     </trans-unit>
-    <trans-unit id="425">
+    <trans-unit id="426">
       <source>of ip_address</source>
       <target>IP adresy</target>
     </trans-unit>
-    <trans-unit id="426">
+    <trans-unit id="427">
       <source>Days count</source>
       <target>Počet dní</target>
     </trans-unit>
-    <trans-unit id="427">
+    <trans-unit id="428">
       <source>To pay</source>
       <target>Vyplatit</target>
     </trans-unit>
-    <trans-unit id="428">
+    <trans-unit id="429">
       <source>Contract activation changed from: %from% to: %to%</source>
       <target>Datum aktivace smlouvy změněno z: %from% na: %to%</target>
     </trans-unit>
-    <trans-unit id="429">
+    <trans-unit id="430">
       <source>Closing Settlment Date</source>
       <target>Datum vypořádání úroků</target>
     </trans-unit>
-    <trans-unit id="430">
+    <trans-unit id="431">
       <source>Date of payment</source>
       <target>Datum vyplacení</target>
     </trans-unit>
-    <trans-unit id="431">
+    <trans-unit id="432">
       <source>Date of settlement</source>
       <target>Datum vypořádání úroků</target>
     </trans-unit>
-    <trans-unit id="432">
+    <trans-unit id="433">
       <source>Closing payment</source>
       <target>Platba</target>
     </trans-unit>
-    <trans-unit id="433">
+    <trans-unit id="434">
       <source>Pay out</source>
       <target>Vyplatit</target>
     </trans-unit>
-    <trans-unit id="434">
+    <trans-unit id="435">
       <source>Reuse</source>
       <target>Použít k reaktivaci</target>
     </trans-unit>
-    <trans-unit id="435">
+    <trans-unit id="436">
       <source>payment</source>
       <target>Platba</target>
     </trans-unit>
-    <trans-unit id="436">
+    <trans-unit id="437">
       <source>reactivation</source>
       <target>Reaktivace</target>
     </trans-unit>
-    <trans-unit id="437">
+    <trans-unit id="438">
       <source>Payment type</source>
       <target>Typ platby</target>
     </trans-unit>
-    <trans-unit id="438">
+    <trans-unit id="439">
       <source>Save and reuse</source>
       <target>Uložit a reaktivovat</target>
     </trans-unit>
-    <trans-unit id="439">
+    <trans-unit id="440">
       <source>Birth date</source>
       <target>Datum narození</target>
     </trans-unit>
-    <trans-unit id="440">
+    <trans-unit id="441">
       <source>Regulation year</source>
       <target>Rok</target>
     </trans-unit>
-    <trans-unit id="441">
+    <trans-unit id="442">
       <source>An object with the same "contract_id, date" already exist.</source>
       <target>Vypořádání úroků pro tuto smlouvu a datum již existue</target>
     </trans-unit>
-    <trans-unit id="442">
+    <trans-unit id="443">
       <source>An object with the same "date, contract_id" already exist.</source>
       <target>Vypořádání úroků pro tuto smlouvu a datum již existue</target>
     </trans-unit>
-    <trans-unit id="443">
+    <trans-unit id="444">
       <source>Reuse as reactivation</source>
       <target>Ukončit smlouvu reaktivací</target>
     </trans-unit>
-    <trans-unit id="444">
+    <trans-unit id="445">
       <source>end_of_year</source>
       <target>Konec roku</target>
+    </trans-unit>
+    <trans-unit id="446">
+      <source>Closing type</source>
+      <target>Typ ukončení</target>
+    </trans-unit>
+    <trans-unit id="447">
+      <source>With reactivation</source>
+      <target>S reaktivací</target>
+    </trans-unit>
+    <trans-unit id="448">
+      <source>Without reactivation</source>
+      <target>Bez reaktivace</target>
+    </trans-unit>
+    <trans-unit id="449">
+      <source>Contract closed successfully</source>
+      <target>Smlouva byla úspěšně ukončena</target>
     </trans-unit>
   </body>
 </xliff>

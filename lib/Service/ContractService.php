@@ -7,8 +7,8 @@ class ContractService
     {
         $this->checkContractActivation($contract);
         if ($contract->getActivatedAt()) {
-            $this->generateEndOfYearsSettlements($contract);
             $this->generateSettlementsForContract($contract);
+            $this->generateEndOfYearsSettlements($contract);
             $this->updateContractSettlements($contract);
         }
     }
@@ -59,7 +59,7 @@ class ContractService
             if ($contract->getClosedAt()) {
                 $closedAt = new DateTime($contract->getClosedAt());
                 $settlementDate = new DateTime($settlement->getDate());
-                if ($closedAt < $settlementDate && $settlement->getSettlementType() != SettlementPeer::CLOSING) {
+                if ($closedAt < $settlementDate && !in_array($settlement->getSettlementType(), array(SettlementPeer::CLOSING, SettlementPeer::CLOSING_BY_REACTIVATION))) {
                     $settlement->delete();
                     continue;
                 }
@@ -88,7 +88,7 @@ class ContractService
             $closedAt = new DateTime($contract->getClosedAt());
         }
 
-        if ((!$closedAt || $closedAt && $closedAt > $nextSettlementDate) && ($nextSettlementDate < $lastDayOfThisYear)) {
+        if ((!$closedAt || $closedAt && $closedAt > $nextSettlementDate) && ($nextSettlementDate < $lastDayOfThisYear) && !$contract->getSettlementForDate($nextSettlementDate)) {
             $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD, $nextSettlementDate);
             $this->generateSettlementsForContract($contract);
         }
@@ -98,11 +98,7 @@ class ContractService
     {
         foreach ($this->getYearsOfContract($contract) as $year) {
             $lastDateOfYear = new DateTime($year . '-12-31');
-            $criteria = new Criteria();
-            $criteria
-                ->add(SettlementPeer::DATE, $lastDateOfYear)
-                ->add(SettlementPeer::CONTRACT_ID, $contract->getId());
-            if (SettlementPeer::doCount($criteria) == 0) {
+            if (!$contract->getSettlementForDate($lastDateOfYear)) {
                 $this->addSettlementForContract($contract, SettlementPeer::END_OF_YEAR, $lastDateOfYear);
             }
         }
@@ -155,15 +151,15 @@ class ContractService
             $date = $this->getNextSettlementDateForContract($contract);
         }
 
-        $settlement->setDate($date);
-        $settlement->setBalance($this->getBalanceForSettlement($settlement));
-        $settlement->setInterest($this->getInterestForSettlement($settlement));
-        $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
-        $settlement->setSettlementType($settlementType);
-        $settlement->save();
+            $settlement->setDate($date);
+            $settlement->setBalance($this->getBalanceForSettlement($settlement));
+            $settlement->setInterest($this->getInterestForSettlement($settlement));
+            $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
+            $settlement->setSettlementType($settlementType);
+            $settlement->save();
 
-        $contract->addSettlement($settlement);
-        $contract->reload();
+            $contract->addSettlement($settlement);
+            $contract->reload();
 
         $this->updateContractSettlements($contract);
 
@@ -177,16 +173,26 @@ class ContractService
         }
         $lastSettlement = $contract->getLastSettlement(SettlementPeer::IN_PERIOD);
         if ($lastSettlement) {
-            $previosDate = $lastSettlement->getDate();
+            $isFirst = false;
+            $previousDate = new DateTime($lastSettlement->getDate());
         } else {
-            $previosDate = $activatedAt;
+            $isFirst = true;
+            $previousDate = new DateTime($activatedAt);
         }
 
-        $nextSettlementDate = new DateTime($previosDate);
-        $nextSettlementDate->modify(sprintf('+%s month', $contract->getPeriodInMonths()));
-        if ($nextSettlementDate->format('d') == 31) {
+        $daysCount = 0;
+        $firstDayOfNextMonth = clone $previousDate;
+        for ($i = 1; $i <= $contract->getPeriodInMonths(); $i++) {
+            $firstDayOfNextMonth->modify('last day of next month');
+            $daysCount += $firstDayOfNextMonth->format('d');
+        }
+
+        $nextSettlementDate = $previousDate;
+        $nextSettlementDate->modify(sprintf('+%s day', $daysCount));
+        if ($isFirst && $nextSettlementDate->format('d') != 31) {
             $nextSettlementDate->modify('-1 day');
         }
+
         return $nextSettlementDate;
     }
 
@@ -223,7 +229,7 @@ class ContractService
         return $interest;
     }
 
-    public function getDaysDiff(DateTime $dateFrom, DateTime $dateTo, $calculateFirstDate = false)
+    public function getDaysDiff(DateTime $dateFrom, DateTime $dateTo)
     {
         $yearDiff = $dateTo->format('Y') - $dateFrom->format('Y');
         $monthDiff = $dateTo->format('m') - $dateFrom->format('m');
@@ -233,12 +239,23 @@ class ContractService
         $dayTo = $dayTo == 31 ? 30 : $dayTo;
         $dayDiff = $dayTo - $dayFrom;
 
-        return $yearDiff * 360 + $monthDiff * 30 + $dayDiff + ($calculateFirstDate ? 1 : 0);
+        return $yearDiff * 360 + $monthDiff * 30 + $dayDiff;
     }
 
     public function getDaysCount(Settlement $settlement)
     {
-        return $this->getDaysDiff($this->getPreviousDateForSettlement($settlement), new DateTime($settlement->getDate()), $settlement->getCalculateFirstDate());
+
+        $daysCount = $this->getDaysDiff($this->getPreviousDateForSettlement($settlement), new DateTime($settlement->getDate()));
+
+        if ($settlement->isFirstOfContract()) {
+            $daysCount +=1;
+        }
+//        die(var_dump($settlement->getSettlementType()));
+        if ($settlement->getSettlementType() == SettlementPeer::CLOSING) {
+            $daysCount -=1;
+        }
+
+        return $daysCount;
     }
 
     /**
@@ -260,27 +277,45 @@ class ContractService
     /**
      * @param Contract $contract
      */
-    public function getContractClosingAmount(Contract $contract, Datetime $date = null, $calculateFirstDate = false)
+    public function getContractClosingAmount(Contract $contract, Datetime $date = null, $settlementType = SettlementPeer::CLOSING)
     {
+
         $clossingSettlement = null;
         if ($date == null) {
             $clossingSettlement = $contract->getLastSettlement(SettlementPeer::CLOSING);
             $date = $clossingSettlement ? new Datetime($clossingSettlement->getDate()) : new DateTime('now');
         }
+
+
         $unsettled = $contract->getUnsettled($date);
         if (!$clossingSettlement) {
-            $settlement = new Settlement();
-            $settlement->setContract($contract);
-            $settlement->setDate($date);
+            $settlement = null;
+            if ($date) {
+                $criteria = new Criteria();
+                $criteria->add(SettlementPeer::DATE, $date);
+                $settlementWithSameDate = $contract->getSettlements($criteria);
+                if (count($settlementWithSameDate) > 0) {
+                    $settlement = reset($settlementWithSameDate);
+                    $previousSettlement =  $settlement->getPreviousSettlementOfContract();
+                    if($previousSettlement)
+                    {
+                        $unsettled = $contract->getUnsettled(new DateTime($previousSettlement->getDate()));
+                    }
+                }
+            }
+            if (!$settlement) {
+                $settlement = new Settlement();
+                $settlement->setContract($contract);
+                $settlement->setDate($date);
+            }
+            $settlement->setSettlementType($settlementType);
             $settlement->setBalance($this->getBalanceForSettlement($settlement));
-            $settlement->setCalculateFirstDate($calculateFirstDate);
             $interest = $this->getInterestForSettlement($settlement);
             $settlement->setInterest($interest);
             $unsettled += $settlement->getUnsettled();
         } else {
             $settlement = $clossingSettlement;
         }
-
         $closingAmount = array(
             'unsettled' => $unsettled,
             'balance_reduction' => $settlement->getBalance() - $settlement->getBalanceReduction(),

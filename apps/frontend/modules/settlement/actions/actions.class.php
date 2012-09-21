@@ -44,12 +44,24 @@ class settlementActions extends autoSettlementActions
     public function executeCreate(sfWebRequest $request)
     {
         $this->executeNew($request);
-        $this->processForm($request, $this->form);
-
         $this->setTemplate('new');
+
+        $this->processForm($request, $this->form);
     }
 
-    public function executeContractFilter(sfWebRequest $request)
+    public function executeClose(sfWebRequest $request)
+    {
+        $this->executeContractFilter($request, false);
+        $this->executeNew($request);
+
+        $this->form = new ClosingSettlementForm($this->settlement);
+
+        if ($request->isMethod(sfWebRequest::POST)) {
+            $this->processClosingForm($request, $this->form);
+        }
+    }
+
+    public function executeContractFilter(sfWebRequest $request, $redirect = true)
     {
         $contractId = $request->getParameter('contract_id');
         $contract = ContractPeer::retrieveByPK($contractId);
@@ -59,7 +71,9 @@ class settlementActions extends autoSettlementActions
             $filters['creditor_id'] = $contract->getCreditorId();
             $this->setFilters($filters);
         }
-        return $this->redirect('@settlement');
+        if ($redirect) {
+            return $this->redirect('@settlement');
+        }
     }
 
     protected function processForm(sfWebRequest $request, sfForm $form)
@@ -80,6 +94,25 @@ class settlementActions extends autoSettlementActions
             return $this->redirect($redirect, 205);
         } else {
             ServiceContainer::getMessageService()->addFromErrors($form);
+        }
+    }
+
+    protected function processClosingForm(sfWebRequest $request, sfForm $form)
+    {
+        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+        if ($form->isValid()) {
+
+            $settlement = $form->save();
+
+            if ($settlement->getSettlementType() == SettlementPeer::CLOSING_BY_REACTIVATION) {
+                return $this->forward('payment', 'newReactivation');
+            }
+
+            ServiceContainer::getMessageService()->addSuccess('Contract closed successfully');
+
+            return $this->redirect('@contract', 205);
+        } else {
+            ServiceContainer::getMessageService()->addFromErrors($form, true);
         }
     }
 
@@ -142,11 +175,7 @@ class settlementActions extends autoSettlementActions
             $contractService = ServiceContainer::getContractService();
             $settlement = SettlementPeer::retrieveByPK($request->getParameter('settlement_id'));
             if (!$settlement) {
-                $criteria = new Criteria();
-                $criteria
-                    ->add(SettlementPeer::DATE, $date)
-                    ->add(SettlementPeer::CONTRACT_ID, $contract->getId());
-                $settlement = SettlementPeer::doSelectOne($criteria);
+                $settlement = $contract->getSettlementForDate($date);
                 if ($settlement) {
                     $settlement->setManualBalance(false);
                     $settlement->setManualInterest(false);
@@ -171,10 +200,13 @@ class settlementActions extends autoSettlementActions
             }
             if ($calculate) {
                 $settlement->setDate($date);
+                $settlementType = $request->getParameter('settlement_type');
+                if (SettlementPeer::settlementTypeExists($settlementType)) {
+                    $settlement->setSettlementType($settlementType);
+                }
             }
             if ($what == 'interest') {
                 if ($calculate) {
-
                     $amount = $contractService->getInterestForSettlement($settlement);
                 } else {
                     $amount = $settlement->getInterest();

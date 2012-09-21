@@ -65,8 +65,7 @@ class contractGeneratorHelper extends BaseContractGeneratorHelper
 
     public function linkToClose($object, $params)
     {
-        return '<li class="sf_admin_action_close">' . link_to('<i class="icon-remove icon-white"></i> ' . __($params['label']), $this->getUrlForAction('close'), $object, array('class' => 'btn btn-danger modal_link')) . '</li>';
-        //treba doladit
-        return '<li class="sf_admin_action_close">' . link_to('<i class="icon-remove icon-white"></i> ' . __($params['label']), $this->getUrlForAction('close'), $object, array('class' => 'btn btn-danger modal_link', 'confirm' => __('Are you sure?', array(), 'sf_admin'))) . '</li>';
+        return '<li class="sf_admin_action_close">' . link_to('<i class="icon-remove icon-white"></i> ' . __($params['label']), '@settlement_close?contract_id='.$object->getId(), array('class' => 'btn btn-danger modal_link')) . '</li>';
+
     }
 }

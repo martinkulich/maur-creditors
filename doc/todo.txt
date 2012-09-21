@@ -184,3 +184,5 @@ oddelit po tisicich
 desetiny oddelovat
 double klik na ulozit znemoznit
 
+filtr smlouvy join
+

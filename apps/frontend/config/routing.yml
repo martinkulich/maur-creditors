@@ -116,6 +116,10 @@ settlement_balance:
     url:   /settlement-balance.json
     param: { module: settlement, action: balance, sf_format: json }
 
+settlement_close:
+  url:   /settlement-close/:contract_id
+  param: { module: settlement, action: close }
+
 report_filters:
   url:   /report/:report_type/filters
   param: { module: report, action: filters }

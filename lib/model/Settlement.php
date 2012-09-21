@@ -91,6 +91,16 @@ class Settlement extends BaseSettlement
     {
         return $this->getSettlementType() == $settlementType;
     }
+
+    public function isFirstOfContract()
+    {
+        $criteria = new Criteria();
+        $criteria
+            ->add(SettlementPeer::DATE, $this->getDate(), Criteria::LESS_THAN)
+            ->add(SettlementPeer::CONTRACT_ID, $this->getContract()->getId());
+
+        return SettlementPeer::doCount($criteria) === 0;
+    }
 }
 
 // Settlement

@@ -444,7 +444,8 @@
 'Closed';'Ukončeno'
 'Settlement type';'Typ'
 'in_period';'Řádné'
-'closing';'Při ukončení smlouvy'
+'closing_by_reactivation';'Ukončení – reaktivace'
+'closing';'Ukončení smlouvy'
 'manual';'Ručně zadané'
 'end_of_first_year';'Konec prvního roku'
 ;
@@ -483,3 +484,7 @@
 'An object with the same "date, contract_id" already exist.';'Vypořádání úroků pro tuto smlouvu a datum již existue'
 'Reuse as reactivation';'Ukončit smlouvu reaktivací'
 'end_of_year';'Konec roku'
+'Closing type';'Typ ukončení'
+'With reactivation';'S reaktivací'
+'Without reactivation';'Bez reaktivace'
+'Contract closed successfully';'Smlouva byla úspěšně ukončena'

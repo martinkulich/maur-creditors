@@ -11,5 +11,6 @@
         [?php echo $form[$key]->renderLabel(null, array('class'=>'control-label'))?]
     <div class="controls">
         [?php echo $form[$key]->render($renderOptions)?]
+        [?php echo $form[$key]->renderHelp()?]
     </div>
 </div>

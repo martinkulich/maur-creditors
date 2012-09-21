@@ -20,6 +20,7 @@ class SettlementForm extends BaseSettlementForm
 
         $this->getWidget('note')->setAttribute('rows', 2);
 
+
         $dateFields = array(
             'date',
             'date_of_payment'
@@ -28,8 +29,11 @@ class SettlementForm extends BaseSettlementForm
             $this->setWidget($filed, new myJQueryDateWidget());
             $this->setValidator($filed, new myValidatorDate());
         }
+
         $this->getValidator('date_of_payment')->setOption('required', false);
         $this->getWidgetSchema()->moveField('date_of_payment', sfWidgetFormSchema::AFTER, 'date');
+        $this->getWidgetSchema()->setHelp('date_of_payment', 'Datum odchazí platby.');
+
         $this->getWidget('date')->setLabel('Date of settlement');
 
         $contractId = $this->getObject()->getContractId() ? $this->getObject()->getContractId() : 0;
@@ -78,8 +82,6 @@ class SettlementForm extends BaseSettlementForm
         }
         $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=settlement'), 'settlement_creditor_id', 'settlement_contract_id', 'creditor_id'));
 
-        $this->setWidget('calculate_first_date', new sfWidgetFormInputHidden());
-
         $fieldsToUnset = array(
             'settlement_type',
         );
@@ -92,15 +94,16 @@ class SettlementForm extends BaseSettlementForm
         $calculateSettlement = '';
 
         foreach ($activableFields as $field) {
-            $onUncheck = "calculateSettlement(%settlement_id%, '%contract_field_selector%', %contract_id%, '%date_field_selector%', '%calculate_first_date_field_selector%','%selector%', '%url%', '%manual_field_selector%');";
+            $onUncheck = "calculateSettlement(%settlement_id%, '%settlement_type%', '%contract_field_selector%', %contract_id%, '%date_field_selector%', '%settlement_type_field_selector%','%selector%', '%url%', '%manual_field_selector%');";
             $replacements = array(
                 '%contract_id%' => $contractId,
                 '%url%' => url_for('@settlement_' . $field),
                 '%selector%' => '#' . $fullFormName . '_' . $field,
                 '%contract_field_selector%' => '#' . $fullFormName . '_contract_id',
                 '%date_field_selector%' => '#' . $fullFormName . '_date_date',
-                '%calculate_first_date_field_selector%' => '#' . $fullFormName . '_calculate_first_date',
+                '%settlement_type_field_selector%' => '#' . $fullFormName . '_settlement_type',
                 '%settlement_id%' => $this->getObject()->isNew() ? 0 : $this->getObject()->getId(),
+                '%settlement_type%' => $this->getObject()->getSettlementType() ? $this->getObject()->getSettlementType() : 0,
                 '%manual_field_selector%' => '#' . $fullFormName . '_manual_' . $field,
             );
             $onUncheck = str_replace(array_keys($replacements), $replacements, $onUncheck);
@@ -114,7 +117,6 @@ class SettlementForm extends BaseSettlementForm
             unset($widgetSchema[$checkboxWidgetName]);
         }
         $this->getWidget('date')->setAttribute('onChange', $calculateSettlement);
-        $this->getWidget('calculate_first_date')->setAttribute('onChange', $calculateSettlement);
 
         //zatim nechat moznost vzdy editovat
         if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
@@ -165,7 +167,7 @@ class SettlementForm extends BaseSettlementForm
             }
         }
         $this->deleteSettlementOfSameDay();
-        
+
         parent::doSave($con);
         $settlement->reload();
         $contractService->checkContractChanges($settlement->getContract());
@@ -178,10 +180,10 @@ class SettlementForm extends BaseSettlementForm
         $criteria
             ->add(SettlementPeer::CONTRACT_ID, $settlement->getContract()->getId())
             ->add(SettlementPeer::DATE, $settlement->getDate())
-        ->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
-        foreach(SettlementPeer::doSelect($criteria) as $settlementOfTheSameDay)
-        {
-            $settlementOfTheSameDay->delete($con);
+            ->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
+
+        foreach (SettlementPeer::doSelect($criteria) as $settlementOfTheSameDay) {
+            $settlementOfTheSameDay->delete();
         }
     }
 }
