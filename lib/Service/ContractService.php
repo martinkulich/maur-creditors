@@ -2,7 +2,8 @@
 
 class ContractService
 {
-
+    const DAY_FORMAT = 'd';
+    const DATE_FORMAT = 'Y-m-d';
     public function checkContractChanges(Contract $contract)
     {
         $this->checkContractActivation($contract);
@@ -151,15 +152,15 @@ class ContractService
             $date = $this->getNextSettlementDateForContract($contract);
         }
 
-            $settlement->setDate($date);
-            $settlement->setBalance($this->getBalanceForSettlement($settlement));
-            $settlement->setInterest($this->getInterestForSettlement($settlement));
-            $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
-            $settlement->setSettlementType($settlementType);
-            $settlement->save();
+        $settlement->setDate($date);
+        $settlement->setBalance($this->getBalanceForSettlement($settlement));
+        $settlement->setInterest($this->getInterestForSettlement($settlement));
+        $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
+        $settlement->setSettlementType($settlementType);
+        $settlement->save();
 
-            $contract->addSettlement($settlement);
-            $contract->reload();
+        $contract->addSettlement($settlement);
+        $contract->reload();
 
         $this->updateContractSettlements($contract);
 
@@ -179,18 +180,34 @@ class ContractService
             $isFirst = true;
             $previousDate = new DateTime($activatedAt);
         }
+        $nextSettlementYear = $previousDateYear = $previousDate->format('Y');
+        $nextSettlementMonth = $previousDateMonth = $previousDate->format('m');
+        $nextSettlementDay = $previousDateDay = $previousDate->format(self::DAY_FORMAT);
 
-        $daysCount = 0;
-        $firstDayOfNextMonth = clone $previousDate;
-        for ($i = 1; $i <= $contract->getPeriodInMonths(); $i++) {
-            $firstDayOfNextMonth->modify('last day of next month');
-            $daysCount += $firstDayOfNextMonth->format('d');
+        $nextSettlementMonth = $previousDateMonth + $contract->getPeriodInMonths();
+        if($nextSettlementMonth > 12)
+        {
+            $nextSettlementMonth -= 12;
+            $nextSettlementYear +=1;
         }
 
-        $nextSettlementDate = $previousDate;
-        $nextSettlementDate->modify(sprintf('+%s day', $daysCount));
-        if ($isFirst && $nextSettlementDate->format('d') != 31) {
+        $nextSettlementDateMonthFirstDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, 1, $nextSettlementYear)));
+        $nextSettlementDateMonthLastDate = clone $nextSettlementDateMonthFirstDate;
+        $nextSettlementDateMonthLastDate->modify('last day of this month');
+        $nextSettlementDateMonthLastDateDay = $nextSettlementDateMonthLastDate->format(self::DAY_FORMAT);
+        $nextSettlementDay = $nextSettlementDay > $nextSettlementDateMonthLastDateDay ? $nextSettlementDateMonthLastDateDay : $nextSettlementDay;
+        $nextSettlementDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, $nextSettlementDay, $nextSettlementYear)));
+
+
+        if ($isFirst && $nextSettlementDate->format(self::DAY_FORMAT) != 31) {
             $nextSettlementDate->modify('-1 day');
+        }
+
+        $lastDateOfNextSettlementDateMonth = clone $nextSettlementDate;
+        $lastDateOfNextSettlementDateMonth->modify('last day of this month');
+        if($nextSettlementDate->format(self::DAY_FORMAT) == 30 && $lastDateOfNextSettlementDateMonth->format(self::DAY_FORMAT) == 31)
+        {
+            $nextSettlementDate = $lastDateOfNextSettlementDateMonth;
         }
 
         return $nextSettlementDate;
@@ -233,9 +250,9 @@ class ContractService
     {
         $yearDiff = $dateTo->format('Y') - $dateFrom->format('Y');
         $monthDiff = $dateTo->format('m') - $dateFrom->format('m');
-        $dayFrom = $dateFrom->format('d');
+        $dayFrom = $dateFrom->format(self::DAY_FORMAT);
         $dayFrom = $dayFrom == 31 ? 30 : $dayFrom;
-        $dayTo = $dateTo->format('d');
+        $dayTo = $dateTo->format(self::DAY_FORMAT);
         $dayTo = $dayTo == 31 ? 30 : $dayTo;
         $dayDiff = $dayTo - $dayFrom;
 
@@ -254,7 +271,6 @@ class ContractService
         if ($settlement->getSettlementType() == SettlementPeer::CLOSING) {
             $daysCount -=1;
         }
-
         return $daysCount;
     }
 
@@ -296,9 +312,8 @@ class ContractService
                 $settlementWithSameDate = $contract->getSettlements($criteria);
                 if (count($settlementWithSameDate) > 0) {
                     $settlement = reset($settlementWithSameDate);
-                    $previousSettlement =  $settlement->getPreviousSettlementOfContract();
-                    if($previousSettlement)
-                    {
+                    $previousSettlement = $settlement->getPreviousSettlementOfContract();
+                    if ($previousSettlement) {
                         $unsettled = $contract->getUnsettled(new DateTime($previousSettlement->getDate()));
                     }
                 }
