@@ -488,3 +488,4 @@
 'With reactivation';'S reaktivací'
 'Without reactivation';'Bez reaktivace'
 'Contract closed successfully';'Smlouva byla úspěšně ukončena'
+'Last allowed day in month is %last_day_in_month%';'Poslední povolený den v měsíci je %last_day_in_month%'

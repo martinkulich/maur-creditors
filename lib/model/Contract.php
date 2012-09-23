@@ -63,7 +63,7 @@ class Contract extends BaseContract
     public function getSettlementsInYear($year)
     {
         $firstDate = new DateTime($year . '-01-01');
-        $lastDate = new DateTime($year . '-12-31');
+        $lastDate = new DateTime($year . '-12-30');
         $criteria = new Criteria;
         $criteria->add(SettlementPeer::DATE, $firstDate, Criteria::GREATER_EQUAL);
         $criteria->add(SettlementPeer::DATE, $lastDate, Criteria::LESS_EQUAL);

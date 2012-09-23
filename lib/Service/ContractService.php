@@ -98,7 +98,7 @@ class ContractService
     public function generateEndOfYearsSettlements(Contract $contract)
     {
         foreach ($this->getYearsOfContract($contract) as $year) {
-            $lastDateOfYear = new DateTime($year . '-12-31');
+            $lastDateOfYear = new DateTime($year . '-12-30');
             if (!$contract->getSettlementForDate($lastDateOfYear)) {
                 $this->addSettlementForContract($contract, SettlementPeer::END_OF_YEAR, $lastDateOfYear);
             }
@@ -113,7 +113,7 @@ class ContractService
         }
 
         $activatedAtDate = new DateTime($contractActivatedAt);
-        $endOfFirstYearDate = new DateTime($activatedAtDate->format('Y-12-31'));
+        $endOfFirstYearDate = new DateTime($activatedAtDate->format('Y-12-30'));
 
         $criteria = new Criteria();
         $criteria->add(SettlementPeer::DATE, $endOfFirstYearDate);
@@ -199,15 +199,16 @@ class ContractService
         $nextSettlementDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, $nextSettlementDay, $nextSettlementYear)));
 
 
-        if ($isFirst && $nextSettlementDate->format(self::DAY_FORMAT) != 31) {
+        if ($isFirst) {
             $nextSettlementDate->modify('-1 day');
         }
 
         $lastDateOfNextSettlementDateMonth = clone $nextSettlementDate;
         $lastDateOfNextSettlementDateMonth->modify('last day of this month');
-        if($nextSettlementDate->format(self::DAY_FORMAT) == 30 && $lastDateOfNextSettlementDateMonth->format(self::DAY_FORMAT) == 31)
+        
+        if($nextSettlementDate->format(self::DAY_FORMAT) == 31)
         {
-            $nextSettlementDate = $lastDateOfNextSettlementDateMonth;
+            $nextSettlementDate->modify('-1 day');
         }
 
         return $nextSettlementDate;

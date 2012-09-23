@@ -1797,5 +1797,9 @@
       <source>Contract closed successfully</source>
       <target>Smlouva byla úspěšně ukončena</target>
     </trans-unit>
+    <trans-unit id="450">
+      <source>Last allowed day in month is %last_day_in_month%</source>
+      <target>Poslední povolený den v měsíci je %last_day_in_month%</target>
+    </trans-unit>
   </body>
 </xliff>
