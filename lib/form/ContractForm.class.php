@@ -26,8 +26,11 @@ class ContractForm extends BaseContractForm
         }
 
         $this->getWidget('created_at')->setLabel('Date of signature');
+        $this->getValidator('created_at')->setOption('last_day_in_month', 31);
+
         $this->getWidget('activated_at')->setLabel('Date of payment');
         $this->getValidator('activated_at')->setOption('required', false);
+
         $this->getValidator('closed_at')->setOption('required', false);
 
         $periodChoices = Contract::getPeriods();
@@ -45,20 +48,17 @@ class ContractForm extends BaseContractForm
         $fieldsToUnset = array(
             'activated_at',
             'closed_at',
-            );
+        );
 
-        if(!$this->getObject()->isNew())
-        {
+        if (!$this->getObject()->isNew()) {
             $fieldsToUnset[] = 'period';
         }
 
-        if($this->getObject()->getActivatedAt())
-        {
+        if ($this->getObject()->getActivatedAt()) {
 //            $fieldsToUnset[] = 'activated_at';
         }
 
-        foreach($fieldsToUnset as $field)
-        {
+        foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
     }
