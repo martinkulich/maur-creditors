@@ -60,7 +60,7 @@ class ContractService
             if ($contract->getClosedAt()) {
                 $closedAt = new DateTime($contract->getClosedAt());
                 $settlementDate = new DateTime($settlement->getDate());
-                if ($closedAt < $settlementDate && !in_array($settlement->getSettlementType(), array(SettlementPeer::CLOSING, SettlementPeer::CLOSING_BY_REACTIVATION))) {
+                if ($closedAt < $settlementDate && !in_array($settlement->getSettlementType(), array(SettlementPeer::CLOSING, SettlementPeer::CLOSING_BY_REACTIVATION, SettlementPeer::MANUAL))) {
                     $settlement->delete();
                     continue;
                 }
@@ -205,7 +205,7 @@ class ContractService
 
         $lastDateOfNextSettlementDateMonth = clone $nextSettlementDate;
         $lastDateOfNextSettlementDateMonth->modify('last day of this month');
-        
+
         if($nextSettlementDate->format(self::DAY_FORMAT) == 31)
         {
             $nextSettlementDate->modify('-1 day');

@@ -16,7 +16,7 @@ class contractComponents extends sfComponents
         }
 
         if ($filter != 'all') {
-            $criteria->add(ContractPeer::CLOSED_AT, null, Criteria::ISNULL);
+//            $criteria->add(ContractPeer::CLOSED_AT, null, Criteria::ISNULL);
         }
         $this->contractId = $request->getParameter('default', 0);
         $this->widget = new sfWidgetFormPropelChoice(array('model' => 'Contract', 'criteria' => $criteria, 'add_empty' => true));
