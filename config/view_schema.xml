@@ -14,8 +14,8 @@
     <column name="paid" phpName="Paid" type="NUMERIC" size="15" scale="2"/>
     <column name="paid_for_current_year" phpName="PaidForCurrentYear" type="NUMERIC" size="15" scale="2"/>
     <column name="capitalized" phpName="Capitalized" type="NUMERIC" size="15" scale="2"/>
-    <column name="teoretically_to_pay_in_current_year" phpName="TeoreticallyToPayInCurrentYear" type="NUMERIC" size="15" scale="2"/>
     <column name="unpaid" phpName="Unpaid" type="NUMERIC" size="15" scale="2"/>
+    <column name="unpaid_in_past" phpName="UnpaidInPast" type="NUMERIC" size="15" scale="2"/>
     <column name="end_balance" phpName="EndBalance" type="NUMERIC" size="15" scale="2"/>
   </table>
 </database>

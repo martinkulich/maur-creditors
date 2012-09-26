@@ -48,8 +48,8 @@ class RegulationTableMap extends TableMap {
 		$this->addColumn('PAID', 'Paid', 'NUMERIC', false, 15, null);
 		$this->addColumn('PAID_FOR_CURRENT_YEAR', 'PaidForCurrentYear', 'NUMERIC', false, 15, null);
 		$this->addColumn('CAPITALIZED', 'Capitalized', 'NUMERIC', false, 15, null);
-		$this->addColumn('TEORETICALLY_TO_PAY_IN_CURRENT_YEAR', 'TeoreticallyToPayInCurrentYear', 'NUMERIC', false, 15, null);
 		$this->addColumn('UNPAID', 'Unpaid', 'NUMERIC', false, 15, null);
+		$this->addColumn('UNPAID_IN_PAST', 'UnpaidInPast', 'NUMERIC', false, 15, null);
 		$this->addColumn('END_BALANCE', 'EndBalance', 'NUMERIC', false, 15, null);
 		// validators
 	} // initialize()

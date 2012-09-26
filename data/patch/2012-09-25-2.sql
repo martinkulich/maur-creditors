@@ -84,11 +84,16 @@ CREATE OR REPLACE FUNCTION unpaid(_contract_id integer, _year integer)
             _regulation_for_year numeric(15, 2);
             _capitalized numeric(15, 2);
             _has_previous_year boolean;
+            _has_current_year boolean;
         BEGIN
+            SELECT count(s.id)>0 FROM settlement s WHERE year(s.date) = _year AND s.contract_id = _contract_id INTO _has_current_year;
+
             SELECT count(s.id)>0 FROM settlement s WHERE year(s.date) = _year- 1 AND s.contract_id = _contract_id INTO _has_previous_year;
 
-            SELECT COALESCE(regulation_for_year(_contract_id, _year) - capitalized(_contract_id, _year) - paid(_contract_id, _year)
-            ,0) INTO _unpaid;
+            _unpaid = NULL::NUMERIC;
+            IF _has_current_year  THEN
+                SELECT COALESCE(regulation_for_year(_contract_id, _year) - capitalized(_contract_id, _year) - paid(_contract_id, _year),0) INTO _unpaid;
+            END IF;
 
             IF _has_previous_year  THEN
                 _unpaid = _unpaid + unpaid(_contract_id , _year-1);
@@ -102,22 +107,6 @@ CREATE OR REPLACE FUNCTION unpaid(_contract_id integer, _year integer)
     LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
     COST 100;
 
-CREATE OR REPLACE FUNCTION teoretically_to_pay_in_current_year(_contract_id integer, _year integer)
-    RETURNS numeric AS
-    $BODY$
-        BEGIN
-
-            RETURN (
-                SELECT COALESCE(sum(lsoy.interest), 0)
-                FROM last_settlement_of_year lsoy
-                WHERE lsoy.contract_id = _contract_id
-                AND year(lsoy.date) = _year-1
-            );
-
-        END;
-    $BODY$
-    LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
-    COST 100;
 
 CREATE OR REPLACE FUNCTION capitalized(_contract_id integer, _year integer)
     RETURNS numeric AS
@@ -228,8 +217,8 @@ SELECT (ry.id || '_'::text) || c.id AS id,
     paid(c.id, ry.id) AS paid,
     paid_for_current_year(c.id, ry.id) AS paid_for_current_year,
     unpaid(c.id, ry.id) AS unpaid,
+    unpaid(c.id, ry.id-1) AS unpaid_in_past,
     capitalized(c.id, ry.id) AS capitalized,
-    teoretically_to_pay_in_current_year(c.id, ry.id) AS teoretically_to_pay_in_current_year,
     end_balance(c.id, ry.id) as end_balance
 
 FROM

@@ -91,16 +91,16 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	protected $capitalized;
 
 	/**
-	 * The value for the teoretically_to_pay_in_current_year field.
-	 * @var        string
-	 */
-	protected $teoretically_to_pay_in_current_year;
-
-	/**
 	 * The value for the unpaid field.
 	 * @var        string
 	 */
 	protected $unpaid;
+
+	/**
+	 * The value for the unpaid_in_past field.
+	 * @var        string
+	 */
+	protected $unpaid_in_past;
 
 	/**
 	 * The value for the end_balance field.
@@ -270,16 +270,6 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [teoretically_to_pay_in_current_year] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getTeoreticallyToPayInCurrentYear()
-	{
-		return $this->teoretically_to_pay_in_current_year;
-	}
-
-	/**
 	 * Get the [unpaid] column value.
 	 * 
 	 * @return     string
@@ -287,6 +277,16 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	public function getUnpaid()
 	{
 		return $this->unpaid;
+	}
+
+	/**
+	 * Get the [unpaid_in_past] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUnpaidInPast()
+	{
+		return $this->unpaid_in_past;
 	}
 
 	/**
@@ -569,26 +569,6 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	} // setCapitalized()
 
 	/**
-	 * Set the value of [teoretically_to_pay_in_current_year] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Regulation The current object (for fluent API support)
-	 */
-	public function setTeoreticallyToPayInCurrentYear($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->teoretically_to_pay_in_current_year !== $v) {
-			$this->teoretically_to_pay_in_current_year = $v;
-			$this->modifiedColumns[] = RegulationPeer::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR;
-		}
-
-		return $this;
-	} // setTeoreticallyToPayInCurrentYear()
-
-	/**
 	 * Set the value of [unpaid] column.
 	 * 
 	 * @param      string $v new value
@@ -607,6 +587,26 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setUnpaid()
+
+	/**
+	 * Set the value of [unpaid_in_past] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Regulation The current object (for fluent API support)
+	 */
+	public function setUnpaidInPast($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->unpaid_in_past !== $v) {
+			$this->unpaid_in_past = $v;
+			$this->modifiedColumns[] = RegulationPeer::UNPAID_IN_PAST;
+		}
+
+		return $this;
+	} // setUnpaidInPast()
 
 	/**
 	 * Set the value of [end_balance] column.
@@ -672,8 +672,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			$this->paid = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->paid_for_current_year = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->capitalized = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->teoretically_to_pay_in_current_year = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->unpaid = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->unpaid = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->unpaid_in_past = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
 			$this->end_balance = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->resetModified();
 
@@ -1046,10 +1046,10 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 				return $this->getCapitalized();
 				break;
 			case 12:
-				return $this->getTeoreticallyToPayInCurrentYear();
+				return $this->getUnpaid();
 				break;
 			case 13:
-				return $this->getUnpaid();
+				return $this->getUnpaidInPast();
 				break;
 			case 14:
 				return $this->getEndBalance();
@@ -1087,8 +1087,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			$keys[9] => $this->getPaid(),
 			$keys[10] => $this->getPaidForCurrentYear(),
 			$keys[11] => $this->getCapitalized(),
-			$keys[12] => $this->getTeoreticallyToPayInCurrentYear(),
-			$keys[13] => $this->getUnpaid(),
+			$keys[12] => $this->getUnpaid(),
+			$keys[13] => $this->getUnpaidInPast(),
 			$keys[14] => $this->getEndBalance(),
 		);
 		return $result;
@@ -1158,10 +1158,10 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 				$this->setCapitalized($value);
 				break;
 			case 12:
-				$this->setTeoreticallyToPayInCurrentYear($value);
+				$this->setUnpaid($value);
 				break;
 			case 13:
-				$this->setUnpaid($value);
+				$this->setUnpaidInPast($value);
 				break;
 			case 14:
 				$this->setEndBalance($value);
@@ -1202,8 +1202,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setPaid($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setPaidForCurrentYear($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setCapitalized($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setTeoreticallyToPayInCurrentYear($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setUnpaid($arr[$keys[13]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUnpaid($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setUnpaidInPast($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setEndBalance($arr[$keys[14]]);
 	}
 
@@ -1228,8 +1228,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RegulationPeer::PAID)) $criteria->add(RegulationPeer::PAID, $this->paid);
 		if ($this->isColumnModified(RegulationPeer::PAID_FOR_CURRENT_YEAR)) $criteria->add(RegulationPeer::PAID_FOR_CURRENT_YEAR, $this->paid_for_current_year);
 		if ($this->isColumnModified(RegulationPeer::CAPITALIZED)) $criteria->add(RegulationPeer::CAPITALIZED, $this->capitalized);
-		if ($this->isColumnModified(RegulationPeer::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR)) $criteria->add(RegulationPeer::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR, $this->teoretically_to_pay_in_current_year);
 		if ($this->isColumnModified(RegulationPeer::UNPAID)) $criteria->add(RegulationPeer::UNPAID, $this->unpaid);
+		if ($this->isColumnModified(RegulationPeer::UNPAID_IN_PAST)) $criteria->add(RegulationPeer::UNPAID_IN_PAST, $this->unpaid_in_past);
 		if ($this->isColumnModified(RegulationPeer::END_BALANCE)) $criteria->add(RegulationPeer::END_BALANCE, $this->end_balance);
 
 		return $criteria;
@@ -1309,9 +1309,9 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 
 		$copyObj->setCapitalized($this->capitalized);
 
-		$copyObj->setTeoreticallyToPayInCurrentYear($this->teoretically_to_pay_in_current_year);
-
 		$copyObj->setUnpaid($this->unpaid);
+
+		$copyObj->setUnpaidInPast($this->unpaid_in_past);
 
 		$copyObj->setEndBalance($this->end_balance);
 

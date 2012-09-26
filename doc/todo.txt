@@ -202,3 +202,5 @@ vyplaceno za prislusny = vyplaceno - nevyplaceno za predchozi rok
 nevyplaceno = predpis - vyplaceno za prislusny
 
 teorie = nevyplaceno
+
+sloupec nevyplacené úroky z minulych let (333)
