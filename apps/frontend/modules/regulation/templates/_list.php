@@ -23,6 +23,8 @@
                     <th>
                     </th>
                     <th>
+                    </th>
+                    <th>
                         <?php echo my_format_currency($sums['start_balance'], $currencyCode) ?>
                     </th>
                     <th>
@@ -40,9 +42,6 @@
                     </th>
                     <th class="text-align-right">
                         <?php echo my_format_currency($sums['capitalized'], $currencyCode) ?>
-                    </th>
-                    <th class="text-align-right">
-                        <?php echo my_format_currency($sums['teoreticaly_to_pay_in_current_year'], $currencyCode) ?>
                     </th>
                     <th class="text-align-right">
                         <?php if (array_key_exists('unpaid', $sums)) { ?>

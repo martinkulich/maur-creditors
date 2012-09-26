@@ -1801,5 +1801,9 @@
       <source>Last allowed day in month is %last_day_in_month%</source>
       <target>Poslední povolený den v měsíci je %last_day_in_month%</target>
     </trans-unit>
+    <trans-unit id="451">
+      <source>Upaid in past</source>
+      <target>Nevyplacené úroky z předchozích let</target>
+    </trans-unit>
   </body>
 </xliff>

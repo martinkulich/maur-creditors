@@ -37,8 +37,8 @@ class regulationActions extends autoRegulationActions
         $criteria->addSelectColumn(sprintf('sum(%s) as paid', RegulationPeer::PAID));
         $criteria->addSelectColumn(sprintf('sum(%s) as paid_for_current_year', RegulationPeer::PAID_FOR_CURRENT_YEAR));
         $criteria->addSelectColumn(sprintf('sum(%s) as capitalized', RegulationPeer::CAPITALIZED));
-        $criteria->addSelectColumn(sprintf('sum(%s) as teoreticaly_to_pay_in_current_year', RegulationPeer::TEORETICALLY_TO_PAY_IN_CURRENT_YEAR));
         $criteria->addSelectColumn(sprintf('sum(%s) as unpaid', RegulationPeer::UNPAID));
+        $criteria->addSelectColumn(sprintf('sum(%s) as unpaid_in_past', RegulationPeer::UNPAID_IN_PAST));
         $criteria->clearOrderByColumns();
         $sumPager->setCriteria($criteria);
         $sumPager->init();
