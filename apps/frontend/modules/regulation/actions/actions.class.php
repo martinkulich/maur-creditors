@@ -18,6 +18,11 @@ class regulationActions extends autoRegulationActions
     {
         parent::executeIndex($request);
         $this->sums = $this->getSums();
+        $filters = $this->getFilters();
+        if(!array_key_exists('regulation_year', $filters) || (array_key_exists('regulation_year', $filters) && !$filters['regulation_year']))
+        {
+            unset($this->sums['unpaid']);
+        }
     }
 
     protected function getSums()

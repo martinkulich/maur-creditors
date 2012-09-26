@@ -166,14 +166,14 @@ class SettlementForm extends BaseSettlementForm
                 $settlement->setInterest($contractService->getInterestForSettlement($settlement));
             }
         }
-        $this->deleteSettlementOfSameDay();
+        $this->deleteSettlementOfSameDay($con);
 
         parent::doSave($con);
         $settlement->reload();
         $contractService->checkContractChanges($settlement->getContract());
     }
 
-    public function deleteSettlementOfSameDay()
+    public function deleteSettlementOfSameDay($con = null)
     {
         $settlement = $this->getObject();
         $criteria = new Criteria();
@@ -183,7 +183,7 @@ class SettlementForm extends BaseSettlementForm
             ->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
 
         foreach (SettlementPeer::doSelect($criteria) as $settlementOfTheSameDay) {
-            $settlementOfTheSameDay->delete();
+            $settlementOfTheSameDay->delete($con);
         }
     }
 }

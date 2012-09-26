@@ -186,3 +186,19 @@ double klik na ulozit znemoznit
 
 filtr smlouvy join
 
+
+zobrazovani poznamky
+zvetsit na velky display
+vyplaceno je vse vyplaceno za dany rok
+nevyplaceno z minulych let
+
+otazky?
+co presne je paid for current year
+kdyz predchozi settlement vychazi na 28.2 pridat 2 dny (kdyz 29.2 tak jeden)
+post validator, kdyz bylo vyplaceno, musi byt vyplneno datum vyplaceni..
+
+nevyplaceno + vyplaceno = predpis
+vyplaceno za prislusny = vyplaceno - nevyplaceno za predchozi rok
+nevyplaceno = predpis - vyplaceno za prislusny
+
+teorie = nevyplaceno
