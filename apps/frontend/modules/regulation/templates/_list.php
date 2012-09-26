@@ -25,10 +25,11 @@
                     <th>
                     </th>
                     <th>
-                        <?php echo my_format_currency($sums['start_balance'], $currencyCode) ?>
                     </th>
                     <th>
+                        <?php echo my_format_currency($sums['start_balance'], $currencyCode) ?>
                     </th>
+
                     <th>
                     </th>
                     <th class="text-align-right">

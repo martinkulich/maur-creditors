@@ -84,16 +84,12 @@ CREATE OR REPLACE FUNCTION unpaid(_contract_id integer, _year integer)
             _regulation_for_year numeric(15, 2);
             _capitalized numeric(15, 2);
             _has_previous_year boolean;
-            _has_current_year boolean;
+
         BEGIN
-            SELECT count(s.id)>0 FROM settlement s WHERE year(s.date) = _year AND s.contract_id = _contract_id INTO _has_current_year;
 
             SELECT count(s.id)>0 FROM settlement s WHERE year(s.date) = _year- 1 AND s.contract_id = _contract_id INTO _has_previous_year;
 
-            _unpaid = NULL::NUMERIC;
-            IF _has_current_year  THEN
-                SELECT COALESCE(regulation_for_year(_contract_id, _year) - capitalized(_contract_id, _year) - paid(_contract_id, _year),0) INTO _unpaid;
-            END IF;
+            SELECT COALESCE(regulation_for_year(_contract_id, _year) - capitalized(_contract_id, _year) - paid(_contract_id, _year),0) INTO _unpaid;
 
             IF _has_previous_year  THEN
                 _unpaid = _unpaid + unpaid(_contract_id , _year-1);
