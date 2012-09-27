@@ -16,9 +16,9 @@ abstract class BaseRegulationForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
       'creditor_fullname'     => new sfWidgetFormInputText(),
-      'contract_id'           => new sfWidgetFormInputText(),
+      'contract_id'           => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => true)),
       'contract_name'         => new sfWidgetFormInputText(),
-      'regulation_year'       => new sfWidgetFormInputText(),
+      'regulation_year'       => new sfWidgetFormPropelChoice(array('model' => 'RegulationYear', 'add_empty' => true)),
       'start_balance'         => new sfWidgetFormInputText(),
       'contract_activated_at' => new sfWidgetFormDate(),
       'contract_balance'      => new sfWidgetFormInputText(),
@@ -34,9 +34,9 @@ abstract class BaseRegulationForm extends BaseFormPropel
     $this->setValidators(array(
       'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'creditor_fullname'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'contract_id'           => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'contract_id'           => new sfValidatorPropelChoice(array('model' => 'Contract', 'column' => 'id', 'required' => false)),
       'contract_name'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'regulation_year'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'regulation_year'       => new sfValidatorPropelChoice(array('model' => 'RegulationYear', 'column' => 'id', 'required' => false)),
       'start_balance'         => new sfValidatorNumber(array('required' => false)),
       'contract_activated_at' => new sfValidatorDate(array('required' => false)),
       'contract_balance'      => new sfValidatorNumber(array('required' => false)),

@@ -14,6 +14,11 @@ require_once dirname(__FILE__) . '/../lib/paymentGeneratorHelper.class.php';
 class paymentActions extends autoPaymentActions
 {
 
+    public function executeNote(sfWebRequest $request)
+    {
+        $this->payment = $this->getRoute()->getObject();
+    }
+    
     public function executeIndex(sfWebRequest $request)
     {
         parent::executeIndex($request);

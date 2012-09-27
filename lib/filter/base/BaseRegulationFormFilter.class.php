@@ -13,9 +13,9 @@ abstract class BaseRegulationFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'creditor_fullname'     => new sfWidgetFormFilterInput(),
-      'contract_id'           => new sfWidgetFormFilterInput(),
+      'contract_id'           => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => true)),
       'contract_name'         => new sfWidgetFormFilterInput(),
-      'regulation_year'       => new sfWidgetFormFilterInput(),
+      'regulation_year'       => new sfWidgetFormPropelChoice(array('model' => 'RegulationYear', 'add_empty' => true)),
       'start_balance'         => new sfWidgetFormFilterInput(),
       'contract_activated_at' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'contract_balance'      => new sfWidgetFormFilterInput(),
@@ -30,9 +30,9 @@ abstract class BaseRegulationFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'creditor_fullname'     => new sfValidatorPass(array('required' => false)),
-      'contract_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'contract_id'           => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Contract', 'column' => 'id')),
       'contract_name'         => new sfValidatorPass(array('required' => false)),
-      'regulation_year'       => new sfValidatorPass(array('required' => false)),
+      'regulation_year'       => new sfValidatorPropelChoice(array('required' => false, 'model' => 'RegulationYear', 'column' => 'id')),
       'start_balance'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'contract_activated_at' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'contract_balance'      => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
@@ -62,9 +62,9 @@ abstract class BaseRegulationFormFilter extends BaseFormFilterPropel
     return array(
       'id'                    => 'Text',
       'creditor_fullname'     => 'Text',
-      'contract_id'           => 'Number',
+      'contract_id'           => 'ForeignKey',
       'contract_name'         => 'Text',
-      'regulation_year'       => 'Text',
+      'regulation_year'       => 'ForeignKey',
       'start_balance'         => 'Number',
       'contract_activated_at' => 'Date',
       'contract_balance'      => 'Number',

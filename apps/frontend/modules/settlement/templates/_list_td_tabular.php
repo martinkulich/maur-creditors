@@ -46,4 +46,7 @@
 <td class="sf_admin_text sf_admin_list_td_settlement_type text-align-right">
         <?php echo $sf_context->getI18n()->__($settlement->getSettlementType()); ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_note text-align-right">
+        <?php echo $settlement->getNote() ? link_to('Poznámka', '@settlement_note?id='.$settlement->getId(), array('class'=>'modal_link')) : ''; ?>
+</td>
 

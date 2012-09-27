@@ -37,6 +37,7 @@ payment:
     column:               id
     with_wildcard_routes: true
     collection_actions: {filters: get, filter: post, reset: get}
+    object_actions: {note: get}
 
 settlement:
   class: sfPropelRouteCollection
@@ -46,7 +47,7 @@ settlement:
     prefix_path:          /settlement
     column:               id
     with_wildcard_routes: true
-    object_actions: {capitalize: get, pay: get}
+    object_actions: {capitalize: get, pay: get, note: get}
     collection_actions: {filters: get, filter: post, reset: get, checkContracts: get}
 
 creditor:
@@ -67,7 +68,7 @@ contract:
     prefix_path:          /contract
     column:               id
     with_wildcard_routes: true
-    object_actions: {copy: get, duplicate: post, close: [get, post]}
+    object_actions: {copy: get, duplicate: post, close: [get, post], note: get}
     collection_actions: {filters: get, filter: post, reset: get, regulation: get}
 
 group:

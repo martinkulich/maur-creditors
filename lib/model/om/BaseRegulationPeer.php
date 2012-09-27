@@ -457,6 +457,687 @@ abstract class BaseRegulationPeer {
 		$stmt->closeCursor();
 		return $results;
 	}
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related Contract table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinContract(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(RegulationPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			RegulationPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related RegulationYearRelatedByRegulationYear table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinRegulationYearRelatedByRegulationYear(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(RegulationPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			RegulationPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of Regulation objects pre-filled with their Contract objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Regulation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinContract(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		RegulationPeer::addSelectColumns($criteria);
+		$startcol = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
+		ContractPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = RegulationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = RegulationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = RegulationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				RegulationPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = ContractPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = ContractPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					ContractPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (Regulation) to $obj2 (Contract)
+				$obj2->addRegulation($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Regulation objects pre-filled with their RegulationYear objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Regulation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinRegulationYearRelatedByRegulationYear(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		RegulationPeer::addSelectColumns($criteria);
+		$startcol = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
+		RegulationYearPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = RegulationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = RegulationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = RegulationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				RegulationPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = RegulationYearPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = RegulationYearPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = RegulationYearPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					RegulationYearPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (Regulation) to $obj2 (RegulationYear)
+				$obj2->addRegulation($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining all related tables
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(RegulationPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			RegulationPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+	/**
+	 * Selects a collection of Regulation objects pre-filled with all related objects.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Regulation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		RegulationPeer::addSelectColumns($criteria);
+		$startcol2 = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		ContractPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		RegulationYearPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (RegulationYearPeer::NUM_COLUMNS - RegulationYearPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = RegulationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = RegulationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = RegulationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				RegulationPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+			// Add objects for joined Contract rows
+
+			$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = ContractPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = ContractPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					ContractPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
+
+				// Add the $obj1 (Regulation) to the collection in $obj2 (Contract)
+				$obj2->addRegulation($obj1);
+			} // if joined row not null
+
+			// Add objects for joined RegulationYear rows
+
+			$key3 = RegulationYearPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			if ($key3 !== null) {
+				$obj3 = RegulationYearPeer::getInstanceFromPool($key3);
+				if (!$obj3) {
+
+					$cls = RegulationYearPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					RegulationYearPeer::addInstanceToPool($obj3, $key3);
+				} // if obj3 loaded
+
+				// Add the $obj1 (Regulation) to the collection in $obj3 (RegulationYear)
+				$obj3->addRegulation($obj1);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related Contract table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptContract(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(RegulationPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			RegulationPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related RegulationYearRelatedByRegulationYear table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptRegulationYearRelatedByRegulationYear(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(RegulationPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			RegulationPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of Regulation objects pre-filled with all related objects except Contract.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Regulation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptContract(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		RegulationPeer::addSelectColumns($criteria);
+		$startcol2 = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		RegulationYearPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (RegulationYearPeer::NUM_COLUMNS - RegulationYearPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = RegulationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = RegulationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = RegulationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				RegulationPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined RegulationYear rows
+
+				$key2 = RegulationYearPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = RegulationYearPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = RegulationYearPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					RegulationYearPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Regulation) to the collection in $obj2 (RegulationYear)
+				$obj2->addRegulation($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Regulation objects pre-filled with all related objects except RegulationYearRelatedByRegulationYear.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Regulation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptRegulationYearRelatedByRegulationYear(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		RegulationPeer::addSelectColumns($criteria);
+		$startcol2 = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		ContractPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseRegulationPeer', $criteria, $con);
+		}
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = RegulationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = RegulationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = RegulationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				RegulationPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Contract rows
+
+				$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = ContractPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = ContractPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					ContractPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Regulation) to the collection in $obj2 (Contract)
+				$obj2->addRegulation($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.

@@ -17,5 +17,11 @@
     <column name="unpaid" phpName="Unpaid" type="NUMERIC" size="15" scale="2"/>
     <column name="unpaid_in_past" phpName="UnpaidInPast" type="NUMERIC" size="15" scale="2"/>
     <column name="end_balance" phpName="EndBalance" type="NUMERIC" size="15" scale="2"/>
+    <foreign-key foreignTable="contract" name="regulation_contract" onDelete="RESTRICT" onUpdate="CASCADE">
+      <reference local="contract_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="regulation_year" name="regulation_regulation_year" onDelete="RESTRICT" onUpdate="CASCADE">
+      <reference local="regulation_year" foreign="id"/>
+    </foreign-key>
   </table>
 </database>

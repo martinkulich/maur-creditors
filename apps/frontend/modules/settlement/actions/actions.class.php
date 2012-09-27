@@ -14,6 +14,10 @@ require_once dirname(__FILE__) . '/../lib/settlementGeneratorHelper.class.php';
 class settlementActions extends autoSettlementActions
 {
 
+    public function executeNote(sfWebRequest $request)
+    {
+        $this->settlement = $this->getRoute()->getObject();
+    }
     public function executeCheckContracts(sfWebRequest $request)
     {
         $contractService = ServiceContainer::getContractService();

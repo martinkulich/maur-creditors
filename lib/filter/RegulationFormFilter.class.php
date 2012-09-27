@@ -51,12 +51,4 @@ class RegulationFormFilter extends BaseRegulationFormFilter
         $criteria->add(ContractPeer::CREDITOR_ID, $value);
         return $criteria;
     }
-
-    public function addRegulationYearColumnCriteria(Criteria $criteria, $field, $value)
-    {
-        if ($value && $value['text']) {
-            $criteria->add(RegulationPeer::REGULATION_YEAR, $value['text']);
-        }
-        return $criteria;
-    }
 }

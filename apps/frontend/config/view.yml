@@ -22,6 +22,8 @@ ratingsSuccess:
 resultsSuccess:
   layout: layoutModal
 
+noteSuccess:
+  layout: layoutModal
 
 
 printListSuccess:

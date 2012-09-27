@@ -38,9 +38,9 @@ class RegulationTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'VARCHAR', true, 255, null);
 		$this->addColumn('CREDITOR_FULLNAME', 'CreditorFirstname', 'VARCHAR', false, 255, null);
-		$this->addColumn('CONTRACT_ID', 'ContractId', 'INTEGER', false, null, null);
+		$this->addForeignKey('CONTRACT_ID', 'ContractId', 'INTEGER', 'contract', 'ID', false, null, null);
 		$this->addColumn('CONTRACT_NAME', 'ContractName', 'VARCHAR', false, 255, null);
-		$this->addColumn('REGULATION_YEAR', 'RegulationYear', 'VARCHAR', false, 255, null);
+		$this->addForeignKey('REGULATION_YEAR', 'RegulationYear', 'VARCHAR', 'regulation_year', 'ID', false, 255, null);
 		$this->addColumn('START_BALANCE', 'StartBalance', 'NUMERIC', false, 15, null);
 		$this->addColumn('CONTRACT_ACTIVATED_AT', 'ContractActivatedAt', 'DATE', false, null, null);
 		$this->addColumn('CONTRACT_BALANCE', 'ContractBalance', 'NUMERIC', false, 15, null);
@@ -59,6 +59,8 @@ class RegulationTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('Contract', 'Contract', RelationMap::MANY_TO_ONE, array('contract_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('RegulationYearRelatedByRegulationYear', 'RegulationYear', RelationMap::MANY_TO_ONE, array('regulation_year' => 'id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

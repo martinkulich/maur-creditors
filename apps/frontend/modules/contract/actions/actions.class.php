@@ -13,6 +13,10 @@ require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
  */
 class contractActions extends autoContractActions
 {
+    public function executeNote(sfWebRequest $request)
+    {
+        $this->contract = $this->getRoute()->getObject();
+    }
 
     public function executePrintList(sfWebRequest $request)
     {
@@ -61,7 +65,7 @@ class contractActions extends autoContractActions
             if (!SettlementPeer::settlementTypeExists($settlementType)) {
                 $settlementType = null;
             }
-            
+
             $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract, $date, $settlementType);
         }
 

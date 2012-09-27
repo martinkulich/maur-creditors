@@ -26,4 +26,7 @@
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_closed_at text-align-right">
     <?php echo false !== strtotime($contract->getClosedAt()) ? format_date($contract->getClosedAt(), "D") : '&nbsp;' ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_note text-align-right">
+        <?php echo $contract->getNote() ? link_to('Poznámka', '@contract_note?id='.$contract->getId(), array('class'=>'modal_link')) : ''; ?>
+</td>
 

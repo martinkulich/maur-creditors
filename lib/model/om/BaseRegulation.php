@@ -109,6 +109,16 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	protected $end_balance;
 
 	/**
+	 * @var        Contract
+	 */
+	protected $aContract;
+
+	/**
+	 * @var        RegulationYear
+	 */
+	protected $aRegulationYearRelatedByRegulationYear;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -356,6 +366,10 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = RegulationPeer::CONTRACT_ID;
 		}
 
+		if ($this->aContract !== null && $this->aContract->getId() !== $v) {
+			$this->aContract = null;
+		}
+
 		return $this;
 	} // setContractId()
 
@@ -394,6 +408,10 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		if ($this->regulation_year !== $v) {
 			$this->regulation_year = $v;
 			$this->modifiedColumns[] = RegulationPeer::REGULATION_YEAR;
+		}
+
+		if ($this->aRegulationYearRelatedByRegulationYear !== null && $this->aRegulationYearRelatedByRegulationYear->getId() !== $v) {
+			$this->aRegulationYearRelatedByRegulationYear = null;
 		}
 
 		return $this;
@@ -707,6 +725,12 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aContract !== null && $this->contract_id !== $this->aContract->getId()) {
+			$this->aContract = null;
+		}
+		if ($this->aRegulationYearRelatedByRegulationYear !== null && $this->regulation_year !== $this->aRegulationYearRelatedByRegulationYear->getId()) {
+			$this->aRegulationYearRelatedByRegulationYear = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -746,6 +770,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aContract = null;
+			$this->aRegulationYearRelatedByRegulationYear = null;
 		} // if (deep)
 	}
 
@@ -888,6 +914,25 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aContract !== null) {
+				if ($this->aContract->isModified() || $this->aContract->isNew()) {
+					$affectedRows += $this->aContract->save($con);
+				}
+				$this->setContract($this->aContract);
+			}
+
+			if ($this->aRegulationYearRelatedByRegulationYear !== null) {
+				if ($this->aRegulationYearRelatedByRegulationYear->isModified() || $this->aRegulationYearRelatedByRegulationYear->isNew()) {
+					$affectedRows += $this->aRegulationYearRelatedByRegulationYear->save($con);
+				}
+				$this->setRegulationYearRelatedByRegulationYear($this->aRegulationYearRelatedByRegulationYear);
+			}
+
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
@@ -969,6 +1014,24 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			$retval = null;
 
 			$failureMap = array();
+
+
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aContract !== null) {
+				if (!$this->aContract->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aContract->getValidationFailures());
+				}
+			}
+
+			if ($this->aRegulationYearRelatedByRegulationYear !== null) {
+				if (!$this->aRegulationYearRelatedByRegulationYear->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aRegulationYearRelatedByRegulationYear->getValidationFailures());
+				}
+			}
 
 
 			if (($retval = RegulationPeer::doValidate($this, $columns)) !== true) {
@@ -1359,6 +1422,104 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Declares an association between this object and a Contract object.
+	 *
+	 * @param      Contract $v
+	 * @return     Regulation The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setContract(Contract $v = null)
+	{
+		if ($v === null) {
+			$this->setContractId(NULL);
+		} else {
+			$this->setContractId($v->getId());
+		}
+
+		$this->aContract = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Contract object, it will not be re-added.
+		if ($v !== null) {
+			$v->addRegulation($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated Contract object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Contract The associated Contract object.
+	 * @throws     PropelException
+	 */
+	public function getContract(PropelPDO $con = null)
+	{
+		if ($this->aContract === null && ($this->contract_id !== null)) {
+			$this->aContract = ContractPeer::retrieveByPk($this->contract_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aContract->addRegulations($this);
+			 */
+		}
+		return $this->aContract;
+	}
+
+	/**
+	 * Declares an association between this object and a RegulationYear object.
+	 *
+	 * @param      RegulationYear $v
+	 * @return     Regulation The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setRegulationYearRelatedByRegulationYear(RegulationYear $v = null)
+	{
+		if ($v === null) {
+			$this->setRegulationYear(NULL);
+		} else {
+			$this->setRegulationYear($v->getId());
+		}
+
+		$this->aRegulationYearRelatedByRegulationYear = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the RegulationYear object, it will not be re-added.
+		if ($v !== null) {
+			$v->addRegulation($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated RegulationYear object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     RegulationYear The associated RegulationYear object.
+	 * @throws     PropelException
+	 */
+	public function getRegulationYearRelatedByRegulationYear(PropelPDO $con = null)
+	{
+		if ($this->aRegulationYearRelatedByRegulationYear === null && (($this->regulation_year !== "" && $this->regulation_year !== null))) {
+			$this->aRegulationYearRelatedByRegulationYear = RegulationYearPeer::retrieveByPk($this->regulation_year);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aRegulationYearRelatedByRegulationYear->addRegulations($this);
+			 */
+		}
+		return $this->aRegulationYearRelatedByRegulationYear;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1372,6 +1533,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		if ($deep) {
 		} // if ($deep)
 
+			$this->aContract = null;
+			$this->aRegulationYearRelatedByRegulationYear = null;
 	}
 
 	// symfony_behaviors behavior
