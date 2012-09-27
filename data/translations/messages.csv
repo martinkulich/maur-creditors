@@ -490,3 +490,4 @@
 'Contract closed successfully';'Smlouva byla úspěšně ukončena'
 'Last allowed day in month is %last_day_in_month%';'Poslední povolený den v měsíci je %last_day_in_month%'
 'Upaid in past';'Nevyplacené úroky z předchozích let'
+'Date of payment required if paid is set';'Datum vyplacení je povinné, pokud je vyplněno pole “Vyplaceno“'

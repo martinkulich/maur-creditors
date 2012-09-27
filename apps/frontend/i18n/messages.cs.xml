@@ -1805,5 +1805,9 @@
       <source>Upaid in past</source>
       <target>Nevyplacené úroky z předchozích let</target>
     </trans-unit>
+    <trans-unit id="452">
+      <source>Date of payment required if paid is set</source>
+      <target>Datum vyplacení je povinné, pokud je vyplněno pole “Vyplaceno“</target>
+    </trans-unit>
   </body>
 </xliff>

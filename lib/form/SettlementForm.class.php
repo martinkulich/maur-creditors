@@ -139,6 +139,8 @@ class SettlementForm extends BaseSettlementForm
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
+
+        $this->getValidatorSchema()->setPostValidator(new SettlementPostValidator());
     }
 
     public function doSave($con = null)
