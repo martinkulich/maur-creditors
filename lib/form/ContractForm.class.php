@@ -35,6 +35,8 @@ class ContractForm extends BaseContractForm
 
         $this->getValidator('closed_at')->setOption('required', false);
 
+        $this->getValidator('first_settlement_date')->setOption('required', false);
+
         $periodChoices = Contract::getPeriods();
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
         $this->setValidator('period', new sfValidatorChoice(array('choices' => array_keys($periodChoices), 'required' => true)));
