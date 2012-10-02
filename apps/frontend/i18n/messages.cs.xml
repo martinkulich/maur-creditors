@@ -1809,5 +1809,9 @@
       <source>Date of payment required if paid is set</source>
       <target>Datum vyplacení je povinné, pokud je vyplněno pole “Vyplaceno“</target>
     </trans-unit>
+    <trans-unit id="453">
+      <source>First settlement date</source>
+      <target>Datum prvního vypořádání</target>
+    </trans-unit>
   </body>
 </xliff>

@@ -23,6 +23,9 @@
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_activated_at text-align-right">
     <?php echo false !== strtotime($contract->getActivatedAt()) ? format_date($contract->getActivatedAt(), "D") : '&nbsp;' ?>
 </td>
+<td class="sf_admin_date no-wrap-line sf_admin_list_td_first_settlement_date text-align-right">
+    <?php echo false !== strtotime($contract->getFirstSettlementDate()) ? format_date($contract->getFirstSettlementDate(), "D") : '&nbsp;' ?>
+</td>
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_closed_at text-align-right">
     <?php echo false !== strtotime($contract->getClosedAt()) ? format_date($contract->getClosedAt(), "D") : '&nbsp;' ?>
 </td>

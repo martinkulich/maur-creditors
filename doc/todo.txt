@@ -180,4 +180,4 @@ double klik na ulozit znemoznit
 otazky?
 kdyz predchozi settlement vychazi na 28.2 pridat 2 dny (kdyz 29.2 tak jeden)
 
-post validator, kdyz bylo vyplaceno, musi byt vyplneno datum vyplaceni..
+//post validator, kdyz bylo vyplaceno, musi byt vyplneno datum vyplaceni..

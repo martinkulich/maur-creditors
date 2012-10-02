@@ -85,6 +85,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $currency_code;
 
 	/**
+	 * The value for the first_settlement_date field.
+	 * @var        string
+	 */
+	protected $first_settlement_date;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
@@ -319,6 +325,39 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	public function getCurrencyCode()
 	{
 		return $this->currency_code;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [first_settlement_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getFirstSettlementDate($format = 'Y-m-d')
+	{
+		if ($this->first_settlement_date === null) {
+			return null;
+		}
+
+
+
+		try {
+			$dt = new DateTime($this->first_settlement_date);
+		} catch (Exception $x) {
+			throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->first_settlement_date, true), $x);
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -637,6 +676,55 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setCurrencyCode()
 
 	/**
+	 * Sets the value of [first_settlement_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setFirstSettlementDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->first_settlement_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->first_settlement_date !== null && $tmpDt = new DateTime($this->first_settlement_date)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->first_settlement_date = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = ContractPeer::FIRST_SETTLEMENT_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setFirstSettlementDate()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -679,6 +767,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->closed_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->note = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->currency_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->first_settlement_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -688,7 +777,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Contract object", $e);
@@ -1161,6 +1250,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 10:
 				return $this->getCurrencyCode();
 				break;
+			case 11:
+				return $this->getFirstSettlementDate();
+				break;
 			default:
 				return null;
 				break;
@@ -1193,6 +1285,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[8] => $this->getClosedAt(),
 			$keys[9] => $this->getNote(),
 			$keys[10] => $this->getCurrencyCode(),
+			$keys[11] => $this->getFirstSettlementDate(),
 		);
 		return $result;
 	}
@@ -1257,6 +1350,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 10:
 				$this->setCurrencyCode($value);
 				break;
+			case 11:
+				$this->setFirstSettlementDate($value);
+				break;
 		} // switch()
 	}
 
@@ -1292,6 +1388,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setClosedAt($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setNote($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setCurrencyCode($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setFirstSettlementDate($arr[$keys[11]]);
 	}
 
 	/**
@@ -1314,6 +1411,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::CLOSED_AT)) $criteria->add(ContractPeer::CLOSED_AT, $this->closed_at);
 		if ($this->isColumnModified(ContractPeer::NOTE)) $criteria->add(ContractPeer::NOTE, $this->note);
 		if ($this->isColumnModified(ContractPeer::CURRENCY_CODE)) $criteria->add(ContractPeer::CURRENCY_CODE, $this->currency_code);
+		if ($this->isColumnModified(ContractPeer::FIRST_SETTLEMENT_DATE)) $criteria->add(ContractPeer::FIRST_SETTLEMENT_DATE, $this->first_settlement_date);
 
 		return $criteria;
 	}
@@ -1387,6 +1485,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$copyObj->setNote($this->note);
 
 		$copyObj->setCurrencyCode($this->currency_code);
+
+		$copyObj->setFirstSettlementDate($this->first_settlement_date);
 
 
 		if ($deepCopy) {

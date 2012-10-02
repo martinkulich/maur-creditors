@@ -4,6 +4,7 @@ class ContractService
 {
     const DAY_FORMAT = 'd';
     const DATE_FORMAT = 'Y-m-d';
+
     public function checkContractChanges(Contract $contract)
     {
         $this->checkContractActivation($contract);
@@ -170,44 +171,48 @@ class ContractService
     public function getNextSettlementDateForContract(Contract $contract)
     {
         if (($activatedAt = $contract->getActivatedAt()) == null) {
-            throw new Exception('Contract was not acitvated');
+            throw new Exception('Contract was not activated');
         }
         $lastSettlement = $contract->getLastSettlement(SettlementPeer::IN_PERIOD);
+        $nextSettlementDate = null;
         if ($lastSettlement) {
             $isFirst = false;
             $previousDate = new DateTime($lastSettlement->getDate());
         } else {
             $isFirst = true;
-            $previousDate = new DateTime($activatedAt);
-        }
-        $nextSettlementYear = $previousDateYear = $previousDate->format('Y');
-        $nextSettlementMonth = $previousDateMonth = $previousDate->format('m');
-        $nextSettlementDay = $previousDateDay = $previousDate->format(self::DAY_FORMAT);
-
-        $nextSettlementMonth = $previousDateMonth + $contract->getPeriodInMonths();
-        if($nextSettlementMonth > 12)
-        {
-            $nextSettlementMonth -= 12;
-            $nextSettlementYear +=1;
+            $firstDate = $contract->getFirstSettlementDate();
+            if ($firstDate) {
+                $nextSettlementDate = new DateTime($firstDate);
+            } else {
+                $previousDate = new DateTime($activatedAt);
+            }
         }
 
-        $nextSettlementDateMonthFirstDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, 1, $nextSettlementYear)));
-        $nextSettlementDateMonthLastDate = clone $nextSettlementDateMonthFirstDate;
-        $nextSettlementDateMonthLastDate->modify('last day of this month');
-        $nextSettlementDateMonthLastDateDay = $nextSettlementDateMonthLastDate->format(self::DAY_FORMAT);
-        $nextSettlementDay = $nextSettlementDay > $nextSettlementDateMonthLastDateDay ? $nextSettlementDateMonthLastDateDay : $nextSettlementDay;
-        $nextSettlementDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, $nextSettlementDay, $nextSettlementYear)));
+        if (!$nextSettlementDate) {
+            $nextSettlementYear = $previousDateYear = $previousDate->format('Y');
+            $nextSettlementMonth = $previousDateMonth = $previousDate->format('m');
+            $nextSettlementDay = $previousDateDay = $previousDate->format(self::DAY_FORMAT);
+
+            $nextSettlementMonth = $previousDateMonth + $contract->getPeriodInMonths();
+            if ($nextSettlementMonth > 12) {
+                $nextSettlementMonth -= 12;
+                $nextSettlementYear +=1;
+            }
+
+            $nextSettlementDateMonthFirstDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, 1, $nextSettlementYear)));
+            $nextSettlementDateMonthLastDate = clone $nextSettlementDateMonthFirstDate;
+            $nextSettlementDateMonthLastDate->modify('last day of this month');
+            $nextSettlementDateMonthLastDateDay = $nextSettlementDateMonthLastDate->format(self::DAY_FORMAT);
+            $nextSettlementDay = $nextSettlementDay > $nextSettlementDateMonthLastDateDay ? $nextSettlementDateMonthLastDateDay : $nextSettlementDay;
+            $nextSettlementDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, $nextSettlementDay, $nextSettlementYear)));
 
 
-        if ($isFirst) {
-            $nextSettlementDate->modify('-1 day');
+            if ($isFirst) {
+                $nextSettlementDate->modify('-1 day');
+            }
         }
 
-        $lastDateOfNextSettlementDateMonth = clone $nextSettlementDate;
-        $lastDateOfNextSettlementDateMonth->modify('last day of this month');
-
-        if($nextSettlementDate->format(self::DAY_FORMAT) == 31)
-        {
+        if ($nextSettlementDate->format(self::DAY_FORMAT) == 31) {
             $nextSettlementDate->modify('-1 day');
         }
 

@@ -48,6 +48,7 @@ class ContractTableMap extends TableMap {
 		$this->addColumn('CLOSED_AT', 'ClosedAt', 'DATE', false, null, null);
 		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
 		$this->addForeignKey('CURRENCY_CODE', 'CurrencyCode', 'CHAR', 'currency', 'CODE', true, 3, null);
+		$this->addColumn('FIRST_SETTLEMENT_DATE', 'FirstSettlementDate', 'DATE', false, null, null);
 		// validators
 	} // initialize()
 

@@ -14,10 +14,12 @@ class ContractForm extends BaseContractForm
     {
         $this->getWidgetSchema()->moveField('name', sfWidgetFormSchema::FIRST);
         $this->getWidgetSchema()->moveField('currency_code', sfWidgetFormSchema::AFTER, 'amount');
+        $this->getWidgetSchema()->moveField('first_settlement_date', sfWidgetFormSchema::AFTER, 'created_at');
         $dateFields = array(
             'activated_at',
             'created_at',
             'closed_at',
+            'first_settlement_date',
         );
 
         foreach ($dateFields as $dateField) {
