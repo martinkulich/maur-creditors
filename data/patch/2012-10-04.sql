@@ -36,13 +36,13 @@ SELECT
     c.name as contract_name,
     c.id as contract_id,
     s.date as settlement_date,
-    contract_unpaid(c.id, s.date) as contract_unpaid,
-    creditor_unpaid(cr.id, s.date) as creditor_unpaid
+    contract_unpaid(c.id, s.date)::integer as contract_unpaid,
+    creditor_unpaid(cr.id, s.date)::integer as creditor_unpaid
 FROM
     settlement s
 join contract c ON c.id = s.contract_id
 join creditor cr ON cr.id = c.creditor_id
-order by s.date asc
+order by s.date asc;
 
 INSERT INTO security_perm(code, name, is_public) VALUES
     ('unpaid.admin', 'Nevyplacené úroky', true);
