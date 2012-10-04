@@ -20,6 +20,7 @@ generator:
         object_actions: []
         batch_actions: []
         display: [creditor_fullname, contract_name, contract_unpaid]
+        sort: [creditor_fullname, asc]
       filter:  ~
       form:    ~
       edit:    ~
