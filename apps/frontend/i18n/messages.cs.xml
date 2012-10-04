@@ -1813,5 +1813,9 @@
       <source>First settlement date</source>
       <target>Datum prvního vypořádání</target>
     </trans-unit>
+    <trans-unit id="454">
+      <source>unpaid admin</source>
+      <target>Nevyplacené úroky</target>
+    </trans-unit>
   </body>
 </xliff>

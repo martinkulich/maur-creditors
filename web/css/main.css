@@ -479,34 +479,38 @@ table.table-prices a
 
 @media (min-width: 1280px) {
 
-  /* Update subnav container */
-  .container,
-  .navbar-fixed-top .container,
-  .navbar-fixed-bottom .container {
-    width: 1250px;
-  }
+    /* Update subnav container */
+/*    .container,*/
+    .navbar-fixed-top .container,
+    .navbar-fixed-bottom .container {
+        width: 1250px;
+    }
 
 }
 
 @media (min-width: 1360px) {
 
-  /* Update subnav container */
-  .container,
-  .navbar-fixed-top .container,
-  .navbar-fixed-bottom .container {
-    width: 1330px;
-  }
+    /* Update subnav container */
+/*    .container,*/
+    .navbar-fixed-top .container,
+    .navbar-fixed-bottom .container {
+        width: 1330px;
+    }
 
 }
 
+table.table-admin tbody
+{
+    overflow: auto;
+}
 
 @media (min-width: 1600px) {
 
-  /* Update subnav container */
-  .container,
-  .navbar-fixed-top .container,
-  .navbar-fixed-bottom .container {
-    width: 1570px;
-  }
+    /* Update subnav container */
+/*    .container,*/
+    .navbar-fixed-top .container,
+    .navbar-fixed-bottom .container {
+        width: 1570px;
+    }
 
 }

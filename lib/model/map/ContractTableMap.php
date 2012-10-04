@@ -62,6 +62,7 @@ class ContractTableMap extends TableMap {
     $this->addRelation('Payment', 'Payment', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Settlement', 'Settlement', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Regulation', 'Regulation', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Unpaid', 'Unpaid', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

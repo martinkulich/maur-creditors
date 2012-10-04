@@ -43,6 +43,7 @@ class defaultComponents extends sfComponents
             'payment',
             'settlement',
             'regulation',
+            'unpaid',
         );
         $this->adminLinks = array(
             'security_user',

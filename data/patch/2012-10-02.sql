@@ -55,7 +55,7 @@ AND
     ry.id = year(c.activated_at)
     OR ry.id IN (SELECT DISTINCT year(s.date) FROM settlement s WHERE s.contract_id = c.id)
     OR ry.id IN (SELECT DISTINCT year(s1.date_of_payment) FROM settlement s1 WHERE s1.contract_id = c.id)
-    OR (unpaid(c.id, ry.id) > 0
+    OR (unpaid(c.id, ry.id) != 0
 )
 AND ry.id <= year(now()::DATE));
 

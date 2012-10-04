@@ -59,9 +59,6 @@
       <reference local="contract_id" foreign="id"/>
     </foreign-key>
   </table>
-  <table name="regulation_year" phpName="RegulationYear">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
-  </table>
   <table name="security_group" phpName="SecurityGroup">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" required="true"/>

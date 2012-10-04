@@ -1,3 +1,13 @@
+unpaid:
+  class: sfPropelRouteCollection
+  options:
+    model:                unpaid
+    module:               unpaid
+    prefix_path:          /unpaid
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
 ip_address:
   class: sfPropelRouteCollection
   options:

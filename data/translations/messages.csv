@@ -492,3 +492,4 @@
 'Upaid in past';'Nevyplacené úroky z předchozích let'
 'Date of payment required if paid is set';'Datum vyplacení je povinné, pokud je vyplněno pole “Vyplaceno“'
 'First settlement date';'Datum prvního vypořádání'
+'unpaid admin';'Nevyplacené úroky'
