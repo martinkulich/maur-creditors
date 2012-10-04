@@ -58,6 +58,7 @@ class UnpaidFormFilter extends BaseUnpaidFormFilter
         $criteria = parent::doBuildCriteria($values);
         $customCriteria = sprintf("%s = (SELECT MAX(s1.date) FROM settlement s1 WHERE s1.date <= '%s' AND s1.contract_id = %s)", UnpaidPeer::SETTLEMENT_DATE, date('Y-m-d'), UnpaidPeer::CONTRACT_ID);
         $criteria->add(UnpaidPeer::SETTLEMENT_DATE, $customCriteria, Criteria::CUSTOM);
+        $criteria->add(UnpaidPeer::CONTRACT_UNPAID, 0, Criteria::NOT_EQUAL);
         return $criteria;
     }
 }
