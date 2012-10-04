@@ -60,5 +60,6 @@ class UnpaidFormFilter extends BaseUnpaidFormFilter
         $criteria->add(UnpaidPeer::SETTLEMENT_DATE, $customCriteria, Criteria::CUSTOM);
         $criteria->add(UnpaidPeer::CONTRACT_UNPAID, 0, Criteria::NOT_EQUAL);
         return $criteria;
+        
     }
 }
