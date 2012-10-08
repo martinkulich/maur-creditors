@@ -23,6 +23,7 @@ generator:
         sort: [creditor_fullname, asc]
         actions:
           filters: ~
+          reset: ~
       filter:  ~
       form:    ~
       edit:    ~
