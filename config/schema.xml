@@ -42,6 +42,7 @@
   <table name="ip_address" phpName="IpAddress">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="ip_address" phpName="IpAddress" type="VARCHAR" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" required="true"/>
     <unique name="ip_address_ip_address_uidx">
       <unique-column name="ip_address"/>
     </unique>

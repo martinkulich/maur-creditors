@@ -31,6 +31,12 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 	protected $ip_address;
 
 	/**
+	 * The value for the name field.
+	 * @var        string
+	 */
+	protected $name;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -66,6 +72,16 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 	public function getIpAddress()
 	{
 		return $this->ip_address;
+	}
+
+	/**
+	 * Get the [name] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getName()
+	{
+		return $this->name;
 	}
 
 	/**
@@ -109,6 +125,26 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 	} // setIpAddress()
 
 	/**
+	 * Set the value of [name] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     IpAddress The current object (for fluent API support)
+	 */
+	public function setName($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->name !== $v) {
+			$this->name = $v;
+			$this->modifiedColumns[] = IpAddressPeer::NAME;
+		}
+
+		return $this;
+	} // setName()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -142,6 +178,7 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->ip_address = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -151,7 +188,7 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 2; // 2 = IpAddressPeer::NUM_COLUMNS - IpAddressPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 3; // 3 = IpAddressPeer::NUM_COLUMNS - IpAddressPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating IpAddress object", $e);
@@ -487,6 +524,9 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 			case 1:
 				return $this->getIpAddress();
 				break;
+			case 2:
+				return $this->getName();
+				break;
 			default:
 				return null;
 				break;
@@ -510,6 +550,7 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getIpAddress(),
+			$keys[2] => $this->getName(),
 		);
 		return $result;
 	}
@@ -547,6 +588,9 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 			case 1:
 				$this->setIpAddress($value);
 				break;
+			case 2:
+				$this->setName($value);
+				break;
 		} // switch()
 	}
 
@@ -573,6 +617,7 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setIpAddress($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setName($arr[$keys[2]]);
 	}
 
 	/**
@@ -586,6 +631,7 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(IpAddressPeer::ID)) $criteria->add(IpAddressPeer::ID, $this->id);
 		if ($this->isColumnModified(IpAddressPeer::IP_ADDRESS)) $criteria->add(IpAddressPeer::IP_ADDRESS, $this->ip_address);
+		if ($this->isColumnModified(IpAddressPeer::NAME)) $criteria->add(IpAddressPeer::NAME, $this->name);
 
 		return $criteria;
 	}
@@ -641,6 +687,8 @@ abstract class BaseIpAddress extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setIpAddress($this->ip_address);
+
+		$copyObj->setName($this->name);
 
 
 		$copyObj->setNew(true);

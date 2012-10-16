@@ -16,11 +16,13 @@ abstract class BaseIpAddressForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'         => new sfWidgetFormInputHidden(),
       'ip_address' => new sfWidgetFormInputText(),
+      'name'       => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'         => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'ip_address' => new sfValidatorString(array('max_length' => 255)),
+      'name'       => new sfValidatorString(array('max_length' => 255)),
     ));
 
     $this->validatorSchema->setPostValidator(

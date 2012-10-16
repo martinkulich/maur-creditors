@@ -13,10 +13,12 @@ abstract class BaseIpAddressFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'ip_address' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'name'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
       'ip_address' => new sfValidatorPass(array('required' => false)),
+      'name'       => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('ip_address_filters[%s]');
@@ -36,6 +38,7 @@ abstract class BaseIpAddressFormFilter extends BaseFormFilterPropel
     return array(
       'id'         => 'Number',
       'ip_address' => 'Text',
+      'name'       => 'Text',
     );
   }
 }

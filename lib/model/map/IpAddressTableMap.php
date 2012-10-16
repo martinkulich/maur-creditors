@@ -39,6 +39,7 @@ class IpAddressTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('IP_ADDRESS', 'IpAddress', 'VARCHAR', true, 255, null);
+		$this->addColumn('NAME', 'Name', 'VARCHAR', true, 255, null);
 		// validators
 	} // initialize()
 

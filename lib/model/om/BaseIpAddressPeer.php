@@ -25,7 +25,7 @@ abstract class BaseIpAddressPeer {
 	const TM_CLASS = 'IpAddressTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class BaseIpAddressPeer {
 
 	/** the column name for the IP_ADDRESS field */
 	const IP_ADDRESS = 'ip_address.IP_ADDRESS';
+
+	/** the column name for the NAME field */
+	const NAME = 'ip_address.NAME';
 
 	/**
 	 * An identiy map to hold any loaded instances of IpAddress objects.
@@ -59,11 +62,11 @@ abstract class BaseIpAddressPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'IpAddress', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'ipAddress', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::IP_ADDRESS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'ip_address', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'IpAddress', 'Name', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'ipAddress', 'name', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::IP_ADDRESS, self::NAME, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'ip_address', 'name', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -73,11 +76,11 @@ abstract class BaseIpAddressPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'IpAddress' => 1, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'ipAddress' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::IP_ADDRESS => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'ip_address' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'IpAddress' => 1, 'Name' => 2, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'ipAddress' => 1, 'name' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::IP_ADDRESS => 1, self::NAME => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'ip_address' => 1, 'name' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -149,6 +152,7 @@ abstract class BaseIpAddressPeer {
 	{
 		$criteria->addSelectColumn(IpAddressPeer::ID);
 		$criteria->addSelectColumn(IpAddressPeer::IP_ADDRESS);
+		$criteria->addSelectColumn(IpAddressPeer::NAME);
 	}
 
 	/**

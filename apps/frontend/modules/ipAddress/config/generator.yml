@@ -15,11 +15,12 @@ generator:
       actions: ~
       fields:  ~
       list:
-        display: [ip_address]
+        display: [name ,ip_address]
         batch_actions: []
         actions:
           _new: ~
         object_actions:
+          _edit: ~
           _delete: ~
       filter:  ~
       form:
