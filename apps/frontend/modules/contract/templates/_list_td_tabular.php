@@ -5,10 +5,10 @@
     <?php echo $contract->getCreditor() ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_amount text-align-right">
-    <?php echo my_format_currency($contract->getAmount(), 'CZK') ?>
+    <?php echo my_format_currency($contract->getAmount(), $contract->getCurrencyCode()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_payments_amount text-align-right">
-    <?php echo link_to(my_format_currency($contract->getPaymentsAmount(), 'CZK'), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
+    <?php echo link_to(my_format_currency($contract->getPaymentsAmount(), $contract->getCurrencyCode()), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
 </td>
 
 <td class="sf_admin_text sf_admin_list_td_interest_rate_as_string text-align-right">

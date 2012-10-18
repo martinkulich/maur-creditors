@@ -1,4 +1,4 @@
-<?php $currencyCode = 'CZK'; ?>
+<?php $currencyCode = $regulation->getContract()->getCurrencyCode(); ?>
 <td class="sf_admin_text sf_admin_list_td_creditor_fullname ">
     <?php echo $regulation->getCreditorFirstname() ?>
 </td>

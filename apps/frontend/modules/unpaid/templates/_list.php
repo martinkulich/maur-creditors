@@ -7,7 +7,6 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $currencyCode = 'CZK' ?>
                 <?php foreach ($pager->getResults() as $i => $unpaid): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                     <tr class="sf_admin_row <?php echo $odd ?>">
                         <?php include_partial('unpaid/list_td_tabular', array('unpaid' => $unpaid)) ?>
@@ -21,7 +20,7 @@
                     <th>
                     </th>
                     <th>
-                        <?php echo my_format_currency($sums['unpaid'], $currencyCode) ?>
+                        <?php //echo my_format_currency($sums['unpaid'], 'CZK') ?>
                     </th>
                 </tr>
             </tfoot>

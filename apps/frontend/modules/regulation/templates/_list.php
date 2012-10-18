@@ -27,26 +27,26 @@
                     <th>
                     </th>
                     <th>
-                        <?php echo my_format_currency($sums['start_balance'], $currencyCode) ?>
+                        <?php //echo my_format_currency($sums['start_balance'], $currencyCode) ?>
                     </th>
 
                     <th>
                     </th>
                     <th class="text-align-right">
-                        <?php echo my_format_currency($sums['regulation'], $currencyCode) ?>
+                        <?php //echo my_format_currency($sums['regulation'], $currencyCode) ?>
                     </th>
                     <th class="text-align-right">
-                        <?php echo my_format_currency($sums['paid'], $currencyCode) ?>
+                        <?php //echo my_format_currency($sums['paid'], $currencyCode) ?>
                     </th>
                     <th class="text-align-right">
-                        <?php echo my_format_currency($sums['paid_for_current_year'], $currencyCode) ?>
+                        <?php //echo my_format_currency($sums['paid_for_current_year'], $currencyCode) ?>
                     </th>
                     <th class="text-align-right">
-                        <?php echo my_format_currency($sums['capitalized'], $currencyCode) ?>
+                        <?php //echo my_format_currency($sums['capitalized'], $currencyCode) ?>
                     </th>
                     <th class="text-align-right">
                         <?php if (array_key_exists('unpaid', $sums)) { ?>
-                            <?php echo my_format_currency($sums['unpaid'], $currencyCode) ?>
+                            <?php //echo my_format_currency($sums['unpaid'], $currencyCode) ?>
                         <?php } ?>
                     </th>
                     <th>
