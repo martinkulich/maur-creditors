@@ -6,8 +6,8 @@
       <target>cs</target>
     </trans-unit>
     <trans-unit id="2">
-      <source></source>
-      <target></target>
+      <source/>
+      <target/>
     </trans-unit>
     <trans-unit id="3">
       <source>Account</source>
@@ -54,7 +54,7 @@
       <target>Rezervace</target>
     </trans-unit>
     <trans-unit id="14">
-      <source>No schedule </source>
+      <source>No schedule</source>
       <target>Pro toto datum neexistuje žádný rozvrh</target>
     </trans-unit>
     <trans-unit id="15">
@@ -1159,7 +1159,7 @@
     </trans-unit>
     <trans-unit id="290">
       <source>There is no curt for %sport%  at %date%</source>
-      <target>Dne %date% není pro %sport% naplánovaný žádný kurt </target>
+      <target>Dne %date% není pro %sport% naplánovaný žádný kurt</target>
     </trans-unit>
     <trans-unit id="291">
       <source>Show</source>
@@ -1816,6 +1816,14 @@
     <trans-unit id="454">
       <source>unpaid admin</source>
       <target>Nevyplacené úroky</target>
+    </trans-unit>
+    <trans-unit id="455">
+      <source>About how much balance should be reduced</source>
+      <target>O kolik bude jistina ponížena</target>
+    </trans-unit>
+    <trans-unit id="456">
+      <source>This field is unchangeable after contract activation</source>
+      <target>Nelze změnit/nastavit po aktivaci smlouvy</target>
     </trans-unit>
   </body>
 </xliff>

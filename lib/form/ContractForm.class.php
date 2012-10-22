@@ -36,6 +36,8 @@ class ContractForm extends BaseContractForm
         $this->getValidator('closed_at')->setOption('required', false);
 
         $this->getValidator('first_settlement_date')->setOption('required', false);
+        $this->getWidgetSchema()->setHelp('first_settlement_date', 'This field is unchangeable after contract activation');
+        
 
         $periodChoices = Contract::getPeriods();
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
@@ -59,7 +61,7 @@ class ContractForm extends BaseContractForm
         }
 
         if ($this->getObject()->getActivatedAt()) {
-//            $fieldsToUnset[] = 'activated_at';
+            $fieldsToUnset[] = 'first_settlement_date';
         }
 
         foreach ($fieldsToUnset as $field) {

@@ -185,3 +185,7 @@ kdyz predchozi settlement vychazi na 28.2 pridat 2 dny (kdyz 29.2 tak jeden)
 razeni ve smlouvach podle nazvu
 nevyporadany filtr ve vyplatach uroku
 ukotvit zahlavi
+
+
+
+ponizeni jistiny - help

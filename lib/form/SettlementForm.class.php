@@ -62,6 +62,8 @@ class SettlementForm extends BaseSettlementForm
                 $this->setWidget($field, new myWidgetFormInputAmount(array('currency_code' => $this->getObject()->getContract()->getCurrencyCode())));
             }
         }
+        
+        $this->getWidgetSchema()->setHelp('balance_reduction','About how much balance should be reduced');
 
         $contractCriteria = new Criteria();
         $contractCriteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID);
