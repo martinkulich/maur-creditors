@@ -20,29 +20,29 @@
     <?php echo ServiceContainer::getContractService()->getDaysCount($settlement) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_balance text-align-right <?php echo $settlement->getManualBalance() ? ' text-red ' : '' ?>">
-    <?php echo my_format_converted_currency($settlement->getBalance(), $currencyCode, $defaultCurrencyCode) ?>
+    <?php echo my_format_currency($settlement->getBalance(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_interest text-align-right <?php echo $settlement->getManualInterest() ? ' text-red ' : '' ?>">
-    <?php echo my_format_converted_currency($settlement->getInterest(), $currencyCode, $defaultCurrencyCode) ?>
+    <?php echo my_format_currency($settlement->getInterest(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_paid text-align-right">
-    <?php echo my_format_converted_currency($settlement->getPaid(), $currencyCode, $defaultCurrencyCode) ?>
+    <?php echo my_format_currency($settlement->getPaid(), $currencyCode) ?>
 </td>
 <td class="sf_admin_boolean sf_admin_list_td_cash ">
   <?php echo get_partial('settlement/list_field_boolean', array('value' => $settlement->getCash())) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_capitalized text-align-right">
-    <?php echo my_format_converted_currency($settlement->getCapitalized(), $currencyCode, $defaultCurrencyCode) ?>
+    <?php echo my_format_currency($settlement->getCapitalized(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_balance_reduction text-align-right">
-    <?php echo my_format_converted_currency($settlement->getBalanceReduction(), $currencyCode, $defaultCurrencyCode) ?>
+    <?php echo my_format_currency($settlement->getBalanceReduction(), $currencyCode) ?>
 </td>
 
 <td class="sf_admin_text sf_admin_list_td_unsettled text-align-right">
-        <?php echo my_format_converted_currency($settlement->getUnsettled(), $currencyCode, $defaultCurrencyCode) ?>
+        <?php echo my_format_currency($settlement->getUnsettled(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_unsettled_cumulative text-align-right">
-  <?php echo my_format_converted_currency($settlement->getUnsettledCumulative(), $currencyCode, $defaultCurrencyCode) ?>
+  <?php echo my_format_currency($settlement->getUnsettledCumulative(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_settlement_type text-align-right">
         <?php echo $sf_context->getI18n()->__($settlement->getSettlementType()); ?>

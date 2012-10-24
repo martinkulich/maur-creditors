@@ -8,7 +8,7 @@ COMMIT;
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION amount_in_currency(_amount numeric, _from_currency_code string, _to_currency_code string)
+CREATE OR REPLACE FUNCTION amount_in_currency(_amount numeric, _from_currency_code text, _to_currency_code text)
   RETURNS numeric AS
 $BODY$
         DECLARE
