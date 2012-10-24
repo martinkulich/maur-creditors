@@ -10,7 +10,7 @@
       <tbody>
         <?php foreach ($pager->getResults() as $i => $payment): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
           <tr class="sf_admin_row <?php echo $odd ?>">
-            <?php include_partial('payment/list_td_tabular', array('payment' => $payment)) ?>
+            <?php include_partial('payment/list_td_tabular', array('payment' => $payment, 'currency'=>$currency)) ?>
             <?php include_partial('payment/list_td_actions', array('payment' => $payment, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
@@ -26,7 +26,7 @@
               <th>
               </th>
               <th class="text-align-right">
-                  <?php //echo my_format_currency($sums['amount'], $payment->getContract()->getCurrencyCode()) ?>
+                  <?php echo my_format_currency($sums['amount'], $currency) ?>
               </th>
               <th>
               </th>

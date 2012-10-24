@@ -13,6 +13,7 @@ require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
  */
 class contractActions extends autoContractActions
 {
+
     public function executeNote(sfWebRequest $request)
     {
         $this->contract = $this->getRoute()->getObject();
@@ -32,7 +33,13 @@ class contractActions extends autoContractActions
 
     public function executeRequlation(sfWebRequest $request)
     {
+        
+    }
 
+    public function executeIndex(sfWebRequest $request)
+    {
+        parent::executeIndex($request);
+        $this->currency = ServiceContainer::getCurrencyService()->getDefaultCurrency();
     }
 
     public function executeCopy(sfWebRequest $request)
@@ -71,4 +78,5 @@ class contractActions extends autoContractActions
 
         $this->data = json_encode($closingAmount);
     }
+
 }

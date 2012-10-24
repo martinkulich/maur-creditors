@@ -5,5 +5,5 @@
     <?php echo $unpaid->getContractName() ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_contract_unpaid span1">
-    <?php echo my_format_currency($unpaid->getContractUnpaid(), $unpaid->getContract()->getCurrencyCode()) ?>
+    <?php echo my_format_converted_currency($unpaid->getContractUnpaid(), $unpaid->getContract()->getCurrencyCode(), $currency->getCode()) ?>
 </td>

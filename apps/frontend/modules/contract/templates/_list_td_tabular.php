@@ -1,14 +1,15 @@
+<?php $differentCurrency = $contract->getCurrencyCode() <> $currency->getCode()?>
 <td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
     <?php echo link_to($contract->getName(), '@settlement_contract_filter?contract_id='.$contract->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $contract->getCreditor() ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_amount text-align-right">
-    <?php echo my_format_currency($contract->getAmount(), $contract->getCurrencyCode()) ?>
+<td class="sf_admin_text sf_admin_list_td_amount text-align-right <?php if($differentCurrency) echo ' text-red '?>" title="<?php if($differentCurrency) echo __('Currency'). ' '.$contract->getCurrencyCode()?>">
+    <?php echo my_format_converted_currency($contract->getAmount(), $contract->getCurrencyCode(), $currency->getCode()) ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_payments_amount text-align-right">
-    <?php echo link_to(my_format_currency($contract->getPaymentsAmount(), $contract->getCurrencyCode()), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
+<td class="sf_admin_text sf_admin_list_td_payments_amount text-align-right <?php if($differentCurrency) echo ' text-red '?>" title="<?php if($differentCurrency) echo __('Currency'). ' '.$contract->getCurrencyCode()?>">
+    <?php echo link_to(my_format_converted_currency($contract->getPaymentsAmount(), $contract->getCurrencyCode(), $currency->getCode()), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
 </td>
 
 <td class="sf_admin_text sf_admin_list_td_interest_rate_as_string text-align-right">

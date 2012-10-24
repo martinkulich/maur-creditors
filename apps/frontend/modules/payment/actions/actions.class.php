@@ -22,20 +22,24 @@ class paymentActions extends autoPaymentActions
     public function executeIndex(sfWebRequest $request)
     {
         parent::executeIndex($request);
-        $this->sums = $this->getSums();
+        $this->currency = ServiceContainer::getCurrencyService()->getDefaultCurrency();
+        $this->sums = $this->getSums($this->currency);
     }
 
-    protected function getSums()
+    protected function getSums(Currency $currency)
     {
         $sumPager = $this->getPager();
+
         $criteria = $sumPager->getCriteria();
         $criteria->clearSelectColumns();
-        $criteria->addSelectColumn(sprintf('sum(%s) as amount', PaymentPeer::AMOUNT));
+        $criteria->addJoin(PaymentPeer::CONTRACT_ID, ContractPeer::ID);
+        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as amount", PaymentPeer::AMOUNT, ContractPeer::CURRENCY_CODE, $currency->getCode()));
         $criteria->clearOrderByColumns();
         $sumPager->setCriteria($criteria);
         $sumPager->init();
 
-        $statement = RegulationPeer::doSelectStmt($sumPager->getCriteria());
+        $statement = PaymentPeer::doSelectStmt($sumPager->getCriteria());
+        
         return $statement->fetch(PDO::FETCH_ASSOC);
         return $sumPager;
     }

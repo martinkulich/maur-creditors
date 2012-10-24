@@ -17,15 +17,18 @@ class unpaidActions extends autoUnpaidActions
         public function executeIndex(sfWebRequest $request)
     {
         parent::executeIndex($request);
-        $this->sums = $this->getSums();
+        $this->currency = ServiceContainer::getCurrencyService()->getDefaultCurrency();
+        $this->sums = $this->getSums($this->currency);
     }
 
-    protected function getSums()
+    protected function getSums(Currency $currency)
     {
         $sumPager = $this->getPager();
         $criteria = $sumPager->getCriteria();
         $criteria->clearSelectColumns();
-        $criteria->addSelectColumn(sprintf('sum(%s) as unpaid', UnpaidPeer::CONTRACT_UNPAID));
+        $criteria->addJoin(UnpaidPeer::CONTRACT_ID, ContractPeer::ID);
+        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as unpaid", UnpaidPeer::CONTRACT_UNPAID, ContractPeer::CURRENCY_CODE, $currency->getCode()));
+        
         $criteria->clearOrderByColumns();
         $sumPager->setCriteria($criteria);
         $sumPager->init();

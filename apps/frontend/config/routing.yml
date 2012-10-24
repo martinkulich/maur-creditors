@@ -1,3 +1,13 @@
+currency:
+  class: sfPropelRouteCollection
+  options:
+    model:                currency
+    module:               currency
+    prefix_path:          /currency
+    column:               code
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+    
 unpaid:
   class: sfPropelRouteCollection
   options:

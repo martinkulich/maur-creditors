@@ -38,6 +38,8 @@
   </table>
   <table name="currency" phpName="Currency">
     <column name="code" phpName="Code" type="CHAR" size="3" primaryKey="true" required="true"/>
+    <column name="is_default" phpName="IsDefault" type="BOOLEAN" required="true" defaultValue="false"/>
+    <column name="rate" phpName="Rate" type="NUMERIC" size="15" scale="2" required="true" defaultValue="1"/>
   </table>
   <table name="ip_address" phpName="IpAddress">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>

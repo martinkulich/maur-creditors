@@ -9,7 +9,7 @@
             <tbody>
                 <?php foreach ($pager->getResults() as $i => $unpaid): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                     <tr class="sf_admin_row <?php echo $odd ?>">
-                        <?php include_partial('unpaid/list_td_tabular', array('unpaid' => $unpaid)) ?>
+                        <?php include_partial('unpaid/list_td_tabular', array('unpaid' => $unpaid, 'currency'=>$currency)) ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -20,7 +20,7 @@
                     <th>
                     </th>
                     <th>
-                        <?php //echo my_format_currency($sums['unpaid'], 'CZK') ?>
+                        <?php echo my_format_currency($sums['unpaid'], $currency->getCode()) ?>
                     </th>
                 </tr>
             </tfoot>

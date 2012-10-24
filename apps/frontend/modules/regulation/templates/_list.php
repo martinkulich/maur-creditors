@@ -8,9 +8,8 @@
             </thead>
             <tbody>
                 <?php foreach ($pager->getResults() as $i => $regulation): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
-                    <?php $currencyCode = 'CZK' ?>
                     <tr class="sf_admin_row <?php echo $odd ?>">
-                        <?php include_partial('regulation/list_td_tabular', array('regulation' => $regulation)) ?>
+                        <?php include_partial('regulation/list_td_tabular', array('regulation' => $regulation, 'currency'=>$currency)) ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -23,30 +22,29 @@
                     <th>
                     </th>
                     <th>
+                        <?php echo my_format_currency($sums['start_balance']) ?>
                     </th>
                     <th>
                     </th>
                     <th>
-                        <?php //echo my_format_currency($sums['start_balance'], $currencyCode) ?>
                     </th>
-
                     <th>
                     </th>
                     <th class="text-align-right">
-                        <?php //echo my_format_currency($sums['regulation'], $currencyCode) ?>
+                        <?php echo my_format_currency($sums['regulation'], $currency->getCode()) ?>
                     </th>
                     <th class="text-align-right">
-                        <?php //echo my_format_currency($sums['paid'], $currencyCode) ?>
+                        <?php echo my_format_currency($sums['paid'], $currency->getCode()) ?>
                     </th>
                     <th class="text-align-right">
-                        <?php //echo my_format_currency($sums['paid_for_current_year'], $currencyCode) ?>
+                        <?php echo my_format_currency($sums['paid_for_current_year'], $currency->getCode()) ?>
                     </th>
                     <th class="text-align-right">
-                        <?php //echo my_format_currency($sums['capitalized'], $currencyCode) ?>
+                        <?php echo my_format_currency($sums['capitalized'], $currency->getCode()) ?>
                     </th>
                     <th class="text-align-right">
                         <?php if (array_key_exists('unpaid', $sums)) { ?>
-                            <?php //echo my_format_currency($sums['unpaid'], $currencyCode) ?>
+                            <?php echo my_format_currency($sums['unpaid'], $currency->getCode()) ?>
                         <?php } ?>
                     </th>
                     <th>

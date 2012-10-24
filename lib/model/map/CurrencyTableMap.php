@@ -37,6 +37,8 @@ class CurrencyTableMap extends TableMap {
 		$this->setUseIdGenerator(false);
 		// columns
 		$this->addPrimaryKey('CODE', 'Code', 'CHAR', true, 3, null);
+		$this->addColumn('IS_DEFAULT', 'IsDefault', 'BOOLEAN', true, null, false);
+		$this->addColumn('RATE', 'Rate', 'NUMERIC', true, 15, 1);
 		// validators
 	} // initialize()
 

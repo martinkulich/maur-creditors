@@ -1825,5 +1825,41 @@
       <source>This field is unchangeable after contract activation</source>
       <target>Nelze změnit/nastavit po aktivaci smlouvy</target>
     </trans-unit>
+    <trans-unit id="457">
+      <source>currency admin</source>
+      <target>Měny</target>
+    </trans-unit>
+    <trans-unit id="458">
+      <source>of currency</source>
+      <target>Měn</target>
+    </trans-unit>
+    <trans-unit id="459">
+      <source>Code</source>
+      <target>Kód</target>
+    </trans-unit>
+    <trans-unit id="460">
+      <source>Is default</source>
+      <target>Výchozí</target>
+    </trans-unit>
+    <trans-unit id="461">
+      <source>Rate</source>
+      <target>kurz</target>
+    </trans-unit>
+    <trans-unit id="462">
+      <source>Currency</source>
+      <target>Měna</target>
+    </trans-unit>
+    <trans-unit id="463">
+      <source>New currency</source>
+      <target>Nová měna</target>
+    </trans-unit>
+    <trans-unit id="464">
+      <source>Edit currency</source>
+      <target>Editace měny</target>
+    </trans-unit>
+    <trans-unit id="465">
+      <source>Filter currency</source>
+      <target>Filtrovat měny</target>
+    </trans-unit>
   </body>
 </xliff>

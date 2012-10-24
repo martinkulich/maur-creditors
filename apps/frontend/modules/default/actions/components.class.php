@@ -49,6 +49,7 @@ class defaultComponents extends sfComponents
             'security_user',
             'ip_address',
             'rights',
+            'currency',
         );
         $pattern = '%s.admin';
         $user = $this->getUser();

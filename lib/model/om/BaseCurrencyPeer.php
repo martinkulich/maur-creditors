@@ -25,13 +25,19 @@ abstract class BaseCurrencyPeer {
 	const TM_CLASS = 'CurrencyTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 1;
+	const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the CODE field */
 	const CODE = 'currency.CODE';
+
+	/** the column name for the IS_DEFAULT field */
+	const IS_DEFAULT = 'currency.IS_DEFAULT';
+
+	/** the column name for the RATE field */
+	const RATE = 'currency.RATE';
 
 	/**
 	 * An identiy map to hold any loaded instances of Currency objects.
@@ -56,11 +62,11 @@ abstract class BaseCurrencyPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Code', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('code', ),
-		BasePeer::TYPE_COLNAME => array (self::CODE, ),
-		BasePeer::TYPE_FIELDNAME => array ('code', ),
-		BasePeer::TYPE_NUM => array (0, )
+		BasePeer::TYPE_PHPNAME => array ('Code', 'IsDefault', 'Rate', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('code', 'isDefault', 'rate', ),
+		BasePeer::TYPE_COLNAME => array (self::CODE, self::IS_DEFAULT, self::RATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('code', 'is_default', 'rate', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -70,11 +76,11 @@ abstract class BaseCurrencyPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Code' => 0, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('code' => 0, ),
-		BasePeer::TYPE_COLNAME => array (self::CODE => 0, ),
-		BasePeer::TYPE_FIELDNAME => array ('code' => 0, ),
-		BasePeer::TYPE_NUM => array (0, )
+		BasePeer::TYPE_PHPNAME => array ('Code' => 0, 'IsDefault' => 1, 'Rate' => 2, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('code' => 0, 'isDefault' => 1, 'rate' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::CODE => 0, self::IS_DEFAULT => 1, self::RATE => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('code' => 0, 'is_default' => 1, 'rate' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -145,6 +151,8 @@ abstract class BaseCurrencyPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 		$criteria->addSelectColumn(CurrencyPeer::CODE);
+		$criteria->addSelectColumn(CurrencyPeer::IS_DEFAULT);
+		$criteria->addSelectColumn(CurrencyPeer::RATE);
 	}
 
 	/**

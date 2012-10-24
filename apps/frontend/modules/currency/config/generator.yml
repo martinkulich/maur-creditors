@@ -1,0 +1,28 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           currency
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              currency
+    plural:                currencys
+    route_prefix:          currency
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        display: [code, is_default, rate]
+        batch_actions: []
+        object_actions:
+          _edit: ~
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+        
+      edit:    ~
+      new:     ~

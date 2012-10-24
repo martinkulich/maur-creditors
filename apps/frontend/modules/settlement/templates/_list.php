@@ -11,7 +11,7 @@
         <?php foreach ($pager->getResults() as $i => $settlement): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                 <?php $currencyCode = $settlement->getContract()->getCurrencyCode()?>
           <tr class="sf_admin_row <?php echo $odd.' '; echo ($settlement->isSettlementType(SettlementPeer::END_OF_YEAR) ? ' text-light-blue ' : '')?>">
-            <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement)) ?>
+            <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement,'currency'=>$currency)) ?>
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
@@ -33,21 +33,21 @@
               <th>
               </th>
               <th class="text-align-right">
-                      <?php echo my_format_currency($sums['interest'], $currencyCode) ?>
+                      <?php echo my_format_currency($sums['interest'], $currency->getCode()) ?>
               </th>
               <th class="text-align-right">
-                      <?php echo my_format_currency($sums['paid'], $currencyCode) ?>
+                      <?php echo my_format_currency($sums['paid'], $currency->getCode()) ?>
               </th>
               <th>
               </th>
               <th class="text-align-right">
-                      <?php echo my_format_currency($sums['capitalized'], $currencyCode) ?>
+                      <?php echo my_format_currency($sums['capitalized'], $currency->getCode()) ?>
               </th>
               <th class="text-align-right">
-                      <?php echo my_format_currency($sums['balance_reduction'], $currencyCode) ?>
+                      <?php echo my_format_currency($sums['balance_reduction'], $currency->getCode()) ?>
               </th>
               <th class="text-align-right">
-                  <?php echo my_format_currency($sums['unsettled'], $currencyCode) ?>
+                  <?php echo my_format_currency($sums['unsettled'], $currency->getCode()) ?>
               </th>
               <th>
               </th>

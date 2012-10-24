@@ -25,6 +25,20 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 	protected $code;
 
 	/**
+	 * The value for the is_default field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_default;
+
+	/**
+	 * The value for the rate field.
+	 * Note: this column has a database default value of: '1'
+	 * @var        string
+	 */
+	protected $rate;
+
+	/**
 	 * @var        array Contract[] Collection to store aggregation of Contract objects.
 	 */
 	protected $collContracts;
@@ -53,6 +67,28 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 	const PEER = 'CurrencyPeer';
 
 	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_default = false;
+		$this->rate = '1';
+	}
+
+	/**
+	 * Initializes internal state of BaseCurrency object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
+
+	/**
 	 * Get the [code] column value.
 	 * 
 	 * @return     string
@@ -60,6 +96,26 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 	public function getCode()
 	{
 		return $this->code;
+	}
+
+	/**
+	 * Get the [is_default] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsDefault()
+	{
+		return $this->is_default;
+	}
+
+	/**
+	 * Get the [rate] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getRate()
+	{
+		return $this->rate;
 	}
 
 	/**
@@ -83,6 +139,46 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 	} // setCode()
 
 	/**
+	 * Set the value of [is_default] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Currency The current object (for fluent API support)
+	 */
+	public function setIsDefault($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_default !== $v || $this->isNew()) {
+			$this->is_default = $v;
+			$this->modifiedColumns[] = CurrencyPeer::IS_DEFAULT;
+		}
+
+		return $this;
+	} // setIsDefault()
+
+	/**
+	 * Set the value of [rate] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Currency The current object (for fluent API support)
+	 */
+	public function setRate($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->rate !== $v || $this->isNew()) {
+			$this->rate = $v;
+			$this->modifiedColumns[] = CurrencyPeer::RATE;
+		}
+
+		return $this;
+	} // setRate()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -92,6 +188,14 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_default !== false) {
+				return false;
+			}
+
+			if ($this->rate !== '1') {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -115,6 +219,8 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 		try {
 
 			$this->code = ($row[$startcol + 0] !== null) ? (string) $row[$startcol + 0] : null;
+			$this->is_default = ($row[$startcol + 1] !== null) ? (boolean) $row[$startcol + 1] : null;
+			$this->rate = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -124,7 +230,7 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 1; // 1 = CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 3; // 3 = CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Currency object", $e);
@@ -471,6 +577,12 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 			case 0:
 				return $this->getCode();
 				break;
+			case 1:
+				return $this->getIsDefault();
+				break;
+			case 2:
+				return $this->getRate();
+				break;
 			default:
 				return null;
 				break;
@@ -493,6 +605,8 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 		$keys = CurrencyPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getCode(),
+			$keys[1] => $this->getIsDefault(),
+			$keys[2] => $this->getRate(),
 		);
 		return $result;
 	}
@@ -527,6 +641,12 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 			case 0:
 				$this->setCode($value);
 				break;
+			case 1:
+				$this->setIsDefault($value);
+				break;
+			case 2:
+				$this->setRate($value);
+				break;
 		} // switch()
 	}
 
@@ -552,6 +672,8 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 		$keys = CurrencyPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setCode($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setIsDefault($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRate($arr[$keys[2]]);
 	}
 
 	/**
@@ -564,6 +686,8 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 		$criteria = new Criteria(CurrencyPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(CurrencyPeer::CODE)) $criteria->add(CurrencyPeer::CODE, $this->code);
+		if ($this->isColumnModified(CurrencyPeer::IS_DEFAULT)) $criteria->add(CurrencyPeer::IS_DEFAULT, $this->is_default);
+		if ($this->isColumnModified(CurrencyPeer::RATE)) $criteria->add(CurrencyPeer::RATE, $this->rate);
 
 		return $criteria;
 	}
@@ -619,6 +743,10 @@ abstract class BaseCurrency extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setCode($this->code);
+
+		$copyObj->setIsDefault($this->is_default);
+
+		$copyObj->setRate($this->rate);
 
 
 		if ($deepCopy) {
