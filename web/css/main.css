@@ -511,3 +511,14 @@ table.table-admin tbody
     }
 
 }
+
+@media (min-width: 1920px) {
+
+    /* Update subnav container */
+/*    .container,*/
+    .navbar-fixed-top .container,
+    .navbar-fixed-bottom .container {
+        width: 1870px;
+    }
+
+}
