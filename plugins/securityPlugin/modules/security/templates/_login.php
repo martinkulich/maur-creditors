@@ -1,6 +1,6 @@
 <div class="row">
     <div class="span3 offset4">
-        <div class="span-login-form well container">
+        <div class="span-login-form well">
             <form action="<?php echo url_for('@login') ?>" method="post" class="no-bottom-margin form-login">
                 <?php include_partial('default/form_field', array('form'=>$form, 'key'=>'email'))?>
                 <?php $formName = $form->getName(); $key = 'password'?>
