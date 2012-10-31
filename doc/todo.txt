@@ -182,10 +182,14 @@ kdyz predchozi settlement vychazi na 28.2 pridat 2 dny (kdyz 29.2 tak jeden)
 
 //post validator, kdyz bylo vyplaceno, musi byt vyplneno datum vyplaceni..
 
-razeni ve smlouvach podle nazvu
-nevyporadany filtr ve vyplatach uroku
+//razeni ve smlouvach podle nazvu
 ukotvit zahlavi
 
+!!!!!!!!!!!!!!!!!!!!!!!!
+zobrazovani vice men
+    //vyplaty uroku
+    //predpisy
 
+//schovat administraci ip addressr
 
-ponizeni jistiny - help
+//nevyplacene uroky grupovat podle veritele

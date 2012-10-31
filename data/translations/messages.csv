@@ -494,7 +494,7 @@ Date of payment required if paid is set;Datum vyplacení je povinné, pokud je v
 First settlement date;Datum prvního vypořádání
 unpaid admin;Nevyplacené úroky
 About how much balance should be reduced;O kolik bude jistina ponížena
-This field is unchangeable after contract activation;Nelze změnit/nastavit po aktivaci smlouvy
+This field is unchangeable after contract activation;Nutno nastavit před aktivací smlouvy
 currency admin;Měny
 of currency;Měn
 Code;Kód
@@ -504,3 +504,7 @@ Currency;Měna
 New currency;Nová měna
 Edit currency;Editace měny
 Filter currency;Filtrovat měny
+Currency rate;Kurz měny
+unpaid;Nevyplacené úroky
+of unpaid;Nevyplacené úroky
+Unpaid to date;Nevyplaceno ke dni

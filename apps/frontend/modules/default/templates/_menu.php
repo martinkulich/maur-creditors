@@ -31,6 +31,27 @@
                         </li>
                     </ul>
                 <?php }?>
+                <?php if(count($reportLinks)> 0){?>
+                    <ul class="nav nav-pills visible-desktop">
+                        <li class="dropdown <?php if($activeLinkIsReportLink ) echo 'active' ?>" id="report_menu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#report_menu"  >
+                                <?php echo __('Reports')?>
+                                    <?php if($activeLinkIsReportLink){?>
+                                        (<?php echo __('of '.$activeLink)?>)
+                                     <?php }?>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php foreach ($reportLinks as $link) { ?>
+                                    <li class="<?php if ($link == $activeLink) echo 'active';?>">
+                                        <?php echo link_to(__($link . ' admin'), '@' . 'report?report_type='.$link) ?>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </li>
+                    </ul>
+                <?php }?>
+            
                 <ul class="nav pull-right">
                     <li class="me dropdown <?php if($activeLink  == 'account') echo 'active' ?>" id="user_menu">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#user_menu">

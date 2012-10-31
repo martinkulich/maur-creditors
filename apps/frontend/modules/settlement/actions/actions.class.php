@@ -18,7 +18,6 @@ class settlementActions extends autoSettlementActions
     {
         $this->settlement = $this->getRoute()->getObject();
     }
-
     public function executeCheckContracts(sfWebRequest $request)
     {
         $contractService = ServiceContainer::getContractService();
@@ -33,8 +32,7 @@ class settlementActions extends autoSettlementActions
     {
 //        $this->executeCheckContracts();
         parent::executeIndex($request);
-        $this->currency = ServiceContainer::getCurrencyService()->getDefaultCurrency();
-        $this->sums = $this->getSums($this->currency);
+        $this->sums = $this->getSums();
     }
 
     public function executeNew(sfWebRequest $request)
@@ -257,26 +255,33 @@ class settlementActions extends autoSettlementActions
         return $pager;
     }
 
-    protected function getSums(Currency $currency)
+    protected function getSums()
     {
-
         $sumPager = $this->getPager();
         $criteria = $sumPager->getCriteria();
         $criteria->clearSelectColumns();
         $criteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID);
-        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as interest", SettlementPeer::INTEREST, ContractPeer::CURRENCY_CODE, $currency->getCode()));
-        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as balance", SettlementPeer::BALANCE, ContractPeer::CURRENCY_CODE, $currency->getCode()));
-        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as balance_reduction", SettlementPeer::BALANCE_REDUCTION, ContractPeer::CURRENCY_CODE, $currency->getCode()));
-        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as paid", SettlementPeer::PAID, ContractPeer::CURRENCY_CODE, $currency->getCode()));
-        $criteria->addSelectColumn(sprintf("sum(amount_in_currency(%s, %s, '%s')) as capitalized", SettlementPeer::CAPITALIZED, ContractPeer::CURRENCY_CODE, $currency->getCode()));
-        $criteria->addSelectColumn(sprintf("CASE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0)) < 0 WHEN TRUE THEN 0 ELSE sum(amount_in_currency((coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0)), %s, '%s'))  END  as unsettled", ContractPeer::CURRENCY_CODE, $currency->getCode()));
+        $criteria->addSelectColumn(ContractPeer::CURRENCY_CODE);
+        $criteria->addSelectColumn(sprintf('sum(%s) as interest', SettlementPeer::INTEREST));
+        $criteria->addSelectColumn(sprintf('sum(%s) as balance', SettlementPeer::BALANCE));
+        $criteria->addSelectColumn(sprintf('sum(%s) as balance_reduction', SettlementPeer::BALANCE_REDUCTION));
+        $criteria->addSelectColumn(sprintf('sum(%s) as paid', SettlementPeer::PAID));
+        $criteria->addSelectColumn(sprintf('sum(%s) as capitalized', SettlementPeer::CAPITALIZED));
+        $criteria->addSelectColumn('CASE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0)) < 0 WHEN TRUE THEN 0 ELSE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0))  END  as unsettled');
         $criteria->clearOrderByColumns();
+        $criteria->addGroupByColumn(ContractPeer::CURRENCY_CODE);
         $sumPager->setCriteria($criteria);
         $sumPager->init();
 
         $statement = SettlementPeer::doSelectStmt($sumPager->getCriteria());
-        return $statement->fetch(PDO::FETCH_ASSOC);
-        return $sumPager;
+
+        $sums = array();
+        foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $row)
+        {
+            $sums[$row['currency_code']] = $row;
+        }
+        ksort($sums);
+        return $sums;
     }
 
     protected function getFilters()
@@ -296,5 +301,4 @@ class settlementActions extends autoSettlementActions
 
         return $filters;
     }
-
 }

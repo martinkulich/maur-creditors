@@ -77,8 +77,8 @@ abstract class BaseUnpaidPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorFirstname', 'CreditorId', 'ContractId', 'ContractName', 'SettlementDate', 'CreditorUnpaid', 'ContractUnpaid', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorFirstname', 'creditorId', 'contractId', 'contractName', 'settlementDate', 'creditorUnpaid', 'contractUnpaid', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorFullname', 'CreditorId', 'ContractId', 'ContractName', 'SettlementDate', 'CreditorUnpaid', 'ContractUnpaid', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorFullname', 'creditorId', 'contractId', 'contractName', 'settlementDate', 'creditorUnpaid', 'contractUnpaid', ),
 		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_FULLNAME, self::CREDITOR_ID, self::CONTRACT_ID, self::CONTRACT_NAME, self::SETTLEMENT_DATE, self::CREDITOR_UNPAID, self::CONTRACT_UNPAID, ),
 		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_fullname', 'creditor_id', 'contract_id', 'contract_name', 'settlement_date', 'creditor_unpaid', 'contract_unpaid', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
@@ -91,8 +91,8 @@ abstract class BaseUnpaidPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorFirstname' => 1, 'CreditorId' => 2, 'ContractId' => 3, 'ContractName' => 4, 'SettlementDate' => 5, 'CreditorUnpaid' => 6, 'ContractUnpaid' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorFirstname' => 1, 'creditorId' => 2, 'contractId' => 3, 'contractName' => 4, 'settlementDate' => 5, 'creditorUnpaid' => 6, 'contractUnpaid' => 7, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorFullname' => 1, 'CreditorId' => 2, 'ContractId' => 3, 'ContractName' => 4, 'SettlementDate' => 5, 'CreditorUnpaid' => 6, 'ContractUnpaid' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorFullname' => 1, 'creditorId' => 2, 'contractId' => 3, 'contractName' => 4, 'settlementDate' => 5, 'creditorUnpaid' => 6, 'contractUnpaid' => 7, ),
 		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_FULLNAME => 1, self::CREDITOR_ID => 2, self::CONTRACT_ID => 3, self::CONTRACT_NAME => 4, self::SETTLEMENT_DATE => 5, self::CREDITOR_UNPAID => 6, self::CONTRACT_UNPAID => 7, ),
 		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_fullname' => 1, 'creditor_id' => 2, 'contract_id' => 3, 'contract_name' => 4, 'settlement_date' => 5, 'creditor_unpaid' => 6, 'contract_unpaid' => 7, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )

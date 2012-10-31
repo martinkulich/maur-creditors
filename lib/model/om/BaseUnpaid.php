@@ -109,7 +109,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 	 * 
 	 * @return     string
 	 */
-	public function getCreditorFirstname()
+	public function getCreditorFullname()
 	{
 		return $this->creditor_fullname;
 	}
@@ -223,7 +223,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 	 * @param      string $v new value
 	 * @return     Unpaid The current object (for fluent API support)
 	 */
-	public function setCreditorFirstname($v)
+	public function setCreditorFullname($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
@@ -235,7 +235,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 		}
 
 		return $this;
-	} // setCreditorFirstname()
+	} // setCreditorFullname()
 
 	/**
 	 * Set the value of [creditor_id] column.
@@ -817,7 +817,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getCreditorFirstname();
+				return $this->getCreditorFullname();
 				break;
 			case 2:
 				return $this->getCreditorId();
@@ -859,7 +859,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 		$keys = UnpaidPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getCreditorFirstname(),
+			$keys[1] => $this->getCreditorFullname(),
 			$keys[2] => $this->getCreditorId(),
 			$keys[3] => $this->getContractId(),
 			$keys[4] => $this->getContractName(),
@@ -901,7 +901,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setCreditorFirstname($value);
+				$this->setCreditorFullname($value);
 				break;
 			case 2:
 				$this->setCreditorId($value);
@@ -946,7 +946,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 		$keys = UnpaidPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setCreditorFirstname($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setCreditorFullname($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setCreditorId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setContractId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setContractName($arr[$keys[4]]);
@@ -1028,7 +1028,7 @@ abstract class BaseUnpaid extends BaseObject  implements Persistent {
 
 		$copyObj->setId($this->id);
 
-		$copyObj->setCreditorFirstname($this->creditor_fullname);
+		$copyObj->setCreditorFullname($this->creditor_fullname);
 
 		$copyObj->setCreditorId($this->creditor_id);
 

@@ -120,6 +120,9 @@ class SettlementForm extends BaseSettlementForm
         }
         $this->getWidget('date')->setAttribute('onChange', $calculateSettlement);
 
+        $this->getValidator('currency_rate')->setOption('min', 0.0001);
+        $this->getWidgetSchema()->moveField('currency_rate', sfWidgetFormSchema::AFTER, 'balance_reduction');
+        
         //zatim nechat moznost vzdy editovat
         if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
             $fieldsToUnset[] = 'interest';
@@ -136,6 +139,12 @@ class SettlementForm extends BaseSettlementForm
             $fieldsToUnset[] = 'creditor_id';
 
             $this->setWidget('contract_id', new sfWidgetFormInputHidden());
+        }
+        
+        $contract = $this->getObject()->getContract();
+        if($contract && $contract->getCurrency()->getIsDefault())
+        {
+            $fieldsToUnset[] = 'currency_rate';
         }
 
         foreach ($fieldsToUnset as $field) {

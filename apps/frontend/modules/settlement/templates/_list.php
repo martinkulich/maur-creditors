@@ -11,54 +11,56 @@
         <?php foreach ($pager->getResults() as $i => $settlement): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                 <?php $currencyCode = $settlement->getContract()->getCurrencyCode()?>
           <tr class="sf_admin_row <?php echo $odd.' '; echo ($settlement->isSettlementType(SettlementPeer::END_OF_YEAR) ? ' text-light-blue ' : '')?>">
-            <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement,'currency'=>$currency)) ?>
+            <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement)) ?>
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
       </tbody>
       <tfoot class="no-wrap-line">
-          <tr class="sf_admin_row">
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th class="text-align-right">
-                      <?php echo my_format_currency($sums['interest'], $currency->getCode()) ?>
-              </th>
-              <th class="text-align-right">
-                      <?php echo my_format_currency($sums['paid'], $currency->getCode()) ?>
-              </th>
-              <th>
-              </th>
-              <th class="text-align-right">
-                      <?php echo my_format_currency($sums['capitalized'], $currency->getCode()) ?>
-              </th>
-              <th class="text-align-right">
-                      <?php echo my_format_currency($sums['balance_reduction'], $currency->getCode()) ?>
-              </th>
-              <th class="text-align-right">
-                  <?php echo my_format_currency($sums['unsettled'], $currency->getCode()) ?>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
-              <th>
-              </th>
+          <?php foreach($sums as $currencyCode=>$sumValues){?>
+            <tr class="sf_admin_row">
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th class="text-align-right">
+                        <?php echo my_format_currency($sumValues['interest'], $currencyCode) ?>
+                </th>
+                <th class="text-align-right">
+                        <?php echo my_format_currency($sumValues['paid'], $currencyCode) ?>
+                </th>
+                <th>
+                </th>
+                <th class="text-align-right">
+                        <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
+                </th>
+                <th class="text-align-right">
+                        <?php echo my_format_currency($sumValues['balance_reduction'], $currencyCode) ?>
+                </th>
+                <th class="text-align-right">
+                    <?php echo my_format_currency($sumValues['unsettled'], $currencyCode) ?>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
 
-          </tr>
+            </tr>
+          <?php }?>
       </tfoot>
     </table>
     </div>

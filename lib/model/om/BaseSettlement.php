@@ -117,6 +117,13 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	protected $date_of_payment;
 
 	/**
+	 * The value for the currency_rate field.
+	 * Note: this column has a database default value of: '1'
+	 * @var        string
+	 */
+	protected $currency_rate;
+
+	/**
 	 * @var        Contract
 	 */
 	protected $aContract;
@@ -155,6 +162,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$this->settlement_type = 'in_period';
 		$this->manual_interest = false;
 		$this->manual_balance = false;
+		$this->currency_rate = '1';
 	}
 
 	/**
@@ -361,6 +369,16 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [currency_rate] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCurrencyRate()
+	{
+		return $this->currency_rate;
 	}
 
 	/**
@@ -726,6 +744,26 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	} // setDateOfPayment()
 
 	/**
+	 * Set the value of [currency_rate] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Settlement The current object (for fluent API support)
+	 */
+	public function setCurrencyRate($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->currency_rate !== $v || $this->isNew()) {
+			$this->currency_rate = $v;
+			$this->modifiedColumns[] = SettlementPeer::CURRENCY_RATE;
+		}
+
+		return $this;
+	} // setCurrencyRate()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -767,6 +805,10 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 				return false;
 			}
 
+			if ($this->currency_rate !== '1') {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -804,6 +846,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$this->manual_interest = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
 			$this->manual_balance = ($row[$startcol + 13] !== null) ? (boolean) $row[$startcol + 13] : null;
 			$this->date_of_payment = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->currency_rate = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -813,7 +856,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 16; // 16 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Settlement object", $e);
@@ -1216,6 +1259,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 14:
 				return $this->getDateOfPayment();
 				break;
+			case 15:
+				return $this->getCurrencyRate();
+				break;
 			default:
 				return null;
 				break;
@@ -1252,6 +1298,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$keys[12] => $this->getManualInterest(),
 			$keys[13] => $this->getManualBalance(),
 			$keys[14] => $this->getDateOfPayment(),
+			$keys[15] => $this->getCurrencyRate(),
 		);
 		return $result;
 	}
@@ -1328,6 +1375,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 14:
 				$this->setDateOfPayment($value);
 				break;
+			case 15:
+				$this->setCurrencyRate($value);
+				break;
 		} // switch()
 	}
 
@@ -1367,6 +1417,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setManualInterest($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setManualBalance($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setDateOfPayment($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setCurrencyRate($arr[$keys[15]]);
 	}
 
 	/**
@@ -1393,6 +1444,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SettlementPeer::MANUAL_INTEREST)) $criteria->add(SettlementPeer::MANUAL_INTEREST, $this->manual_interest);
 		if ($this->isColumnModified(SettlementPeer::MANUAL_BALANCE)) $criteria->add(SettlementPeer::MANUAL_BALANCE, $this->manual_balance);
 		if ($this->isColumnModified(SettlementPeer::DATE_OF_PAYMENT)) $criteria->add(SettlementPeer::DATE_OF_PAYMENT, $this->date_of_payment);
+		if ($this->isColumnModified(SettlementPeer::CURRENCY_RATE)) $criteria->add(SettlementPeer::CURRENCY_RATE, $this->currency_rate);
 
 		return $criteria;
 	}
@@ -1474,6 +1526,8 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$copyObj->setManualBalance($this->manual_balance);
 
 		$copyObj->setDateOfPayment($this->date_of_payment);
+
+		$copyObj->setCurrencyRate($this->currency_rate);
 
 
 		$copyObj->setNew(true);

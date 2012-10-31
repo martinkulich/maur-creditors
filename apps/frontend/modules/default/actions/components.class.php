@@ -5,6 +5,7 @@ class defaultComponents extends sfComponents
 
     public function executeFooter()
     {
+        
     }
 
     public function executeMenu(sfWebRequest $request)
@@ -43,7 +44,6 @@ class defaultComponents extends sfComponents
             'payment',
             'settlement',
             'regulation',
-            'unpaid',
         );
         $this->adminLinks = array(
             'security_user',
@@ -51,8 +51,15 @@ class defaultComponents extends sfComponents
             'rights',
             'currency',
         );
-        $pattern = '%s.admin';
+
         $user = $this->getUser();
+        
+        $this->reportLinks = array();
+        if ($user->hasCredential('report.admin')) {
+            $this->reportLinks[] = 'unpaid';
+        }
+        
+        $pattern = '%s.admin';
         foreach ($this->adminLinks as $key => $link) {
             $credential = sprintf($pattern, $link);
             if (!$user->hasCredential($credential)) {
@@ -60,14 +67,15 @@ class defaultComponents extends sfComponents
             }
         }
 
-        foreach ($this->mainLinks as $key=>$link) {
+        foreach ($this->mainLinks as $key => $link) {
             $credential = sprintf($pattern, $link);
             if (!$user->hasCredential($credential)) {
                 unset($this->mainLinks[$key]);
             }
         }
-        $this->activeLinkIsAdministrationLink = in_array($this->activeLink, $this->adminLinks) || $this->activeLink == 'rights';
 
+        $this->activeLinkIsAdministrationLink = in_array($this->activeLink, $this->adminLinks) || $this->activeLink == 'rights';
+        $this->activeLinkIsReportLink = in_array($this->activeLink, $this->reportLinks);
     }
 
     public function executeFlashes()
@@ -75,4 +83,5 @@ class defaultComponents extends sfComponents
         $this->messages = ServiceContainer::getMessageService()->getAllMessages();
         ;
     }
+
 }

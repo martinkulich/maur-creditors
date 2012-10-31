@@ -1823,7 +1823,7 @@
     </trans-unit>
     <trans-unit id="456">
       <source>This field is unchangeable after contract activation</source>
-      <target>Nelze změnit/nastavit po aktivaci smlouvy</target>
+      <target>Nutno nastavit před aktivací smlouvy</target>
     </trans-unit>
     <trans-unit id="457">
       <source>currency admin</source>
@@ -1860,6 +1860,22 @@
     <trans-unit id="465">
       <source>Filter currency</source>
       <target>Filtrovat měny</target>
+    </trans-unit>
+    <trans-unit id="466">
+      <source>Currency rate</source>
+      <target>Kurz měny</target>
+    </trans-unit>
+    <trans-unit id="467">
+      <source>unpaid</source>
+      <target>Nevyplacené úroky</target>
+    </trans-unit>
+    <trans-unit id="468">
+      <source>of unpaid</source>
+      <target>Nevyplacené úroky</target>
+    </trans-unit>
+    <trans-unit id="469">
+      <source>Unpaid to date</source>
+      <target>Nevyplaceno ke dni</target>
     </trans-unit>
   </body>
 </xliff>

@@ -39,6 +39,7 @@ generator:
           printList:
             action: printList
             Label: Print list
+        sort: [name, asc]
       filter:  ~
       form:
         actions:

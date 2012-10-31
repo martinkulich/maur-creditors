@@ -131,16 +131,6 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	private $lastRegulationCriteria = null;
 
 	/**
-	 * @var        array Unpaid[] Collection to store aggregation of Unpaid objects.
-	 */
-	protected $collUnpaids;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collUnpaids.
-	 */
-	private $lastUnpaidCriteria = null;
-
-	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -866,9 +856,6 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->collRegulations = null;
 			$this->lastRegulationCriteria = null;
 
-			$this->collUnpaids = null;
-			$this->lastUnpaidCriteria = null;
-
 		} // if (deep)
 	}
 
@@ -1084,14 +1071,6 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collUnpaids !== null) {
-				foreach ($this->collUnpaids as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -1199,14 +1178,6 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 				if ($this->collRegulations !== null) {
 					foreach ($this->collRegulations as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collUnpaids !== null) {
-					foreach ($this->collUnpaids as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1538,12 +1509,6 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			foreach ($this->getRegulations() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addRegulation($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getUnpaids() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addUnpaid($relObj->copy($deepCopy));
 				}
 			}
 
@@ -2202,207 +2167,6 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collUnpaids collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addUnpaids()
-	 */
-	public function clearUnpaids()
-	{
-		$this->collUnpaids = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collUnpaids collection (array).
-	 *
-	 * By default this just sets the collUnpaids collection to an empty array (like clearcollUnpaids());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initUnpaids()
-	{
-		$this->collUnpaids = array();
-	}
-
-	/**
-	 * Gets an array of Unpaid objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Contract has previously been saved, it will retrieve
-	 * related Unpaids from storage. If this Contract is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Unpaid[]
-	 * @throws     PropelException
-	 */
-	public function getUnpaids($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUnpaids === null) {
-			if ($this->isNew()) {
-			   $this->collUnpaids = array();
-			} else {
-
-				$criteria->add(UnpaidPeer::CONTRACT_ID, $this->id);
-
-				UnpaidPeer::addSelectColumns($criteria);
-				$this->collUnpaids = UnpaidPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(UnpaidPeer::CONTRACT_ID, $this->id);
-
-				UnpaidPeer::addSelectColumns($criteria);
-				if (!isset($this->lastUnpaidCriteria) || !$this->lastUnpaidCriteria->equals($criteria)) {
-					$this->collUnpaids = UnpaidPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastUnpaidCriteria = $criteria;
-		return $this->collUnpaids;
-	}
-
-	/**
-	 * Returns the number of related Unpaid objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Unpaid objects.
-	 * @throws     PropelException
-	 */
-	public function countUnpaids(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collUnpaids === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(UnpaidPeer::CONTRACT_ID, $this->id);
-
-				$count = UnpaidPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(UnpaidPeer::CONTRACT_ID, $this->id);
-
-				if (!isset($this->lastUnpaidCriteria) || !$this->lastUnpaidCriteria->equals($criteria)) {
-					$count = UnpaidPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collUnpaids);
-				}
-			} else {
-				$count = count($this->collUnpaids);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Unpaid object to this object
-	 * through the Unpaid foreign key attribute.
-	 *
-	 * @param      Unpaid $l Unpaid
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addUnpaid(Unpaid $l)
-	{
-		if ($this->collUnpaids === null) {
-			$this->initUnpaids();
-		}
-		if (!in_array($l, $this->collUnpaids, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collUnpaids, $l);
-			$l->setContract($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Contract is new, it will return
-	 * an empty collection; or if this Contract has previously
-	 * been saved, it will retrieve related Unpaids from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Contract.
-	 */
-	public function getUnpaidsJoinCreditor($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collUnpaids === null) {
-			if ($this->isNew()) {
-				$this->collUnpaids = array();
-			} else {
-
-				$criteria->add(UnpaidPeer::CONTRACT_ID, $this->id);
-
-				$this->collUnpaids = UnpaidPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(UnpaidPeer::CONTRACT_ID, $this->id);
-
-			if (!isset($this->lastUnpaidCriteria) || !$this->lastUnpaidCriteria->equals($criteria)) {
-				$this->collUnpaids = UnpaidPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastUnpaidCriteria = $criteria;
-
-		return $this->collUnpaids;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -2429,17 +2193,11 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collUnpaids) {
-				foreach ((array) $this->collUnpaids as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
 		$this->collPayments = null;
 		$this->collSettlements = null;
 		$this->collRegulations = null;
-		$this->collUnpaids = null;
 			$this->aCreditor = null;
 			$this->aCurrency = null;
 	}

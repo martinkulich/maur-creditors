@@ -26,6 +26,7 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'manual_interest'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'manual_balance'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'date_of_payment'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'currency_rate'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -43,6 +44,7 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'manual_interest'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'manual_balance'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'date_of_payment'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'currency_rate'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('settlement_filters[%s]');
@@ -75,6 +77,7 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'manual_interest'   => 'Boolean',
       'manual_balance'    => 'Boolean',
       'date_of_payment'   => 'Date',
+      'currency_rate'     => 'Number',
     );
   }
 }

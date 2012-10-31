@@ -9,47 +9,49 @@
             <tbody>
                 <?php foreach ($pager->getResults() as $i => $regulation): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                     <tr class="sf_admin_row <?php echo $odd ?>">
-                        <?php include_partial('regulation/list_td_tabular', array('regulation' => $regulation, 'currency'=>$currency)) ?>
+                        <?php include_partial('regulation/list_td_tabular', array('regulation' => $regulation)) ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
             <tfoot class="no-wrap-line">
-                <tr class="sf_admin_row">
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                        <?php echo my_format_currency($sums['start_balance']) ?>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
-                    <th class="text-align-right">
-                        <?php echo my_format_currency($sums['regulation'], $currency->getCode()) ?>
-                    </th>
-                    <th class="text-align-right">
-                        <?php echo my_format_currency($sums['paid'], $currency->getCode()) ?>
-                    </th>
-                    <th class="text-align-right">
-                        <?php echo my_format_currency($sums['paid_for_current_year'], $currency->getCode()) ?>
-                    </th>
-                    <th class="text-align-right">
-                        <?php echo my_format_currency($sums['capitalized'], $currency->getCode()) ?>
-                    </th>
-                    <th class="text-align-right">
-                        <?php if (array_key_exists('unpaid', $sums)) { ?>
-                            <?php echo my_format_currency($sums['unpaid'], $currency->getCode()) ?>
-                        <?php } ?>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
+                <?php foreach($sums as $currencyCode=>$sumValues){?>
+                    <tr class="sf_admin_row">
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th class="text-align-right">
+                            <?php echo my_format_currency($sumValues['start_balance'], $currencyCode) ?>
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+                        <th class="text-align-right">
+                            <?php echo my_format_currency($sumValues['regulation'], $currencyCode) ?>
+                        </th>
+                        <th class="text-align-right">
+                            <?php echo my_format_currency($sumValues['paid'], $currencyCode) ?>
+                        </th>
+                        <th class="text-align-right">
+                            <?php echo my_format_currency($sumValues['paid_for_current_year'], $currencyCode) ?>
+                        </th>
+                        <th class="text-align-right">
+                            <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
+                        </th>
+                        <th class="text-align-right">
+                            <?php if (array_key_exists('unpaid', $sums)) { ?>
+                                <?php echo my_format_currency($sumValues['unpaid'], $currencyCode) ?>
+                            <?php } ?>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                 <?php }?>
             </tfoot>
         </table>
     </div>

@@ -10,7 +10,7 @@
 class CurrencyForm extends BaseCurrencyForm {
 
     public function configure() {
-        
+        $this->unsetField('is_default');
     }
 
     public function doSave($con = null) {

@@ -29,20 +29,5 @@
         <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
     </table>
 
-    <table name="unpaid" phpName="Unpaid">
-        <column name="id" phpName="Id" type="VARCHAR"  primaryKey="true"/>
-        <column name="creditor_fullname" phpName="CreditorFirstname" type="VARCHAR"/>
-        <column name="creditor_id" phpName="CreditorId" type="INTEGER"/>
-        <column name="contract_id" phpName="ContractId" type="INTEGER"/>
-        <column name="contract_name" phpName="ContractName" type="VARCHAR" />
-        <column name="settlement_date" phpName="SettlementDate" type="DATE"/>
-        <column name="creditor_unpaid" phpName="CreditorUnpaid" type="NUMERIC" size="15" scale="2"/>
-        <column name="contract_unpaid" phpName="ContractUnpaid" type="NUMERIC" size="15" scale="2"/>
-        <foreign-key foreignTable="contract" name="unpaid_contract" onDelete="RESTRICT" onUpdate="CASCADE">
-            <reference local="contract_id" foreign="id"/>
-        </foreign-key>
-        <foreign-key foreignTable="creditor" name="unpaid_creditor" onDelete="RESTRICT" onUpdate="CASCADE">
-            <reference local="creditor_id" foreign="id"/>
-        </foreign-key>
-    </table>
+    
 </database>

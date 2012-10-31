@@ -59,7 +59,6 @@ class CreditorTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Contract', 'Contract', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'CASCADE', 'CASCADE');
-    $this->addRelation('Unpaid', 'Unpaid', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**
