@@ -11,8 +11,10 @@ class securityActions extends sfActions
     public function executeRights(sfWebRequest $request)
     {
         $criteria = new Criteria();
+        $criteria->add(SecurityPermPeer::IS_PUBLIC, true);
         $this->perms = SecurityPermPeer::doSelect($criteria);
 
+        $criteria = new Criteria();
         $this->roles = SecurityRolePeer::doSelect($criteria);
 
         $this->users = SecurityUserPeer::doSelect($criteria);
