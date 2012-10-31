@@ -20,7 +20,7 @@ class ReportService
                 sum(contract_unpaid(c.id, '%date_to%'))::integer AS creditor_unpaid
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
-            GROUP BY c.currency_code, cr.id, cr.lastname, cr.firsname
+            GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
             HAVING sum(contract_unpaid(c.id, '%date_to%'))::integer <> 0
             ORDER BY %order_by%
             ;";
