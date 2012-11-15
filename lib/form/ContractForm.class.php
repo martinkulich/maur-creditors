@@ -45,9 +45,10 @@ class ContractForm extends BaseContractForm
         $this->getWidgetSchema()->setDefault('period', 2);
 
         $this->setWidget('interest_rate', new myWidgetFormInputPercentage());
-
         $this->getValidator('interest_rate')->setOption('min', 0);
+
         $this->getValidator('amount')->setOption('min', 0);
+        $this->changeFieldToMyNumberField('amount');
 
         $this->getWidget('creditor_id')->setOption('order_by', array('Lastname', 'asc'));
 

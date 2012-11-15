@@ -28,6 +28,7 @@ default:
 #    - bootstrap/bootstrap-datepicker.js
 #    - bootstrap/locales/bootstrap-datepicker.cs.js
 #    - moment/moment.js
+    - masks/masks.js
     - all.js
     - init.js
 

@@ -1,7 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
-<form action="<?php echo  url_for('@settlement_close?contract_id='.$settlement->getContract()->getId()) ?>" method="post" class="form form-horizontal form-modal">
+<form action="<?php echo  url_for('@settlement_close?contract_id='.$settlement->getContract()->getId()) ?>" method="post" class="form form-horizontal form-modal" name="formMask">
 <div class="modal-body">
     <?php include_component('default','flashes') ?>
     <?php echo $form->renderHiddenFields(false) ?>

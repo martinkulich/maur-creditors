@@ -14,6 +14,8 @@ class PaymentForm extends BasePaymentForm
     {
         sfProjectConfiguration::getActive()->loadHelpers('Url');
 
+        $this->changeFieldToMyNumberField('amount');
+        
         $this->setWidget('date', new myJQueryDateWidget());
         $this->setValidator('date', new myValidatorDate());
 

@@ -51,19 +51,24 @@ class SettlementForm extends BaseSettlementForm
 
         $fullFormName = $this->getFullFormName();
 
-        if (!$this->getObject()->isNew()) {
-            $amountFields = array(
-                'paid',
-                'capitalized',
-                'balance_reduction',
-            );
+        $amountFields = array(
+            'paid',
+            'capitalized',
+            'balance_reduction',
+        );
 
-            foreach ($amountFields as $field) {
+
+        foreach ($amountFields as $field) {
+            if (!$this->getObject()->isNew()) {
                 $this->setWidget($field, new myWidgetFormInputAmount(array('currency_code' => $this->getObject()->getContract()->getCurrencyCode())));
+                $this->setValidator($field, new myValidatorNumber());
+            } else {
+                $this->changeFieldToMyNumberField($field);
             }
         }
-        
-        $this->getWidgetSchema()->setHelp('balance_reduction','About how much balance should be reduced');
+
+
+        $this->getWidgetSchema()->setHelp('balance_reduction', 'About how much balance should be reduced');
 
         $contractCriteria = new Criteria();
         $contractCriteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID);
@@ -114,7 +119,7 @@ class SettlementForm extends BaseSettlementForm
             $checkboxWidgetName = 'manual_' . $field;
             $getter = sfInflector::camelize('get_' . $checkboxWidgetName);
             $this->setWidget($field, new myWidgetFormActivableInput(array('on_uncheck' => $onUncheck, 'checked' => $this->getObject()->$getter(), 'widget_name' => $checkboxWidgetName, 'widget' => $this->getWidget($checkboxWidgetName), 'form_name' => $this->getName(), 'parent_form_name' => $this->getParentFormName())));
-
+            $this->setValidator($field, new myValidatorNumber());
             $widgetSchema = $this->getWidgetSchema();
             unset($widgetSchema[$checkboxWidgetName]);
         }
@@ -122,7 +127,7 @@ class SettlementForm extends BaseSettlementForm
 
         $this->getValidator('currency_rate')->setOption('min', 0.0001);
         $this->getWidgetSchema()->moveField('currency_rate', sfWidgetFormSchema::AFTER, 'balance_reduction');
-        
+
         //zatim nechat moznost vzdy editovat
         if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
             $fieldsToUnset[] = 'interest';
@@ -140,10 +145,9 @@ class SettlementForm extends BaseSettlementForm
 
             $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         }
-        
+
         $contract = $this->getObject()->getContract();
-        if($contract && $contract->getCurrency()->getIsDefault())
-        {
+        if ($contract && $contract->getCurrency()->getIsDefault()) {
             $fieldsToUnset[] = 'currency_rate';
         }
 
@@ -191,12 +195,13 @@ class SettlementForm extends BaseSettlementForm
         $settlement = $this->getObject();
         $criteria = new Criteria();
         $criteria
-            ->add(SettlementPeer::CONTRACT_ID, $settlement->getContract()->getId())
-            ->add(SettlementPeer::DATE, $settlement->getDate())
-            ->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
+                ->add(SettlementPeer::CONTRACT_ID, $settlement->getContract()->getId())
+                ->add(SettlementPeer::DATE, $settlement->getDate())
+                ->add(SettlementPeer::ID, $settlement->getId(), Criteria::NOT_EQUAL);
 
         foreach (SettlementPeer::doSelect($criteria) as $settlementOfTheSameDay) {
             $settlementOfTheSameDay->delete($con);
         }
     }
+
 }

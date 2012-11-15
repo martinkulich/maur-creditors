@@ -1,7 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
-<?php echo form_tag_for($form, '@payment', array('class'=>'form form-horizontal form-modal')) ?>
+<?php echo form_tag_for($form, '@payment', array('class'=>'form form-horizontal form-modal', 'name'=>'formMask')) ?>
 <div class="modal-body">
     <?php include_component('default','flashes') ?>
     <?php echo $form->renderHiddenFields(false) ?>

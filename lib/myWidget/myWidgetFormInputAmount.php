@@ -1,6 +1,6 @@
 <?php
 
-class myWidgetFormInputAmount extends sfWidgetFormInput
+class myWidgetFormInputAmount extends myWidgetFormInputNumber
 {
 
     protected function configure($options = array(), $attributes = array())

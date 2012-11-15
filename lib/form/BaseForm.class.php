@@ -21,5 +21,5 @@ class BaseForm extends sfFormSymfony
     {
         unset($this->validatorSchema[$field]);
         unset($this->widgetSchema[$field]);
-    }
+    }    
 }

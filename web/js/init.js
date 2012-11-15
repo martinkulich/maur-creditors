@@ -244,7 +244,9 @@ function calculateContractClosingAmount(selector,unsettledTarget, balanceReducti
         });
     $result.success(function(data, textStatus, xhr){
         $(unsettledTarget).val(data.unsettled);
+        $(unsettledTarget).blur();
         $(balanceReductionTarget).val(data.balance_reduction);
+        $(balanceReductionTarget).blur();
     });
 }
 
@@ -282,6 +284,7 @@ function calculateSettlement(settlement_id, settlement_type, contractSelector, c
 
         $result.success(function(data, textStatus, xhr){
             $(target).val(data.amount);
+            $(target).blur();
         });
     }
 }
