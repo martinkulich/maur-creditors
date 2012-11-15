@@ -44,7 +44,7 @@
                             <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
                         </th>
                         <th class="text-align-right">
-                            <?php if (array_key_exists('unpaid', $sums)) { ?>
+                            <?php if (array_key_exists('unpaid', $sumValues)) { ?>
                                 <?php echo my_format_currency($sumValues['unpaid'], $currencyCode) ?>
                             <?php } ?>
                         </th>

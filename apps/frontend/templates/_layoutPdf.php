@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
 
-      <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('pdf.css', true)?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('pdf.css', true)?>" />
   </head>
   <body>
     <div class="page">

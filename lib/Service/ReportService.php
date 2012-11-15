@@ -53,6 +53,49 @@ class ReportService
         return $data;
     }
 
+        public function getDataBalance(array $filters = array(), $price = false)
+    {
+        $main = "
+            SELECT 
+                cr.id as creditor_id,
+                c.currency_code as currency_code,
+                (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname, 
+                sum(contract_balance(c.id, '%date_to%'))::integer AS creditor_balance
+            FROM creditor cr
+            JOIN contract c ON cr.id = c.creditor_id and c.closed_at is null
+            GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
+            HAVING sum(contract_balance(c.id, '%date_to%'))::integer <> 0
+            ORDER BY %order_by%
+            ;";
+        $replacements = array(
+            '%order_by%' => 'creditor_fullname',
+            '%date_to%' => $filters['date_to'],
+        );
+
+        $replacements = $this->getReplacements($replacements, $filters);
+        $rows = $this->procesQueryFetchAll($main, $replacements);
+        $data = array(
+            'total' => array(),
+            'rows' => $rows,
+            'currency_codes'=>array(),
+            'columns' => array(
+                'creditor_balance' => 1,
+            ),
+        );
+
+        foreach ($rows as $row) {
+            
+            $data['currency_codes'][$row['currency_code']] = $row['currency_code'];
+            if ($row['creditor_balance']) {
+                if (!isset($data['total']['creditor_balance'][$row['currency_code']])) {
+                    $data['total']['creditor_balance'][$row['currency_code']] = 0;
+                }
+                $data['total']['creditor_balance'][$row['currency_code']] += $row['creditor_balance'];
+            }
+        }
+        return $data;
+    }
+    
     protected function procesQueryFetchAll($query, array $replacements = array())
     {
         $query = str_replace(array_keys($replacements), $replacements, $query);

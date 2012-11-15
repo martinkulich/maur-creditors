@@ -19,12 +19,6 @@ class contractActions extends autoContractActions
         $this->contract = $this->getRoute()->getObject();
     }
 
-    public function executePrintList(sfWebRequest $request)
-    {
-        $this->pager = $this->getPager();
-        $this->sort = $this->getSort();
-        ServiceContainer::getPdfService()->generatePdf('contractList.pdf', 'contract', 'printList', array('pager' => $this->pager, 'sort' => $this->sort, 'helper' => $this->helper));
-    }
 
     public function executeUpdateSelect(sfWebRequest $request)
     {

@@ -24,6 +24,8 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends <?ph
     $this->dispatcher->notify(new sfEvent($this, 'admin.pre_execute', array('configuration' => $this->configuration)));
 
     $this->helper = new <?php echo $this->getModuleName() ?>GeneratorHelper();
+    
+    $this->sums = $this->getSums();
 
     parent::preExecute();
   }
@@ -59,4 +61,6 @@ abstract class <?php echo $this->getGeneratedModuleName() ?>Actions extends <?ph
 <?php include dirname(__FILE__).'/../../parts/sortingAction.php' ?>
 
 <?php include dirname(__FILE__).'/../../parts/printListAction.php' ?>
+
+<?php include dirname(__FILE__).'/../../parts/getSumsAction.php' ?>
 }

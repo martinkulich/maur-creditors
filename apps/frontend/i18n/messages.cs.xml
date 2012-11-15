@@ -1814,7 +1814,7 @@
       <target>Datum prvního vypořádání</target>
     </trans-unit>
     <trans-unit id="454">
-      <source>unpaid admin</source>
+      <source>unpaid report</source>
       <target>Nevyplacené úroky</target>
     </trans-unit>
     <trans-unit id="455">
@@ -1876,6 +1876,18 @@
     <trans-unit id="469">
       <source>Unpaid to date</source>
       <target>Nevyplaceno ke dni</target>
+    </trans-unit>
+    <trans-unit id="470">
+      <source>balance report</source>
+      <target>Jistiny</target>
+    </trans-unit>
+    <trans-unit id="471">
+      <source>of balance</source>
+      <target>Jistiny</target>
+    </trans-unit>
+    <trans-unit id="472">
+      <source>Balance to date</source>
+      <target>Jistina ke dni</target>
     </trans-unit>
   </body>
 </xliff>

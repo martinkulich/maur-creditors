@@ -1,4 +1,4 @@
-<td class="list_object_actions no-wrap-line">
+<td class="list_object_actions no-wrap-line no-print">
     <ul class="sf_admin_actions">
         <?php echo $helper->linkToEdit($contract, array('class' => 'modal_link', 'params' => array(), 'class_suffix' => 'edit', 'label' => 'Edit',)) ?>
         <?php if (method_exists($helper, 'linkToCopy')): ?>

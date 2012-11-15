@@ -1,4 +1,4 @@
-<td class="list_object_actions no-wrap-line">
+<td class="list_object_actions no-wrap-line no-print">
     <ul class="sf_admin_actions">
         <?php foreach ($this->configuration->getValue('list.object_actions') as $name => $params): ?>
             <?php if ('_delete' == $name): ?>

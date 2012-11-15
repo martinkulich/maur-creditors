@@ -492,7 +492,7 @@ Last allowed day in month is %last_day_in_month%;Poslední povolený den v měs�
 Upaid in past;Nevyplacené úroky z předchozích let
 Date of payment required if paid is set;Datum vyplacení je povinné, pokud je vyplněno pole “Vyplaceno“
 First settlement date;Datum prvního vypořádání
-unpaid admin;Nevyplacené úroky
+unpaid report;Nevyplacené úroky
 About how much balance should be reduced;O kolik bude jistina ponížena
 This field is unchangeable after contract activation;Nutno nastavit před aktivací smlouvy
 currency admin;Měny
@@ -508,3 +508,6 @@ Currency rate;Kurz měny
 unpaid;Nevyplacené úroky
 of unpaid;Nevyplacené úroky
 Unpaid to date;Nevyplaceno ke dni
+balance report;Jistiny
+of balance;Jistiny
+Balance to date;Jistina ke dni

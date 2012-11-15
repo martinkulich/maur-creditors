@@ -57,6 +57,7 @@ class defaultComponents extends sfComponents
         $this->reportLinks = array();
         if ($user->hasCredential('report.admin')) {
             $this->reportLinks[] = 'unpaid';
+            $this->reportLinks[] = 'balance';
         }
         
         $pattern = '%s.admin';

@@ -44,7 +44,7 @@
                             <ul class="dropdown-menu">
                                 <?php foreach ($reportLinks as $link) { ?>
                                     <li class="<?php if ($link == $activeLink) echo 'active';?>">
-                                        <?php echo link_to(__($link . ' admin'), '@' . 'report?report_type='.$link) ?>
+                                        <?php echo link_to(__($link . ' report'), '@' . 'report?report_type='.$link) ?>
                                     </li>
                                 <?php } ?>
                             </ul>

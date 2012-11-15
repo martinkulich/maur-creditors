@@ -11,12 +11,14 @@ class PdfService
 
         $noHeader = !isset($options['with_header']);
         if ($noHeader) {
-            $mpdf = new mPDF('utf-8', 'A4', '', '');
+//            $mpdf = new mPDF('utf-8', 'A4', '', '');
+            $mpdf = new mPDF('utf-8', 'A4', '', '',15,15,16,16,9,9, 'L');
         } else {
-            $mpdf = new mPDF('utf-8', 'A4', '', '', 15, 15, 40);
+//            $mpdf = new mPDF('utf-8', 'A4', '', '', 15, 15, 40);
+            $mpdf = new mPDF('utf-8', 'A4', '', '',15,15,40,16,9,9, 'L');
 
         }
-
+        
         $cssfiles = array(
             'pdf.css',
         );
