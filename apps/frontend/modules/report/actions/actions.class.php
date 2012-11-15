@@ -28,7 +28,7 @@ class reportActions extends sfActions
     {
         $filters = $this->getFilters();
         $this->hasFilter = count($filters) > 0;
-        if(!$this->hasFilter && $this->reportType == 'unpaid')
+        if(!$this->hasFilter && in_array($this->reportType ,array('unpaid', 'balance')))
         {
             $filters['date_to'] = date(sprintf('Y-m-%s', date('d') == '31' ? '30' : date('d')));
             $this->setFilters($filters);
