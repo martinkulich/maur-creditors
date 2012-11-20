@@ -8,6 +8,15 @@
             <th class="span3 text-align-center">
                 <?php echo link_to(__('Balance'), '@report_sort?sort=creditor_balance&report_type='.$reportType)?>
             </th>
+            <th class="span3 text-align-center">
+                <?php echo link_to(__('Interest'), '@report_sort?sort=creditor_interest&report_type='.$reportType)?>
+            </th>
+            <th class="span3 text-align-center">
+                <?php echo link_to(__('Paid'), '@report_sort?sort=creditor_paid&report_type='.$reportType)?>
+            </th>
+            <th class="span3 text-align-center">
+                <?php echo link_to(__('Unpaid'), '@report_sort?sort=creditor_unpaid&report_type='.$reportType)?>
+            </th>
         </tr>
     </thead>
     <tbody>

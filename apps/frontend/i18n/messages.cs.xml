@@ -1889,5 +1889,17 @@
       <source>Balance to date</source>
       <target>Jistina ke dni</target>
     </trans-unit>
+    <trans-unit id="473">
+      <source>Summary to date</source>
+      <target>Sumarizace ke dni</target>
+    </trans-unit>
+    <trans-unit id="474">
+      <source>summary report</source>
+      <target>Sumarizace</target>
+    </trans-unit>
+    <trans-unit id="475">
+      <source>of summary</source>
+      <target>Sumarizace</target>
+    </trans-unit>
   </body>
 </xliff>
