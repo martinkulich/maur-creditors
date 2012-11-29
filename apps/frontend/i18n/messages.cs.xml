@@ -1901,5 +1901,9 @@
       <source>of summary</source>
       <target>Sumarizace</target>
     </trans-unit>
+    <trans-unit id="476">
+      <source>Unpaid regular</source>
+      <target>Nevyplaceno (řádná vypořádání)</target>
+    </trans-unit>
   </body>
 </xliff>

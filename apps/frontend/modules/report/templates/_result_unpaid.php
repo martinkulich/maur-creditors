@@ -6,7 +6,10 @@
                 <?php echo link_to(__('Creditor'), '@report_sort?sort=creditor_fullname&report_type='.$reportType)?>
             </th>
             <th class="span3 text-align-center">
-                <?php echo link_to(__('Unpaid'), '@report_sort?sort=creditor_unpaid&report_type='.$reportType)?>
+                <?php echo link_to(__('Unpaid'), '@report_sort?sort=creditor_unpaid&report_type='.$reportType, array('title'=>'Pokud je datum nastaveno na konec roku, jsou zde zahrnuty i úroky dopočítané do konce roku'))?>
+            </th>
+            <th class="span3 text-align-center">
+                <?php echo link_to(__('Unpaid regular'), '@report_sort?sort=creditor_unpaid_regular&report_type='.$reportType, array('title'=>'Pokud je datum nastaveno na konec roku, nejsou  zde zahrnuty úroky dopočítané do konce roku, ale pouze úroky z řádných vypořádání'))?>
             </th>
         </tr>
     </thead>

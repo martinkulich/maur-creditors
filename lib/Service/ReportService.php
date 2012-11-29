@@ -10,13 +10,14 @@ class ReportService
         return $this->$dataFunction($filters);
     }
 
-    public function getDataUnpaid(array $filters = array())
+    public function getDataUnpaid(array $filters = array(), $excludeEndOfYearSettlement = false)
     {
         $main = "
             SELECT 
                 cr.id as creditor_id,
                 c.currency_code as currency_code,
                 (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname, 
+                sum(contract_unpaid_regular(c.id, '%date_to%'))::integer AS creditor_unpaid_regular,
                 sum(contract_unpaid(c.id, '%date_to%'))::integer AS creditor_unpaid
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
@@ -30,6 +31,7 @@ class ReportService
         );
         $columns = array(
             'creditor_unpaid' => 1,
+            'creditor_unpaid_regular' => 1,
         );
 
         $orderBy = $this->getOrderBy($filters, array_merge(array('creditor_fullname'), array_keys($columns)));
@@ -45,19 +47,23 @@ class ReportService
             'columns' =>$columns,
         );
 
-        foreach ($rows as $row) {
-
-            $data['currency_codes'][$row['currency_code']] = $row['currency_code'];
-            if ($row['creditor_unpaid']) {
-                if (!isset($data['total']['creditor_unpaid'][$row['currency_code']])) {
-                    $data['total']['creditor_unpaid'][$row['currency_code']] = 0;
+        foreach ($columns as $column => $isCurrency) {
+            foreach ($rows as $row) {
+                $data['currency_codes'][$row['currency_code']] = $row['currency_code'];
+                if (!isset($data['total'][$column][$row['currency_code']])) {
+                    $data['total'][$column][$row['currency_code']] = 0;
                 }
-                $data['total']['creditor_unpaid'][$row['currency_code']] += $row['creditor_unpaid'];
+                $data['total'][$column][$row['currency_code']] += $row[$column];
             }
         }
         return $data;
     }
-
+    public function getDataInterestsToPay(array $filters = array())
+    {
+        return $this->getDataUnpaid($filters, true);
+    }
+            
+    
     public function getDataBalance(array $filters = array())
     {
         $main = "
