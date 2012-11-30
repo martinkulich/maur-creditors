@@ -1949,5 +1949,13 @@
       <source>Age on next birthday</source>
       <target>Věk při příštích narozeninách</target>
     </trans-unit>
+    <trans-unit id="488">
+      <source>of birthday</source>
+      <target>Narozeniny</target>
+    </trans-unit>
+    <trans-unit id="489">
+      <source>birthday report</source>
+      <target>Narozeniny</target>
+    </trans-unit>
   </body>
 </xliff>
