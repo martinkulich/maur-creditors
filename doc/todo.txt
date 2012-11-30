@@ -172,24 +172,66 @@ rucni zadani datumu u ukonceni smlouvy
 
 
 ////
-desetiny oddelovat
 
 double klik na ulozit znemoznit
 
 
-otazky?
-kdyz predchozi settlement vychazi na 28.2 pridat 2 dny (kdyz 29.2 tak jeden)
 
-//post validator, kdyz bylo vyplaceno, musi byt vyplneno datum vyplaceni..
+//////////////////////////
 
-//razeni ve smlouvach podle nazvu
-ukotvit zahlavi
+//prani k narozkam report
+    jmeno
+    datum narozeni
+    adresa
 
-!!!!!!!!!!!!!!!!!!!!!!!!
-zobrazovani vice men
-    //vyplaty uroku
-    //predpisy
 
-//schovat administraci ip addressr
+report jistina od posledni zmeny - potvrzeni od veritelu
+    filtr na rok nikoliv na datum
+    jmeno
+    adresa
+    jistina na zacatku roku - 
+    jistina - na konci suma z predpisu
+    
+    nevyplaceny urok - za vsechny obdobi cili = nevyplaceno v predpisu
+    vyplaceno a kdy po jednotlivych platbach
 
-//nevyplacene uroky grupovat podle veritele
+
+
+////
+
+///report vynosy veritelu
+    prijate platby - vsechy prichozi platby i uzavrenych smluv
+    kapitalizace = soucasna jistina - prijate platby - ponizeni jistiny
+    soucasna jistina
+    celkove k datu
+        urok
+        vyplaceno
+        nevyplaceno kumulativne
+
+
+
+// mesicni report
+group
+    po veritelych
+    uplne vsichni dohromady
+    
+jistina na konci mesice  se zapoci. kapitalizaci apod
+vyplacene uroky
+kapitalizce
+kolik prichozi platby
+
+/// nevyplacene uroky kumulativne
+/// uroky k vyplaceni
+
+
+
+report k vyplate - stejny jako vyplata uroku, pouze osekana a pridany sloupec cislo uctu
+
+predpis
+	sumacni sloupce ktere se maji zobrazit pouze pri filtru na rok
+		jistina k 1.1
+
+
+popisky v zahlavi
+    reporty
+    predpisy

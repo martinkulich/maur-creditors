@@ -1905,5 +1905,37 @@
       <source>Unpaid regular</source>
       <target>Nevyplaceno (řádná vypořádání)</target>
     </trans-unit>
+    <trans-unit id="477">
+      <source>creditor_revenue report</source>
+      <target>Výnosy věřitelů</target>
+    </trans-unit>
+    <trans-unit id="478">
+      <source>of creditor_revenue</source>
+      <target>Výnosy věřitelů</target>
+    </trans-unit>
+    <trans-unit id="479">
+      <source>Creditor received payments</source>
+      <target>Přijaté platby</target>
+    </trans-unit>
+    <trans-unit id="480">
+      <source>Creditor current balance</source>
+      <target>Současná jistina</target>
+    </trans-unit>
+    <trans-unit id="481">
+      <source>Creditor balance change</source>
+      <target>Změna jistiny</target>
+    </trans-unit>
+    <trans-unit id="482">
+      <source>Creditor interest regular</source>
+      <target>Řádný úrok</target>
+    </trans-unit>
+    <trans-unit id="483">
+      <source>Creditor paid</source>
+      <target>Vyplaceno</target>
+    </trans-unit>
+    <trans-unit id="484">
+      <source>Creditor unpaid regular cumulative</source>
+      <target>Nevyplaceno kumulativně</target>
+    </trans-unit>
   </body>
 </xliff>

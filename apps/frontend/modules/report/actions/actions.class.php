@@ -34,6 +34,11 @@ class reportActions extends sfActions
             $this->setFilters($filters);
             $this->hasFilter = true;
         }
+        elseif($this->reportType == 'birthday')
+        {
+            $this->hasFilter = true;
+        }
+        
         if ($this->hasFilter) {
             $this->data = $this->reportService->getData($this->reportType, $filters);
         }

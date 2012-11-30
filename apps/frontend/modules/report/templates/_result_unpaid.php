@@ -21,7 +21,7 @@
             </td>
             <?php foreach($data['columns'] as $column=>$isCurrency){?>
                 <td class="text-align-right">
-                    <?php echo $isCurrency ? format_currency($row[$column], $row['currency_code']) : $row[$column] ?>
+                    <?php echo $isCurrency ? my_format_currency($row[$column], $row['currency_code']) : $row[$column] ?>
                 </td>
             <?php }?>
         </tr>
@@ -35,7 +35,7 @@
                 </th>
                 <?php foreach($data['columns'] as $column=>$isCurrency){?>
                     <th class="text-align-right">
-                        <?php echo $isCurrency ? format_currency($data['total'][$column][$currency], $currency) : $data['total'][$column][$currency] ?>
+                        <?php echo $isCurrency ? my_format_currency($data['total'][$column][$currency], $currency) : $data['total'][$column][$currency] ?>
                     </th>
                 <?php }?>
             </tr>

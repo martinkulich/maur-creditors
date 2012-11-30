@@ -515,3 +515,11 @@ Summary to date;Sumarizace ke dni
 summary report;Sumarizace
 of summary;Sumarizace
 Unpaid regular;Nevyplaceno (řádná vypořádání)
+creditor_revenue report;Výnosy věřitelů
+of creditor_revenue;Výnosy věřitelů
+Creditor received payments;Přijaté platby
+Creditor current balance;Současná jistina
+Creditor balance change;Změna jistiny
+Creditor interest regular;Řádný úrok
+Creditor paid;Vyplaceno
+Creditor unpaid regular cumulative;Nevyplaceno kumulativně
