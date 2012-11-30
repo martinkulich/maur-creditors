@@ -1,0 +1,8 @@
+1. proc nam nesedeli vyplaceno a vyplaceno za prislusny rok
+    protoze slopec Nevyplacené úroky z předchozích let...
+
+2. Report Vynosy veritelu
+    Ponizeni jistiny
+        Fabik, Techler atd.. pri reaktivaci byla jistina ponizena na nulu - to je spatne ...
+    Zmena jistiny vs. kapitalizovano novy kamil
+        jedna jeho kapitalizacni platba (100.000,-) nebyla oznacena jako reaktivace a proto se tyto sloupce neshodji, treba opravit

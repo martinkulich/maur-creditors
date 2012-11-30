@@ -52,7 +52,12 @@ class regulationActions extends autoRegulationActions
         $filters = $this->getFilters();
         if(!array_key_exists('regulation_year', $filters) || (array_key_exists('regulation_year', $filters) && !$filters['regulation_year']))
         {
-            unset($sums['unpaid']);
+            foreach($sums as  $currencyCode => $row)
+            {
+                unset($sums[$currencyCode]['unpaid']);
+                unset($sums[$currencyCode]['start_balance']);
+                
+            }
         }
         return $sums;
     }

@@ -23,7 +23,9 @@
                         <th>
                         </th>
                         <th class="text-align-right">
-                            <?php echo my_format_currency($sumValues['start_balance'], $currencyCode) ?>
+                            <?php if (array_key_exists('start_balance', $sumValues)) { ?>
+                                <?php echo my_format_currency($sumValues['start_balance'], $currencyCode) ?>
+                            <?php } ?>
                         </th>
                         <th>
                         </th>
