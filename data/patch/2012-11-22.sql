@@ -1,5 +1,6 @@
 BEGIN;
 --byla spatne 
+DROP VIEW unpaid;
 DROP FUNCTION creditor_unpaid(integer, date);
 
 

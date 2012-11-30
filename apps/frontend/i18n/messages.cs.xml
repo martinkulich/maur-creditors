@@ -1937,5 +1937,17 @@
       <source>Creditor unpaid regular cumulative</source>
       <target>Nevyplaceno kumulativně</target>
     </trans-unit>
+    <trans-unit id="485">
+      <source>Address</source>
+      <target>Adresa</target>
+    </trans-unit>
+    <trans-unit id="486">
+      <source>Next birthday</source>
+      <target>Příští narozeniny</target>
+    </trans-unit>
+    <trans-unit id="487">
+      <source>Age on next birthday</source>
+      <target>Věk při příštích narozeninách</target>
+    </trans-unit>
   </body>
 </xliff>
