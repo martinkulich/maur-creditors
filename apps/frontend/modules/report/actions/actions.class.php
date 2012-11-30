@@ -15,6 +15,11 @@ class reportActions extends sfActions
     {
         $request = $this->getRequest();
         $this->reportType = $request->getParameter('report_type');
+        
+        $credential = str_replace("_", "-", sprintf('report-%s', $this->reportType));
+                if (!$this->getUser()->hasCredential($credential)) {
+                    return $this->forward('security', 'secure');
+                }
 
         $this->reportService = ServiceContainer::getReportService();
     }
