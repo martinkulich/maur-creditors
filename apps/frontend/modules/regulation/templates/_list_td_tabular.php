@@ -20,7 +20,7 @@
 <td class="sf_admin_text sf_admin_list_td_unpaid_in_past text-align-right">
     <?php echo my_format_currency($regulation->getUnpaidInPast(), $currencyCode) ?>
 </td>
-<td class="sf_admin_text sf_admin_list_td_regulation text-align-center <?php if ($regulation->hasManualInterest()) echo ' text-red ' ?>">
+<td class="sf_admin_text sf_admin_list_td_regulation text-align-right <?php if ($regulation->hasManualInterest()) echo ' text-red ' ?>">
     <?php echo my_format_currency($regulation->getRequlation(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_paid text-align-right">

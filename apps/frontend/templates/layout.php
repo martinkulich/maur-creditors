@@ -6,6 +6,8 @@
         <?php include_title() ?>
         <link rel="shortcut icon" href="/favicon.ico" />
         <?php include_stylesheets() ?>
+        <?php echo stylesheet_tag('main', array('media'=>'print')) ?>
+        <?php echo stylesheet_tag('print', array('media'=>'print')) ?>
         <script type="text/javascript">
             var login_url = '<?php echo url_for('@login') ?>';
         </script>

@@ -15,9 +15,7 @@
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
-      </tbody>
-      <tfoot class="no-wrap-line">
-          <?php foreach($sums as $currencyCode=>$sumValues){?>
+        <?php foreach($sums as $currencyCode=>$sumValues){?>
             <tr class="sf_admin_row">
                 <th>
                 </th>
@@ -56,12 +54,11 @@
                 </th>
                 <th>
                 </th>
-                <th>
+                <th class="no-print">
                 </th>
-
             </tr>
           <?php }?>
-      </tfoot>
+      </tbody>
     </table>
     </div>
 <?php endif; ?>

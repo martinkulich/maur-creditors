@@ -27,9 +27,7 @@ generator:
         actions:
           filters: ~
           reset: ~
-          printList:
-            action: printList
-            Label: Print list
+          print: ~
         batch_actions: []
         object_actions: []
         sort: [regulation_year, desc]

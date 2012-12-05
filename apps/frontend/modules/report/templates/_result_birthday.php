@@ -16,14 +16,14 @@
             </th>
         </tr>
     </thead>
-    <tbody>
+    </tbody>
         <?php foreach($data['rows'] as $rowKey=>$row){?>
         <tr>
             <td>
                 <?php echo $row['creditor_fullname']?>
             </td>
             <?php foreach($data['columns'] as $column=>$isCurrency){?>
-                <td class="text-align-right">
+                <td class="<?php echo in_array($column, array('creditor_next_birthday', 'creditor_age')) ? 'text-align-right' : 'text-align-left' ?>">
                     <?php echo $column == 'creditor_next_birthday' ? format_date($row[$column], 'D') : $row[$column] ?>
                 </td>
             <?php }?>

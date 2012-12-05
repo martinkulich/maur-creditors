@@ -48,7 +48,7 @@ kolik prichozi platby
 
 report k vyplate - stejny jako vyplata uroku, pouze osekana a pridany sloupec cislo uctu
 
-predpis
+//predpis
 	sumacni sloupce ktere se maji zobrazit pouze pri filtru na rok
 		jistina k 1.1
 

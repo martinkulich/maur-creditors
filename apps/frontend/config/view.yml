@@ -25,6 +25,4 @@ resultsSuccess:
 noteSuccess:
   layout: layoutModal
 
-
-printListSuccess:
-  layout: layoutPdf
+  

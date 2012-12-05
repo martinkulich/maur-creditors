@@ -1,6 +1,6 @@
 <?php if ($actions = $this->configuration->getValue('list.actions')): ?>
     [?php slot('submenu') ?]
-        <div class="subnav subnav-fixed">
+        <div class="subnav subnav-fixed no-print">
             <div class="container">
                 <ul class="nav nav-pills nav-reservation nav-reservation-date pull-left">
 
@@ -13,6 +13,8 @@
                             [?php  if(isset($showResetFilter) && $showResetFilter){ ?]
                                 <?php echo $this->addCredentialCondition('[?php echo $helper->linkToreset('.$this->asPhp($params).') ?]', $params)."\n" ?>
                             [?php }?]
+                        <?php elseif ('print' == $name): ?>
+                                <?php echo $this->addCredentialCondition('[?php echo $helper->linkToPrint() ?]', $params)."\n" ?>
                         <?php else: ?>
                             <li class="sf_admin_action_<?php echo $params['class_suffix'] ?>">
                               <?php echo $this->addCredentialCondition($this->getLinkToAction($name, $params, false), $params)."\n" ?>

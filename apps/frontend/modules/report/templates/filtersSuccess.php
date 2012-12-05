@@ -1,6 +1,6 @@
 <?php use_helper('I18N', 'Date') ?>
 <div class="modal_content">
-    <div class="modal-header" id="reservation_detail_header">
+    <div class="modal-header" >
         <a class="close" data-dismiss="modal">×</a>
         <h3><?php echo __('Filter') ?></h3>
     </div>

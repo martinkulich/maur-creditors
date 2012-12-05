@@ -1,0 +1,44 @@
+a
+{
+    text-decoration: none;
+    color: black;
+}
+
+table, th, td
+{
+    border-style: solid;
+    border-width: 1px;
+    padding: 1px;
+    margin: 5px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th
+{
+    white-space: normal;
+}
+table.table-admin tbody th
+{
+    white-space: nowrap;
+}
+
+th, td
+{
+    padding: 1px 3px;
+
+}
+
+
+.no-print
+{
+    display: none;
+}
+
+
+#sf_admin_list_th_actions,
+.list_object_actions
+{
+
+    display: none;
+}

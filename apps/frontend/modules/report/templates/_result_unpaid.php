@@ -26,8 +26,6 @@
             <?php }?>
         </tr>
         <?php } ?>
-    </tbody>
-    <tfoot>
         <?php foreach($data['currency_codes'] as $currency){?>
             <tr>
                 <th>
@@ -40,5 +38,5 @@
                 <?php }?>
             </tr>
         <?php }?>
-    </tfoot>
+    </tbody>
 </table>

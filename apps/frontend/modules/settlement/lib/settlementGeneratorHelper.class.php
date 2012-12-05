@@ -20,4 +20,9 @@ class settlementGeneratorHelper extends BaseSettlementGeneratorHelper
     {
         return '<li class="sf_admin_action_pay">' . link_to('<i class="icon-edit "></i> ' . __($params['label']), $this->getUrlForAction('pay'), $object, array('class' => 'btn')) . '</li>';
     }
+    
+  public function linkToPrint()
+  {
+    return '<li class="sf_admin_action_print"><a href=# onclick="window.print();return false;">'.__('Print').'</a></li>';
+  }
 }

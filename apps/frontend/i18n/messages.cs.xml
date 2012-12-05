@@ -1957,5 +1957,9 @@
       <source>birthday report</source>
       <target>Narozeniny</target>
     </trans-unit>
+    <trans-unit id="490">
+      <source>Print</source>
+      <target>Tisk</target>
+    </trans-unit>
   </body>
 </xliff>

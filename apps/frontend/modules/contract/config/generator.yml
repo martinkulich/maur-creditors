@@ -36,9 +36,7 @@ generator:
           _new: ~
           filters: ~
           reset: ~
-          printList:
-            action: printList
-            Label: Print list
+          print: ~
         sort: [name, asc]
       filter:  ~
       form:

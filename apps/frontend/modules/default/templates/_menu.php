@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-fixed-top no-print">
     <div class="navbar-inner">
         <div class="container">
             <?php if($userIsAuthenticated){?>

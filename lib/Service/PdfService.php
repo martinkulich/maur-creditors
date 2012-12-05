@@ -20,7 +20,7 @@ class PdfService
         }
         
         $cssfiles = array(
-            'pdf.css',
+            'print.css',
         );
         foreach ($cssfiles as $css) {
             $cssPath = stylesheet_path($css, true);

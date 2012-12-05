@@ -501,6 +501,12 @@ table.table-admin tbody
     overflow: auto;
 }
 
+table.table-admin tbody th
+{
+    white-space: nowrap;
+}
+
+
 @media (min-width: 1600px) {
 
     /* Update subnav container */

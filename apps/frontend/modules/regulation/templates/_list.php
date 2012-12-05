@@ -12,8 +12,6 @@
                         <?php include_partial('regulation/list_td_tabular', array('regulation' => $regulation)) ?>
                     </tr>
                 <?php endforeach; ?>
-            </tbody>
-            <tfoot class="no-wrap-line">
                 <?php foreach($sums as $currencyCode=>$sumValues){?>
                     <tr class="sf_admin_row">
                         <th>
@@ -54,7 +52,7 @@
                         </th>
                     </tr>
                  <?php }?>
-            </tfoot>
+            </tbody>
         </table>
     </div>
 <?php endif; ?>
