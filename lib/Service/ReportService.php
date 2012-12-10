@@ -21,6 +21,7 @@ class ReportService
                 sum(contract_unpaid(c.id, '%date_to%'))::integer AS creditor_unpaid
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
+            %where_conditions%
             GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
             HAVING sum(contract_unpaid(c.id, '%date_to%'::date))::integer <> 0
             ORDER BY %order_by%
@@ -38,7 +39,7 @@ class ReportService
         if ($orderBy) {
             $replacements['%order_by%'] = $orderBy;
         }
-        $replacements = $this->getReplacements($replacements, $filters);
+        $replacements = $this->getReplacements($replacements, $filters, array('creditor_id'=>'creditor_id = '));
         $rows = $this->procesQueryFetchAll($main, $replacements);
         $data = array(
             'total' => array(),
@@ -74,6 +75,7 @@ class ReportService
                 sum(contract_balance(c.id, '%date_to%'::date))::integer AS creditor_balance
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
+            %where_conditions%
             GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
             HAVING sum(contract_balance(c.id, '%date_to%'::date))::integer <> 0
             ORDER BY %order_by%
@@ -92,7 +94,7 @@ class ReportService
             $replacements['%order_by%'] = $orderBy;
         }
 
-        $replacements = $this->getReplacements($replacements, $filters);
+        $replacements = $this->getReplacements($replacements, $filters, array('creditor_id'=>'creditor_id = '));
         $rows = $this->procesQueryFetchAll($main, $replacements);
         $data = array(
             'total' => array(),
@@ -118,6 +120,7 @@ class ReportService
     {
         $main = "
             SELECT 
+                cr.id as creditor_id,
                 (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname, 
                 c.currency_code as currency_code,
                 creditor_received_payments(cr.id, '%date_to%'::date) as creditor_received_payments,
@@ -130,6 +133,7 @@ class ReportService
                 sum(contract_unpaid_regular(c.id, '%date_to%'::date))::integer AS creditor_unpaid_regular
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
+            %where_conditions%
             GROUP BY  currency_code, cr.id, cr.lastname, cr.firstname
             ORDER BY %order_by%
             ;";
@@ -153,7 +157,7 @@ class ReportService
         if ($orderBy) {
             $replacements['%order_by%'] = $orderBy;
         }
-        $replacements = $this->getReplacements($replacements, $filters);
+        $replacements = $this->getReplacements($replacements, $filters , array('creditor_id'=>'creditor_id = '));
         $rows = $this->procesQueryFetchAll($main, $replacements);
 
         $data = array(

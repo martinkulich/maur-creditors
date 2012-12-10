@@ -13,10 +13,12 @@ class ReportForm extends BaseForm
         $this->setWidgets(array(
             'date_from' => new myJQueryDateWidget(),
             'date_to' => new myJQueryDateWidget(),
+            'creditor_id'=> new sfWidgetFormPropelChoice(array('model'=>'creditor', 'order_by'=>  array('Lastname', 'asc'), 'add_empty'=>true)),
             ));
         $this->setValidators(array(
             'date_from' => new myValidatorDate(array('required' => false)),
             'date_to' => new myValidatorDate(array('required' => false)),
+            'creditor_id'=> new sfValidatorPropelChoice(array('model'=>'creditor','required'=> false)),
         ));
 
         $usedFields = $this->getUsedFields();
