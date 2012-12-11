@@ -17,7 +17,7 @@ class UnpaidReport extends Report
             %where%
             GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
             HAVING sum(contract_unpaid(c.id, '%date_to%'::date))::integer <> 0
-            ORDER BY %order_by%
+            ORDER BY currency_code,  %order_by%
             ;
         ";
     }

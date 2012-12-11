@@ -2049,5 +2049,13 @@
       <source>Creditor age</source>
       <target>Věk při příštích narozeninách</target>
     </trans-unit>
+    <trans-unit id="513">
+      <source>End of month balance</source>
+      <target>Jistina na konci měsíce</target>
+    </trans-unit>
+    <trans-unit id="514">
+      <source>Received payments</source>
+      <target>Přijaté platby</target>
+    </trans-unit>
   </body>
 </xliff>

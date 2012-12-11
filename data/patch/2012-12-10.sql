@@ -70,6 +70,8 @@ $BODY$
 CREATE OR REPLACE FUNCTION last_day(_month integer, _year integer)
 RETURNS date AS
 $BODY$
-  SELECT (date_trunc('MONTH', (_year || '-' || _month || '-1')::DATE) + INTERVAL '1 MONTH - 1 day')::date;
+  SELECT (date_trunc('MONTH', ($2 || '-' || $1 || '-1')::DATE) + INTERVAL '1 MONTH - 1 day')::date;
 $BODY$ LANGUAGE 'sql' IMMUTABLE STRICT;
+
+
 COMMIT;

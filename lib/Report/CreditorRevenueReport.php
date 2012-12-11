@@ -22,7 +22,7 @@ class CreditorRevenueReport extends Report
             JOIN contract c ON c.creditor_id = cr.id
             %where%
             GROUP BY  currency_code, cr.id, cr.lastname, cr.firstname
-            ORDER BY %order_by%
+            ORDER BY currency_code, %order_by%
             ;
         ";
     }

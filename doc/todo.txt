@@ -39,10 +39,10 @@ group
     po veritelych
     uplne vsichni dohromady
     
-jistina na konci mesice  se zapoci. kapitalizaci apod
-vyplacene uroky
-kapitalizce
-kolik prichozi platby
+    //jistina na konci mesice  se zapoci. kapitalizaci apod
+    //vyplacene uroky
+    //kapitalizce
+    //kolik prichozi platby
 
 
 

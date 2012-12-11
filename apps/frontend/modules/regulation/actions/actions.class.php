@@ -30,7 +30,7 @@ class regulationActions extends autoRegulationActions
         $criteria->addSelectColumn(sprintf("sum(%s) as regulation", RegulationPeer::REGULATION));
         $criteria->addSelectColumn(sprintf("sum(%s) as start_balance", RegulationPeer::START_BALANCE));
         $criteria->addSelectColumn(sprintf("sum(%s) as contract_balance", RegulationPeer::CONTRACT_BALANCE));
-        $criteria->addSelectColumn(sprintf("sum(%s) as end_balance", RegulationPeer::END_BALANCE));
+        //$criteria->addSelectColumn(sprintf("sum(%s) as end_balance", RegulationPeer::END_BALANCE));
         $criteria->addSelectColumn(sprintf("sum(%s) as paid", RegulationPeer::PAID));
         $criteria->addSelectColumn(sprintf("sum(%s) as paid_for_current_year", RegulationPeer::PAID_FOR_CURRENT_YEAR));
         $criteria->addSelectColumn(sprintf("sum(%s) as capitalized", RegulationPeer::CAPITALIZED));

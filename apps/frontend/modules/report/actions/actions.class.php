@@ -66,7 +66,7 @@ class reportActions extends sfActions
         $this->form->bind($request->getParameter($this->form->getName()));
 
         if ($this->form->isValid()) {
-            $this->setFilters($this->form->getValues());
+            $this->setFilters(array_merge($this->getFilters(), $this->form->getValues()));
 
             return $this->redirect('@report?report_type=' . $this->reportType, 205);
         } else {
@@ -85,7 +85,7 @@ class reportActions extends sfActions
 
     protected function getForm(sfWebRequest $request)
     {
-        return $this->reportService->getForm($this->reportType);
+        return $this->reportService->getForm($this->reportType, $this->getFilters());
     }
 
     protected function getFilters()
