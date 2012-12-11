@@ -62,6 +62,7 @@ class defaultComponents extends sfComponents
             $this->reportLinks[] = 'birthday';
             $this->reportLinks[] = 'creditor_revenue';
             $this->reportLinks[] = 'monthly';
+            $this->reportLinks[] = 'creditor_confirmation';
 
             $pattern = 'report-%s';
             foreach ($this->reportLinks as $key => $link) {

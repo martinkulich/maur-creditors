@@ -2057,5 +2057,13 @@
       <source>Received payments</source>
       <target>Přijaté platby</target>
     </trans-unit>
+    <trans-unit id="515">
+      <source>creditor_confirmation report</source>
+      <target>Potvrzení od věřitelů</target>
+    </trans-unit>
+    <trans-unit id="516">
+      <source>of creditor_confirmation</source>
+      <target>Potvrzení od věřitelů</target>
+    </trans-unit>
   </body>
 </xliff>

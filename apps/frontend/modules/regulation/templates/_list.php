@@ -49,7 +49,9 @@
                             <?php } ?>
                         </th>
                         <th>
-                            
+                            <?php if (array_key_exists('end_balance', $sumValues)) { ?>
+                                <?php echo my_format_currency($sumValues['end_balance'], $currencyCode) ?>
+                            <?php } ?>
                         </th>
                     </tr>
                  <?php }?>
