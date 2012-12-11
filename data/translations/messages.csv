@@ -517,12 +517,12 @@ of summary;Sumarizace
 Unpaid regular;Nevyplaceno (řádná vypořádání)
 creditor_revenue report;Výnosy věřitelů
 of creditor_revenue;Výnosy věřitelů
-Creditor received payments;Přijaté platby
-Creditor current balance;Současná jistina
-Creditor balance change;Změna jistiny
-Creditor interest regular;Řádný úrok
-Creditor paid;Vyplaceno
-Creditor unpaid regular cumulative;Nevyplaceno kumulativně
+Received payments;Přijaté platby
+Current balance;Současná jistina
+Balance change;Změna jistiny
+Interest regular;Řádný úrok
+paid;Vyplaceno
+unpaid regular cumulative;Nevyplaceno kumulativně
 Address;Adresa
 Next birthday;Příští narozeniny
 Age on next birthday;Věk při příštích narozeninách
@@ -548,9 +548,9 @@ Creditor capitalized;Kapitalizováno
 Creditor balance reduction;Ponížení jistiny
 Creditor unpaid;Nevyplaceno
 Creditor balance;Jistina
-Creditor address;Adresa
-Creditor birthday;Příští narozeniny
-Creditor age;Věk při příštích narozeninách
+Address;Adresa
+Birthday;Příští narozeniny
+Age;Věk při příštích narozeninách
 End of month balance;Jistina na konci měsíce
 Received payments;Přijaté platby
 creditor_confirmation report;Potvrzení od věřitelů

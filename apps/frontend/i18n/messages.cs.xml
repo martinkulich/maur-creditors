@@ -1914,27 +1914,27 @@
       <target>Výnosy věřitelů</target>
     </trans-unit>
     <trans-unit id="479">
-      <source>Creditor received payments</source>
+      <source>Received payments</source>
       <target>Přijaté platby</target>
     </trans-unit>
     <trans-unit id="480">
-      <source>Creditor current balance</source>
+      <source>Current balance</source>
       <target>Současná jistina</target>
     </trans-unit>
     <trans-unit id="481">
-      <source>Creditor balance change</source>
+      <source>Balance change</source>
       <target>Změna jistiny</target>
     </trans-unit>
     <trans-unit id="482">
-      <source>Creditor interest regular</source>
+      <source>Interest regular</source>
       <target>Řádný úrok</target>
     </trans-unit>
     <trans-unit id="483">
-      <source>Creditor paid</source>
+      <source>paid</source>
       <target>Vyplaceno</target>
     </trans-unit>
     <trans-unit id="484">
-      <source>Creditor unpaid regular cumulative</source>
+      <source>unpaid regular cumulative</source>
       <target>Nevyplaceno kumulativně</target>
     </trans-unit>
     <trans-unit id="485">
@@ -2038,30 +2038,22 @@
       <target>Jistina</target>
     </trans-unit>
     <trans-unit id="510">
-      <source>Creditor address</source>
-      <target>Adresa</target>
-    </trans-unit>
-    <trans-unit id="511">
-      <source>Creditor birthday</source>
+      <source>Birthday</source>
       <target>Příští narozeniny</target>
     </trans-unit>
-    <trans-unit id="512">
-      <source>Creditor age</source>
+    <trans-unit id="511">
+      <source>Age</source>
       <target>Věk při příštích narozeninách</target>
     </trans-unit>
-    <trans-unit id="513">
+    <trans-unit id="512">
       <source>End of month balance</source>
       <target>Jistina na konci měsíce</target>
     </trans-unit>
-    <trans-unit id="514">
-      <source>Received payments</source>
-      <target>Přijaté platby</target>
-    </trans-unit>
-    <trans-unit id="515">
+    <trans-unit id="513">
       <source>creditor_confirmation report</source>
       <target>Potvrzení od věřitelů</target>
     </trans-unit>
-    <trans-unit id="516">
+    <trans-unit id="514">
       <source>of creditor_confirmation</source>
       <target>Potvrzení od věřitelů</target>
     </trans-unit>
