@@ -1961,5 +1961,93 @@
       <source>Print</source>
       <target>Tisk</target>
     </trans-unit>
+    <trans-unit id="491">
+      <source>monthly report</source>
+      <target>Měsíční přehled</target>
+    </trans-unit>
+    <trans-unit id="492">
+      <source>of monthly</source>
+      <target>Měsíční přehled</target>
+    </trans-unit>
+    <trans-unit id="493">
+      <source>January</source>
+      <target>Leden</target>
+    </trans-unit>
+    <trans-unit id="494">
+      <source>February</source>
+      <target>Únor</target>
+    </trans-unit>
+    <trans-unit id="495">
+      <source>March</source>
+      <target>Březen</target>
+    </trans-unit>
+    <trans-unit id="496">
+      <source>April</source>
+      <target>Duben</target>
+    </trans-unit>
+    <trans-unit id="497">
+      <source>May</source>
+      <target>Květen</target>
+    </trans-unit>
+    <trans-unit id="498">
+      <source>June</source>
+      <target>Červen</target>
+    </trans-unit>
+    <trans-unit id="499">
+      <source>July</source>
+      <target>Červenec</target>
+    </trans-unit>
+    <trans-unit id="500">
+      <source>August</source>
+      <target>Srpen</target>
+    </trans-unit>
+    <trans-unit id="501">
+      <source>September</source>
+      <target>Září</target>
+    </trans-unit>
+    <trans-unit id="502">
+      <source>October</source>
+      <target>Říjen</target>
+    </trans-unit>
+    <trans-unit id="503">
+      <source>November</source>
+      <target>Listopad</target>
+    </trans-unit>
+    <trans-unit id="504">
+      <source>December</source>
+      <target>Prosinec</target>
+    </trans-unit>
+    <trans-unit id="505">
+      <source>Creditor unpaid regular</source>
+      <target>Nevyplaceno (řádná vypořádání)</target>
+    </trans-unit>
+    <trans-unit id="506">
+      <source>Creditor capitalized</source>
+      <target>Kapitalizováno</target>
+    </trans-unit>
+    <trans-unit id="507">
+      <source>Creditor balance reduction</source>
+      <target>Ponížení jistiny</target>
+    </trans-unit>
+    <trans-unit id="508">
+      <source>Creditor unpaid</source>
+      <target>Nevyplaceno</target>
+    </trans-unit>
+    <trans-unit id="509">
+      <source>Creditor balance</source>
+      <target>Jistina</target>
+    </trans-unit>
+    <trans-unit id="510">
+      <source>Creditor address</source>
+      <target>Adresa</target>
+    </trans-unit>
+    <trans-unit id="511">
+      <source>Creditor birthday</source>
+      <target>Příští narozeniny</target>
+    </trans-unit>
+    <trans-unit id="512">
+      <source>Creditor age</source>
+      <target>Věk při příštích narozeninách</target>
+    </trans-unit>
   </body>
 </xliff>

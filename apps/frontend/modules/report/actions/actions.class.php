@@ -15,11 +15,11 @@ class reportActions extends sfActions
     {
         $request = $this->getRequest();
         $this->reportType = $request->getParameter('report_type');
-        
+
         $credential = str_replace("_", "-", sprintf('report-%s', $this->reportType));
-                if (!$this->getUser()->hasCredential($credential)) {
-                    return $this->forward('security', 'secure');
-                }
+        if (!$this->getUser()->hasCredential($credential)) {
+            return $this->forward('security', 'secure');
+        }
 
         $this->reportService = ServiceContainer::getReportService();
     }
@@ -32,22 +32,8 @@ class reportActions extends sfActions
     public function executeIndex(sfWebRequest $request)
     {
         $filters = $this->getFilters();
+        $this->report = $this->reportService->getReport($this->reportType, $filters);
         $this->hasFilter = count($filters) > 0;
-        if(!$this->hasFilter && in_array($this->reportType ,array('unpaid', 'balance', 'summary')))
-        {
-            $filters['date_to'] = date(sprintf('Y-m-%s', date('d') == '31' ? '30' : date('d')));
-            $this->setFilters($filters);
-            $this->hasFilter = true;
-        }
-        elseif($this->reportType == 'birthday')
-        {
-            $this->hasFilter = true;
-        }
-        
-        if ($this->hasFilter) {
-            $this->data = $this->reportService->getData($this->reportType, $filters);
-        }
-        
     }
 
     public function executeFilters(sfWebRequest $request)
@@ -111,4 +97,5 @@ class reportActions extends sfActions
     {
         return $this->getUser()->setAttribute('report.filters', $filters, 'report');
     }
+
 }

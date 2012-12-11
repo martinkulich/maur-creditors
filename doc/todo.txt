@@ -56,3 +56,10 @@ report k vyplate - stejny jako vyplata uroku, pouze osekana a pridany sloupec ci
 popisky v zahlavi
     reporty
     predpisy
+
+
+
+////
+predpisy
+    osoba a rok filter ->
+        nevyplacene uroky sumace
