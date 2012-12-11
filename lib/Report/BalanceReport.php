@@ -6,10 +6,9 @@ class BalanceReport extends Report
     {
         return "
             SELECT 
-                cr.id as creditor_id,
                 c.currency_code as currency_code,
-                (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname, 
-                sum(contract_balance(c.id, '%date_to%'::date))::integer AS creditor_balance
+                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
+                sum(contract_balance(c.id, '%date_to%'::date))::integer as balance
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
             %where%
@@ -23,14 +22,14 @@ class BalanceReport extends Report
     public function getColumns()
     {
         return array(
-            'creditor_fullname',
-            'creditor_balance',
+            'fullname',
+            'balance',
         );
     }
     
     public function getTotalColumns()
     {
-        return array('creditor_balance');
+        return array('balance');
     }
     
     public function getTotalRow()
@@ -54,7 +53,7 @@ class BalanceReport extends Report
     public function getFormatedValue($row, $column)
     {
         switch ($column) {
-            case 'creditor_balance':
+            case 'balance':
                 $formatedValue = my_format_currency($row[$column], $row['currency_code']);
                 break;
 

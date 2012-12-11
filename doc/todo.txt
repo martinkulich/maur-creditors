@@ -21,7 +21,7 @@ double klik na ulozit znemoznit
         nevyplaceno kumulativne
 
 
-report jistina od posledni zmeny - potvrzeni od veritelu
+//report jistina od posledni zmeny - potvrzeni od veritelu
     filtr na rok nikoliv na datum
     jmeno
     adresa

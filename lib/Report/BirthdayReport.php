@@ -7,10 +7,9 @@ class BirthdayReport extends Report
     {
         return "
             SELECT 
-                cr.id as creditor_id,
-                (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname,
-                cr.street || ', ' || cr.city || ', ' || cr.zip as creditor_address,
-                (date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date as creditor_birthday,
+                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
+                cr.street || ', ' || cr.city || ', ' || cr.zip as address,
+                (date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date as birthday,
                 
                 CASE (date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date > now()::date
                 WHEN true
@@ -18,14 +17,14 @@ class BirthdayReport extends Report
                     (date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date 
                 ELSE 
                     (date_part('year', now())+1 || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date 
-                END  as creditor_next_birthday,
+                END  as next_birthday,
                 CASE (date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date > now()::date
                 WHEN true
                 THEN
                     (SELECT EXTRACT(year from AGE((date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date, cr.birth_date)))
                 ELSE 
                     (SELECT EXTRACT(year from AGE((date_part('year', now())+1 || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date, cr.birth_date)))
-                END as creditor_age
+                END as age
             FROM creditor cr
             ORDER BY %order_by%
             ;
@@ -35,23 +34,23 @@ class BirthdayReport extends Report
     public function getColumns()
     {
         return array(
-            'creditor_fullname',
-            'creditor_address',
-            'creditor_birthday',
-            'creditor_age'
+            'fullname',
+            'address',
+            'birthday',
+            'age'
         );
     }
 
     public function getDateColumns()
     {
-        return array('creditor_birthday');
+        return array('birthday');
     }
 
     public function getColumnRowClass($column)
     {
         $class = parent::getColumnRowClass($column);
         ;
-        if ($column == 'creditor_age') {
+        if ($column == 'age') {
             $class = static::ALIGN_RIGHT;
         }
         return $class;

@@ -7,11 +7,10 @@ class UnpaidReport extends Report
     {
         return "
             SELECT 
-                cr.id as creditor_id,
                 c.currency_code as currency_code,
-                (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname, 
-                sum(contract_unpaid_regular(c.id, '%date_to%'))::integer AS creditor_unpaid_regular,
-                sum(contract_unpaid(c.id, '%date_to%'))::integer AS creditor_unpaid
+                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
+                sum(contract_unpaid_regular(c.id, '%date_to%'))::integer as unpaid_regular,
+                sum(contract_unpaid(c.id, '%date_to%'))::integer as unpaid
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
             %where%
@@ -25,17 +24,17 @@ class UnpaidReport extends Report
     public function getColumns()
     {
         return array(
-            'creditor_fullname',
-            'creditor_unpaid',
-            'creditor_unpaid_regular',
+            'fullname',
+            'unpaid',
+            'unpaid_regular',
         );
     }
 
     public function getTotalColumns()
     {
         return array(
-            'creditor_unpaid',
-            'creditor_unpaid_regular',
+            'unpaid',
+            'unpaid_regular',
         );
     }
     

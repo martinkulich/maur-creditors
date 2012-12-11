@@ -7,8 +7,8 @@ class CreditorConfirmationReport extends Report
     {
         return "
             SELECT 
-                (cr.lastname::text || ' '::text || cr.firstname::text) AS creditor_fullname, 
-                cr.street || ', ' || cr.city || ', ' || cr.zip as creditor_address,
+                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
+                cr.street || ', ' || cr.city || ', ' || cr.zip as address,
                 c.currency_code as currency_code,
                 sum(contract_balance(c.id, last_day(12, %year%-1))) as start_balance,
                 sum(contract_balance(c.id, last_day(12, %year%))) as end_balance,
@@ -41,8 +41,8 @@ class CreditorConfirmationReport extends Report
     {
         return array_merge(
                 array(
-            'creditor_fullname',
-            'creditor_address',
+            'fullname',
+            'address',
                 ), $this->getCurrencyColumns()
         );
     }
