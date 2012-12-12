@@ -233,6 +233,22 @@ class securityActions extends sfActions
         $this->registrationFrom = new registrationForm();
     }
 
+    public function executeLoginAs(sfWebRequest $request)
+    {
+        if(!$this->getUser()->hasCredential('login-as'))
+        {
+            return $this->redirect('security/secure');
+        }
+        $userId = $request->getParameter('user_id');
+        $user = SecurityUserPeer::retrieveByPK($userId);
+        $this->forward404Unless($user);
+        $this->getUser()->authenticate($user);
+        
+        return $this->redirect('@homepage');
+        
+        
+    }
+    
     public function executeSecure(sfWebRequest $request)
     {
 

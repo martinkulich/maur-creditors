@@ -70,7 +70,11 @@
     <?php foreach($users as $user){?>
         <tr>
             <td colspan="2">
-                <?php echo $user->getFullName();?>
+                    <?php if($sf_user->hasCredential('login-as')){ ?>
+                        <?php echo link_to($user->getFullName(), '@login_as?user_id='.$user->getId());?>
+                    <?php }else{ ?>
+                        <?php echo $user->getFullName();?>
+                    <?php } ?>
             </td>
         <?php foreach($roles as $role){?>
             <td class="user_role well  text-align-center">

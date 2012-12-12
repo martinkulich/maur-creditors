@@ -53,6 +53,11 @@ logout:
   url:   /logout
   param: { module: security, action: logout }
 
+login_as:
+  url:   /login-ad/:user_id
+  param: { module: security, action: loginAs }
+
+
 account:
   url:   /account
   param: { module: security, action: account }
