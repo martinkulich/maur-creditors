@@ -55,6 +55,7 @@ class regulationActions extends autoRegulationActions
             foreach($sums as  $currencyCode => $row)
             {
                 unset($sums[$currencyCode]['unpaid']);
+                unset($sums[$currencyCode]['unpaid_in_past']);
                 unset($sums[$currencyCode]['start_balance']);
                 unset($sums[$currencyCode]['end_balance']);
                 

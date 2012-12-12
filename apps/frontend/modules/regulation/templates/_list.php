@@ -30,6 +30,9 @@
                         <th>
                         </th>
                         <th>
+                            <?php if (array_key_exists('unpaid_in_past', $sumValues)) { ?>
+                                <?php echo my_format_currency($sumValues['unpaid_in_past'], $currencyCode) ?>
+                            <?php } ?>
                         </th>
                         <th class="text-align-right">
                             <?php echo my_format_currency($sumValues['regulation'], $currencyCode) ?>
