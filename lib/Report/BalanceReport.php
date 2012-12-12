@@ -8,12 +8,12 @@ class BalanceReport extends Report
             SELECT 
                 c.currency_code as currency_code,
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
-                sum(contract_balance(c.id, '%date_to%'::date))::integer as balance
+                sum(contract_balance(c.id, '%date_to%'::date, true))::integer as balance
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
             %where%
             GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
-            HAVING sum(contract_balance(c.id, '%date_to%'::date))::integer <> 0
+            HAVING sum(contract_balance(c.id, '%date_to%'::date, true))::integer <> 0
             ORDER BY currency_code,  %order_by%
             ;
         ";
