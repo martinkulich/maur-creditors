@@ -2,12 +2,14 @@
 
 class BalanceReport extends Report
 {
+
     public function getSqlPatter()
     {
         return "
             SELECT 
                 c.currency_code as currency_code,
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
+                sum(contract_balance(c.id, '%date_to%'::date, false))::integer as balance_no_capitalization_and_balance_reduction,
                 sum(contract_balance(c.id, '%date_to%'::date, true))::integer as balance
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
@@ -18,66 +20,50 @@ class BalanceReport extends Report
             ;
         ";
     }
-    
+
     public function getColumns()
     {
-        return array(
+        return array_merge(array(
             'fullname',
-            'balance',
+                ), $this->getCurrencyColumns()
         );
     }
-    
+
     public function getTotalColumns()
     {
-        return array('balance');
+        return array(
+            'balance',
+            'balance_no_capitalization_and_balance_reduction',
+        );
     }
-    
+
     public function getTotalRow()
     {
-        
-       return 'currency_code';
+
+        return 'currency_code';
     }
-    
+
     public function getCurrencyColumns()
     {
         return $this->getTotalColumns();
     }
-    
+
     public function hasTotalColumn($column)
     {
         $totalColumns = $this->getTotalColumns();
         return in_array($column, $totalColumns);
     }
-    
-    
-    public function getFormatedValue($row, $column)
-    {
-        switch ($column) {
-            case 'balance':
-                $formatedValue = my_format_currency($row[$column], $row['currency_code']);
-                break;
 
-            default:
-                $formatedValue = $row[$column];
-                break;
-        }
-        
-        return $formatedValue;
-    }
-    
-
-    
     public function getWhere()
     {
         $where = '';
-        if($creditorId = $this->getFilter('creditor_id'))
-        {
-            $where = ' WHERE cr.id = '.$creditorId;
+        if ($creditorId = $this->getFilter('creditor_id')) {
+            $where = ' WHERE cr.id = ' . $creditorId;
         }
 
         return $where;
     }
-    
+
     protected function getRequiredFilters()
     {
         return array('date_to');
