@@ -2057,5 +2057,9 @@
       <source>of creditor_confirmation</source>
       <target>Potvrzení od věřitelů</target>
     </trans-unit>
+    <trans-unit id="515">
+      <source>Balance no capitalization and balance reduction</source>
+      <target>Jistina (bez kapitalizace a ponížení jistiny)</target>
+    </trans-unit>
   </body>
 </xliff>
