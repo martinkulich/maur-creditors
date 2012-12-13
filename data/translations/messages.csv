@@ -490,8 +490,12 @@ Without reactivation;Bez reaktivace
 Contract closed successfully;Smlouva byla úspěšně ukončena
 Last allowed day in month is %last_day_in_month%;Poslední povolený den v měsíci je %last_day_in_month%
 Upaid in past;Nevyplacené úroky z předchozích let
-Date of payment required if paid is set;Datum vyplacení je povinné, pokud je vyplněno pole “Vyplaceno“
+Outgoing payment required if paid is set;Odchozí platba je povinná, pokud je vyplněno pole “Vyplaceno“
+Paid required if outgoing payment is set;Pole “Vyplaceno“ je povinné, pokud je vyplněna odchozí platba
+Paid exceeded unused amount %unused_amount%;K vyplacení lze využít  částku %unused_amount%, tedy část odchozí platby která ještě není přiřazená žádnému vypořádání úroků
+There is no unused amount to pay;Odchozí platba je již zcela použita na výplatu úroků
 First settlement date;Datum prvního vypořádání
+Currency of outgoing payment is not equal with cuurency of settlement contract;Měna odchozí platby se neshoduje s měnou smlouvy
 unpaid report;Nevyplacené úroky
 About how much balance should be reduced;O kolik bude jistina ponížena
 This field is unchangeable after contract activation;Nutno nastavit před aktivací smlouvy
@@ -556,3 +560,15 @@ Received payments;Přijaté platby
 creditor_confirmation report;Potvrzení od věřitelů
 of creditor_confirmation;Potvrzení od věřitelů
 Balance no capitalization and balance reduction;Jistina (bez kapitalizace a ponížení jistiny)
+outgoing_payment admin;Odchozí platby
+of outgoing_payment;Odchozí platby
+bank_account admin;Bankovní účty
+of bank_account;Bankovní účty
+New bankAccount;Nový bankovní účet
+Edit bankAccount;Editace bankovního účtu
+Fiter bankAccount;Filtrovat bankovní účty
+Number;Číslo
+Used amount;Použitá částka
+Unused amount;Nevyužitá částka
+Outgoing payment;Odchozí platba
+Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel odchozí platby se neshoduje s věřitelem smlouvy

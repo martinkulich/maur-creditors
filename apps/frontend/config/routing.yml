@@ -1,3 +1,24 @@
+outgoing_payment:
+  class: sfPropelRouteCollection
+  options:
+    model:                outgoingPayment
+    module:               outgoingPayment
+    prefix_path:          /outgoingPayment
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+    object_actions: {note: get}
+
+bank_account:
+  class: sfPropelRouteCollection
+  options:
+    model:                bankAccount
+    module:               bankAccount
+    prefix_path:          /bankAccount
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+    
 currency:
   class: sfPropelRouteCollection
   options:

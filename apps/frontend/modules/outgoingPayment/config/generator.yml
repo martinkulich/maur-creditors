@@ -1,0 +1,33 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           outgoingPayment
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              outgoingPayment
+    plural:                outgoingPayments
+    route_prefix:          outgoing_payment
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        date:
+          date_format: D
+      list:
+        peer_method:           doSelectJoinAll
+        batch_actions: []
+        display: [bank_account, creditor, date, amount, used_amount, unused_amount, note]
+        actions:
+          _new: ~
+          filters: ~
+          reset: ~
+          print: ~
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

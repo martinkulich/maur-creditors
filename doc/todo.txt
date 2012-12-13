@@ -63,3 +63,15 @@ popisky v zahlavi
 predpisy
     osoba a rok filter ->
         nevyplacene uroky sumace
+
+
+/// odchozi platby
+    //validace na menu platby vs contraktu
+    pridani interaktivni poznamku do listu odchozich plateb
+    //select box odchozich plateb
+        //settlement + filter
+        //zahrnou menu
+        //zahrnout pouze s pouzitelnou castkou
+        //zlepsit to string
+    list odchozich platem pouzita castka prolink na filtr na settlement
+    //validace na stejneho veritele

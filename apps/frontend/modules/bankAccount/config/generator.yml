@@ -1,0 +1,30 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           bankAccount
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              bankAccount
+    plural:                bankAccounts
+    route_prefix:          bank_account
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        batch_actions: []
+        display: [name, number]
+        actions:
+          _new: ~
+          filters: ~
+          reset: ~
+          print: ~
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~

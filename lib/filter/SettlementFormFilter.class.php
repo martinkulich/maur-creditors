@@ -14,18 +14,19 @@ class SettlementFormFilter extends BaseSettlementFormFilter
     {
         sfProjectConfiguration::getActive()->loadHelpers('Url');
 
-        $dateFields = array('date', 'date_of_payment');
+        $dateFields = array('date');
 
         foreach ($dateFields as $field) {
             $this->setWidget($field, new MyJQueryFormFilterDate());
             $this->setValidator($field, new MyValidatorDateRange(array('required' => false)));
         }
 
-
-
-        $this->getWidgetSchema()->moveField('date_of_payment', sfWidgetFormSchema::AFTER, 'date');
         $this->getWidget('date')->setLabel('Date of settlement');
 
+        $outgoingPaymentCriteria = new Criteria();
+        $outgoingPaymentCriteria->addAscendingOrderByColumn((OutgoingPaymentPeer::DATE));
+        $this->getWidget('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria);
+        
         $fieldsToUnset = array(
             'balance',
             'interest',

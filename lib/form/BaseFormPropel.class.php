@@ -12,6 +12,7 @@ abstract class BaseFormPropel extends sfFormPropel
 
     public function setup()
     {
+        $this->disableCSRFProtection();
     }
 
     public function unsetField($field)

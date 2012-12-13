@@ -16,6 +16,7 @@ class SettlementForm extends BaseSettlementForm
 
         $this->getWidgetSchema()->moveField('balance', sfWidgetFormSchema::AFTER, 'date');
         $this->getWidgetSchema()->moveField('interest', sfWidgetFormSchema::AFTER, 'balance');
+        $this->getWidgetSchema()->moveField('outgoing_payment_id', sfWidgetFormSchema::AFTER, 'paid');
         $this->getWidgetSchema()->moveField('note', sfWidgetFormSchema::LAST);
 
         $this->getWidget('note')->setAttribute('rows', 2);
@@ -23,16 +24,11 @@ class SettlementForm extends BaseSettlementForm
 
         $dateFields = array(
             'date',
-            'date_of_payment'
         );
         foreach ($dateFields as $filed) {
             $this->setWidget($filed, new myJQueryDateWidget());
             $this->setValidator($filed, new myValidatorDate());
         }
-
-        $this->getValidator('date_of_payment')->setOption('required', false);
-        $this->getWidgetSchema()->moveField('date_of_payment', sfWidgetFormSchema::AFTER, 'date');
-        $this->getWidgetSchema()->setHelp('date_of_payment', 'Datum odchazí platby.');
 
         $this->getWidget('date')->setLabel('Date of settlement');
 
@@ -67,7 +63,23 @@ class SettlementForm extends BaseSettlementForm
             }
         }
 
+        $outgoingPaymentCriteria = new Criteria();
+        $outgoingPaymentCriteria->addAscendingOrderByColumn(OutgoingPaymentPeer::DATE, Criteria::DESC);
+        if ($contractId) {
+            $outgoingPaymentCriteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->getObject()->getContract()->getCreditorId());
+        }
+        
+        $customCriteria = sprintf("((select coalesce(sum(%s), 0) from %s where %s = %s) < %s)", SettlementPeer::PAID, SettlementPeer::TABLE_NAME, SettlementPeer::OUTGOING_PAYMENT_ID, OutgoingPaymentPeer::ID, OutgoingPaymentPeer::AMOUNT);
+//            die(var_dump($customCriteria));
+        $criterion1 = $outgoingPaymentCriteria->getNewCriterion(OutgoingPaymentPeer::ID, $customCriteria, Criteria::CUSTOM);
+        if ($this->getObject()->getOutgoingPaymentId()) {
+            $criterion2 = $outgoingPaymentCriteria->getNewCriterion(OutgoingPaymentPeer::ID, $this->getObject()->getOutgoingPaymentId());
+            $criterion1->addOr($criterion2);
+        }
+        $outgoingPaymentCriteria->addAnd($criterion1);
 
+        $this->getWidget('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria)->setAttribute('class', 'span3');
+        $this->getValidator('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria);
         $this->getWidgetSchema()->setHelp('balance_reduction', 'About how much balance should be reduced');
 
         $contractCriteria = new Criteria();

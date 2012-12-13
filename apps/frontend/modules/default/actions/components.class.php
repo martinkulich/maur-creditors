@@ -23,6 +23,8 @@ class defaultComponents extends sfComponents
         switch ($moduleName) {
             case 'securityUser':
             case 'ipAddress':
+            case 'outgoingPayment':
+            case 'bankAccount':
                 $activeLink = sfInflector::underscore($moduleName);
                 break;
             case 'security':
@@ -42,6 +44,7 @@ class defaultComponents extends sfComponents
             'creditor',
             'contract',
             'payment',
+            'outgoing_payment',
             'settlement',
             'regulation',
         );
@@ -50,6 +53,7 @@ class defaultComponents extends sfComponents
             'ip_address',
             'rights',
             'currency',
+            'bank_account',
         );
 
         $user = $this->getUser();

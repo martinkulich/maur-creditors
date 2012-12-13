@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'currency' table.
+ * This class defines the structure of the 'bank_account' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class CurrencyTableMap extends TableMap {
+class BankAccountTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.CurrencyTableMap';
+	const CLASS_NAME = 'lib.model.map.BankAccountTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,15 +30,16 @@ class CurrencyTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('currency');
-		$this->setPhpName('Currency');
-		$this->setClassname('Currency');
+		$this->setName('bank_account');
+		$this->setPhpName('BankAccount');
+		$this->setClassname('BankAccount');
 		$this->setPackage('lib.model');
-		$this->setUseIdGenerator(false);
+		$this->setUseIdGenerator(true);
+		$this->setPrimaryKeyMethodInfo('bank_account_id_seq');
 		// columns
-		$this->addPrimaryKey('CODE', 'Code', 'CHAR', true, 3, null);
-		$this->addColumn('IS_DEFAULT', 'IsDefault', 'BOOLEAN', true, null, false);
-		$this->addColumn('RATE', 'Rate', 'NUMERIC', true, 15, 1);
+		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
+		$this->addColumn('NAME', 'Name', 'VARCHAR', true, 255, null);
+		$this->addColumn('NUMBER', 'Number', 'VARCHAR', true, 255, null);
 		// validators
 	} // initialize()
 
@@ -47,8 +48,7 @@ class CurrencyTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Contract', 'Contract', RelationMap::ONE_TO_MANY, array('code' => 'currency_code', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::ONE_TO_MANY, array('code' => 'currency_code', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::ONE_TO_MANY, array('id' => 'bank_account_id', ), 'SET NULL', 'CASCADE');
 	} // buildRelations()
 
 	/**
@@ -65,4 +65,4 @@ class CurrencyTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // CurrencyTableMap
+} // BankAccountTableMap
