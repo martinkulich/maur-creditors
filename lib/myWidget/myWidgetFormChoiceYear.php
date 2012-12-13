@@ -15,7 +15,7 @@ class myWidgetFormChoiceYear extends myWidgetFormChoice
     {
         $i18n = sfContext::getInstance()->getI18N();
 
-        $years = array();
+        $years = parent::getChoices();
 
         for ($i = $this->getOption('min_year'); $i <= $this->getOption('max_year'); $i++) {
             $years[$i] = $i;

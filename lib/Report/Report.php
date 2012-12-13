@@ -163,7 +163,7 @@ abstract class Report
         return static::ALIGN_CENTER;
     }
 
-    public function getColumnRowClass($column)
+    public function getColumnRowClass($column, array $row = array())
     {
         if (
                 in_array($column, $this->getCurrencyColumns()) ||

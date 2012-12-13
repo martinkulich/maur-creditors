@@ -2125,5 +2125,9 @@
       <source>Creditor of outgoing payment is not equal with creditor of settlement contract</source>
       <target>Věřitel odchozí platby se neshoduje s věřitelem smlouvy</target>
     </trans-unit>
+    <trans-unit id="532">
+      <source>regulation report</source>
+      <target>Předpisy</target>
+    </trans-unit>
   </body>
 </xliff>

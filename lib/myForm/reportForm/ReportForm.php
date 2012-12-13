@@ -13,6 +13,7 @@ class ReportForm extends BaseForm
             'date_from' => new myJQueryDateWidget(),
             'date_to' => new myJQueryDateWidget(),
             'creditor_id'=> new sfWidgetFormPropelChoice(array('model'=>'creditor', 'order_by'=>  array('Lastname', 'asc'), 'add_empty'=>true)),
+            'contract_id'=> new sfWidgetFormPropelChoice(array('add_empty' => true, 'model' => 'Contract', 'order_by' => array('Name', 'asc'))),
             'month'=> new myWidgetFormChoiceMonth(),
             'year'=> new myWidgetFormChoiceYear(),
             ));
@@ -20,10 +21,19 @@ class ReportForm extends BaseForm
             'date_from' => new myValidatorDate(),
             'date_to' => new myValidatorDate(),
             'creditor_id'=> new sfValidatorPropelChoice(array('model'=>'creditor','required'=> false)),
+            'contract_id'=> new sfValidatorPropelChoice(array('model' => 'Contract', 'required' => false)),
             'month'=> new sfValidatorChoice(array('choices'=>$this->getWidget('month')->getChoicesKeys())),
             'year'=> new sfValidatorChoice(array('choices'=>$this->getWidget('year')->getChoicesKeys())),
         ));
 
+        
+        $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s', 'all'); ;", url_for('@update_contract_select?form_name=report'), 'report_creditor_id', 'report_contract_id', 'creditor_id'));
+
+        $contract = ContractPeer::retrieveByPK($this->getValue('contract_id'));
+        if ($contract) {
+            $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
+        }
+        
         $usedFields = $this->getUsedFields();
         foreach ($this->getWidgetSchema()->getFields() as $field => $widget) {
             if (!in_array($field, $usedFields)) {
@@ -31,6 +41,7 @@ class ReportForm extends BaseForm
             }
         }
         $this->widgetSchema->setNameFormat('report[%s]');
+
     }
 
     public function getName()

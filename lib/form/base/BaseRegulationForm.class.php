@@ -16,6 +16,7 @@ abstract class BaseRegulationForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
       'creditor_fullname'     => new sfWidgetFormInputText(),
+      'creditor_id'           => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => true)),
       'contract_id'           => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => true)),
       'contract_name'         => new sfWidgetFormInputText(),
       'regulation_year'       => new sfWidgetFormPropelChoice(array('model' => 'RegulationYear', 'add_empty' => true)),
@@ -34,6 +35,7 @@ abstract class BaseRegulationForm extends BaseFormPropel
     $this->setValidators(array(
       'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'creditor_fullname'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'creditor_id'           => new sfValidatorPropelChoice(array('model' => 'Creditor', 'column' => 'id', 'required' => false)),
       'contract_id'           => new sfValidatorPropelChoice(array('model' => 'Contract', 'column' => 'id', 'required' => false)),
       'contract_name'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'regulation_year'       => new sfValidatorPropelChoice(array('model' => 'RegulationYear', 'column' => 'id', 'required' => false)),

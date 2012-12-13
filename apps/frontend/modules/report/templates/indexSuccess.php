@@ -1,4 +1,2 @@
 <?php include_partial('report/submenu', array('reportType'=>$reportType, 'hasFilter'=>$hasFilter))?>
-<?php if($hasFilter){ ?>
-    <?php include_partial('report/result', array('reportType'=>$reportType, 'report'=>$report))?>
-<?php }?>
+<?php include_partial('report/result', array('reportType'=>$reportType, 'report'=>$report))?>

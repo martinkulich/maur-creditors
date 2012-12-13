@@ -26,6 +26,11 @@
             </ul>
         </div>
     </form>
+    <script type="text/javascript">
+$(document).ready(function(){
+    jQuery('#report_creditor_id').change();
+});
+</script>
 
 
 </div>

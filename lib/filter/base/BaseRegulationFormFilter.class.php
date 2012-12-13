@@ -13,6 +13,7 @@ abstract class BaseRegulationFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'creditor_fullname'     => new sfWidgetFormFilterInput(),
+      'creditor_id'           => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => true)),
       'contract_id'           => new sfWidgetFormPropelChoice(array('model' => 'Contract', 'add_empty' => true)),
       'contract_name'         => new sfWidgetFormFilterInput(),
       'regulation_year'       => new sfWidgetFormPropelChoice(array('model' => 'RegulationYear', 'add_empty' => true)),
@@ -30,6 +31,7 @@ abstract class BaseRegulationFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'creditor_fullname'     => new sfValidatorPass(array('required' => false)),
+      'creditor_id'           => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Creditor', 'column' => 'id')),
       'contract_id'           => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Contract', 'column' => 'id')),
       'contract_name'         => new sfValidatorPass(array('required' => false)),
       'regulation_year'       => new sfValidatorPropelChoice(array('required' => false, 'model' => 'RegulationYear', 'column' => 'id')),
@@ -62,6 +64,7 @@ abstract class BaseRegulationFormFilter extends BaseFormFilterPropel
     return array(
       'id'                    => 'Text',
       'creditor_fullname'     => 'Text',
+      'creditor_id'           => 'ForeignKey',
       'contract_id'           => 'ForeignKey',
       'contract_name'         => 'Text',
       'regulation_year'       => 'ForeignKey',

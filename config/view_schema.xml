@@ -4,6 +4,7 @@
     <table name="regulation" phpName="Regulation">
         <column name="id" phpName="Id" type="VARCHAR"  primaryKey="true"/>
         <column name="creditor_fullname" phpName="CreditorFirstname" type="VARCHAR"/>
+        <column name="creditor_id" phpName="CreditorId" type="INTEGER"/>
         <column name="contract_id" phpName="ContractId" type="INTEGER"/>
         <column name="contract_name" phpName="ContractName" type="VARCHAR" />
         <column name="regulation_year" phpName="RegulationYear" type="VARCHAR"/>
@@ -17,8 +18,12 @@
         <column name="unpaid" phpName="Unpaid" type="NUMERIC" size="15" scale="2"/>
         <column name="unpaid_in_past" phpName="UnpaidInPast" type="NUMERIC" size="15" scale="2"/>
         <column name="end_balance" phpName="EndBalance" type="NUMERIC" size="15" scale="2"/>
+        <!--<column name="manual_balance" phpName="ManualBalance" type="BOOLEAN"/>-->
         <foreign-key foreignTable="contract" name="regulation_contract" onDelete="RESTRICT" onUpdate="CASCADE">
             <reference local="contract_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="creditor" name="regulation_creditor" onDelete="RESTRICT" onUpdate="CASCADE">
+            <reference local="creditor_id" foreign="id"/>
         </foreign-key>
         <foreign-key foreignTable="regulation_year" name="regulation_regulation_year" onDelete="RESTRICT" onUpdate="CASCADE">
             <reference local="regulation_year" foreign="id"/>

@@ -7,19 +7,19 @@ class myWidgetFormChoice extends sfWidgetFormChoice
     {
         parent::configure($options, $attributes);
         $this->setOption('choices', $this->getChoices());
+        $this->addOption('add_empty');
     }
 
     public function getChoices()
     {
-        $i18n = sfContext::getInstance()->getI18N();
-
-        $months = array();
-
-        for ($i = 0; $i <= 12; $i++) {
-            $months[$i] = $i18n->__(date("F", mktime(0, 0, 0, $i, 10)));
+        $choices = array();
+        
+        if($this->getOption('add_empty') == true)
+        {
+            $choices[''] = '';
         }
-
-        return $months;
+        
+        return $choices;
     }
     
     public  function getChoicesKeys()
