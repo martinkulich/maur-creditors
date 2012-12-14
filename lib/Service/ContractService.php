@@ -84,7 +84,7 @@ class ContractService
     {
         $nextSettlementDate = $this->getNextSettlementDateForContract($contract);
         $lastDayOfThisYear = new DateTime();
-        $lastDayOfThisYear->setDate($lastDayOfThisYear->format('Y'), '12', '31');
+        $lastDayOfThisYear->setDate($lastDayOfThisYear->format('Y')+1, '12', '31');
         $closedAt = null;
         if ($contract->getClosedAt()) {
             $closedAt = new DateTime($contract->getClosedAt());
