@@ -74,7 +74,7 @@ abstract class Report
     {
         return array();
     }
-    
+
     public function getTotalRow()
     {
         return 'total';
@@ -117,11 +117,16 @@ abstract class Report
             }
         }
         if (!in_array($orderByColumn, $this->getColumns())) {
-            $columns = $this->getColumns();
-            $orderBy = reset($columns);
+            $orderBy = $this->getDefaultOrderBy();
         }
 
         return $orderBy;
+    }
+
+    protected function getDefaultOrderBy()
+    {
+        $columns = $this->getColumns();
+        return reset($columns);
     }
 
     protected function getWhere()

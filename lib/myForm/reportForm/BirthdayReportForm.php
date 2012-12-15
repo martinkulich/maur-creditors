@@ -5,6 +5,6 @@ class BirthdayReportForm extends ReportForm
     
     public function getUsedFields()
     {
-        return array();
+        return array('creditor_id');
     }
 }

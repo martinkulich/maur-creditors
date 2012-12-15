@@ -7,6 +7,7 @@ class BirthdayReport extends Report
     {
         return "
             SELECT 
+                cr.id as creditor_id,
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
                 cr.street || ', ' || cr.city || ', ' || cr.zip as address,
                 (date_part('year', now()) || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date as birthday,
@@ -26,6 +27,7 @@ class BirthdayReport extends Report
                     (SELECT EXTRACT(year from AGE((date_part('year', now())+1 || '-' ||date_part('month', cr.birth_date)|| '-' ||date_part('day', cr.birth_date))::date, cr.birth_date)))
                 END as age
             FROM creditor cr
+            %where%
             ORDER BY %order_by%
             ;
         ";
@@ -36,14 +38,14 @@ class BirthdayReport extends Report
         return array(
             'fullname',
             'address',
-            'birthday',
+            'next_birthday',
             'age'
         );
     }
 
     public function getDateColumns()
     {
-        return array('birthday');
+        return array('next_birthday');
     }
 
     public function getColumnRowClass($column, array $row = array())
@@ -54,6 +56,20 @@ class BirthdayReport extends Report
             $class = static::ALIGN_RIGHT;
         }
         return $class;
+    }
+    
+    public function getWhere()
+    {
+        $where = '';
+        if ($creditorId = $this->getFilter('creditor_id')) {
+            $where = ' WHERE cr.id = ' . $creditorId;
+        }
+        return $where;
+    }
+    
+    protected function getDefaultOrderBy()
+    {
+        return 'next_birthday';
     }
 
 }
