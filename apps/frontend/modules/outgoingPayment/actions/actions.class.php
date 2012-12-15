@@ -18,6 +18,11 @@ class outgoingPaymentActions extends autoOutgoingPaymentActions
     {
         $this->outgoinPayment = $this->getRoute()->getObject();
     }
+    
+    public function executeDetail(sfWebRequest $request)
+    {
+        $this->outgoinPayment = $this->getRoute()->getObject();
+    }
 
     public function executeDelete(sfWebRequest $request)
     {

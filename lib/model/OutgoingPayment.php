@@ -21,6 +21,7 @@ class OutgoingPayment extends BaseOutgoingPayment
         return sprintf("%s - %s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getAmount()));
     }
     
+    
     public function getUsedAmount()
     {
         $amount = 0;

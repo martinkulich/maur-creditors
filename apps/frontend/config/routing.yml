@@ -7,7 +7,7 @@ outgoing_payment:
     column:               id
     with_wildcard_routes: true
     collection_actions: {filters: get, filter: post, reset: get}
-    object_actions: {note: get}
+    object_actions: {note: get, detail: get}
 
 bank_account:
   class: sfPropelRouteCollection

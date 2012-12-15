@@ -76,9 +76,9 @@ predpisy
     list odchozich platem pouzita castka prolink na filtr na settlement
     //validace na stejneho veritele
 
-pri smazani odchozi platby validace na prirazena vyporadani uroku
+//pri smazani odchozi platby validace na prirazena vyporadani uroku
 
-nahled na odchozi platbu stejne jako poznamka
+//nahled na odchozi platbu stejne jako poznamka
 
 report k vyplaceni
 
