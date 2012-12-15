@@ -2129,5 +2129,21 @@
       <source>regulation report</source>
       <target>Předpisy</target>
     </trans-unit>
+    <trans-unit id="533">
+      <source>Filter outgoingPayment</source>
+      <target>Filtrovat odchozí platby</target>
+    </trans-unit>
+    <trans-unit id="534">
+      <source>New outgoingPayment</source>
+      <target>Nová odchozí platba</target>
+    </trans-unit>
+    <trans-unit id="535">
+      <source>Edit outgoingPayment</source>
+      <target>Editace odchozí platby</target>
+    </trans-unit>
+    <trans-unit id="536">
+      <source>There are some settlements related to this outgoing payment, pls unrelate them before deletion</source>
+      <target>Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání</target>
+    </trans-unit>
   </body>
 </xliff>

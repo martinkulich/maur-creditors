@@ -14,6 +14,8 @@ class OutgoingPaymentForm extends BaseOutgoingPaymentForm
     {
         $this->setWidget('date', new myJQueryDateWidget());
         $this->setValidator('date', new myValidatorDate());
+        
+        $this->getWidget('creditor_id')->setOption('order_by', array('Lastname', 'asc'));
 
         $field = 'amount';
         if (!$this->getObject()->isNew()) {

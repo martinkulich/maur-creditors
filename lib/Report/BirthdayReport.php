@@ -46,7 +46,7 @@ class BirthdayReport extends Report
         return array('birthday');
     }
 
-    public function getColumnRowClass($column)
+    public function getColumnRowClass($column, array $row = array())
     {
         $class = parent::getColumnRowClass($column);
         ;

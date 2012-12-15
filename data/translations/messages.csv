@@ -573,3 +573,7 @@ Unused amount;Nevyužitá částka
 Outgoing payment;Odchozí platba
 Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel odchozí platby se neshoduje s věřitelem smlouvy
 regulation report;Předpisy
+Filter outgoingPayment;Filtrovat odchozí platby
+New outgoingPayment;Nová odchozí platba
+Edit outgoingPayment;Editace odchozí platby
+There are some settlements related to this outgoing payment, pls unrelate them before deletion;Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání
