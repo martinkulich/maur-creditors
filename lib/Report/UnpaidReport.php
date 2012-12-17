@@ -10,8 +10,8 @@ class UnpaidReport extends Report
                 cr.id as creditor_id,
                 c.currency_code as currency_code,
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
-                sum(contract_unpaid_regular(c.id, '%date_to%'))::integer as unpaid_cumulative_regular,
-                sum(contract_unpaid(c.id, '%date_to%'))::integer as unpaid_cumulative
+                sum(contract_unpaid_regular(c.id, '%date_to%', true))::integer as unpaid_cumulative_regular,
+                sum(contract_unpaid(c.id, '%date_to%', true))::integer as unpaid_cumulative
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
             %where%
@@ -20,7 +20,7 @@ class UnpaidReport extends Report
                 cr.id, 
                 cr.lastname, 
                 cr.firstname
-            HAVING sum(contract_unpaid(c.id, '%date_to%'::date))::integer <> 0
+            HAVING sum(contract_unpaid_regular(c.id, '%date_to%'::date, true))::integer <> 0
             ORDER BY currency_code,  %order_by%
             ;
         ";
