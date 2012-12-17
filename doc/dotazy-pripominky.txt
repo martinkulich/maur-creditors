@@ -6,3 +6,16 @@
         Fabik, Techler atd.. pri reaktivaci byla jistina ponizena na nulu - to je spatne ...
     Zmena jistiny vs. kapitalizovano novy kamil
         jedna jeho kapitalizacni platba (100.000,-) nebyla oznacena jako reaktivace a proto se tyto sloupce neshodji, treba opravit
+
+vyplaceni po ukonceni
+    musi se rucne nastavit limit na 0,- viz napr. fabik 3. smlouva
+
+(ne)vyplaceno rozhodne datum
+    reporty
+        Nevyplacene uroky 
+        vynosy veritelu
+        mesicni prehled
+        potvrzeni od veritelu
+        k vyplaceni
+    
+    predpisy

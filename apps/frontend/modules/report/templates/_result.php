@@ -15,7 +15,7 @@
             <tr>
                 <?php foreach($report->getColumns() as $column){?>
                     <td class="<?php echo $report->getColumnRowClass($column, $row)?>">
-                        <?php echo $report->getFormatedValue($row, $column) ?>
+                        <?php echo $report->getFormatedRowValue($row, $column) ?>
                     </td>
                 <?php }?>           
             </tr>

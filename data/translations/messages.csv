@@ -490,6 +490,7 @@ Without reactivation;Bez reaktivace
 Contract closed successfully;Smlouva byla úspěšně ukončena
 Last allowed day in month is %last_day_in_month%;Poslední povolený den v měsíci je %last_day_in_month%
 Upaid in past;Nevyplacené úroky z předchozích let
+Unpaid in past;Nevyplacené úroky z předchozích let
 Outgoing payment required if paid is set;Odchozí platba je povinná, pokud je vyplněno pole “Vyplaceno“
 Paid required if outgoing payment is set;Pole “Vyplaceno“ je povinné, pokud je vyplněna odchozí platba
 Paid exceeded unused amount %unused_amount%;K vyplacení lze využít  částku %unused_amount%, tedy část odchozí platby která ještě není přiřazená žádnému vypořádání úroků
@@ -577,3 +578,6 @@ Filter outgoingPayment;Filtrovat odchozí platby
 New outgoingPayment;Nová odchozí platba
 Edit outgoingPayment;Editace odchozí platby
 There are some settlements related to this outgoing payment, pls unrelate them before deletion;Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání
+to_pay report;K vyplacení
+of to_pay;K vyplacení
+Settlement date;Datum vypořádání úroků

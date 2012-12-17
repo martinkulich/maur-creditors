@@ -147,6 +147,11 @@ abstract class Report
         return $formatedValue;
     }
 
+    public function getFormatedRowValue($row, $column)
+    {
+        return $this->getFormatedValue($row, $column);
+    }
+
     public function getDateColumns()
     {
         return array();

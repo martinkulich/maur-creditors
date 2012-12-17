@@ -84,6 +84,6 @@ report k vyplaceni
 
 korunove zaokrouhleni
 
-defaultni razeni podle data narozeni v reportu narozenin
+//defaultni razeni podle data narozeni v reportu narozenin
 
 defaultni kapitalizace smlouvy

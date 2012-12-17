@@ -18,6 +18,7 @@ class settlementActions extends autoSettlementActions
     {
         $this->settlement = $this->getRoute()->getObject();
     }
+
     public function executeCheckContracts(sfWebRequest $request)
     {
         $contractService = ServiceContainer::getContractService();
@@ -100,9 +101,9 @@ class settlementActions extends autoSettlementActions
 
             $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $settlement)));
 
-            $redirect = array('sf_route' => 'settlement_edit', 'sf_subject' => $settlement);
-
-
+//            $redirect = array('sf_route' => 'settlement_edit', 'sf_subject' => $settlement);
+            $redirect = '@settlement';
+            
             ServiceContainer::getMessageService()->addSuccess($notice);
 
             return $this->redirect($redirect, 205);
@@ -156,12 +157,13 @@ class settlementActions extends autoSettlementActions
 
     public function executePay(sfWebRequest $request)
     {
-        $settlement = $this->getRoute()->getObject();
-        $settlement->setPaid($settlement->getUnsettled() + $settlement->getPaid());
-        $settlement->save();
-        ServiceContainer::getContractService()->checkContractChanges($settlement->getContract());
-
-        return $this->redirect('@settlement');
+        $this->settlement = $this->getRoute()->getObject();
+        $this->form = new SettlementPayForm($this->settlement);
+        
+        if($request->isMethod(sfWebRequest::POST))
+        {
+            $this->processForm($request, $this->form);
+        }
     }
 
     public function executeInterest(sfWebRequest $request)
@@ -276,8 +278,7 @@ class settlementActions extends autoSettlementActions
         $statement = SettlementPeer::doSelectStmt($sumPager->getCriteria());
 
         $sums = array();
-        foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $row)
-        {
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $sums[$row['currency_code']] = $row;
         }
         ksort($sums);
@@ -301,4 +302,5 @@ class settlementActions extends autoSettlementActions
 
         return $filters;
     }
+
 }
