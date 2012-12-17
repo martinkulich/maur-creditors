@@ -26,7 +26,8 @@ class ToPayReport extends Report
                 cr.firstname,
                 co.name,
                 cr.bank_account,
-                co.id
+                co.id, 
+                co.currency_code
                 
             ORDER BY %order_by%, settlement_date, fullname
             ;
