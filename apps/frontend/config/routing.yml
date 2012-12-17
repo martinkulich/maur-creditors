@@ -170,6 +170,11 @@ report_filter:
   url:   /report/:report_type/filter
   param: { module: report, action: filter }
 
+report_add_filter:
+  url:   /report/:report_type/add-filter
+  param: { module: report, action: addFilter }
+
+
 report_reset:
   url:   /report/:report_type/reser
   param: { module: report, action: reset }

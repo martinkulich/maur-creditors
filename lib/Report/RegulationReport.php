@@ -46,7 +46,7 @@ class RegulationReport extends Report
             unpaid,
             end_balance,
             contract_currency_code
-            ORDER BY %order_by%
+            ORDER BY %order_by%, contract_name
             ;
         ";
     }
@@ -134,6 +134,10 @@ class RegulationReport extends Report
         );
     }
 
+    public function getDefaultOrderBy()
+    {
+        return 'regulation_year';
+    }
     public function getColumnRowClass($column, array $row = array())
     {
         $class = parent::getColumnRowClass($column, $row);

@@ -581,3 +581,5 @@ There are some settlements related to this outgoing payment, pls unrelate them b
 to_pay report;K vyplacení
 of to_pay;K vyplacení
 Settlement date;Datum vypořádání úroků
+Unpaid cumulative;Nevyplaceno kumulativně
+Unpaid cumulative regular;Nevyplaceno kumulativně (řádná vypořádání)

@@ -14,12 +14,10 @@ class ToPayReport extends Report
                 cr.bank_account as bank_account,
                 (SELECT COALESCE(date, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_date,
                 (SELECT COALESCE(id, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_id,
-                contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer as to_pay
+                contract_unpaid_regular(co.id,  '%date_to%'::date)::integer as to_pay
             FROM contract co
             JOIN creditor cr ON cr.id = co.creditor_id
-            WHERE 
-                co.closed_at IS NULL
-                AND contract_unpaid_regular(co.id,  '%date_to%'::date)::integer > 0 
+            WHERE contract_unpaid_regular(co.id,  '%date_to%'::date)::integer <> 0 
             %where%
             GROUP BY
                 cr.lastname,

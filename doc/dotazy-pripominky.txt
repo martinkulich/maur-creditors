@@ -8,7 +8,10 @@
         jedna jeho kapitalizacni platba (100.000,-) nebyla oznacena jako reaktivace a proto se tyto sloupce neshodji, treba opravit
 
 vyplaceni po ukonceni
-    musi se rucne nastavit limit na 0,- viz napr. fabik 3. smlouva
+    musi se rucne nastavit urok na 0,- viz napr. fabik 3. smlouva
+    select * from settlement s
+    join contract co on s.contract_id = co.id
+    where  co.closed_at < s.date
 
 (ne)vyplaceno rozhodne datum
     reporty

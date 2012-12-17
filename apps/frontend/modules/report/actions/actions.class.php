@@ -20,7 +20,7 @@ class reportActions extends sfActions
         if (!$this->getUser()->hasCredential($credential)) {
             return $this->forward('security', 'secure');
         }
-
+       
         $this->reportService = ServiceContainer::getReportService();
     }
 
@@ -75,6 +75,17 @@ class reportActions extends sfActions
 
         $this->setTemplate('filters');
     }
+    
+    public function executeAddFilter(sfWebRequest $request)
+    {
+         if($filter = $request->getParameter('filter'))
+        {
+            $this->setFilters(array_merge($this->getFilters(), $filter));
+        }
+        return $this->redirect('@report?report_type=' . $this->reportType);
+    }
+    
+    
 
     public function executeReset(sfWebRequest $request)
     {

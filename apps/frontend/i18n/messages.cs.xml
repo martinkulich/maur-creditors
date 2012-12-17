@@ -2161,5 +2161,13 @@
       <source>Settlement date</source>
       <target>Datum vypořádání úroků</target>
     </trans-unit>
+    <trans-unit id="541">
+      <source>Unpaid cumulative</source>
+      <target>Nevyplaceno kumulativně</target>
+    </trans-unit>
+    <trans-unit id="542">
+      <source>Unpaid cumulative regular</source>
+      <target>Nevyplaceno kumulativně (řádná vypořádání)</target>
+    </trans-unit>
   </body>
 </xliff>

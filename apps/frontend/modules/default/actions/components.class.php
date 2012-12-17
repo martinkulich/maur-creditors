@@ -60,13 +60,13 @@ class defaultComponents extends sfComponents
 
         $this->reportLinks = array();
         if ($user->hasCredential('report.admin')) {
-            $this->reportLinks[] = 'unpaid';
+            $this->reportLinks[] = 'regulation';
             $this->reportLinks[] = 'balance';
             $this->reportLinks[] = 'birthday';
-            $this->reportLinks[] = 'creditor_revenue';
             $this->reportLinks[] = 'monthly';
+            $this->reportLinks[] = 'creditor_revenue';
             $this->reportLinks[] = 'creditor_confirmation';
-            $this->reportLinks[] = 'regulation';
+            $this->reportLinks[] = 'unpaid';
             $this->reportLinks[] = 'to_pay';
 
             $pattern = 'report-%s';
