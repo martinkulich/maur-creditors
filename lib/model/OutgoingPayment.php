@@ -18,7 +18,7 @@ class OutgoingPayment extends BaseOutgoingPayment
 
     public function __toString()
     {
-        return sprintf("%s - %s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getAmount()));
+        return sprintf("%s - %s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getAmount(), $this->getCurrencyCode()));
     }
     
     
