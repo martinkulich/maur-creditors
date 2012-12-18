@@ -11,6 +11,6 @@ class UnpaidReportForm extends ReportForm
     
     public function getUsedFields()
     {
-        return array('date_to', 'creditor_id');
+        return array('date_to');
     }
 }
