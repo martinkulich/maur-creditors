@@ -25,7 +25,7 @@ class settlementActions extends autoSettlementActions
         foreach (ContractPeer::doSelect(new Criteria()) as $contract) {
             $contractService->checkContractChanges($contract);
         }
-//        return sfView::NONE;
+        return sfView::NONE;
         return $this->redirect('@settlement');
     }
 

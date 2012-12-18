@@ -91,9 +91,19 @@ class ContractService
             $closedAt = new DateTime($contract->getClosedAt());
         }
 
-        if ((!$closedAt || $closedAt && $closedAt > $nextSettlementDate) && ($nextSettlementDate < $lastDayOfNextYear) && !$contract->getSettlementForDate($nextSettlementDate)) {
-            $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD, $nextSettlementDate);
-            $this->generateSettlementsForContract($contract);
+        if ((!$closedAt || $closedAt && $closedAt > $nextSettlementDate) && ($nextSettlementDate < $lastDayOfNextYear)) {
+            $generate = true;
+            if ($settlement = $contract->getSettlementForDate($nextSettlementDate)) {
+                if ($settlement->getSettlementType() == SettlementPeer::END_OF_YEAR) {
+                    $settlement->delete();
+                } else {
+                    $generate = false;
+                }
+            }
+            if ($generate) {
+                $newSettlement = $this->addSettlementForContract($contract, SettlementPeer::IN_PERIOD, $nextSettlementDate);
+                $this->generateSettlementsForContract($contract);
+            }
         }
     }
 
@@ -178,7 +188,6 @@ class ContractService
         if (!$lastSettlement) {
 //            $lastSettlement = $contract->getLastSettlement(SettlementPeer::END_OF_YEAR);
         }
-
         $nextSettlementDate = null;
         if ($lastSettlement) {
             $isFirst = false;
@@ -281,7 +290,7 @@ class ContractService
         if ($settlement->isFirstOfContract()) {
             $daysCount +=1;
         }
-//        die(var_dump($settlement->getSettlementType()));
+
         if ($settlement->getSettlementType() == SettlementPeer::CLOSING) {
             $daysCount -=1;
         }

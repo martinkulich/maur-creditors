@@ -137,6 +137,12 @@ class Contract extends BaseContract
         return $lastSettlementDate;
     }
 
+    /**
+     * 
+     * @param DateTime $date
+     * @param Criteria $criteria
+     * @return Settlement $settlement
+     */
     public function getSettlementForDate(DateTime $date, Criteria $criteria = null)
     {
         if (is_null($criteria)) {
