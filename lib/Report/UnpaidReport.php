@@ -54,15 +54,6 @@ class UnpaidReport extends Report
     }
 
 
-    public function getWhere()
-    {
-        $where = '';
-        if ($creditorId = $this->getFilter('creditor_id')) {
-            $where = ' WHERE cr.id = ' . $creditorId;
-        }
-
-        return $where;
-    }
 
     protected function getRequiredFilters()
     {
