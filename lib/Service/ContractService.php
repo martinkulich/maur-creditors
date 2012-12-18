@@ -176,7 +176,7 @@ class ContractService
         }
         $lastSettlement = $contract->getLastSettlement(SettlementPeer::IN_PERIOD);
         if (!$lastSettlement) {
-            $lastSettlement = $contract->getLastSettlement(SettlementPeer::END_OF_YEAR);
+//            $lastSettlement = $contract->getLastSettlement(SettlementPeer::END_OF_YEAR);
         }
 
         $nextSettlementDate = null;
