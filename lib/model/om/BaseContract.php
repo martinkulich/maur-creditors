@@ -91,6 +91,13 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $first_settlement_date;
 
 	/**
+	 * The value for the capitalize field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $capitalize;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
@@ -147,6 +154,27 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'ContractPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->capitalize = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseContract object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -358,6 +386,16 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [capitalize] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getCapitalize()
+	{
+		return $this->capitalize;
 	}
 
 	/**
@@ -725,6 +763,26 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setFirstSettlementDate()
 
 	/**
+	 * Set the value of [capitalize] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setCapitalize($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->capitalize !== $v || $this->isNew()) {
+			$this->capitalize = $v;
+			$this->modifiedColumns[] = ContractPeer::CAPITALIZE;
+		}
+
+		return $this;
+	} // setCapitalize()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -734,6 +792,10 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->capitalize !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -768,6 +830,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->note = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->currency_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->first_settlement_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->capitalize = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -777,7 +840,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 13; // 13 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Contract object", $e);
@@ -1253,6 +1316,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 11:
 				return $this->getFirstSettlementDate();
 				break;
+			case 12:
+				return $this->getCapitalize();
+				break;
 			default:
 				return null;
 				break;
@@ -1286,6 +1352,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[9] => $this->getNote(),
 			$keys[10] => $this->getCurrencyCode(),
 			$keys[11] => $this->getFirstSettlementDate(),
+			$keys[12] => $this->getCapitalize(),
 		);
 		return $result;
 	}
@@ -1353,6 +1420,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 11:
 				$this->setFirstSettlementDate($value);
 				break;
+			case 12:
+				$this->setCapitalize($value);
+				break;
 		} // switch()
 	}
 
@@ -1389,6 +1459,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setNote($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setCurrencyCode($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setFirstSettlementDate($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCapitalize($arr[$keys[12]]);
 	}
 
 	/**
@@ -1412,6 +1483,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::NOTE)) $criteria->add(ContractPeer::NOTE, $this->note);
 		if ($this->isColumnModified(ContractPeer::CURRENCY_CODE)) $criteria->add(ContractPeer::CURRENCY_CODE, $this->currency_code);
 		if ($this->isColumnModified(ContractPeer::FIRST_SETTLEMENT_DATE)) $criteria->add(ContractPeer::FIRST_SETTLEMENT_DATE, $this->first_settlement_date);
+		if ($this->isColumnModified(ContractPeer::CAPITALIZE)) $criteria->add(ContractPeer::CAPITALIZE, $this->capitalize);
 
 		return $criteria;
 	}
@@ -1487,6 +1559,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$copyObj->setCurrencyCode($this->currency_code);
 
 		$copyObj->setFirstSettlementDate($this->first_settlement_date);
+
+		$copyObj->setCapitalize($this->capitalize);
 
 
 		if ($deepCopy) {

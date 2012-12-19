@@ -17,7 +17,8 @@ class ToPayReport extends Report
                 contract_unpaid_regular(co.id, '%date_to%'::date, true)::integer as to_pay
             FROM contract co
             JOIN creditor cr ON cr.id = co.creditor_id
-            WHERE contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer <> 0 
+            WHERE contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer > 0 
+            AND co.closed_at is null
             %where%
             GROUP BY
                 cr.lastname,
@@ -27,7 +28,7 @@ class ToPayReport extends Report
                 co.id, 
                 co.currency_code
                 
-            ORDER BY %order_by%, settlement_date, fullname
+            ORDER BY %order_by%, settlement_date
             ;
         ";
     }
@@ -60,7 +61,7 @@ class ToPayReport extends Report
     
     public function getDefaultOrderBy()
     {
-        return 'settlement_date';
+        return 'fullname';
     }
     
     public function getTotalRow()

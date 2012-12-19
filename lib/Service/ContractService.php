@@ -169,8 +169,11 @@ class ContractService
         $settlement->setInterest($this->getInterestForSettlement($settlement));
         $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
         $settlement->setSettlementType($settlementType);
-        $settlement->save();
 
+        if ($contract->getCapitalize()) {
+            $settlement->setCapitalized($settlement->getUnsettled());
+        }
+        $settlement->save();
         $contract->addSettlement($settlement);
         $contract->reload();
 

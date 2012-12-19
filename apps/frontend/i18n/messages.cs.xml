@@ -2169,5 +2169,9 @@
       <source>Unpaid cumulative regular</source>
       <target>Nevyplaceno kumulativně (řádná vypořádání)</target>
     </trans-unit>
+    <trans-unit id="543">
+      <source>Newly generated settlements will be automaticaly capitalized</source>
+      <target>Nově vygenerované vypořádání úroků budou atomaticky kapitalizovány</target>
+    </trans-unit>
   </body>
 </xliff>

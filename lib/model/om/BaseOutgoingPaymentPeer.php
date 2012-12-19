@@ -42,14 +42,14 @@ abstract class BaseOutgoingPaymentPeer {
 	/** the column name for the DATE field */
 	const DATE = 'outgoing_payment.DATE';
 
+	/** the column name for the NOTE field */
+	const NOTE = 'outgoing_payment.NOTE';
+
 	/** the column name for the CURRENCY_CODE field */
 	const CURRENCY_CODE = 'outgoing_payment.CURRENCY_CODE';
 
 	/** the column name for the CREDITOR_ID field */
 	const CREDITOR_ID = 'outgoing_payment.CREDITOR_ID';
-
-	/** the column name for the NOTE field */
-	const NOTE = 'outgoing_payment.NOTE';
 
 	/**
 	 * An identiy map to hold any loaded instances of OutgoingPayment objects.
@@ -74,10 +74,10 @@ abstract class BaseOutgoingPaymentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'BankAccountId', 'Amount', 'Date', 'CurrencyCode', 'CreditorId', 'Note', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'bankAccountId', 'amount', 'date', 'currencyCode', 'creditorId', 'note', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::BANK_ACCOUNT_ID, self::AMOUNT, self::DATE, self::CURRENCY_CODE, self::CREDITOR_ID, self::NOTE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'bank_account_id', 'amount', 'date', 'currency_code', 'creditor_id', 'note', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'BankAccountId', 'Amount', 'Date', 'Note', 'CurrencyCode', 'CreditorId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'bankAccountId', 'amount', 'date', 'note', 'currencyCode', 'creditorId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::BANK_ACCOUNT_ID, self::AMOUNT, self::DATE, self::NOTE, self::CURRENCY_CODE, self::CREDITOR_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'bank_account_id', 'amount', 'date', 'note', 'currency_code', 'creditor_id', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
@@ -88,10 +88,10 @@ abstract class BaseOutgoingPaymentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'BankAccountId' => 1, 'Amount' => 2, 'Date' => 3, 'CurrencyCode' => 4, 'CreditorId' => 5, 'Note' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'bankAccountId' => 1, 'amount' => 2, 'date' => 3, 'currencyCode' => 4, 'creditorId' => 5, 'note' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::BANK_ACCOUNT_ID => 1, self::AMOUNT => 2, self::DATE => 3, self::CURRENCY_CODE => 4, self::CREDITOR_ID => 5, self::NOTE => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'bank_account_id' => 1, 'amount' => 2, 'date' => 3, 'currency_code' => 4, 'creditor_id' => 5, 'note' => 6, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'BankAccountId' => 1, 'Amount' => 2, 'Date' => 3, 'Note' => 4, 'CurrencyCode' => 5, 'CreditorId' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'bankAccountId' => 1, 'amount' => 2, 'date' => 3, 'note' => 4, 'currencyCode' => 5, 'creditorId' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::BANK_ACCOUNT_ID => 1, self::AMOUNT => 2, self::DATE => 3, self::NOTE => 4, self::CURRENCY_CODE => 5, self::CREDITOR_ID => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'bank_account_id' => 1, 'amount' => 2, 'date' => 3, 'note' => 4, 'currency_code' => 5, 'creditor_id' => 6, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
@@ -166,9 +166,9 @@ abstract class BaseOutgoingPaymentPeer {
 		$criteria->addSelectColumn(OutgoingPaymentPeer::BANK_ACCOUNT_ID);
 		$criteria->addSelectColumn(OutgoingPaymentPeer::AMOUNT);
 		$criteria->addSelectColumn(OutgoingPaymentPeer::DATE);
+		$criteria->addSelectColumn(OutgoingPaymentPeer::NOTE);
 		$criteria->addSelectColumn(OutgoingPaymentPeer::CURRENCY_CODE);
 		$criteria->addSelectColumn(OutgoingPaymentPeer::CREDITOR_ID);
-		$criteria->addSelectColumn(OutgoingPaymentPeer::NOTE);
 	}
 
 	/**

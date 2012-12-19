@@ -26,6 +26,7 @@ abstract class BaseContractForm extends BaseFormPropel
       'note'                  => new sfWidgetFormTextarea(),
       'currency_code'         => new sfWidgetFormPropelChoice(array('model' => 'Currency', 'add_empty' => false)),
       'first_settlement_date' => new sfWidgetFormDate(),
+      'capitalize'            => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -41,6 +42,7 @@ abstract class BaseContractForm extends BaseFormPropel
       'note'                  => new sfValidatorString(array('required' => false)),
       'currency_code'         => new sfValidatorPropelChoice(array('model' => 'Currency', 'column' => 'code')),
       'first_settlement_date' => new sfValidatorDate(array('required' => false)),
+      'capitalize'            => new sfValidatorBoolean(),
     ));
 
     $this->widgetSchema->setNameFormat('contract[%s]');

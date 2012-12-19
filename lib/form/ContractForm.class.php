@@ -37,7 +37,11 @@ class ContractForm extends BaseContractForm
 
         $this->getValidator('first_settlement_date')->setOption('required', false);
         $this->getWidgetSchema()->setHelp('first_settlement_date', 'This field is unchangeable after contract activation');
-        
+
+        $this->getWidgetSchema()
+                ->setHelp('capitalize', 'Newly generated settlements will be automaticaly capitalized')
+                ->moveField('capitalize', sfWidgetFormSchema::FIRST);
+
 
         $periodChoices = Contract::getPeriods();
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
@@ -77,4 +81,5 @@ class ContractForm extends BaseContractForm
         $contract->reload();
         ServiceContainer::getContractService()->checkContractChanges($contract);
     }
+
 }

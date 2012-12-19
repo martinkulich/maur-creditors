@@ -44,6 +44,12 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	protected $date;
 
 	/**
+	 * The value for the note field.
+	 * @var        string
+	 */
+	protected $note;
+
+	/**
 	 * The value for the currency_code field.
 	 * @var        string
 	 */
@@ -54,12 +60,6 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	 * @var        int
 	 */
 	protected $creditor_id;
-
-	/**
-	 * The value for the note field.
-	 * @var        string
-	 */
-	protected $note;
 
 	/**
 	 * @var        Creditor
@@ -189,6 +189,16 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [note] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getNote()
+	{
+		return $this->note;
+	}
+
+	/**
 	 * Get the [currency_code] column value.
 	 * 
 	 * @return     string
@@ -206,16 +216,6 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	public function getCreditorId()
 	{
 		return $this->creditor_id;
-	}
-
-	/**
-	 * Get the [note] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getNote()
-	{
-		return $this->note;
 	}
 
 	/**
@@ -332,6 +332,26 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	} // setDate()
 
 	/**
+	 * Set the value of [note] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     OutgoingPayment The current object (for fluent API support)
+	 */
+	public function setNote($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->note !== $v) {
+			$this->note = $v;
+			$this->modifiedColumns[] = OutgoingPaymentPeer::NOTE;
+		}
+
+		return $this;
+	} // setNote()
+
+	/**
 	 * Set the value of [currency_code] column.
 	 * 
 	 * @param      string $v new value
@@ -380,26 +400,6 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	} // setCreditorId()
 
 	/**
-	 * Set the value of [note] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     OutgoingPayment The current object (for fluent API support)
-	 */
-	public function setNote($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->note !== $v) {
-			$this->note = $v;
-			$this->modifiedColumns[] = OutgoingPaymentPeer::NOTE;
-		}
-
-		return $this;
-	} // setNote()
-
-	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -439,9 +439,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$this->bank_account_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->amount = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->date = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->currency_code = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->creditor_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
-			$this->note = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->note = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->currency_code = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->creditor_id = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -875,13 +875,13 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 				return $this->getDate();
 				break;
 			case 4:
-				return $this->getCurrencyCode();
+				return $this->getNote();
 				break;
 			case 5:
-				return $this->getCreditorId();
+				return $this->getCurrencyCode();
 				break;
 			case 6:
-				return $this->getNote();
+				return $this->getCreditorId();
 				break;
 			default:
 				return null;
@@ -908,9 +908,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$keys[1] => $this->getBankAccountId(),
 			$keys[2] => $this->getAmount(),
 			$keys[3] => $this->getDate(),
-			$keys[4] => $this->getCurrencyCode(),
-			$keys[5] => $this->getCreditorId(),
-			$keys[6] => $this->getNote(),
+			$keys[4] => $this->getNote(),
+			$keys[5] => $this->getCurrencyCode(),
+			$keys[6] => $this->getCreditorId(),
 		);
 		return $result;
 	}
@@ -955,13 +955,13 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 				$this->setDate($value);
 				break;
 			case 4:
-				$this->setCurrencyCode($value);
+				$this->setNote($value);
 				break;
 			case 5:
-				$this->setCreditorId($value);
+				$this->setCurrencyCode($value);
 				break;
 			case 6:
-				$this->setNote($value);
+				$this->setCreditorId($value);
 				break;
 		} // switch()
 	}
@@ -991,9 +991,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setBankAccountId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setAmount($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setDate($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setCurrencyCode($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreditorId($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setNote($arr[$keys[6]]);
+		if (array_key_exists($keys[4], $arr)) $this->setNote($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCurrencyCode($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreditorId($arr[$keys[6]]);
 	}
 
 	/**
@@ -1009,9 +1009,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(OutgoingPaymentPeer::BANK_ACCOUNT_ID)) $criteria->add(OutgoingPaymentPeer::BANK_ACCOUNT_ID, $this->bank_account_id);
 		if ($this->isColumnModified(OutgoingPaymentPeer::AMOUNT)) $criteria->add(OutgoingPaymentPeer::AMOUNT, $this->amount);
 		if ($this->isColumnModified(OutgoingPaymentPeer::DATE)) $criteria->add(OutgoingPaymentPeer::DATE, $this->date);
+		if ($this->isColumnModified(OutgoingPaymentPeer::NOTE)) $criteria->add(OutgoingPaymentPeer::NOTE, $this->note);
 		if ($this->isColumnModified(OutgoingPaymentPeer::CURRENCY_CODE)) $criteria->add(OutgoingPaymentPeer::CURRENCY_CODE, $this->currency_code);
 		if ($this->isColumnModified(OutgoingPaymentPeer::CREDITOR_ID)) $criteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->creditor_id);
-		if ($this->isColumnModified(OutgoingPaymentPeer::NOTE)) $criteria->add(OutgoingPaymentPeer::NOTE, $this->note);
 
 		return $criteria;
 	}
@@ -1072,11 +1072,11 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 
 		$copyObj->setDate($this->date);
 
+		$copyObj->setNote($this->note);
+
 		$copyObj->setCurrencyCode($this->currency_code);
 
 		$copyObj->setCreditorId($this->creditor_id);
-
-		$copyObj->setNote($this->note);
 
 
 		if ($deepCopy) {

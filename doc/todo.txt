@@ -80,7 +80,7 @@ predpisy
 
 //nahled na odchozi platbu stejne jako poznamka
 
-report k vyplaceni
+//report k vyplaceni
 
 korunove zaokrouhleni
 
