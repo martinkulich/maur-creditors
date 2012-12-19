@@ -1951,7 +1951,7 @@
     </trans-unit>
     <trans-unit id="488">
       <source>paid</source>
-      <target>Vyplaceno</target>
+      <target>vyplaceno</target>
     </trans-unit>
     <trans-unit id="489">
       <source>unpaid regular cumulative</source>

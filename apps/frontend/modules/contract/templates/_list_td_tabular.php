@@ -1,5 +1,5 @@
 <td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
-    <?php echo link_to($contract->getName(), '@settlement_contract_filter?contract_id='.$contract->getId()) ?>
+    <?php echo link_to($contract->getName(), '@settlement_addFilter?filter[contract_id]='.$contract->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $contract->getCreditor() ?>

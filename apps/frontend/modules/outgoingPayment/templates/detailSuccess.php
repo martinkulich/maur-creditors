@@ -7,8 +7,23 @@
 
     <div class="modal-body">
         <?php include_component('default', 'flashes') ?>
-        <?php echo __('Creditor').': '.$outgoinPayment->getCreditor() ?>
-        <br />
-        <?php echo __('Bank account').': '.$outgoinPayment->getBankAccount() ?>
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    <?php echo __('Creditor') ?>
+                </th>
+                <td>
+                    <?php echo $outgoinPayment->getCreditor() ?>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <?php echo __('Bank account'); ?>
+                </th>
+                <td>
+                    <?php echo $outgoinPayment->getBankAccount() ?>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>

@@ -99,6 +99,7 @@ creditor:
     prefix_path:          /creditor
     column:               id
     with_wildcard_routes: true
+    object_actions: {paidDetail: get}
     collection_actions: {filters: get, filter: post, reset: get}
 
 contract:
