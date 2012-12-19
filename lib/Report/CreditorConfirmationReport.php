@@ -15,7 +15,7 @@ class CreditorConfirmationReport extends Report
                 sum(contract_balance(c.id, first_day(1, %year%), false)) as start_balance,
                 sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance,
                 sum(contract_unpaid(c.id, last_day(12, %year%))) as unpaid,
-                sum(contract_paid(c.id, %year%)) as paid
+                sum(contract_paid(c.id, %year%)) as paid 
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
             %where%
