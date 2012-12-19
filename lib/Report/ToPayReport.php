@@ -10,6 +10,7 @@ class ToPayReport extends Report
             SELECT 
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
                 co.name as contract_name,
+                co.id as contract_id,
                 co.currency_code as currency_code,
                 cr.bank_account as bank_account,
                 (SELECT COALESCE(date, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_date,
@@ -90,6 +91,10 @@ class ToPayReport extends Report
         if($column == 'to_pay')
         {
             $formatedValue = link_to($formatedValue, '@settlement_pay?id='.$row['settlement_id'], array('class'=>'modal_link'));
+        }
+        elseif($column == 'contract_name')
+        {
+            $formatedValue = link_to($formatedValue, '@settlement_addFilter?filter[contract_id]='.$row['contract_id']);
         }
         
         return $formatedValue;

@@ -14,6 +14,24 @@ require_once dirname(__FILE__) . '/../lib/settlementGeneratorHelper.class.php';
 class settlementActions extends autoSettlementActions
 {
 
+    public function executeAddFilter(sfWebRequest $request)
+    {
+        $filters = $request->getParameter('filter');
+
+        if (array_key_exists('contract_id', $filters)) {
+            $contract = ContractPeer::retrieveByPK($filters['contract_id']);
+            if ($contract && $contract->getActivatedAt() && $contract->getLastSettlement()) {
+
+                $filters['date']['from'] = $contract->getActivatedAt();
+                $filters['date']['to'] = $contract->getLastSettlement()->getDate();
+            }
+        }
+        $this->setFilters(array_merge($this->getFilters(), $filters));
+
+
+        return $this->redirect('@settlement');
+    }
+
     public function executeNote(sfWebRequest $request)
     {
         $this->settlement = $this->getRoute()->getObject();
@@ -103,7 +121,7 @@ class settlementActions extends autoSettlementActions
 
 //            $redirect = array('sf_route' => 'settlement_edit', 'sf_subject' => $settlement);
             $redirect = '@settlement';
-            
+
             ServiceContainer::getMessageService()->addSuccess($notice);
 
             return $this->redirect($redirect, 205);
@@ -159,9 +177,8 @@ class settlementActions extends autoSettlementActions
     {
         $this->settlement = $this->getRoute()->getObject();
         $this->form = new SettlementPayForm($this->settlement);
-        
-        if($request->isMethod(sfWebRequest::POST))
-        {
+
+        if ($request->isMethod(sfWebRequest::POST)) {
             $this->processForm($request, $this->form);
         }
     }
