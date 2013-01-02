@@ -170,7 +170,7 @@ class ContractService
         $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
         $settlement->setSettlementType($settlementType);
 
-        if ($contract->getCapitalize()) {
+        if ($contract->getCapitalize() && $settlementType != SettlementPeer::END_OF_YEAR) {
             $settlement->setCapitalized($settlement->getUnsettled());
         }
         $settlement->save();
