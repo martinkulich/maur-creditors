@@ -19,7 +19,7 @@ class ToPayReport extends Report
             FROM contract co
             JOIN creditor cr ON cr.id = co.creditor_id
             WHERE contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer > 0 
-            AND co.closed_at is null
+            --AND co.closed_at is null
             %where%
             GROUP BY
                 cr.lastname,
