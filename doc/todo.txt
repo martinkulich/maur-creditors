@@ -86,4 +86,21 @@ korunove zaokrouhleni
 
 //defaultni razeni podle data narozeni v reportu narozenin
 
-defaultni kapitalizace smlouvy
+//defaultni kapitalizace smlouvy
+
+
+//smlouvy ke kapitalizaci nezobrazovat v reportu k vyplaceni
+
+//tick v listu smluv zda je smlouva kapitalizovana..
+
+report prichozich plateb pro kotrolu ze sedi ucty
+
+//odchozi platba zaskrtavatko v hotovosti
+
+odchozi platba moznost svazat s ponizenim jistiny
+
+retail vracena cast platby
+
+zaskrtavatko na neaktivni smlouvu
+
+proverit ukoly z pohledu p. Batlickove

@@ -16,6 +16,9 @@
 <td class="sf_admin_text sf_admin_list_td_amount ">
     <?php echo my_format_currency($outgoingPayment->getAmount() - $usedAmount, $outgoingPayment->getCurrencyCode()) ?>
 </td>
+<td class="sf_admin_boolean sf_admin_list_td_cash ">
+    <?php echo get_partial('outgoingPayment/list_field_boolean', array('value' => $outgoingPayment->getCash())) ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_note text-align-right">
         <?php echo $outgoingPayment->getNote() ? link_to('Poznámka', '@outgoing_payment_note?id='.$outgoingPayment->getId(), array('class'=>'modal_link')) : ''; ?>
 </td>

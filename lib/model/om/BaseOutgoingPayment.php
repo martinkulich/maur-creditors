@@ -62,6 +62,12 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	protected $creditor_id;
 
 	/**
+	 * The value for the cash field.
+	 * @var        boolean
+	 */
+	protected $cash;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
@@ -216,6 +222,16 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	public function getCreditorId()
 	{
 		return $this->creditor_id;
+	}
+
+	/**
+	 * Get the [cash] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getCash()
+	{
+		return $this->cash;
 	}
 
 	/**
@@ -400,6 +416,26 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	} // setCreditorId()
 
 	/**
+	 * Set the value of [cash] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     OutgoingPayment The current object (for fluent API support)
+	 */
+	public function setCash($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->cash !== $v) {
+			$this->cash = $v;
+			$this->modifiedColumns[] = OutgoingPaymentPeer::CASH;
+		}
+
+		return $this;
+	} // setCash()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -442,6 +478,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$this->note = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->currency_code = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->creditor_id = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->cash = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -451,7 +488,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating OutgoingPayment object", $e);
@@ -883,6 +920,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			case 6:
 				return $this->getCreditorId();
 				break;
+			case 7:
+				return $this->getCash();
+				break;
 			default:
 				return null;
 				break;
@@ -911,6 +951,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$keys[4] => $this->getNote(),
 			$keys[5] => $this->getCurrencyCode(),
 			$keys[6] => $this->getCreditorId(),
+			$keys[7] => $this->getCash(),
 		);
 		return $result;
 	}
@@ -963,6 +1004,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			case 6:
 				$this->setCreditorId($value);
 				break;
+			case 7:
+				$this->setCash($value);
+				break;
 		} // switch()
 	}
 
@@ -994,6 +1038,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setNote($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setCurrencyCode($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setCreditorId($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCash($arr[$keys[7]]);
 	}
 
 	/**
@@ -1012,6 +1057,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(OutgoingPaymentPeer::NOTE)) $criteria->add(OutgoingPaymentPeer::NOTE, $this->note);
 		if ($this->isColumnModified(OutgoingPaymentPeer::CURRENCY_CODE)) $criteria->add(OutgoingPaymentPeer::CURRENCY_CODE, $this->currency_code);
 		if ($this->isColumnModified(OutgoingPaymentPeer::CREDITOR_ID)) $criteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->creditor_id);
+		if ($this->isColumnModified(OutgoingPaymentPeer::CASH)) $criteria->add(OutgoingPaymentPeer::CASH, $this->cash);
 
 		return $criteria;
 	}
@@ -1077,6 +1123,8 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		$copyObj->setCurrencyCode($this->currency_code);
 
 		$copyObj->setCreditorId($this->creditor_id);
+
+		$copyObj->setCash($this->cash);
 
 
 		if ($deepCopy) {

@@ -63,6 +63,7 @@
     <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
     <column name="currency_code" phpName="CurrencyCode" type="CHAR" size="3" required="true"/>
     <column name="creditor_id" phpName="CreditorId" type="INTEGER" required="true"/>
+    <column name="cash" phpName="Cash" type="BOOLEAN" required="false"/>
     <foreign-key foreignTable="creditor" name="outgoing_payment_creditor_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="creditor_id" foreign="id"/>
     </foreign-key>

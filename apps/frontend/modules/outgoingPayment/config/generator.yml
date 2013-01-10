@@ -19,7 +19,7 @@ generator:
       list:
         peer_method:           doSelectJoinAll
         batch_actions: []
-        display: [bank_account, creditor, date, amount, used_amount, unused_amount, note]
+        display: [bank_account, creditor, date, amount, used_amount, unused_amount, cash, note]
         actions:
           _new: ~
           filters: ~

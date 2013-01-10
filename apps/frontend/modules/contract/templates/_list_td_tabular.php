@@ -1,4 +1,4 @@
-<td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
+§<td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
     <?php echo link_to($contract->getName(), '@settlement_addFilter?filter[contract_id]='.$contract->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
@@ -13,6 +13,10 @@
 
 <td class="sf_admin_text sf_admin_list_td_interest_rate_as_string text-align-right">
     <?php echo $contract->getInterestRateAsString() ?>
+</td>
+</td>
+<td class="sf_admin_boolean sf_admin_list_td_capitalize text-align-center ">
+    <?php echo get_partial('contract/list_field_boolean', array('value' => $contract->getCapitalize())) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_period_as_string ">
     <?php echo $contract->getPeriodAsString() ?>

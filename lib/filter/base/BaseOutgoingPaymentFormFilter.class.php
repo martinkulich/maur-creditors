@@ -18,6 +18,7 @@ abstract class BaseOutgoingPaymentFormFilter extends BaseFormFilterPropel
       'note'            => new sfWidgetFormFilterInput(),
       'currency_code'   => new sfWidgetFormPropelChoice(array('model' => 'Currency', 'add_empty' => true)),
       'creditor_id'     => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => true)),
+      'cash'            => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ abstract class BaseOutgoingPaymentFormFilter extends BaseFormFilterPropel
       'note'            => new sfValidatorPass(array('required' => false)),
       'currency_code'   => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Currency', 'column' => 'code')),
       'creditor_id'     => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Creditor', 'column' => 'id')),
+      'cash'            => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('outgoing_payment_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BaseOutgoingPaymentFormFilter extends BaseFormFilterPropel
       'note'            => 'Text',
       'currency_code'   => 'ForeignKey',
       'creditor_id'     => 'ForeignKey',
+      'cash'            => 'Boolean',
     );
   }
 }
