@@ -1,4 +1,4 @@
-§<td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
+<td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
     <?php echo link_to($contract->getName(), '@settlement_addFilter?filter[contract_id]='.$contract->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
