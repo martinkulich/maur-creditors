@@ -45,6 +45,7 @@ class defaultComponents extends sfComponents
             'contract',
             'payment',
             'outgoing_payment',
+            'allocation',
             'settlement',
             'regulation',
         );

@@ -493,8 +493,8 @@ Upaid in past;Nevyplacené úroky z předchozích let
 Unpaid in past;Nevyplacené úroky z předchozích let
 Outgoing payment required if paid is set;Odchozí platba je povinná, pokud je vyplněno pole “Vyplaceno“
 Paid required if outgoing payment is set;Pole “Vyplaceno“ je povinné, pokud je vyplněna odchozí platba
-Paid exceeded unused amount %unused_amount%;K vyplacení lze využít  částku %unused_amount%, tedy část odchozí platby která ještě není přiřazená žádnému vypořádání úroků
-There is no unused amount to pay;Odchozí platba je již zcela použita na výplatu úroků
+Exceeded unallocated amount %unallocated_amount%;Z odchozí platby lze již alokovovat pouze částku %unallocated_amount%
+There is no amount to allocate;Odchozí platba je již zcela alokována
 First settlement date;Datum prvního vypořádání
 Currency of outgoing payment is not equal with cuurency of settlement contract;Měna odchozí platby se neshoduje s měnou smlouvy
 unpaid report;Nevyplacené úroky
@@ -584,3 +584,12 @@ Settlement date;Datum vypořádání úroků
 Unpaid cumulative;Nevyplaceno kumulativně
 Unpaid cumulative regular;Nevyplaceno kumulativně (řádná vypořádání)
 Newly generated settlements will be automaticaly capitalized;Nově vygenerované vypořádání úroků budou atomaticky kapitalizovány
+allocation admin;Alokace
+of allocation;Alokace
+Settlement;Vypořádání úroků
+Edit allocation;Editace alokace
+New allocation;Nová alokace
+Filter allocation; Filtrovat alokace
+Allocated amount;Alokováno
+Unallocated amount;Nealokováno
+There is no outgoing payment to be used for allocation;Všechny odchozí platby daného věřitele jsou plně alokovány, vytvořte prosím novou odchozí platbu

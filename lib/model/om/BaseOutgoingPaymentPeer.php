@@ -377,9 +377,6 @@ abstract class BaseOutgoingPaymentPeer {
 	 */
 	public static function clearRelatedInstancePool()
 	{
-		// invalidate objects in SettlementPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		SettlementPeer::clearInstancePool();
-
 	}
 
 	/**

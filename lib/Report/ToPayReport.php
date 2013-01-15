@@ -91,7 +91,7 @@ class ToPayReport extends Report
         
         if($column == 'to_pay')
         {
-            $formatedValue = link_to($formatedValue, '@settlement_pay?id='.$row['settlement_id'], array('class'=>'modal_link'));
+            $formatedValue = link_to($formatedValue, '@settlement_allocate?id='.$row['settlement_id'], array('class'=>'modal_link'));
         }
         elseif($column == 'contract_name')
         {

@@ -1818,12 +1818,12 @@
       <target>Pole “Vyplaceno“ je povinné, pokud je vyplněna odchozí platba</target>
     </trans-unit>
     <trans-unit id="455">
-      <source>Paid exceeded unused amount %unused_amount%</source>
-      <target>K vyplacení lze využít  částku %unused_amount%, tedy část odchozí platby která ještě není přiřazená žádnému vypořádání úroků</target>
+      <source>Exceeded unallocated amount %unallocated_amount%</source>
+      <target>Z odchozí platby lze již alokovovat pouze částku %unallocated_amount%</target>
     </trans-unit>
     <trans-unit id="456">
-      <source>There is no unused amount to pay</source>
-      <target>Odchozí platba je již zcela použita na výplatu úroků</target>
+      <source>There is no amount to allocate</source>
+      <target>Odchozí platba je již zcela alokována</target>
     </trans-unit>
     <trans-unit id="457">
       <source>First settlement date</source>
@@ -2172,6 +2172,42 @@
     <trans-unit id="543">
       <source>Newly generated settlements will be automaticaly capitalized</source>
       <target>Nově vygenerované vypořádání úroků budou atomaticky kapitalizovány</target>
+    </trans-unit>
+    <trans-unit id="544">
+      <source>allocation admin</source>
+      <target>Alokace</target>
+    </trans-unit>
+    <trans-unit id="545">
+      <source>of allocation</source>
+      <target>Alokace</target>
+    </trans-unit>
+    <trans-unit id="546">
+      <source>Settlement</source>
+      <target>Vypořádání úroků</target>
+    </trans-unit>
+    <trans-unit id="547">
+      <source>Edit allocation</source>
+      <target>Editace alokace</target>
+    </trans-unit>
+    <trans-unit id="548">
+      <source>New allocation</source>
+      <target>Nová alokace</target>
+    </trans-unit>
+    <trans-unit id="549">
+      <source>Filter allocation</source>
+      <target>Filtrovat alokace</target>
+    </trans-unit>
+    <trans-unit id="550">
+      <source>Allocated amount</source>
+      <target>Alokováno</target>
+    </trans-unit>
+    <trans-unit id="551">
+      <source>Unallocated amount</source>
+      <target>Nealokováno</target>
+    </trans-unit>
+    <trans-unit id="552">
+      <source>There is no outgoing payment to be used for allocation</source>
+      <target>Všechny odchozí platby daného věřitele jsou plně alokovány, vytvořte prosím novou odchozí platbu</target>
     </trans-unit>
   </body>
 </xliff>

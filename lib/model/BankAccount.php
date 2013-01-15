@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseBankAccount.php';
+require_once 'lib/model/om/BaseBankAccount.php';
 
 /**
  * Skeleton subclass for representing a row from the 'bank_account' table.

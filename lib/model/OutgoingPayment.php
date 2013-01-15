@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseOutgoingPayment.php';
+require_once 'lib/model/om/BaseOutgoingPayment.php';
 
 /**
  * Skeleton subclass for representing a row from the 'outgoing_payment' table.
@@ -22,19 +22,20 @@ class OutgoingPayment extends BaseOutgoingPayment
     }
     
     
-    public function getUsedAmount()
+    public function getAllocatedAmount()
     {
         $amount = 0;
-        foreach($this->getSettlements() as $settlement)
+        foreach($this->getAllocations() as $allocation)
         {
-            $amount += $settlement->getPaid();
+            $amount += $allocation->getPaid();
+            $amount += $allocation->getBalanceReduction();
         }
         return $amount;
     }
     
-    public function getUnusedAmount()
+    public function getUnallocatedAmount()
     {
-        return $this->getAmount() - $this->getUsedAmount();
+        return $this->getAmount() - $this->getAllocatedAmount();
     }
 
 }

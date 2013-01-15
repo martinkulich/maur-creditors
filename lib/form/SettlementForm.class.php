@@ -16,7 +16,6 @@ class SettlementForm extends BaseSettlementForm
 
         $this->getWidgetSchema()->moveField('balance', sfWidgetFormSchema::AFTER, 'date');
         $this->getWidgetSchema()->moveField('interest', sfWidgetFormSchema::AFTER, 'balance');
-        $this->getWidgetSchema()->moveField('outgoing_payment_id', sfWidgetFormSchema::AFTER, 'paid');
         $this->getWidgetSchema()->moveField('note', sfWidgetFormSchema::LAST);
 
         $this->getWidget('note')->setAttribute('rows', 2);
@@ -48,9 +47,7 @@ class SettlementForm extends BaseSettlementForm
         $fullFormName = $this->getFullFormName();
 
         $amountFields = array(
-            'paid',
             'capitalized',
-            'balance_reduction',
         );
 
 
@@ -63,24 +60,6 @@ class SettlementForm extends BaseSettlementForm
             }
         }
 
-        $outgoingPaymentCriteria = new Criteria();
-        $outgoingPaymentCriteria->addAscendingOrderByColumn(OutgoingPaymentPeer::DATE, Criteria::DESC);
-        if ($contractId) {
-            $outgoingPaymentCriteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->getObject()->getContract()->getCreditorId());
-        }
-        
-        $customCriteria = sprintf("((select coalesce(sum(%s), 0) from %s where %s = %s) < %s)", SettlementPeer::PAID, SettlementPeer::TABLE_NAME, SettlementPeer::OUTGOING_PAYMENT_ID, OutgoingPaymentPeer::ID, OutgoingPaymentPeer::AMOUNT);
-//            die(var_dump($customCriteria));
-        $criterion1 = $outgoingPaymentCriteria->getNewCriterion(OutgoingPaymentPeer::ID, $customCriteria, Criteria::CUSTOM);
-        if ($this->getObject()->getOutgoingPaymentId()) {
-            $criterion2 = $outgoingPaymentCriteria->getNewCriterion(OutgoingPaymentPeer::ID, $this->getObject()->getOutgoingPaymentId());
-            $criterion1->addOr($criterion2);
-        }
-        $outgoingPaymentCriteria->addAnd($criterion1);
-
-        $this->getWidget('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria)->setAttribute('class', 'span3');
-        $this->getValidator('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria);
-        $this->getWidgetSchema()->setHelp('balance_reduction', 'About how much balance should be reduced');
 
         $contractCriteria = new Criteria();
         $contractCriteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID);
@@ -138,7 +117,6 @@ class SettlementForm extends BaseSettlementForm
         $this->getWidget('date')->setAttribute('onChange', $calculateSettlement);
 
         $this->getValidator('currency_rate')->setOption('min', 0.0001);
-        $this->getWidgetSchema()->moveField('currency_rate', sfWidgetFormSchema::AFTER, 'balance_reduction');
 
         //zatim nechat moznost vzdy editovat
         if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
@@ -166,8 +144,6 @@ class SettlementForm extends BaseSettlementForm
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
         }
-
-        $this->getValidatorSchema()->setPostValidator(new SettlementPostValidator());
     }
 
     public function doSave($con = null)

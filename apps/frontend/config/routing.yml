@@ -1,3 +1,13 @@
+allocation:
+  class: sfPropelRouteCollection
+  options:
+    model:                allocation
+    module:               allocation
+    prefix_path:          /allocation
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
 outgoing_payment:
   class: sfPropelRouteCollection
   options:
@@ -88,7 +98,7 @@ settlement:
     prefix_path:          /settlement
     column:               id
     with_wildcard_routes: true
-    object_actions: {capitalize: get, pay: [get, post], note: get}
+    object_actions: {capitalize: get, allocate: [get, post], note: get}
     collection_actions: {filters: get, filter: post, reset: get, checkContracts: get, addFilter: get}
 
 creditor:
@@ -141,6 +151,14 @@ contract_closing_amount:
 update_contract_select:
     url:   /:form_name/update-contract-select
     param: { module: contract, action: updateSelect, sf_format: html }
+
+update_settlement_select:
+    url:   /:form_name/update-settlement-select
+    param: { module: settlement, action: updateSelect, sf_format: html }
+
+update_outgoing_payment_select:
+    url:   /:form_name/update-outgoing-payment-select
+    param: { module: outgoingPayment, action: updateSelect, sf_format: html }
 
 payment_contract_filter:
   url:   /payment/contract-filter/:contract_id

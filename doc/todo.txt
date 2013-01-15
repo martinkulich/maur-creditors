@@ -104,3 +104,9 @@ retail vracena cast platby
 zaskrtavatko na neaktivni smlouvu
 
 proverit ukoly z pohledu p. Batlickove
+
+//odchozi platby filtr na datum
+
+report jistiny zobrazit i smlouvy jez ten den konci
+
+(ne)zahrnovani smluv do reportu

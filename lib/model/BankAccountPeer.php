@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseBankAccountPeer.php';
+require_once 'lib/model/om/BaseBankAccountPeer.php';
 
 
 /**

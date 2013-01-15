@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseUnpaid.php';
+require_once 'lib/model/om/BaseUnpaid.php';
 
 
 /**

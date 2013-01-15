@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseRegulationYearPeer.php';
+require_once 'lib/model/om/BaseRegulationYearPeer.php';
 
 
 /**

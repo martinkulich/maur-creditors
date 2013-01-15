@@ -1,3 +1,9 @@
 default:
   is_secure: true
   credentials: settlement.admin
+
+allocate:
+  credentials: [[allocation.admin, settlement.admin]]
+
+UpdateSelect:
+  is_secure: false

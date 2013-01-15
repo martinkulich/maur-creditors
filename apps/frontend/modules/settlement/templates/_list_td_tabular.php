@@ -12,9 +12,6 @@
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_date text-align-right">
     <?php echo false !== strtotime($settlement->getDate()) ? format_date($settlement->getDate(), "D") : '&nbsp;' ?>
 </td>
-<td class="sf_admin_date no-wrap-line sf_admin_list_td_outgoing_payment text-align-right">
-    <?php echo $settlement->getOutgoingPayment() ? link_to($settlement->getOutgoingPayment(), '@outgoing_payment_detail?id='.$settlement->getOutgoingPaymentId(), array('class'=>'modal_link')) : ''; ?>
-</td>
 <td class="sf_admin_text sf_admin_list_td_days_count text-align-right">
     <?php echo ServiceContainer::getContractService()->getDaysCount($settlement) ?>
 </td>
@@ -25,7 +22,7 @@
     <?php echo my_format_currency($settlement->getInterest(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_paid text-align-right">
-    <?php echo my_format_currency($settlement->getPaid(), $currencyCode) ?>
+    <?php echo link_to(my_format_currency($settlement->getPaid(), $currencyCode), '@allocation_filter?reset=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
 </td>
 <td class="sf_admin_boolean sf_admin_list_td_cash ">
   <?php echo get_partial('settlement/list_field_boolean', array('value' => $settlement->getCash())) ?>
@@ -34,7 +31,7 @@
     <?php echo my_format_currency($settlement->getCapitalized(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_balance_reduction text-align-right">
-    <?php echo my_format_currency($settlement->getBalanceReduction(), $currencyCode) ?>
+    <?php echo link_to(my_format_currency($settlement->getBalanceReduction(), $currencyCode), '@allocation_filter?reset=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
 </td>
 
 <td class="sf_admin_text sf_admin_list_td_unsettled text-align-right">

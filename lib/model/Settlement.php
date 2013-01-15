@@ -16,6 +16,10 @@ require_once 'lib/model/om/BaseSettlement.php';
 class Settlement extends BaseSettlement
 {
 
+    public function __toString()
+    {
+        return sprintf('%s (%s)', format_date($this->getDate(), 'D'), $this->getTranslatedSettlementType());
+    }
     public function getCreditor()
     {
         return $this->getContract()->getCreditor();
@@ -101,6 +105,32 @@ class Settlement extends BaseSettlement
 
         return SettlementPeer::doCount($criteria) === 0;
     }
+
+    public function getPaid()
+    {
+        $paid = 0;
+        foreach($this->getAllocations() as $allocation)
+        {
+            $paid += $allocation->getPaid();
+        }
+
+        return $paid;
+    }
+
+    public function getBalanceReduction()
+    {
+        $balanceRecuction = 0;
+        foreach($this->getAllocations() as $allocation)
+        {
+            $balanceRecuction += $allocation->getBalanceReduction();
+        }
+
+        return $balanceRecuction;
+    }
+
+
+
+
 }
 
 // Settlement

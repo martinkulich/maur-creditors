@@ -12,6 +12,7 @@ class OutgoingPaymentForm extends BaseOutgoingPaymentForm
 
     public function configure()
     {
+        $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
         $this->setWidget('date', new myJQueryDateWidget());
         $this->setValidator('date', new myValidatorDate());
         

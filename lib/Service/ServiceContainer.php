@@ -95,4 +95,12 @@ class ServiceContainer
     {
         return self::getService('payment');
     }
+
+    /**
+     * @return AllocationService
+     */
+    public static function getAllocationService()
+    {
+        return self::getService('allocation');
+    }
 }

@@ -41,10 +41,8 @@ class SettlementTableMap extends TableMap {
 		$this->addForeignKey('CONTRACT_ID', 'ContractId', 'INTEGER', 'contract', 'ID', true, null, null);
 		$this->addColumn('DATE', 'Date', 'DATE', true, null, null);
 		$this->addColumn('INTEREST', 'Interest', 'NUMERIC', true, 15, null);
-		$this->addColumn('PAID', 'Paid', 'NUMERIC', true, 15, 0);
 		$this->addColumn('CAPITALIZED', 'Capitalized', 'NUMERIC', true, 15, 0);
 		$this->addColumn('BALANCE', 'Balance', 'NUMERIC', true, 15, 0);
-		$this->addColumn('BALANCE_REDUCTION', 'BalanceReduction', 'NUMERIC', true, 15, 0);
 		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('BANK_ACCOUNT', 'BankAccount', 'VARCHAR', false, 255, null);
 		$this->addColumn('CASH', 'Cash', 'BOOLEAN', true, null, false);
@@ -52,7 +50,6 @@ class SettlementTableMap extends TableMap {
 		$this->addColumn('MANUAL_INTEREST', 'ManualInterest', 'BOOLEAN', true, null, false);
 		$this->addColumn('MANUAL_BALANCE', 'ManualBalance', 'BOOLEAN', true, null, false);
 		$this->addColumn('CURRENCY_RATE', 'CurrencyRate', 'NUMERIC', true, 15, 1);
-		$this->addForeignKey('OUTGOING_PAYMENT_ID', 'OutgoingPaymentId', 'INTEGER', 'outgoing_payment', 'ID', false, null, null);
 		// validators
 	} // initialize()
 
@@ -62,7 +59,7 @@ class SettlementTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Contract', 'Contract', RelationMap::MANY_TO_ONE, array('contract_id' => 'id', ), 'CASCADE', 'CASCADE');
-    $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::MANY_TO_ONE, array('outgoing_payment_id' => 'id', ), 'SET NULL', 'CASCADE');
+    $this->addRelation('Allocation', 'Allocation', RelationMap::ONE_TO_MANY, array('id' => 'settlement_id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 
 	/**

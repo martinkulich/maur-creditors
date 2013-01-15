@@ -14,6 +14,11 @@ require_once dirname(__FILE__) . '/../lib/settlementGeneratorHelper.class.php';
 class settlementActions extends autoSettlementActions
 {
 
+    public function executeUpdateSelect(sfWebRequest $request)
+    {
+        return $this->renderComponent('settlement', 'select', array('contractId' => $request->getParameter('contract_id'), 'formName' => $request->getParameter('form_name')));
+    }
+
     public function executeAddFilter(sfWebRequest $request)
     {
         $filters = $request->getParameter('filter');
@@ -130,6 +135,27 @@ class settlementActions extends autoSettlementActions
         }
     }
 
+    protected function processAllocationForm(sfWebRequest $request, sfForm $form)
+    {
+        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+        if ($form->isValid()) {
+            $notice = $form->getObject()->isNew() ? 'The item was created successfully' : 'The item was updated successfully';
+
+            $allocation = $form->save();
+
+            $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $allocation)));
+
+//            $redirect = array('sf_route' => 'settlement_edit', 'sf_subject' => $settlement);
+            $redirect = '@allocation';
+
+            ServiceContainer::getMessageService()->addSuccess($notice);
+
+            return $this->redirect($redirect, 205);
+        } else {
+            ServiceContainer::getMessageService()->addFromErrors($form);
+        }
+    }
+
     protected function processClosingForm(sfWebRequest $request, sfForm $form)
     {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
@@ -173,14 +199,31 @@ class settlementActions extends autoSettlementActions
         return $this->redirect('@settlement');
     }
 
-    public function executePay(sfWebRequest $request)
+    public function executeAllocate(sfWebRequest $request)
     {
         $this->settlement = $this->getRoute()->getObject();
-        $this->form = new SettlementPayForm($this->settlement);
+        $this->forward404Unless($this->settlement);
+        $outGoingPaymentCount = OutgoingPaymentPeer::doCount(ServiceContainer::getAllocationService()->getAllocableOutgoingPaymentsCriteria($this->getRoute()->getObject()->getContract()->getCreditor()));
+        if ($outGoingPaymentCount) {
+            $this->allocation = new Allocation();
+            $this->allocation->setSettlement($this->settlement);
+            $this->form = new SettlementAllocateForm($this->allocation);
 
-        if ($request->isMethod(sfWebRequest::POST)) {
-            $this->processForm($request, $this->form);
+            if ($request->isMethod(sfWebRequest::POST)) {
+                $this->processAllocationForm($request, $this->form);
+            }
+        } else {
+            $warning = ServiceContainer::getTranslateService()->__('There is no outgoing payment to be used for allocation');
+            ServiceContainer::getMessageService()->addWarning($warning);
+
+            $redirect = $request->getReferer();
+            if (!$redirect) {
+                $redirect = '@settlement';
+            }
+            return $this->redirect($redirect, 205);
         }
+
+
     }
 
     public function executeInterest(sfWebRequest $request)
@@ -283,10 +326,10 @@ class settlementActions extends autoSettlementActions
         $criteria->addSelectColumn(ContractPeer::CURRENCY_CODE);
         $criteria->addSelectColumn(sprintf('sum(%s) as interest', SettlementPeer::INTEREST));
         $criteria->addSelectColumn(sprintf('sum(%s) as balance', SettlementPeer::BALANCE));
-        $criteria->addSelectColumn(sprintf('sum(%s) as balance_reduction', SettlementPeer::BALANCE_REDUCTION));
-        $criteria->addSelectColumn(sprintf('sum(%s) as paid', SettlementPeer::PAID));
+        $criteria->addSelectColumn(sprintf('sum(settlement_balance_reduction(%s)) as balance_reduction', SettlementPeer::ID));
+        $criteria->addSelectColumn(sprintf('sum(settlement_paid(%s)) as paid', SettlementPeer::ID));
         $criteria->addSelectColumn(sprintf('sum(%s) as capitalized', SettlementPeer::CAPITALIZED));
-        $criteria->addSelectColumn('CASE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0)) < 0 WHEN TRUE THEN 0 ELSE sum(coalesce(interest,0) - coalesce(paid,0) - coalesce(capitalized,0))  END  as unsettled');
+        $criteria->addSelectColumn(sprintf('CASE sum(coalesce(interest,0) - coalesce(settlement_paid(%s),0) - coalesce(capitalized,0)) < 0 WHEN TRUE THEN 0 ELSE sum(coalesce(interest,0) - coalesce(settlement_paid(%s),0) - coalesce(capitalized,0))  END  as unsettled', SettlementPeer::ID, SettlementPeer::ID));
         $criteria->clearOrderByColumns();
         $criteria->addGroupByColumn(ContractPeer::CURRENCY_CODE);
         $sumPager->setCriteria($criteria);

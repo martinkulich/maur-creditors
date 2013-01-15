@@ -23,16 +23,11 @@ class SettlementFormFilter extends BaseSettlementFormFilter
 
         $this->getWidget('date')->setLabel('Date of settlement');
 
-        $outgoingPaymentCriteria = new Criteria();
-        $outgoingPaymentCriteria->addAscendingOrderByColumn((OutgoingPaymentPeer::DATE));
-        $this->getWidget('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria);
-        
         $fieldsToUnset = array(
             'balance',
             'interest',
             'capitalized',
             'balance',
-            'paid',
             'manual_interest',
             'manual_balance',
         );

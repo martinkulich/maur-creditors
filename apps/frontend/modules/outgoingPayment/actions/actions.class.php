@@ -13,6 +13,10 @@ require_once dirname(__FILE__) . '/../lib/outgoingPaymentGeneratorHelper.class.p
  */
 class outgoingPaymentActions extends autoOutgoingPaymentActions
 {
+    public function executeUpdateSelect(sfWebRequest $request)
+    {
+        return $this->renderComponent('outgoingPayment', 'select', array('contractId' => $request->getParameter('contract_id'), 'formName' => $request->getParameter('form_name')));
+    }
 
     public function executeNote(sfWebRequest $request)
     {

@@ -1,7 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
-<form action="<?php echo  url_for('@settlement_pay?id='.$settlement->getId()) ?>" method="post" class="form form-horizontal form-modal" name="formMask">
+<form action="<?php echo  url_for('@settlement_allocate?id='.$settlement->getId()) ?>" method="post" class="form form-horizontal form-modal" name="formMask">
 <div class="modal-body">
     <?php include_component('default','flashes') ?>
     <?php echo $form->renderHiddenFields(false) ?>
@@ -16,9 +16,5 @@
     <?php include_partial('settlement/form_actions', array('settlement' => $settlement, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
 </div>
 </form>
-<script type="text/javascript">
-$(document).ready(function(){
-    jQuery('#settlement_creditor_id').change();
-});
-</script>
+
 

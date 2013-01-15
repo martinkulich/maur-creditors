@@ -15,10 +15,20 @@ class contractComponents extends sfComponents
             $criteria->add(ContractPeer::ACTIVATED_AT, null, Criteria::ISNOTNULL);
         }
 
-        if ($filter != 'all') {
-//            $criteria->add(ContractPeer::CLOSED_AT, null, Criteria::ISNULL);
-        }
         $this->contractId = $request->getParameter('default', 0);
         $this->widget = new sfWidgetFormPropelChoice(array('model' => 'Contract', 'criteria' => $criteria, 'add_empty' => true));
+        if (in_array($this->formName, array('allocation', 'allocation_filters'))) {
+
+            if($this->formName == 'allocation')
+            {
+                $allocationForm = new AllocationForm();
+            }
+            elseif($this->formName == 'allocation_filters')
+            {
+                $allocationForm = new AllocationFormFilter();
+            }
+
+            $this->widget->setAttributes($allocationForm->getWidget('contract_id')->getAttributes());
+        }
     }
 }
