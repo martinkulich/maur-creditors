@@ -1,0 +1,27 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           allocation
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              allocation
+    plural:                allocations
+    route_prefix:          allocation
+    with_propel_route:     1
+    actions_base_class:    sfActions
+    peer_method:           doSelectJoinAll
+
+    config:
+      actions: ~
+      fields: ~
+      list:
+        display: [creditor, contract, settlement, outgoing_payment, paid, balance_reduction]
+        batch_actions: []
+        sort: [id, asc]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~
