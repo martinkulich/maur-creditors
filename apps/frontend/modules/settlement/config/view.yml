@@ -1,2 +1,4 @@
 allocateSuccess:
   layout: layoutModal
+newOutgoingPaymentSuccess:
+  layout: layoutModal

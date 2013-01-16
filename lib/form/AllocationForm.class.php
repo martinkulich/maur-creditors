@@ -55,7 +55,10 @@ class AllocationForm extends BaseAllocationForm
 
         $outgoingPaymentCriteria = ServiceContainer::getAllocationService()->getAllocableOutgoingPaymentsCriteria($creditor, $this->getObject()->getOutgoingPayment());
 
-        $this->getWidget('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria)->setAttribute('class', 'span3');
+        $this->getWidget('outgoing_payment_id')
+            ->setOption('method', 'getLongToString')
+            ->setOption('criteria', $outgoingPaymentCriteria)
+            ->setAttribute('class', 'span4');
         $this->getValidator('outgoing_payment_id')->setOption('criteria', $outgoingPaymentCriteria);
 
 

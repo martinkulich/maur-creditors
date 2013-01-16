@@ -156,6 +156,27 @@ class settlementActions extends autoSettlementActions
         }
     }
 
+    protected function processNewOutgoingPaymentForm(sfWebRequest $request, sfForm $form, settlement $settlement)
+    {
+        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+        if ($form->isValid()) {
+            $notice = $form->getObject()->isNew() ? 'The item was created successfully' : 'The item was updated successfully';
+
+            $outgoingPayment = $form->save();
+
+            $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $outgoingPayment)));
+
+//            $redirect = array('sf_route' => 'settlement_edit', 'sf_subject' => $settlement);
+            $redirect = '@settlement_allocate?id='.$settlement->getId();
+
+            ServiceContainer::getMessageService()->addSuccess($notice);
+
+            return $this->redirect($redirect);
+        } else {
+            ServiceContainer::getMessageService()->addFromErrors($form);
+        }
+    }
+
     protected function processClosingForm(sfWebRequest $request, sfForm $form)
     {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
@@ -216,15 +237,28 @@ class settlementActions extends autoSettlementActions
             $warning = ServiceContainer::getTranslateService()->__('There is no outgoing payment to be used for allocation');
             ServiceContainer::getMessageService()->addWarning($warning);
 
-            $redirect = $request->getReferer();
-            if (!$redirect) {
-                $redirect = '@settlement';
-            }
-            return $this->redirect($redirect, 205);
+            $redirect = '@settlement_newOutgoingPayment?id=' . $this->settlement->getId();
+            return $this->redirect($redirect);
         }
 
 
     }
+
+    public function executeNewOutgoingPayment(sfWebRequest $request)
+    {
+        $this->settlement = $this->getRoute()->getObject();
+        $this->forward404Unless($this->settlement);
+
+        $this->outgoingPayment = new OutgoingPayment();
+        $this->outgoingPayment->setCreditor($this->settlement->getContract()->getCreditor());
+        $this->outgoingPayment->setCurrency($this->settlement->getContract()->getCurrency());
+        $this->form = new settlementNewOutgoingPaymentForm($this->outgoingPayment);
+
+        if ($request->isMethod(sfWebRequest::POST)) {
+            $this->processNewOutgoingPaymentForm($request, $this->form, $this->settlement);
+        }
+    }
+
 
     public function executeInterest(sfWebRequest $request)
     {

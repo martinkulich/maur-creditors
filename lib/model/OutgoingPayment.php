@@ -20,6 +20,11 @@ class OutgoingPayment extends BaseOutgoingPayment
     {
         return sprintf("%s - %s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getAmount(), $this->getCurrencyCode()));
     }
+
+    public function getLongToString()
+    {
+        return sprintf("%s - %s/%s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getUnallocatedAmount(), $this->getCurrencyCode()),my_format_currency($this->getAmount(), $this->getCurrencyCode()));
+    }
     
     
     public function getAllocatedAmount()
