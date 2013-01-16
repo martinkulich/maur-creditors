@@ -23,6 +23,7 @@ ALTER TABLE contract_excluded_report ADD CONSTRAINT contract_excluded_report_rep
 
 insert into report(code, "name") values
 ('regulation', 'Předpisy'),
+('balance', 'Jistiny'),
 ('creditor_revenue', 'Výnosy věřitelů'),
 ('unpaid', 'Nevyplacené úroky'),
 ('to_pay', 'K vyplacení');
