@@ -25,7 +25,7 @@ abstract class BaseSecurityPermPeer {
 	const TM_CLASS = 'SecurityPermTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseSecurityPermPeer {
 
 	/** the column name for the IS_PUBLIC field */
 	const IS_PUBLIC = 'security_perm.IS_PUBLIC';
+
+	/** the column name for the ORDER_NO field */
+	const ORDER_NO = 'security_perm.ORDER_NO';
 
 	/**
 	 * An identiy map to hold any loaded instances of SecurityPerm objects.
@@ -65,11 +68,11 @@ abstract class BaseSecurityPermPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Code', 'Name', 'IsPublic', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'code', 'name', 'isPublic', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CODE, self::NAME, self::IS_PUBLIC, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'code', 'name', 'is_public', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Code', 'Name', 'IsPublic', 'OrderNo', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'code', 'name', 'isPublic', 'orderNo', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CODE, self::NAME, self::IS_PUBLIC, self::ORDER_NO, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'code', 'name', 'is_public', 'order_no', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -79,11 +82,11 @@ abstract class BaseSecurityPermPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Code' => 1, 'Name' => 2, 'IsPublic' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'code' => 1, 'name' => 2, 'isPublic' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CODE => 1, self::NAME => 2, self::IS_PUBLIC => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'code' => 1, 'name' => 2, 'is_public' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Code' => 1, 'Name' => 2, 'IsPublic' => 3, 'OrderNo' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'code' => 1, 'name' => 2, 'isPublic' => 3, 'orderNo' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CODE => 1, self::NAME => 2, self::IS_PUBLIC => 3, self::ORDER_NO => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'code' => 1, 'name' => 2, 'is_public' => 3, 'order_no' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -157,6 +160,7 @@ abstract class BaseSecurityPermPeer {
 		$criteria->addSelectColumn(SecurityPermPeer::CODE);
 		$criteria->addSelectColumn(SecurityPermPeer::NAME);
 		$criteria->addSelectColumn(SecurityPermPeer::IS_PUBLIC);
+		$criteria->addSelectColumn(SecurityPermPeer::ORDER_NO);
 	}
 
 	/**

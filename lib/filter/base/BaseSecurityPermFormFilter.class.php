@@ -15,6 +15,7 @@ abstract class BaseSecurityPermFormFilter extends BaseFormFilterPropel
       'code'                    => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'name'                    => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'is_public'               => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'order_no'                => new sfWidgetFormFilterInput(),
       'security_role_perm_list' => new sfWidgetFormPropelChoice(array('model' => 'SecurityRole', 'add_empty' => true)),
     ));
 
@@ -22,6 +23,7 @@ abstract class BaseSecurityPermFormFilter extends BaseFormFilterPropel
       'code'                    => new sfValidatorPass(array('required' => false)),
       'name'                    => new sfValidatorPass(array('required' => false)),
       'is_public'               => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'order_no'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'security_role_perm_list' => new sfValidatorPropelChoice(array('model' => 'SecurityRole', 'required' => false)),
     ));
 
@@ -69,6 +71,7 @@ abstract class BaseSecurityPermFormFilter extends BaseFormFilterPropel
       'code'                    => 'Text',
       'name'                    => 'Text',
       'is_public'               => 'Boolean',
+      'order_no'                => 'Number',
       'security_role_perm_list' => 'ManyKey',
     );
   }

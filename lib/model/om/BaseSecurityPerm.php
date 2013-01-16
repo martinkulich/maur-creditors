@@ -44,6 +44,12 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 	protected $is_public;
 
 	/**
+	 * The value for the order_no field.
+	 * @var        int
+	 */
+	protected $order_no;
+
+	/**
 	 * @var        array SecurityRolePerm[] Collection to store aggregation of SecurityRolePerm objects.
 	 */
 	protected $collSecurityRolePerms;
@@ -143,6 +149,16 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [order_no] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getOrderNo()
+	{
+		return $this->order_no;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -223,6 +239,26 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 	} // setIsPublic()
 
 	/**
+	 * Set the value of [order_no] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     SecurityPerm The current object (for fluent API support)
+	 */
+	public function setOrderNo($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->order_no !== $v) {
+			$this->order_no = $v;
+			$this->modifiedColumns[] = SecurityPermPeer::ORDER_NO;
+		}
+
+		return $this;
+	} // setOrderNo()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -262,6 +298,7 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 			$this->code = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->is_public = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->order_no = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -271,7 +308,7 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = SecurityPermPeer::NUM_COLUMNS - SecurityPermPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = SecurityPermPeer::NUM_COLUMNS - SecurityPermPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating SecurityPerm object", $e);
@@ -651,6 +688,9 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getIsPublic();
 				break;
+			case 4:
+				return $this->getOrderNo();
+				break;
 			default:
 				return null;
 				break;
@@ -676,6 +716,7 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 			$keys[1] => $this->getCode(),
 			$keys[2] => $this->getName(),
 			$keys[3] => $this->getIsPublic(),
+			$keys[4] => $this->getOrderNo(),
 		);
 		return $result;
 	}
@@ -719,6 +760,9 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 			case 3:
 				$this->setIsPublic($value);
 				break;
+			case 4:
+				$this->setOrderNo($value);
+				break;
 		} // switch()
 	}
 
@@ -747,6 +791,7 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setCode($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setIsPublic($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setOrderNo($arr[$keys[4]]);
 	}
 
 	/**
@@ -762,6 +807,7 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SecurityPermPeer::CODE)) $criteria->add(SecurityPermPeer::CODE, $this->code);
 		if ($this->isColumnModified(SecurityPermPeer::NAME)) $criteria->add(SecurityPermPeer::NAME, $this->name);
 		if ($this->isColumnModified(SecurityPermPeer::IS_PUBLIC)) $criteria->add(SecurityPermPeer::IS_PUBLIC, $this->is_public);
+		if ($this->isColumnModified(SecurityPermPeer::ORDER_NO)) $criteria->add(SecurityPermPeer::ORDER_NO, $this->order_no);
 
 		return $criteria;
 	}
@@ -821,6 +867,8 @@ abstract class BaseSecurityPerm extends BaseObject  implements Persistent {
 		$copyObj->setName($this->name);
 
 		$copyObj->setIsPublic($this->is_public);
+
+		$copyObj->setOrderNo($this->order_no);
 
 
 		if ($deepCopy) {

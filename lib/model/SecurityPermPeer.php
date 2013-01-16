@@ -15,5 +15,12 @@ require_once 'lib/model/om/BaseSecurityPermPeer.php';
  * @package    lib.model
  */
 class SecurityPermPeer extends BaseSecurityPermPeer {
-
+    public static function doSelect(Criteria $criteria, PropelPDO $con = null)
+    {
+        if(count($criteria->getOrderByColumns())== 0)
+        {
+            $criteria->addAscendingOrderByColumn(SecurityPermPeer::ORDER_NO);
+        }
+        return parent::doSelect( $criteria,  $con);
+    }
 } // SecurityPermPeer

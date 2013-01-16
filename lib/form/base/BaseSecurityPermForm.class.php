@@ -18,6 +18,7 @@ abstract class BaseSecurityPermForm extends BaseFormPropel
       'code'                    => new sfWidgetFormInputText(),
       'name'                    => new sfWidgetFormInputText(),
       'is_public'               => new sfWidgetFormInputCheckbox(),
+      'order_no'                => new sfWidgetFormInputText(),
       'security_role_perm_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'SecurityRole')),
     ));
 
@@ -26,6 +27,7 @@ abstract class BaseSecurityPermForm extends BaseFormPropel
       'code'                    => new sfValidatorString(array('max_length' => 255)),
       'name'                    => new sfValidatorString(array('max_length' => 255)),
       'is_public'               => new sfValidatorBoolean(),
+      'order_no'                => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'security_role_perm_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'SecurityRole', 'required' => false)),
     ));
 

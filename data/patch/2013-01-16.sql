@@ -42,5 +42,10 @@ UPDATE payment set bank_account_id = (select id from bank_account where name lik
 
 ALTER TABLE payment alter column bank_account_id set not null;
 
+delete from security_perm where "code" = 'regulation.admin';
+delete from security_perm where "code" = 'currency.admin';
+
+ALTER TABLE security_perm ADD COLUMN order_no integer;
+
 
 COMMIT;

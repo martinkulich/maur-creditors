@@ -15,7 +15,7 @@ generator:
       actions: ~
       fields:  ~
       list:
-        display: [code, is_default, rate]
+        display: [code]
         batch_actions: []
         object_actions:
           _edit: ~

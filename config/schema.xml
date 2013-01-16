@@ -114,6 +114,7 @@
     <column name="code" phpName="Code" type="VARCHAR" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" required="true"/>
     <column name="is_public" phpName="IsPublic" type="BOOLEAN" required="true" defaultValue="false"/>
+    <column name="order_no" phpName="OrderNo" type="INTEGER" required="false"/>
     <unique name="security_perm_code_uidx">
       <unique-column name="code"/>
     </unique>

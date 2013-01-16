@@ -41,6 +41,7 @@ class SecurityPermTableMap extends TableMap {
 		$this->addColumn('CODE', 'Code', 'VARCHAR', true, 255, null);
 		$this->addColumn('NAME', 'Name', 'VARCHAR', true, 255, null);
 		$this->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', true, null, false);
+		$this->addColumn('ORDER_NO', 'OrderNo', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 
