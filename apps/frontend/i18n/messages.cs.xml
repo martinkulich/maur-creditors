@@ -1455,7 +1455,7 @@
     </trans-unit>
     <trans-unit id="364">
       <source>of payment</source>
-      <target>přijaté platby</target>
+      <target>Příchozí platby</target>
     </trans-unit>
     <trans-unit id="365">
       <source>Payments amount</source>
@@ -2240,6 +2240,10 @@
     <trans-unit id="560">
       <source>Contract excluded report list</source>
       <target>Nezahrnovat do reportu</target>
+    </trans-unit>
+    <trans-unit id="561">
+      <source>payment report</source>
+      <target>Příchozí platby</target>
     </trans-unit>
   </body>
 </xliff>

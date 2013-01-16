@@ -28,5 +28,6 @@ insert into report(code, "name") values
 ('unpaid', 'Nevyplacené úroky'),
 ('to_pay', 'K vyplacení');
 
-to_pay
+
+INSERT INTO security_perm(code, name, is_public, order_no) VALUES ('report-payment', 'Příchozí platby', true, 109);
 COMMIT;

@@ -97,11 +97,9 @@ report prichozich plateb pro kotrolu ze sedi ucty
 
 //odchozi platba zaskrtavatko v hotovosti
 
-odchozi platba moznost svazat s ponizenim jistiny
+//odchozi platba moznost svazat s ponizenim jistiny
 
 retail vracena cast platby
-
-zaskrtavatko na neaktivni smlouvu
 
 proverit ukoly z pohledu p. Batlickove
 

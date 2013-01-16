@@ -20,8 +20,9 @@ class ReportService
      */
     public function getForm($reportType)
     {
-        $defaultReportForm = 'ReportForm';
-        $formClass = sfInflector::camelize($reportType) . $defaultReportForm;
+        $defaultReportForm = 'ParentReportForm';
+        $formClassSuffix = 'ReportForm';
+        $formClass = sfInflector::camelize($reportType) . $formClassSuffix;
         if (!class_exists(($formClass))) {
             $formClass = $defaultReportForm;
         }
