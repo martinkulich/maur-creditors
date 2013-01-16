@@ -1,79 +1,46 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'contract' table.
+ * Base static class for performing query and update operations on the 'contract_excluded_report' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseContractPeer {
+abstract class BaseContractExcludedReportPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'contract';
+	const TABLE_NAME = 'contract_excluded_report';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Contract';
+	const OM_CLASS = 'ContractExcludedReport';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Contract';
+	const CLASS_DEFAULT = 'lib.model.ContractExcludedReport';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'ContractTableMap';
+	const TM_CLASS = 'ContractExcludedReportTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 13;
+	const NUM_COLUMNS = 2;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
-	/** the column name for the ID field */
-	const ID = 'contract.ID';
+	/** the column name for the CONTRACT_ID field */
+	const CONTRACT_ID = 'contract_excluded_report.CONTRACT_ID';
 
-	/** the column name for the CREDITOR_ID field */
-	const CREDITOR_ID = 'contract.CREDITOR_ID';
-
-	/** the column name for the CREATED_AT field */
-	const CREATED_AT = 'contract.CREATED_AT';
-
-	/** the column name for the ACTIVATED_AT field */
-	const ACTIVATED_AT = 'contract.ACTIVATED_AT';
-
-	/** the column name for the PERIOD field */
-	const PERIOD = 'contract.PERIOD';
-
-	/** the column name for the INTEREST_RATE field */
-	const INTEREST_RATE = 'contract.INTEREST_RATE';
-
-	/** the column name for the AMOUNT field */
-	const AMOUNT = 'contract.AMOUNT';
-
-	/** the column name for the NAME field */
-	const NAME = 'contract.NAME';
-
-	/** the column name for the CLOSED_AT field */
-	const CLOSED_AT = 'contract.CLOSED_AT';
-
-	/** the column name for the NOTE field */
-	const NOTE = 'contract.NOTE';
-
-	/** the column name for the CURRENCY_CODE field */
-	const CURRENCY_CODE = 'contract.CURRENCY_CODE';
-
-	/** the column name for the FIRST_SETTLEMENT_DATE field */
-	const FIRST_SETTLEMENT_DATE = 'contract.FIRST_SETTLEMENT_DATE';
-
-	/** the column name for the CAPITALIZE field */
-	const CAPITALIZE = 'contract.CAPITALIZE';
+	/** the column name for the REPORT_CODE field */
+	const REPORT_CODE = 'contract_excluded_report.REPORT_CODE';
 
 	/**
-	 * An identiy map to hold any loaded instances of Contract objects.
+	 * An identiy map to hold any loaded instances of ContractExcludedReport objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array Contract[]
+	 * @var        array ContractExcludedReport[]
 	 */
 	public static $instances = array();
 
@@ -92,11 +59,11 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', 'ClosedAt', 'Note', 'CurrencyCode', 'FirstSettlementDate', 'Capitalize', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', 'closedAt', 'note', 'currencyCode', 'firstSettlementDate', 'capitalize', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, self::CLOSED_AT, self::NOTE, self::CURRENCY_CODE, self::FIRST_SETTLEMENT_DATE, self::CAPITALIZE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', 'closed_at', 'note', 'currency_code', 'first_settlement_date', 'capitalize', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+		BasePeer::TYPE_PHPNAME => array ('ContractId', 'ReportCode', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('contractId', 'reportCode', ),
+		BasePeer::TYPE_COLNAME => array (self::CONTRACT_ID, self::REPORT_CODE, ),
+		BasePeer::TYPE_FIELDNAME => array ('contract_id', 'report_code', ),
+		BasePeer::TYPE_NUM => array (0, 1, )
 	);
 
 	/**
@@ -106,11 +73,11 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, 'ClosedAt' => 8, 'Note' => 9, 'CurrencyCode' => 10, 'FirstSettlementDate' => 11, 'Capitalize' => 12, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, 'closedAt' => 8, 'note' => 9, 'currencyCode' => 10, 'firstSettlementDate' => 11, 'capitalize' => 12, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, self::CLOSED_AT => 8, self::NOTE => 9, self::CURRENCY_CODE => 10, self::FIRST_SETTLEMENT_DATE => 11, self::CAPITALIZE => 12, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, 'closed_at' => 8, 'note' => 9, 'currency_code' => 10, 'first_settlement_date' => 11, 'capitalize' => 12, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+		BasePeer::TYPE_PHPNAME => array ('ContractId' => 0, 'ReportCode' => 1, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('contractId' => 0, 'reportCode' => 1, ),
+		BasePeer::TYPE_COLNAME => array (self::CONTRACT_ID => 0, self::REPORT_CODE => 1, ),
+		BasePeer::TYPE_FIELDNAME => array ('contract_id' => 0, 'report_code' => 1, ),
+		BasePeer::TYPE_NUM => array (0, 1, )
 	);
 
 	/**
@@ -159,12 +126,12 @@ abstract class BaseContractPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. ContractPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ContractExcludedReportPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(ContractPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ContractExcludedReportPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -180,19 +147,8 @@ abstract class BaseContractPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(ContractPeer::ID);
-		$criteria->addSelectColumn(ContractPeer::CREDITOR_ID);
-		$criteria->addSelectColumn(ContractPeer::CREATED_AT);
-		$criteria->addSelectColumn(ContractPeer::ACTIVATED_AT);
-		$criteria->addSelectColumn(ContractPeer::PERIOD);
-		$criteria->addSelectColumn(ContractPeer::INTEREST_RATE);
-		$criteria->addSelectColumn(ContractPeer::AMOUNT);
-		$criteria->addSelectColumn(ContractPeer::NAME);
-		$criteria->addSelectColumn(ContractPeer::CLOSED_AT);
-		$criteria->addSelectColumn(ContractPeer::NOTE);
-		$criteria->addSelectColumn(ContractPeer::CURRENCY_CODE);
-		$criteria->addSelectColumn(ContractPeer::FIRST_SETTLEMENT_DATE);
-		$criteria->addSelectColumn(ContractPeer::CAPITALIZE);
+		$criteria->addSelectColumn(ContractExcludedReportPeer::CONTRACT_ID);
+		$criteria->addSelectColumn(ContractExcludedReportPeer::REPORT_CODE);
 	}
 
 	/**
@@ -211,26 +167,26 @@ abstract class BaseContractPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ContractExcludedReportPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		// BasePeer returns a PDOStatement
@@ -249,7 +205,7 @@ abstract class BaseContractPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     Contract
+	 * @return     ContractExcludedReport
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -257,7 +213,7 @@ abstract class BaseContractPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = ContractPeer::doSelect($critcopy, $con);
+		$objects = ContractExcludedReportPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -274,7 +230,7 @@ abstract class BaseContractPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return ContractPeer::populateObjects(ContractPeer::doSelectStmt($criteria, $con));
+		return ContractExcludedReportPeer::populateObjects(ContractExcludedReportPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -292,12 +248,12 @@ abstract class BaseContractPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -305,7 +261,7 @@ abstract class BaseContractPeer {
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 
@@ -321,14 +277,14 @@ abstract class BaseContractPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      Contract $value A Contract object.
+	 * @param      ContractExcludedReport $value A ContractExcludedReport object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(Contract $obj, $key = null)
+	public static function addInstanceToPool(ContractExcludedReport $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
-				$key = (string) $obj->getId();
+				$key = serialize(array((string) $obj->getContractId(), (string) $obj->getReportCode()));
 			} // if key === null
 			self::$instances[$key] = $obj;
 		}
@@ -342,18 +298,18 @@ abstract class BaseContractPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A Contract object or a primary key value.
+	 * @param      mixed $value A ContractExcludedReport object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof Contract) {
-				$key = (string) $value->getId();
-			} elseif (is_scalar($value)) {
+			if (is_object($value) && $value instanceof ContractExcludedReport) {
+				$key = serialize(array((string) $value->getContractId(), (string) $value->getReportCode()));
+			} elseif (is_array($value) && count($value) === 2) {
 				// assume we've been passed a primary key
-				$key = (string) $value;
+				$key = serialize(array((string) $value[0], (string) $value[1]));
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Contract object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ContractExcludedReport object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -368,7 +324,7 @@ abstract class BaseContractPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     Contract Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     ContractExcludedReport Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -392,20 +348,11 @@ abstract class BaseContractPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to contract
+	 * Method to invalidate the instance pool of all tables related to contract_excluded_report
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
 	{
-		// invalidate objects in ContractExcludedReportPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		ContractExcludedReportPeer::clearInstancePool();
-
-		// invalidate objects in PaymentPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		PaymentPeer::clearInstancePool();
-
-		// invalidate objects in SettlementPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		SettlementPeer::clearInstancePool();
-
 	}
 
 	/**
@@ -421,10 +368,10 @@ abstract class BaseContractPeer {
 	public static function getPrimaryKeyHashFromRow($row, $startcol = 0)
 	{
 		// If the PK cannot be derived from the row, return NULL.
-		if ($row[$startcol] === null) {
+		if ($row[$startcol] === null && $row[$startcol + 1] === null) {
 			return null;
 		}
-		return (string) $row[$startcol];
+		return serialize(array((string) $row[$startcol], (string) $row[$startcol + 1]));
 	}
 
 	/**
@@ -439,11 +386,11 @@ abstract class BaseContractPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = ContractPeer::getOMClass(false);
+		$cls = ContractExcludedReportPeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = ContractPeer::getInstanceFromPool($key))) {
+			$key = ContractExcludedReportPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = ContractExcludedReportPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -452,7 +399,7 @@ abstract class BaseContractPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				ContractPeer::addInstanceToPool($obj, $key);
+				ContractExcludedReportPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -460,7 +407,7 @@ abstract class BaseContractPeer {
 	}
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related Contract table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -468,7 +415,7 @@ abstract class BaseContractPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinContract(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -476,14 +423,14 @@ abstract class BaseContractPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ContractExcludedReportPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -492,15 +439,15 @@ abstract class BaseContractPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -516,7 +463,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Currency table
+	 * Returns the number of rows matching criteria, joining the related Report table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -524,7 +471,7 @@ abstract class BaseContractPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinCurrency(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinReport(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -532,14 +479,14 @@ abstract class BaseContractPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ContractExcludedReportPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -548,15 +495,15 @@ abstract class BaseContractPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::REPORT_CODE, ReportPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -572,15 +519,15 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with their Creditor objects.
+	 * Selects a collection of ContractExcludedReport objects pre-filled with their Contract objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Contract objects.
+	 * @return     array Array of ContractExcludedReport objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinContract(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -589,50 +536,50 @@ abstract class BaseContractPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
+		ContractExcludedReportPeer::addSelectColumns($criteria);
+		$startcol = (ContractExcludedReportPeer::NUM_COLUMNS - ContractExcludedReportPeer::NUM_LAZY_LOAD_COLUMNS);
 		ContractPeer::addSelectColumns($criteria);
-		$startcol = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
-		CreditorPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+			$key1 = ContractExcludedReportPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractExcludedReportPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$cls = ContractPeer::getOMClass(false);
+				$cls = ContractExcludedReportPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ContractPeer::addInstanceToPool($obj1, $key1);
+				ContractExcludedReportPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = CreditorPeer::getInstanceFromPool($key2);
+				$obj2 = ContractPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = ContractPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					ContractPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (Contract) to $obj2 (Creditor)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (ContractExcludedReport) to $obj2 (Contract)
+				$obj2->addContractExcludedReport($obj1);
 
 			} // if joined row was not null
 
@@ -644,15 +591,15 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with their Currency objects.
+	 * Selects a collection of ContractExcludedReport objects pre-filled with their Report objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Contract objects.
+	 * @return     array Array of ContractExcludedReport objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinCurrency(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinReport(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -661,50 +608,50 @@ abstract class BaseContractPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		ContractPeer::addSelectColumns($criteria);
-		$startcol = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
-		CurrencyPeer::addSelectColumns($criteria);
+		ContractExcludedReportPeer::addSelectColumns($criteria);
+		$startcol = (ContractExcludedReportPeer::NUM_COLUMNS - ContractExcludedReportPeer::NUM_LAZY_LOAD_COLUMNS);
+		ReportPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::REPORT_CODE, ReportPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+			$key1 = ContractExcludedReportPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractExcludedReportPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$cls = ContractPeer::getOMClass(false);
+				$cls = ContractExcludedReportPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ContractPeer::addInstanceToPool($obj1, $key1);
+				ContractExcludedReportPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = CurrencyPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = ReportPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = CurrencyPeer::getInstanceFromPool($key2);
+				$obj2 = ReportPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CurrencyPeer::getOMClass(false);
+					$cls = ReportPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					CurrencyPeer::addInstanceToPool($obj2, $key2);
+					ReportPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (Contract) to $obj2 (Currency)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (ContractExcludedReport) to $obj2 (Report)
+				$obj2->addContractExcludedReport($obj1);
 
 			} // if joined row was not null
 
@@ -732,14 +679,14 @@ abstract class BaseContractPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ContractExcludedReportPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -748,17 +695,17 @@ abstract class BaseContractPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
-		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::REPORT_CODE, ReportPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -773,12 +720,12 @@ abstract class BaseContractPeer {
 	}
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with all related objects.
+	 * Selects a collection of ContractExcludedReport objects pre-filled with all related objects.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Contract objects.
+	 * @return     array Array of ContractExcludedReport objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -791,76 +738,76 @@ abstract class BaseContractPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
+		ContractExcludedReportPeer::addSelectColumns($criteria);
+		$startcol2 = (ContractExcludedReportPeer::NUM_COLUMNS - ContractExcludedReportPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		ContractPeer::addSelectColumns($criteria);
-		$startcol2 = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		ReportPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (ReportPeer::NUM_COLUMNS - ReportPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CurrencyPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
+		$criteria->addJoin(ContractExcludedReportPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
-
-		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::REPORT_CODE, ReportPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+			$key1 = ContractExcludedReportPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractExcludedReportPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = ContractPeer::getOMClass(false);
+				$cls = ContractExcludedReportPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ContractPeer::addInstanceToPool($obj1, $key1);
+				ContractExcludedReportPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-			// Add objects for joined Creditor rows
+			// Add objects for joined Contract rows
 
-			$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = CreditorPeer::getInstanceFromPool($key2);
+				$obj2 = ContractPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = ContractPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					ContractPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj2 (Creditor)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (ContractExcludedReport) to the collection in $obj2 (Contract)
+				$obj2->addContractExcludedReport($obj1);
 			} // if joined row not null
 
-			// Add objects for joined Currency rows
+			// Add objects for joined Report rows
 
-			$key3 = CurrencyPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			$key3 = ReportPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 			if ($key3 !== null) {
-				$obj3 = CurrencyPeer::getInstanceFromPool($key3);
+				$obj3 = ReportPeer::getInstanceFromPool($key3);
 				if (!$obj3) {
 
-					$cls = CurrencyPeer::getOMClass(false);
+					$cls = ReportPeer::getOMClass(false);
 
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					CurrencyPeer::addInstanceToPool($obj3, $key3);
+					ReportPeer::addInstanceToPool($obj3, $key3);
 				} // if obj3 loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj3 (Currency)
-				$obj3->addContract($obj1);
+				// Add the $obj1 (ContractExcludedReport) to the collection in $obj3 (Report)
+				$obj3->addContractExcludedReport($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -871,7 +818,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related Contract table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -879,7 +826,7 @@ abstract class BaseContractPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptContract(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -887,14 +834,14 @@ abstract class BaseContractPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ContractExcludedReportPeer::TABLE_NAME);
 		
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
@@ -903,15 +850,15 @@ abstract class BaseContractPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::REPORT_CODE, ReportPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -927,7 +874,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Currency table
+	 * Returns the number of rows matching criteria, joining the related Report table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -935,7 +882,7 @@ abstract class BaseContractPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptCurrency(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptReport(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -943,14 +890,14 @@ abstract class BaseContractPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ContractExcludedReportPeer::TABLE_NAME);
 		
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ContractPeer::addSelectColumns($criteria);
+			ContractExcludedReportPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
@@ -959,15 +906,15 @@ abstract class BaseContractPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -983,16 +930,16 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with all related objects except Creditor.
+	 * Selects a collection of ContractExcludedReport objects pre-filled with all related objects except Contract.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Contract objects.
+	 * @return     array Array of ContractExcludedReport objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptContract(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1003,18 +950,18 @@ abstract class BaseContractPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		ContractPeer::addSelectColumns($criteria);
-		$startcol2 = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+		ContractExcludedReportPeer::addSelectColumns($criteria);
+		$startcol2 = (ContractExcludedReportPeer::NUM_COLUMNS - ContractExcludedReportPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CurrencyPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
+		ReportPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ReportPeer::NUM_COLUMNS - ReportPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::REPORT_CODE, ReportPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 
@@ -1022,35 +969,35 @@ abstract class BaseContractPeer {
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+			$key1 = ContractExcludedReportPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractExcludedReportPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = ContractPeer::getOMClass(false);
+				$cls = ContractExcludedReportPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ContractPeer::addInstanceToPool($obj1, $key1);
+				ContractExcludedReportPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Currency rows
+				// Add objects for joined Report rows
 
-				$key2 = CurrencyPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = ReportPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = CurrencyPeer::getInstanceFromPool($key2);
+					$obj2 = ReportPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = CurrencyPeer::getOMClass(false);
+						$cls = ReportPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CurrencyPeer::addInstanceToPool($obj2, $key2);
+					ReportPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj2 (Currency)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (ContractExcludedReport) to the collection in $obj2 (Report)
+				$obj2->addContractExcludedReport($obj1);
 
 			} // if joined row is not null
 
@@ -1062,16 +1009,16 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with all related objects except Currency.
+	 * Selects a collection of ContractExcludedReport objects pre-filled with all related objects except Report.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Contract objects.
+	 * @return     array Array of ContractExcludedReport objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptCurrency(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptReport(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1082,18 +1029,18 @@ abstract class BaseContractPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
+		ContractExcludedReportPeer::addSelectColumns($criteria);
+		$startcol2 = (ContractExcludedReportPeer::NUM_COLUMNS - ContractExcludedReportPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		ContractPeer::addSelectColumns($criteria);
-		$startcol2 = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractExcludedReportPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
 		{
-		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		  call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $criteria, $con);
 		}
 
 
@@ -1101,35 +1048,35 @@ abstract class BaseContractPeer {
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+			$key1 = ContractExcludedReportPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractExcludedReportPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = ContractPeer::getOMClass(false);
+				$cls = ContractExcludedReportPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ContractPeer::addInstanceToPool($obj1, $key1);
+				ContractExcludedReportPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Contract rows
 
-				$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = CreditorPeer::getInstanceFromPool($key2);
+					$obj2 = ContractPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = ContractPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					ContractPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj2 (Creditor)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (ContractExcludedReport) to the collection in $obj2 (Contract)
+				$obj2->addContractExcludedReport($obj1);
 
 			} // if joined row is not null
 
@@ -1156,10 +1103,10 @@ abstract class BaseContractPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseContractPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseContractPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseContractExcludedReportPeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseContractExcludedReportPeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new ContractTableMap());
+	    $dbMap->addTableObject(new ContractExcludedReportTableMap());
 	  }
 	}
 
@@ -1176,13 +1123,13 @@ abstract class BaseContractPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? ContractPeer::CLASS_DEFAULT : ContractPeer::OM_CLASS;
+		return $withPrefix ? ContractExcludedReportPeer::CLASS_DEFAULT : ContractExcludedReportPeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Contract or Criteria object.
+	 * Method perform an INSERT on the database, given a ContractExcludedReport or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Contract object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ContractExcludedReport object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1191,26 +1138,22 @@ abstract class BaseContractPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseContractPeer:doInsert:pre') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseContractExcludedReportPeer:doInsert:pre') as $sf_hook)
     {
-      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseContractPeer', $values, $con))
+      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $values, $con))
       {
         return $sf_hook_retval;
       }
     }
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Contract object
-		}
-
-		if ($criteria->containsKey(ContractPeer::ID) && $criteria->keyContainsValue(ContractPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.ContractPeer::ID.')');
+			$criteria = $values->buildCriteria(); // build Criteria from ContractExcludedReport object
 		}
 
 
@@ -1229,18 +1172,18 @@ abstract class BaseContractPeer {
 		}
 
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseContractPeer:doInsert:post') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseContractExcludedReportPeer:doInsert:post') as $sf_hook)
     {
-      call_user_func($sf_hook, 'BaseContractPeer', $values, $con, $pk);
+      call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $values, $con, $pk);
     }
 
 		return $pk;
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Contract or Criteria object.
+	 * Method perform an UPDATE on the database, given a ContractExcludedReport or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Contract object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ContractExcludedReport object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1249,16 +1192,16 @@ abstract class BaseContractPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseContractPeer:doUpdate:pre') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseContractExcludedReportPeer:doUpdate:pre') as $sf_hook)
     {
-      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseContractPeer', $values, $con))
+      if (false !== $sf_hook_retval = call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $values, $con))
       {
         return $sf_hook_retval;
       }
     }
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -1266,10 +1209,13 @@ abstract class BaseContractPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(ContractPeer::ID);
-			$selectCriteria->add(ContractPeer::ID, $criteria->remove(ContractPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ContractExcludedReportPeer::CONTRACT_ID);
+			$selectCriteria->add(ContractExcludedReportPeer::CONTRACT_ID, $criteria->remove(ContractExcludedReportPeer::CONTRACT_ID), $comparison);
 
-		} else { // $values is Contract object
+			$comparison = $criteria->getComparison(ContractExcludedReportPeer::REPORT_CODE);
+			$selectCriteria->add(ContractExcludedReportPeer::REPORT_CODE, $criteria->remove(ContractExcludedReportPeer::REPORT_CODE), $comparison);
+
+		} else { // $values is ContractExcludedReport object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -1280,35 +1226,35 @@ abstract class BaseContractPeer {
 		$ret = BasePeer::doUpdate($selectCriteria, $criteria, $con);
 
     // symfony_behaviors behavior
-    foreach (sfMixer::getCallables('BaseContractPeer:doUpdate:post') as $sf_hook)
+    foreach (sfMixer::getCallables('BaseContractExcludedReportPeer:doUpdate:post') as $sf_hook)
     {
-      call_user_func($sf_hook, 'BaseContractPeer', $values, $con, $ret);
+      call_user_func($sf_hook, 'BaseContractExcludedReportPeer', $values, $con, $ret);
     }
 
     return $ret;
 	}
 
 	/**
-	 * Method to DELETE all rows from the contract table.
+	 * Method to DELETE all rows from the contract_excluded_report table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(ContractPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ContractExcludedReportPeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			ContractPeer::clearInstancePool();
-			ContractPeer::clearRelatedInstancePool();
+			ContractExcludedReportPeer::clearInstancePool();
+			ContractExcludedReportPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1318,9 +1264,9 @@ abstract class BaseContractPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Contract or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ContractExcludedReport or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Contract object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ContractExcludedReport object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -1331,27 +1277,35 @@ abstract class BaseContractPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			ContractPeer::clearInstancePool();
+			ContractExcludedReportPeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Contract) { // it's a model object
+		} elseif ($values instanceof ContractExcludedReport) { // it's a model object
 			// invalidate the cache for this single object
-			ContractPeer::removeInstanceFromPool($values);
+			ContractExcludedReportPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(ContractPeer::ID, (array) $values, Criteria::IN);
-			// invalidate the cache for this object(s)
-			foreach ((array) $values as $singleval) {
-				ContractPeer::removeInstanceFromPool($singleval);
+			// primary key is composite; we therefore, expect
+			// the primary key passed to be an array of pkey values
+			if (count($values) == count($values, COUNT_RECURSIVE)) {
+				// array is not multi-dimensional
+				$values = array($values);
+			}
+			foreach ($values as $value) {
+				$criterion = $criteria->getNewCriterion(ContractExcludedReportPeer::CONTRACT_ID, $value[0]);
+				$criterion->addAnd($criteria->getNewCriterion(ContractExcludedReportPeer::REPORT_CODE, $value[1]));
+				$criteria->addOr($criterion);
+				// we can invalidate the cache for this single PK
+				ContractExcludedReportPeer::removeInstanceFromPool($value);
 			}
 		}
 
@@ -1366,7 +1320,7 @@ abstract class BaseContractPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			ContractPeer::clearRelatedInstancePool();
+			ContractExcludedReportPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1376,24 +1330,24 @@ abstract class BaseContractPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Contract object.
+	 * Validates all modified columns of given ContractExcludedReport object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Contract $obj The object to validate.
+	 * @param      ContractExcludedReport $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Contract $obj, $cols = null)
+	public static function doValidate(ContractExcludedReport $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(ContractPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(ContractPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ContractExcludedReportPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ContractExcludedReportPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -1409,60 +1363,32 @@ abstract class BaseContractPeer {
 
 		}
 
-		return BasePeer::doValidate(ContractPeer::DATABASE_NAME, ContractPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ContractExcludedReportPeer::DATABASE_NAME, ContractExcludedReportPeer::TABLE_NAME, $columns);
 	}
 
 	/**
-	 * Retrieve a single object by pkey.
-	 *
-	 * @param      int $pk the primary key.
-	 * @param      PropelPDO $con the connection to use
-	 * @return     Contract
+	 * Retrieve object using using composite pkey values.
+	 * @param      int $contract_id
+	 * @param      string $report_code
+	 * @param      PropelPDO $con
+	 * @return     ContractExcludedReport
 	 */
-	public static function retrieveByPK($pk, PropelPDO $con = null)
-	{
-
-		if (null !== ($obj = ContractPeer::getInstanceFromPool((string) $pk))) {
-			return $obj;
+	public static function retrieveByPK($contract_id, $report_code, PropelPDO $con = null) {
+		$key = serialize(array((string) $contract_id, (string) $report_code));
+ 		if (null !== ($obj = ContractExcludedReportPeer::getInstanceFromPool($key))) {
+ 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ContractExcludedReportPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
+		$criteria = new Criteria(ContractExcludedReportPeer::DATABASE_NAME);
+		$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $contract_id);
+		$criteria->add(ContractExcludedReportPeer::REPORT_CODE, $report_code);
+		$v = ContractExcludedReportPeer::doSelect($criteria, $con);
 
-		$criteria = new Criteria(ContractPeer::DATABASE_NAME);
-		$criteria->add(ContractPeer::ID, $pk);
-
-		$v = ContractPeer::doSelect($criteria, $con);
-
-		return !empty($v) > 0 ? $v[0] : null;
+		return !empty($v) ? $v[0] : null;
 	}
-
-	/**
-	 * Retrieve multiple objects by pkey.
-	 *
-	 * @param      array $pks List of primary keys
-	 * @param      PropelPDO $con the connection to use
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function retrieveByPKs($pks, PropelPDO $con = null)
-	{
-		if ($con === null) {
-			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$objs = null;
-		if (empty($pks)) {
-			$objs = array();
-		} else {
-			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
-			$criteria->add(ContractPeer::ID, $pks, Criteria::IN);
-			$objs = ContractPeer::doSelect($criteria, $con);
-		}
-		return $objs;
-	}
-
 	// symfony behavior
 	
 	/**
@@ -1490,15 +1416,15 @@ abstract class BaseContractPeer {
 	{
 	  if (preg_match('/^do(Select|Count)(Join(All(Except)?)?|Stmt)?/', $method, $match))
 	  {
-	    return sprintf('BaseContractPeer:%s:%1$s', 'Count' == $match[1] ? 'doCount' : $match[0]);
+	    return sprintf('BaseContractExcludedReportPeer:%s:%1$s', 'Count' == $match[1] ? 'doCount' : $match[0]);
 	  }
 	
 	  throw new LogicException(sprintf('Unrecognized function "%s"', $method));
 	}
 
-} // BaseContractPeer
+} // BaseContractExcludedReportPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseContractPeer::buildTableMap();
+BaseContractExcludedReportPeer::buildTableMap();
 

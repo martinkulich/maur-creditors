@@ -42,6 +42,7 @@ class ContractForm extends BaseContractForm
                 ->setHelp('capitalize', 'Newly generated settlements will be automaticaly capitalized')
                 ->moveField('capitalize', sfWidgetFormSchema::FIRST);
 
+        $this->getWidget('contract_excluded_report_list')->setOption('expanded', true);
 
         $periodChoices = Contract::getPeriods();
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));

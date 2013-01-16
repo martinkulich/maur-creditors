@@ -1,6 +1,6 @@
 <?php
 
-class CreditorConfirmationReportForm extends ReportForm
+class CreditorConfirmationReportForm extends ParentReportForm
 {
 
     public function getUsedFields()

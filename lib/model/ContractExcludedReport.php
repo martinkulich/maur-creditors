@@ -1,10 +1,10 @@
 <?php
 
-require_once 'lib/model/om/BaseGift.php';
+require_once 'lib/model/om/BaseContractExcludedReport.php';
 
 
 /**
- * Skeleton subclass for representing a row from the 'gift' table.
+ * Skeleton subclass for representing a row from the 'contract_excluded_report' table.
  *
  * 
  *
@@ -14,6 +14,6 @@ require_once 'lib/model/om/BaseGift.php';
  *
  * @package    lib.model
  */
-class Gift extends BaseGift {
+class ContractExcludedReport extends BaseContractExcludedReport {
 
-} // Gift
+} // ContractExcludedReport

@@ -1,6 +1,6 @@
 <?php
 
-class MonthlyReportForm extends ReportForm
+class MonthlyReportForm extends ParentReportForm
 {
 
     public function getUsedFields()

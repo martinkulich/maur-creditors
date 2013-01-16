@@ -1,6 +1,6 @@
 <?php
 
-class ToPayReport extends Report
+class ToPayReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -18,9 +18,8 @@ class ToPayReport extends Report
                 contract_unpaid_regular(co.id, '%date_to%'::date, true)::integer as to_pay
             FROM contract co
             JOIN creditor cr ON cr.id = co.creditor_id
-            WHERE contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer > 0 
-            AND co.closed_at is null
-            AND co.capitalize != true
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'to_pay' AND cer.contract_id = co.id) = 0
+            AND contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer <> 0
             %where%
             GROUP BY
                 cr.lastname,
@@ -29,7 +28,6 @@ class ToPayReport extends Report
                 cr.bank_account,
                 co.id, 
                 co.currency_code
-                
             ORDER BY %order_by%, settlement_date
             ;
         ";

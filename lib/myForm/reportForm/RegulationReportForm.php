@@ -1,6 +1,6 @@
 <?php
 
-class RegulationReportForm extends ReportForm
+class RegulationReportForm extends ParentReportForm
 {
     public function configure()
     {

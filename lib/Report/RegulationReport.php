@@ -1,6 +1,6 @@
 <?php
 
-class RegulationReport extends Report
+class RegulationReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -28,6 +28,7 @@ class RegulationReport extends Report
             FROM regulation r
             LEFT JOIN settlement s1 on s1.contract_id = r.contract_id and s1.manual_balance = true
             LEFT JOIN settlement s2 on s2.contract_id = r.contract_id and s2.manual_interest = true
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'regulation' AND cer.contract_id = r.contract_id) = 0
             %where%
             GROUP BY 
             creditor_id,
@@ -65,7 +66,7 @@ class RegulationReport extends Report
         if ($year = $this->getFilter('year')) {
             $conditions[] = ' regulation_year = ' . $year;
         }
-        $where = count($conditions) >0 ? ' WHERE '.implode(' AND ', $conditions) : '';
+        $where = count($conditions) >0 ? ' AND '.implode(' AND ', $conditions) : '';
 //        die(var_dump($where));
         return $where;
     }

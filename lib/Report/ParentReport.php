@@ -1,6 +1,6 @@
 <?php
 
-abstract class Report
+abstract class ParentReport
 {
 
     const ALIGN_RIGHT = 'text-align-right';

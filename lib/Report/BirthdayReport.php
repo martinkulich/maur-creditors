@@ -1,6 +1,6 @@
 <?php
 
-class BirthdayReport extends Report
+class BirthdayReport extends ParentReport
 {
 
     public function getSqlPatter()

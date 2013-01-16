@@ -1,6 +1,6 @@
 <?php
 
-class CreditorConfirmationReport extends Report
+class CreditorConfirmationReport extends ParentReport
 {
 
     public function getSqlPatter()

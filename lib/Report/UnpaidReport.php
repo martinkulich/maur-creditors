@@ -1,6 +1,6 @@
 <?php
 
-class UnpaidReport extends Report
+class UnpaidReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -14,6 +14,7 @@ class UnpaidReport extends Report
                 sum(contract_unpaid(c.id, '%date_to%', true))::integer as unpaid_cumulative
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'unpaid' AND cer.contract_id = c.id) = 0
             %where%
             GROUP BY 
                 c.currency_code, 

@@ -1,6 +1,6 @@
 <?php
 
-class BalanceReport extends Report
+class BalanceReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -13,6 +13,7 @@ class BalanceReport extends Report
                 sum(contract_balance(c.id, '%date_to%'::date, true))::integer as balance
             FROM creditor cr
             JOIN contract c ON cr.id = c.creditor_id
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'balance' AND cer.contract_id = c.id) = 0
             %where%
             GROUP BY c.currency_code, cr.id, cr.lastname, cr.firstname
             HAVING sum(contract_balance(c.id, '%date_to%'::date, true))::integer <> 0
@@ -58,7 +59,7 @@ class BalanceReport extends Report
     {
         $where = '';
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $where = ' WHERE cr.id = ' . $creditorId;
+            $where = ' AND cr.id = ' . $creditorId;
         }
 
         return $where;

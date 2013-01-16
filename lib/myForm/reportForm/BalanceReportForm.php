@@ -1,6 +1,6 @@
 <?php
 
-class BalanceReportForm extends ReportForm
+class BalanceReportForm extends ParentReportForm
 {
 
     public function configure()

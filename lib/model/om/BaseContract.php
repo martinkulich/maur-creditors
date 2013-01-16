@@ -108,6 +108,16 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $aCurrency;
 
 	/**
+	 * @var        array ContractExcludedReport[] Collection to store aggregation of ContractExcludedReport objects.
+	 */
+	protected $collContractExcludedReports;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collContractExcludedReports.
+	 */
+	private $lastContractExcludedReportCriteria = null;
+
+	/**
 	 * @var        array Payment[] Collection to store aggregation of Payment objects.
 	 */
 	protected $collPayments;
@@ -910,6 +920,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 			$this->aCreditor = null;
 			$this->aCurrency = null;
+			$this->collContractExcludedReports = null;
+			$this->lastContractExcludedReportCriteria = null;
+
 			$this->collPayments = null;
 			$this->lastPaymentCriteria = null;
 
@@ -1110,6 +1123,14 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collContractExcludedReports !== null) {
+				foreach ($this->collContractExcludedReports as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collPayments !== null) {
 				foreach ($this->collPayments as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1222,6 +1243,14 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collContractExcludedReports !== null) {
+					foreach ($this->collContractExcludedReports as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 				if ($this->collPayments !== null) {
 					foreach ($this->collPayments as $referrerFK) {
@@ -1568,6 +1597,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
+			foreach ($this->getContractExcludedReports() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addContractExcludedReport($relObj->copy($deepCopy));
+				}
+			}
+
 			foreach ($this->getPayments() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addPayment($relObj->copy($deepCopy));
@@ -1729,6 +1764,207 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aCurrency;
+	}
+
+	/**
+	 * Clears out the collContractExcludedReports collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addContractExcludedReports()
+	 */
+	public function clearContractExcludedReports()
+	{
+		$this->collContractExcludedReports = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collContractExcludedReports collection (array).
+	 *
+	 * By default this just sets the collContractExcludedReports collection to an empty array (like clearcollContractExcludedReports());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initContractExcludedReports()
+	{
+		$this->collContractExcludedReports = array();
+	}
+
+	/**
+	 * Gets an array of ContractExcludedReport objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Contract has previously been saved, it will retrieve
+	 * related ContractExcludedReports from storage. If this Contract is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array ContractExcludedReport[]
+	 * @throws     PropelException
+	 */
+	public function getContractExcludedReports($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collContractExcludedReports === null) {
+			if ($this->isNew()) {
+			   $this->collContractExcludedReports = array();
+			} else {
+
+				$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $this->id);
+
+				ContractExcludedReportPeer::addSelectColumns($criteria);
+				$this->collContractExcludedReports = ContractExcludedReportPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $this->id);
+
+				ContractExcludedReportPeer::addSelectColumns($criteria);
+				if (!isset($this->lastContractExcludedReportCriteria) || !$this->lastContractExcludedReportCriteria->equals($criteria)) {
+					$this->collContractExcludedReports = ContractExcludedReportPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastContractExcludedReportCriteria = $criteria;
+		return $this->collContractExcludedReports;
+	}
+
+	/**
+	 * Returns the number of related ContractExcludedReport objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related ContractExcludedReport objects.
+	 * @throws     PropelException
+	 */
+	public function countContractExcludedReports(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collContractExcludedReports === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $this->id);
+
+				$count = ContractExcludedReportPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $this->id);
+
+				if (!isset($this->lastContractExcludedReportCriteria) || !$this->lastContractExcludedReportCriteria->equals($criteria)) {
+					$count = ContractExcludedReportPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collContractExcludedReports);
+				}
+			} else {
+				$count = count($this->collContractExcludedReports);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a ContractExcludedReport object to this object
+	 * through the ContractExcludedReport foreign key attribute.
+	 *
+	 * @param      ContractExcludedReport $l ContractExcludedReport
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addContractExcludedReport(ContractExcludedReport $l)
+	{
+		if ($this->collContractExcludedReports === null) {
+			$this->initContractExcludedReports();
+		}
+		if (!in_array($l, $this->collContractExcludedReports, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collContractExcludedReports, $l);
+			$l->setContract($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Contract is new, it will return
+	 * an empty collection; or if this Contract has previously
+	 * been saved, it will retrieve related ContractExcludedReports from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Contract.
+	 */
+	public function getContractExcludedReportsJoinReport($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collContractExcludedReports === null) {
+			if ($this->isNew()) {
+				$this->collContractExcludedReports = array();
+			} else {
+
+				$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $this->id);
+
+				$this->collContractExcludedReports = ContractExcludedReportPeer::doSelectJoinReport($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ContractExcludedReportPeer::CONTRACT_ID, $this->id);
+
+			if (!isset($this->lastContractExcludedReportCriteria) || !$this->lastContractExcludedReportCriteria->equals($criteria)) {
+				$this->collContractExcludedReports = ContractExcludedReportPeer::doSelectJoinReport($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastContractExcludedReportCriteria = $criteria;
+
+		return $this->collContractExcludedReports;
 	}
 
 	/**
@@ -2346,6 +2582,11 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collContractExcludedReports) {
+				foreach ((array) $this->collContractExcludedReports as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collPayments) {
 				foreach ((array) $this->collPayments as $o) {
 					$o->clearAllReferences($deep);
@@ -2363,6 +2604,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
+		$this->collContractExcludedReports = null;
 		$this->collPayments = null;
 		$this->collSettlements = null;
 		$this->collRegulations = null;

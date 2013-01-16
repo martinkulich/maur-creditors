@@ -1,6 +1,6 @@
 <?php
 
-class UnpaidReportForm extends ReportForm
+class UnpaidReportForm extends ParentReportForm
 {
 
     public function configure()

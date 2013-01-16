@@ -1,6 +1,6 @@
 <?php
 
-class ToPayReportForm extends ReportForm
+class ToPayReportForm extends ParentReportForm
 {
 
     

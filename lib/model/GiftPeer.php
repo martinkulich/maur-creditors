@@ -1,6 +1,6 @@
 <?php
 
-require 'lib/model/om/BaseGiftPeer.php';
+require_once 'lib/model/om/BaseGiftPeer.php';
 
 
 /**

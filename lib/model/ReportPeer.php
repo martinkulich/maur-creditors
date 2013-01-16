@@ -1,10 +1,10 @@
 <?php
 
-require_once 'lib/model/om/BaseGift.php';
+require_once 'lib/model/om/BaseReportPeer.php';
 
 
 /**
- * Skeleton subclass for representing a row from the 'gift' table.
+ * Skeleton subclass for performing query and update operations on the 'report' table.
  *
  * 
  *
@@ -14,6 +14,6 @@ require_once 'lib/model/om/BaseGift.php';
  *
  * @package    lib.model
  */
-class Gift extends BaseGift {
+class ReportPeer extends BaseReportPeer {
 
-} // Gift
+} // ReportPeer

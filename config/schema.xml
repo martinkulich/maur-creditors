@@ -40,6 +40,16 @@
       <reference local="currency_code" foreign="code"/>
     </foreign-key>
   </table>
+  <table name="contract_excluded_report" phpName="ContractExcludedReport">
+    <column name="contract_id" phpName="ContractId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="report_code" phpName="ReportCode" type="VARCHAR" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="contract" name="contract_excluded_report_contract_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="contract_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="report" name="contract_excluded_report_report_code_fkey" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="report_code" foreign="code"/>
+    </foreign-key>
+  </table>
   <table name="creditor" phpName="Creditor">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="creditor_type_code" phpName="CreditorTypeCode" type="VARCHAR" required="true"/>
@@ -113,6 +123,10 @@
     <foreign-key foreignTable="contract" name="payment_contract_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
     </foreign-key>
+  </table>
+  <table name="report" phpName="Report">
+    <column name="code" phpName="Code" type="VARCHAR" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" required="true"/>
   </table>
   <table name="security_group" phpName="SecurityGroup">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>

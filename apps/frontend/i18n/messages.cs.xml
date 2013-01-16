@@ -2237,5 +2237,9 @@
       <source>Add gift</source>
       <target>Přidat dárek</target>
     </trans-unit>
+    <trans-unit id="560">
+      <source>Contract excluded report list</source>
+      <target>Nezahrnovat do reportu</target>
+    </trans-unit>
   </body>
 </xliff>

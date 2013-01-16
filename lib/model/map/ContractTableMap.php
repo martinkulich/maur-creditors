@@ -60,6 +60,7 @@ class ContractTableMap extends TableMap {
 	{
     $this->addRelation('Creditor', 'Creditor', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Currency', 'Currency', RelationMap::MANY_TO_ONE, array('currency_code' => 'code', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('ContractExcludedReport', 'ContractExcludedReport', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Payment', 'Payment', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Settlement', 'Settlement', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Regulation', 'Regulation', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'RESTRICT', 'CASCADE');

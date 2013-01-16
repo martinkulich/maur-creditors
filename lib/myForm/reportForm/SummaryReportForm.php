@@ -1,6 +1,6 @@
 <?php
 
-class SummaryReportForm extends ReportForm
+class SummaryReportForm extends ParentReportForm
 {
 
     public function configure()

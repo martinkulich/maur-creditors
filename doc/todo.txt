@@ -109,7 +109,7 @@ proverit ukoly z pohledu p. Batlickove
 
 //report jistiny zobrazit i smlouvy jez ten den konci
 
-(ne)zahrnovani smluv do reportu
+//(ne)zahrnovani smluv do reportu
 
 //prijate platby
     sumace
@@ -121,7 +121,7 @@ proverit ukoly z pohledu p. Batlickove
   //    pridat kolik zbiva k alokaci
 
     narozeniny
-        darek (jiz darovano)
+        //darek (jiz darovano)
   //  smazat pravo predpisy
     //skryt kurz v administraci men
     //seradit prava
