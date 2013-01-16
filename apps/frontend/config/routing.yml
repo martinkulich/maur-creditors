@@ -98,7 +98,7 @@ settlement:
     prefix_path:          /settlement
     column:               id
     with_wildcard_routes: true
-    object_actions: {capitalize: get, allocate: [get, post], note: get}
+    object_actions: {capitalize: get, allocate: [get, post], newOutgoingPayment: [get, post], note: get}
     collection_actions: {filters: get, filter: post, reset: get, checkContracts: get, addFilter: get}
 
 creditor:
