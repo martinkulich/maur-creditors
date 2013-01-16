@@ -24,7 +24,7 @@ class IpAddressFilter extends sfFilter
                     $criteria = new Criteria();
                     $criteria->add(IpAddressPeer::IP_ADDRESS, $ipAddressValue);
                     $ipAddressExists = IpAddressPeer::doCount($criteria) == 1;
-                    if (!$ipAddressExists && false) {
+                    if (!$ipAddressExists) {
                         $error = ServiceContainer::getTranslateService()->__('Invalid IP address');
                         ServiceContainer::getMessageService()->addError($error . ' ' . $ipAddressValue);
                         return self::doRedirect($context);
