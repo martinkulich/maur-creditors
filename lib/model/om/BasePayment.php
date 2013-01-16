@@ -57,10 +57,10 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	protected $cash;
 
 	/**
-	 * The value for the bank_account field.
+	 * The value for the sender_bank_account field.
 	 * @var        string
 	 */
-	protected $bank_account;
+	protected $sender_bank_account;
 
 	/**
 	 * The value for the payment_type field.
@@ -68,6 +68,17 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	 * @var        string
 	 */
 	protected $payment_type;
+
+	/**
+	 * The value for the bank_account_id field.
+	 * @var        int
+	 */
+	protected $bank_account_id;
+
+	/**
+	 * @var        BankAccount
+	 */
+	protected $aBankAccount;
 
 	/**
 	 * @var        Contract
@@ -199,13 +210,13 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [bank_account] column value.
+	 * Get the [sender_bank_account] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getBankAccount()
+	public function getSenderBankAccount()
 	{
-		return $this->bank_account;
+		return $this->sender_bank_account;
 	}
 
 	/**
@@ -216,6 +227,16 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	public function getPaymentType()
 	{
 		return $this->payment_type;
+	}
+
+	/**
+	 * Get the [bank_account_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getBankAccountId()
+	{
+		return $this->bank_account_id;
 	}
 
 	/**
@@ -372,24 +393,24 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	} // setCash()
 
 	/**
-	 * Set the value of [bank_account] column.
+	 * Set the value of [sender_bank_account] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     Payment The current object (for fluent API support)
 	 */
-	public function setBankAccount($v)
+	public function setSenderBankAccount($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->bank_account !== $v) {
-			$this->bank_account = $v;
-			$this->modifiedColumns[] = PaymentPeer::BANK_ACCOUNT;
+		if ($this->sender_bank_account !== $v) {
+			$this->sender_bank_account = $v;
+			$this->modifiedColumns[] = PaymentPeer::SENDER_BANK_ACCOUNT;
 		}
 
 		return $this;
-	} // setBankAccount()
+	} // setSenderBankAccount()
 
 	/**
 	 * Set the value of [payment_type] column.
@@ -410,6 +431,30 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setPaymentType()
+
+	/**
+	 * Set the value of [bank_account_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Payment The current object (for fluent API support)
+	 */
+	public function setBankAccountId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->bank_account_id !== $v) {
+			$this->bank_account_id = $v;
+			$this->modifiedColumns[] = PaymentPeer::BANK_ACCOUNT_ID;
+		}
+
+		if ($this->aBankAccount !== null && $this->aBankAccount->getId() !== $v) {
+			$this->aBankAccount = null;
+		}
+
+		return $this;
+	} // setBankAccountId()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -461,8 +506,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			$this->amount = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->note = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->cash = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
-			$this->bank_account = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->sender_bank_account = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->payment_type = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->bank_account_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -472,7 +518,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Payment object", $e);
@@ -497,6 +543,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 
 		if ($this->aContract !== null && $this->contract_id !== $this->aContract->getId()) {
 			$this->aContract = null;
+		}
+		if ($this->aBankAccount !== null && $this->bank_account_id !== $this->aBankAccount->getId()) {
+			$this->aBankAccount = null;
 		}
 	} // ensureConsistency
 
@@ -537,6 +586,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aBankAccount = null;
 			$this->aContract = null;
 		} // if (deep)
 	}
@@ -685,6 +735,13 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
+			if ($this->aBankAccount !== null) {
+				if ($this->aBankAccount->isModified() || $this->aBankAccount->isNew()) {
+					$affectedRows += $this->aBankAccount->save($con);
+				}
+				$this->setBankAccount($this->aBankAccount);
+			}
+
 			if ($this->aContract !== null) {
 				if ($this->aContract->isModified() || $this->aContract->isNew()) {
 					$affectedRows += $this->aContract->save($con);
@@ -785,6 +842,12 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
+			if ($this->aBankAccount !== null) {
+				if (!$this->aBankAccount->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aBankAccount->getValidationFailures());
+				}
+			}
+
 			if ($this->aContract !== null) {
 				if (!$this->aContract->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aContract->getValidationFailures());
@@ -849,10 +912,13 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 				return $this->getCash();
 				break;
 			case 6:
-				return $this->getBankAccount();
+				return $this->getSenderBankAccount();
 				break;
 			case 7:
 				return $this->getPaymentType();
+				break;
+			case 8:
+				return $this->getBankAccountId();
 				break;
 			default:
 				return null;
@@ -881,8 +947,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			$keys[3] => $this->getAmount(),
 			$keys[4] => $this->getNote(),
 			$keys[5] => $this->getCash(),
-			$keys[6] => $this->getBankAccount(),
+			$keys[6] => $this->getSenderBankAccount(),
 			$keys[7] => $this->getPaymentType(),
+			$keys[8] => $this->getBankAccountId(),
 		);
 		return $result;
 	}
@@ -933,10 +1000,13 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 				$this->setCash($value);
 				break;
 			case 6:
-				$this->setBankAccount($value);
+				$this->setSenderBankAccount($value);
 				break;
 			case 7:
 				$this->setPaymentType($value);
+				break;
+			case 8:
+				$this->setBankAccountId($value);
 				break;
 		} // switch()
 	}
@@ -968,8 +1038,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setAmount($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setNote($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setCash($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setBankAccount($arr[$keys[6]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSenderBankAccount($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setPaymentType($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setBankAccountId($arr[$keys[8]]);
 	}
 
 	/**
@@ -987,8 +1058,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PaymentPeer::AMOUNT)) $criteria->add(PaymentPeer::AMOUNT, $this->amount);
 		if ($this->isColumnModified(PaymentPeer::NOTE)) $criteria->add(PaymentPeer::NOTE, $this->note);
 		if ($this->isColumnModified(PaymentPeer::CASH)) $criteria->add(PaymentPeer::CASH, $this->cash);
-		if ($this->isColumnModified(PaymentPeer::BANK_ACCOUNT)) $criteria->add(PaymentPeer::BANK_ACCOUNT, $this->bank_account);
+		if ($this->isColumnModified(PaymentPeer::SENDER_BANK_ACCOUNT)) $criteria->add(PaymentPeer::SENDER_BANK_ACCOUNT, $this->sender_bank_account);
 		if ($this->isColumnModified(PaymentPeer::PAYMENT_TYPE)) $criteria->add(PaymentPeer::PAYMENT_TYPE, $this->payment_type);
+		if ($this->isColumnModified(PaymentPeer::BANK_ACCOUNT_ID)) $criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->bank_account_id);
 
 		return $criteria;
 	}
@@ -1053,9 +1125,11 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 
 		$copyObj->setCash($this->cash);
 
-		$copyObj->setBankAccount($this->bank_account);
+		$copyObj->setSenderBankAccount($this->sender_bank_account);
 
 		$copyObj->setPaymentType($this->payment_type);
+
+		$copyObj->setBankAccountId($this->bank_account_id);
 
 
 		$copyObj->setNew(true);
@@ -1100,6 +1174,55 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 			self::$peer = new PaymentPeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Declares an association between this object and a BankAccount object.
+	 *
+	 * @param      BankAccount $v
+	 * @return     Payment The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setBankAccount(BankAccount $v = null)
+	{
+		if ($v === null) {
+			$this->setBankAccountId(NULL);
+		} else {
+			$this->setBankAccountId($v->getId());
+		}
+
+		$this->aBankAccount = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the BankAccount object, it will not be re-added.
+		if ($v !== null) {
+			$v->addPayment($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated BankAccount object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     BankAccount The associated BankAccount object.
+	 * @throws     PropelException
+	 */
+	public function getBankAccount(PropelPDO $con = null)
+	{
+		if ($this->aBankAccount === null && ($this->bank_account_id !== null)) {
+			$this->aBankAccount = BankAccountPeer::retrieveByPk($this->bank_account_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aBankAccount->addPayments($this);
+			 */
+		}
+		return $this->aBankAccount;
 	}
 
 	/**
@@ -1165,6 +1288,7 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		if ($deep) {
 		} // if ($deep)
 
+			$this->aBankAccount = null;
 			$this->aContract = null;
 	}
 

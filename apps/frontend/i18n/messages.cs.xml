@@ -2209,5 +2209,9 @@
       <source>There is no outgoing payment to be used for allocation</source>
       <target>Všechny odchozí platby daného věřitele jsou plně alokovány, vytvořte prosím novou odchozí platbu</target>
     </trans-unit>
+    <trans-unit id="553">
+      <source>Sender bank account</source>
+      <target>Bankovní účet odesílatele</target>
+    </trans-unit>
   </body>
 </xliff>

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author martinkulich <martin.kulich@imatic.cz>
+ */
+
 class IpAddressFilter extends sfFilter
 {
 
@@ -20,7 +24,7 @@ class IpAddressFilter extends sfFilter
                     $criteria = new Criteria();
                     $criteria->add(IpAddressPeer::IP_ADDRESS, $ipAddressValue);
                     $ipAddressExists = IpAddressPeer::doCount($criteria) == 1;
-                    if (!$ipAddressExists) {
+                    if (!$ipAddressExists && false) {
                         $error = ServiceContainer::getTranslateService()->__('Invalid IP address');
                         ServiceContainer::getMessageService()->addError($error . ' ' . $ipAddressValue);
                         return self::doRedirect($context);

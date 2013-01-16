@@ -49,6 +49,7 @@ class BankAccountTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::ONE_TO_MANY, array('id' => 'bank_account_id', ), 'SET NULL', 'CASCADE');
+    $this->addRelation('Payment', 'Payment', RelationMap::ONE_TO_MANY, array('id' => 'bank_account_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

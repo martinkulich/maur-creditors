@@ -83,4 +83,27 @@ class paymentActions extends autoPaymentActions
 
         return $this->redirect('@payment');
     }
+
+    protected function getSums()
+    {
+        $sumPager = $this->getPager();
+        $criteria = $sumPager->getCriteria();
+        $criteria->clearSelectColumns();
+        $criteria->addJoin(PaymentPeer::CONTRACT_ID, ContractPeer::ID);
+        $criteria->addSelectColumn(ContractPeer::CURRENCY_CODE);
+        $criteria->addSelectColumn(sprintf('sum(%s) as amount', PaymentPeer::AMOUNT));
+        $criteria->clearOrderByColumns();
+        $criteria->addGroupByColumn(ContractPeer::CURRENCY_CODE);
+        $sumPager->setCriteria($criteria);
+        $sumPager->init();
+
+        $statement = PaymentPeer::doSelectStmt($sumPager->getCriteria());
+
+        $sums = array();
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $sums[$row['currency_code']] = $row;
+        }
+        ksort($sums);
+        return $sums;
+    }
 }

@@ -13,6 +13,12 @@
 <td class="sf_admin_text sf_admin_list_td_amount text-align-right">
     <?php echo my_format_currency($payment->getAmount(), $payment->getContract()->getCurrencyCode()) ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_bank_account ">
+    <?php echo __($payment->getBankAccount()) ?>
+</td>
+<td class="sf_admin_text sf_admin_list_td_bank_account ">
+    <?php echo __($payment->getSenderBankAccount()) ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_note text-align-right">
     <?php echo $payment->getNote() ? link_to('Poznámka', '@payment_note?id=' . $payment->getId(), array('class' => 'modal_link')) : ''; ?>
 </td>

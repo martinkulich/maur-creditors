@@ -107,6 +107,21 @@ proverit ukoly z pohledu p. Batlickove
 
 //odchozi platby filtr na datum
 
-report jistiny zobrazit i smlouvy jez ten den konci
+//report jistiny zobrazit i smlouvy jez ten den konci
 
 (ne)zahrnovani smluv do reportu
+
+prijate platby
+    sumace
+    //prichozi cislo uctu unikredit default
+    //zobrazit z jakeho uctu
+
+odchozi platby
+    k vyplaceni rovnou
+    pridat kolik zbiva k alokaci
+
+    narozeniny
+        darek (jiz darovano)
+    smazat pravo predpisy
+    skryt kurz v administraci men
+    seradit prava

@@ -27,7 +27,7 @@ class PaymentForm extends BasePaymentForm
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {
             $this->getWidget('creditor_id')->setDefault($contract->getCreditorId());
-            $this->getWidgetSchema()->setDefault('bank_account', $contract->getCreditor()->getBankAccount());
+            $this->getWidgetSchema()->setDefault('sender_bank_account', $contract->getCreditor()->getBankAccount());
         }
 
         $this->getWidget('contract_id')->setOption('add_empty', true);

@@ -19,7 +19,7 @@ generator:
         date:
           format_date: D
       list:
-        display: [creditor, contract, payment_type,  date, amount, note]
+        display: [creditor, contract, payment_type,  date, amount, bank_account, sender_bank_account, note]
         batch_actions: []
         sort: [date, asc]
         actions:

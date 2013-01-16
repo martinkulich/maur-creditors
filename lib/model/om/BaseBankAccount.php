@@ -47,6 +47,16 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 	private $lastOutgoingPaymentCriteria = null;
 
 	/**
+	 * @var        array Payment[] Collection to store aggregation of Payment objects.
+	 */
+	protected $collPayments;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collPayments.
+	 */
+	private $lastPaymentCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -263,6 +273,9 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 			$this->collOutgoingPayments = null;
 			$this->lastOutgoingPaymentCriteria = null;
 
+			$this->collPayments = null;
+			$this->lastPaymentCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -435,6 +448,14 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collPayments !== null) {
+				foreach ($this->collPayments as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -508,6 +529,14 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 
 				if ($this->collOutgoingPayments !== null) {
 					foreach ($this->collOutgoingPayments as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collPayments !== null) {
+					foreach ($this->collPayments as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -728,6 +757,12 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 			foreach ($this->getOutgoingPayments() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addOutgoingPayment($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getPayments() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addPayment($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1027,6 +1062,207 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collPayments collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addPayments()
+	 */
+	public function clearPayments()
+	{
+		$this->collPayments = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collPayments collection (array).
+	 *
+	 * By default this just sets the collPayments collection to an empty array (like clearcollPayments());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initPayments()
+	{
+		$this->collPayments = array();
+	}
+
+	/**
+	 * Gets an array of Payment objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this BankAccount has previously been saved, it will retrieve
+	 * related Payments from storage. If this BankAccount is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Payment[]
+	 * @throws     PropelException
+	 */
+	public function getPayments($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(BankAccountPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPayments === null) {
+			if ($this->isNew()) {
+			   $this->collPayments = array();
+			} else {
+
+				$criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->id);
+
+				PaymentPeer::addSelectColumns($criteria);
+				$this->collPayments = PaymentPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->id);
+
+				PaymentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastPaymentCriteria) || !$this->lastPaymentCriteria->equals($criteria)) {
+					$this->collPayments = PaymentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastPaymentCriteria = $criteria;
+		return $this->collPayments;
+	}
+
+	/**
+	 * Returns the number of related Payment objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Payment objects.
+	 * @throws     PropelException
+	 */
+	public function countPayments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(BankAccountPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collPayments === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->id);
+
+				$count = PaymentPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->id);
+
+				if (!isset($this->lastPaymentCriteria) || !$this->lastPaymentCriteria->equals($criteria)) {
+					$count = PaymentPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collPayments);
+				}
+			} else {
+				$count = count($this->collPayments);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Payment object to this object
+	 * through the Payment foreign key attribute.
+	 *
+	 * @param      Payment $l Payment
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addPayment(Payment $l)
+	{
+		if ($this->collPayments === null) {
+			$this->initPayments();
+		}
+		if (!in_array($l, $this->collPayments, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collPayments, $l);
+			$l->setBankAccount($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this BankAccount is new, it will return
+	 * an empty collection; or if this BankAccount has previously
+	 * been saved, it will retrieve related Payments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in BankAccount.
+	 */
+	public function getPaymentsJoinContract($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(BankAccountPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collPayments === null) {
+			if ($this->isNew()) {
+				$this->collPayments = array();
+			} else {
+
+				$criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->id);
+
+				$this->collPayments = PaymentPeer::doSelectJoinContract($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(PaymentPeer::BANK_ACCOUNT_ID, $this->id);
+
+			if (!isset($this->lastPaymentCriteria) || !$this->lastPaymentCriteria->equals($criteria)) {
+				$this->collPayments = PaymentPeer::doSelectJoinContract($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastPaymentCriteria = $criteria;
+
+		return $this->collPayments;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1043,9 +1279,15 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collPayments) {
+				foreach ((array) $this->collPayments as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collOutgoingPayments = null;
+		$this->collPayments = null;
 	}
 
 	// symfony_behaviors behavior

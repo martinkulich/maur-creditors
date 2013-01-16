@@ -43,8 +43,9 @@ class PaymentTableMap extends TableMap {
 		$this->addColumn('AMOUNT', 'Amount', 'NUMERIC', true, 15, 0);
 		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('CASH', 'Cash', 'BOOLEAN', true, null, false);
-		$this->addColumn('BANK_ACCOUNT', 'BankAccount', 'VARCHAR', false, 255, null);
+		$this->addColumn('SENDER_BANK_ACCOUNT', 'SenderBankAccount', 'VARCHAR', false, 255, null);
 		$this->addColumn('PAYMENT_TYPE', 'PaymentType', 'VARCHAR', true, 255, 'payment');
+		$this->addForeignKey('BANK_ACCOUNT_ID', 'BankAccountId', 'INTEGER', 'bank_account', 'ID', true, null, null);
 		// validators
 	} // initialize()
 
@@ -53,6 +54,7 @@ class PaymentTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('BankAccount', 'BankAccount', RelationMap::MANY_TO_ONE, array('bank_account_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Contract', 'Contract', RelationMap::MANY_TO_ONE, array('contract_id' => 'id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 

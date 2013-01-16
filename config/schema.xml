@@ -94,8 +94,12 @@
     <column name="amount" phpName="Amount" type="NUMERIC" size="15" scale="2" required="true" defaultValue="0"/>
     <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
     <column name="cash" phpName="Cash" type="BOOLEAN" required="true" defaultValue="false"/>
-    <column name="bank_account" phpName="BankAccount" type="VARCHAR" required="false"/>
+    <column name="sender_bank_account" phpName="SenderBankAccount" type="VARCHAR" required="false"/>
     <column name="payment_type" phpName="PaymentType" type="VARCHAR" required="true" defaultValue="payment"/>
+    <column name="bank_account_id" phpName="BankAccountId" type="INTEGER" required="true"/>
+    <foreign-key foreignTable="bank_account" name="payment_bank_account_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
+      <reference local="bank_account_id" foreign="id"/>
+    </foreign-key>
     <foreign-key foreignTable="contract" name="payment_contract_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
     </foreign-key>
