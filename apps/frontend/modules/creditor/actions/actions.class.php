@@ -38,4 +38,44 @@ class creditorActions extends autoCreditorActions
         $this->outgoingPayments = OutgoingPaymentPeer::doSelect($criteria);
     }
 
+    public function executeGiftList(sfWebRequest $request)
+    {
+        $this->creditor = $this->getRoute()->getObject();
+        $this->forward404Unless($this->creditor);
+    }
+
+    public function executeAddGift(sfWebRequest $request)
+    {
+        $this->creditor = $this->getRoute()->getObject();
+        $this->forward404Unless($this->creditor);
+
+        $this->gift = new Gift();
+        $this->gift->setCreditor($this->creditor);
+        $this->form = new CreditorGiftForm($this->gift);
+
+        if ($request->isMethod(sfWebRequest::POST)) {
+            $this->processAddGiftForm($request, $this->form);
+        }
+    }
+
+    protected function processAddGiftForm(sfWebRequest $request, sfForm $form)
+    {
+        $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+        if ($form->isValid()) {
+            $notice = $form->getObject()->isNew() ? 'The item was created successfully' : 'The item was updated successfully';
+
+            $gift = $form->save();
+
+
+            $redirect = '@report?report_type=birthday';
+
+            ServiceContainer::getMessageService()->addSuccess($notice);
+
+            return $this->redirect($redirect, 205);
+        } else {
+            ServiceContainer::getMessageService()->addFromErrors($form);
+        }
+    }
+
+
 }

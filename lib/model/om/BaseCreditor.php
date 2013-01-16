@@ -107,6 +107,16 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	private $lastContractCriteria = null;
 
 	/**
+	 * @var        array Gift[] Collection to store aggregation of Gift objects.
+	 */
+	protected $collGifts;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collGifts.
+	 */
+	private $lastGiftCriteria = null;
+
+	/**
 	 * @var        array OutgoingPayment[] Collection to store aggregation of OutgoingPayment objects.
 	 */
 	protected $collOutgoingPayments;
@@ -705,6 +715,9 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			$this->collContracts = null;
 			$this->lastContractCriteria = null;
 
+			$this->collGifts = null;
+			$this->lastGiftCriteria = null;
+
 			$this->collOutgoingPayments = null;
 			$this->lastOutgoingPaymentCriteria = null;
 
@@ -883,6 +896,14 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collGifts !== null) {
+				foreach ($this->collGifts as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collOutgoingPayments !== null) {
 				foreach ($this->collOutgoingPayments as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -972,6 +993,14 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 				if ($this->collContracts !== null) {
 					foreach ($this->collContracts as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collGifts !== null) {
+					foreach ($this->collGifts as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1321,6 +1350,12 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 				}
 			}
 
+			foreach ($this->getGifts() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addGift($relObj->copy($deepCopy));
+				}
+			}
+
 			foreach ($this->getOutgoingPayments() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addOutgoingPayment($relObj->copy($deepCopy));
@@ -1579,6 +1614,160 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		$this->lastContractCriteria = $criteria;
 
 		return $this->collContracts;
+	}
+
+	/**
+	 * Clears out the collGifts collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addGifts()
+	 */
+	public function clearGifts()
+	{
+		$this->collGifts = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collGifts collection (array).
+	 *
+	 * By default this just sets the collGifts collection to an empty array (like clearcollGifts());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initGifts()
+	{
+		$this->collGifts = array();
+	}
+
+	/**
+	 * Gets an array of Gift objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Creditor has previously been saved, it will retrieve
+	 * related Gifts from storage. If this Creditor is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Gift[]
+	 * @throws     PropelException
+	 */
+	public function getGifts($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collGifts === null) {
+			if ($this->isNew()) {
+			   $this->collGifts = array();
+			} else {
+
+				$criteria->add(GiftPeer::CREDITOR_ID, $this->id);
+
+				GiftPeer::addSelectColumns($criteria);
+				$this->collGifts = GiftPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(GiftPeer::CREDITOR_ID, $this->id);
+
+				GiftPeer::addSelectColumns($criteria);
+				if (!isset($this->lastGiftCriteria) || !$this->lastGiftCriteria->equals($criteria)) {
+					$this->collGifts = GiftPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastGiftCriteria = $criteria;
+		return $this->collGifts;
+	}
+
+	/**
+	 * Returns the number of related Gift objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Gift objects.
+	 * @throws     PropelException
+	 */
+	public function countGifts(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collGifts === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(GiftPeer::CREDITOR_ID, $this->id);
+
+				$count = GiftPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(GiftPeer::CREDITOR_ID, $this->id);
+
+				if (!isset($this->lastGiftCriteria) || !$this->lastGiftCriteria->equals($criteria)) {
+					$count = GiftPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collGifts);
+				}
+			} else {
+				$count = count($this->collGifts);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Gift object to this object
+	 * through the Gift foreign key attribute.
+	 *
+	 * @param      Gift $l Gift
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addGift(Gift $l)
+	{
+		if ($this->collGifts === null) {
+			$this->initGifts();
+		}
+		if (!in_array($l, $this->collGifts, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collGifts, $l);
+			$l->setCreditor($this);
+		}
 	}
 
 	/**
@@ -2094,6 +2283,11 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collGifts) {
+				foreach ((array) $this->collGifts as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collOutgoingPayments) {
 				foreach ((array) $this->collOutgoingPayments as $o) {
 					$o->clearAllReferences($deep);
@@ -2107,6 +2301,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collContracts = null;
+		$this->collGifts = null;
 		$this->collOutgoingPayments = null;
 		$this->collRegulations = null;
 	}

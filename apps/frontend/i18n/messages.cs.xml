@@ -2213,5 +2213,29 @@
       <source>Sender bank account</source>
       <target>Bankovní účet odesílatele</target>
     </trans-unit>
+    <trans-unit id="554">
+      <source>New gift</source>
+      <target>Nový dárek</target>
+    </trans-unit>
+    <trans-unit id="555">
+      <source>Edit gift</source>
+      <target>Editvoat dárek</target>
+    </trans-unit>
+    <trans-unit id="556">
+      <source>Filter gift</source>
+      <target>Filtrovat dárky</target>
+    </trans-unit>
+    <trans-unit id="557">
+      <source>Gifts</source>
+      <target>Dárky</target>
+    </trans-unit>
+    <trans-unit id="558">
+      <source>Last gift date</source>
+      <target>Datum posledního dárku</target>
+    </trans-unit>
+    <trans-unit id="559">
+      <source>Add gift</source>
+      <target>Přidat dárek</target>
+    </trans-unit>
   </body>
 </xliff>

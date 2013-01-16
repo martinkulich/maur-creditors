@@ -594,3 +594,9 @@ Allocated amount;Alokováno
 Unallocated amount;Nealokováno
 There is no outgoing payment to be used for allocation;Všechny odchozí platby daného věřitele jsou plně alokovány, vytvořte prosím novou odchozí platbu
 Sender bank account; Bankovní účet odesílatele
+New gift;Nový dárek
+Edit gift;Editvoat dárek
+Filter gift;Filtrovat dárky
+Gifts;Dárky
+Last gift date;Datum posledního dárku
+Add gift;Přidat dárek

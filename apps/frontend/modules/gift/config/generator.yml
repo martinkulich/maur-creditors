@@ -1,0 +1,26 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           gift
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              gift
+    plural:                gifts
+    route_prefix:          gift
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        batch_actions: []
+        display: [creditor, name]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+
+      edit:    ~
+      new:     ~

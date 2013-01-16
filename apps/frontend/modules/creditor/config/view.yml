@@ -1,2 +1,6 @@
 paidDetailSuccess:
-  layout: layoutModal  
+  layout: layoutModal
+giftListSuccess:
+  layout: layoutModal
+addGiftSuccess:
+  layout: layoutModal

@@ -1,3 +1,13 @@
+gift:
+  class: sfPropelRouteCollection
+  options:
+    model:                gift
+    module:               gift
+    prefix_path:          /gift
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
 allocation:
   class: sfPropelRouteCollection
   options:
@@ -109,7 +119,7 @@ creditor:
     prefix_path:          /creditor
     column:               id
     with_wildcard_routes: true
-    object_actions: {paidDetail: get}
+    object_actions: {paidDetail: get, giftList: get, addGift: [get, post]}
     collection_actions: {filters: get, filter: post, reset: get}
 
 contract:

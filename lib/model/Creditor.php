@@ -48,6 +48,16 @@ class Creditor extends BaseCreditor
 
         return array_key_exists($creditorTypeCode, $creditorTypes) ? $creditorTypes[$creditorTypeCode] : null;
     }
+
+    public function getOrderedGifts(Criteria $criteria = null)
+    {
+        if (is_null($criteria)) {
+            $criteria = new Criteria();
+        }
+        $criteria->addAscendingOrderByColumn(GiftPeer::DATE, Criteria::DESC);
+
+        return $this->getGifts($criteria);
+    }
 }
 
 // Creditor

@@ -48,4 +48,20 @@ delete from security_perm where "code" = 'currency.admin';
 ALTER TABLE security_perm ADD COLUMN order_no integer;
 
 
+CREATE TABLE public.gift
+(
+   id serial,
+   creditor_id integer NOT NULL,
+   name character varying NOT NULL,
+   date date NOT NULL,
+   note text,
+   CONSTRAINT gift_id_pkey PRIMARY KEY (id),
+   CONSTRAINT gift_creditor_id_fkey FOREIGN KEY (creditor_id) REFERENCES creditor (id) ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (OIDS = FALSE);
+
+
+INSERT INTO security_perm(code, name, is_public) VALUES ('gift.admin', 'Dárky', false);
+
+
 COMMIT;

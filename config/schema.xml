@@ -60,6 +60,16 @@
     <column name="is_default" phpName="IsDefault" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="rate" phpName="Rate" type="NUMERIC" size="15" scale="2" required="true" defaultValue="1"/>
   </table>
+  <table name="gift" phpName="Gift">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="creditor_id" phpName="CreditorId" type="INTEGER" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" required="true"/>
+    <column name="date" phpName="Date" type="DATE" required="true"/>
+    <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
+    <foreign-key foreignTable="creditor" name="gift_creditor_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="creditor_id" foreign="id"/>
+    </foreign-key>
+  </table>
   <table name="ip_address" phpName="IpAddress">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="ip_address" phpName="IpAddress" type="VARCHAR" required="true"/>
