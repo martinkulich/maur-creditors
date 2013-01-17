@@ -25,7 +25,7 @@ abstract class BaseSettlementPeer {
 	const TM_CLASS = 'SettlementTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 13;
+	const NUM_COLUMNS = 12;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -53,9 +53,6 @@ abstract class BaseSettlementPeer {
 
 	/** the column name for the BANK_ACCOUNT field */
 	const BANK_ACCOUNT = 'settlement.BANK_ACCOUNT';
-
-	/** the column name for the CASH field */
-	const CASH = 'settlement.CASH';
 
 	/** the column name for the SETTLEMENT_TYPE field */
 	const SETTLEMENT_TYPE = 'settlement.SETTLEMENT_TYPE';
@@ -92,11 +89,11 @@ abstract class BaseSettlementPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ContractId', 'Date', 'Interest', 'Capitalized', 'Balance', 'Note', 'BankAccount', 'Cash', 'SettlementType', 'ManualInterest', 'ManualBalance', 'CurrencyRate', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'contractId', 'date', 'interest', 'capitalized', 'balance', 'note', 'bankAccount', 'cash', 'settlementType', 'manualInterest', 'manualBalance', 'currencyRate', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CONTRACT_ID, self::DATE, self::INTEREST, self::CAPITALIZED, self::BALANCE, self::NOTE, self::BANK_ACCOUNT, self::CASH, self::SETTLEMENT_TYPE, self::MANUAL_INTEREST, self::MANUAL_BALANCE, self::CURRENCY_RATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'contract_id', 'date', 'interest', 'capitalized', 'balance', 'note', 'bank_account', 'cash', 'settlement_type', 'manual_interest', 'manual_balance', 'currency_rate', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ContractId', 'Date', 'Interest', 'Capitalized', 'Balance', 'Note', 'BankAccount', 'SettlementType', 'ManualInterest', 'ManualBalance', 'CurrencyRate', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'contractId', 'date', 'interest', 'capitalized', 'balance', 'note', 'bankAccount', 'settlementType', 'manualInterest', 'manualBalance', 'currencyRate', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CONTRACT_ID, self::DATE, self::INTEREST, self::CAPITALIZED, self::BALANCE, self::NOTE, self::BANK_ACCOUNT, self::SETTLEMENT_TYPE, self::MANUAL_INTEREST, self::MANUAL_BALANCE, self::CURRENCY_RATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'contract_id', 'date', 'interest', 'capitalized', 'balance', 'note', 'bank_account', 'settlement_type', 'manual_interest', 'manual_balance', 'currency_rate', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -106,11 +103,11 @@ abstract class BaseSettlementPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ContractId' => 1, 'Date' => 2, 'Interest' => 3, 'Capitalized' => 4, 'Balance' => 5, 'Note' => 6, 'BankAccount' => 7, 'Cash' => 8, 'SettlementType' => 9, 'ManualInterest' => 10, 'ManualBalance' => 11, 'CurrencyRate' => 12, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'contractId' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'bankAccount' => 7, 'cash' => 8, 'settlementType' => 9, 'manualInterest' => 10, 'manualBalance' => 11, 'currencyRate' => 12, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CONTRACT_ID => 1, self::DATE => 2, self::INTEREST => 3, self::CAPITALIZED => 4, self::BALANCE => 5, self::NOTE => 6, self::BANK_ACCOUNT => 7, self::CASH => 8, self::SETTLEMENT_TYPE => 9, self::MANUAL_INTEREST => 10, self::MANUAL_BALANCE => 11, self::CURRENCY_RATE => 12, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'contract_id' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'bank_account' => 7, 'cash' => 8, 'settlement_type' => 9, 'manual_interest' => 10, 'manual_balance' => 11, 'currency_rate' => 12, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ContractId' => 1, 'Date' => 2, 'Interest' => 3, 'Capitalized' => 4, 'Balance' => 5, 'Note' => 6, 'BankAccount' => 7, 'SettlementType' => 8, 'ManualInterest' => 9, 'ManualBalance' => 10, 'CurrencyRate' => 11, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'contractId' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'bankAccount' => 7, 'settlementType' => 8, 'manualInterest' => 9, 'manualBalance' => 10, 'currencyRate' => 11, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CONTRACT_ID => 1, self::DATE => 2, self::INTEREST => 3, self::CAPITALIZED => 4, self::BALANCE => 5, self::NOTE => 6, self::BANK_ACCOUNT => 7, self::SETTLEMENT_TYPE => 8, self::MANUAL_INTEREST => 9, self::MANUAL_BALANCE => 10, self::CURRENCY_RATE => 11, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'contract_id' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'bank_account' => 7, 'settlement_type' => 8, 'manual_interest' => 9, 'manual_balance' => 10, 'currency_rate' => 11, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -188,7 +185,6 @@ abstract class BaseSettlementPeer {
 		$criteria->addSelectColumn(SettlementPeer::BALANCE);
 		$criteria->addSelectColumn(SettlementPeer::NOTE);
 		$criteria->addSelectColumn(SettlementPeer::BANK_ACCOUNT);
-		$criteria->addSelectColumn(SettlementPeer::CASH);
 		$criteria->addSelectColumn(SettlementPeer::SETTLEMENT_TYPE);
 		$criteria->addSelectColumn(SettlementPeer::MANUAL_INTEREST);
 		$criteria->addSelectColumn(SettlementPeer::MANUAL_BALANCE);

@@ -127,8 +127,10 @@ proverit ukoly z pohledu p. Batlickove
     //prejmenovat prichozi na prijate
 
     //nezahrnovat smlouvy s kapitalizaci do reportu k vyplaceni
-    smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit
+    //smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit
 
     oprava odchozich plateb
 
-    vyplaceno hotove..?
+    //vyplaceno hotove..?
+
+    rucni zadani alokaci

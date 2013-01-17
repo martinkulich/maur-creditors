@@ -210,7 +210,6 @@
     <column name="balance" phpName="Balance" type="NUMERIC" size="15" scale="2" required="true" defaultValue="0"/>
     <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
     <column name="bank_account" phpName="BankAccount" type="VARCHAR" required="false"/>
-    <column name="cash" phpName="Cash" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="settlement_type" phpName="SettlementType" type="VARCHAR" required="true" defaultValue="in_period"/>
     <column name="manual_interest" phpName="ManualInterest" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="manual_balance" phpName="ManualBalance" type="BOOLEAN" required="true" defaultValue="false"/>
