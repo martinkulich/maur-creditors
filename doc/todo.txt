@@ -130,6 +130,9 @@ proverit ukoly z pohledu p. Batlickove
     //smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit
 
     oprava odchozich plateb
+        ka production
+            1sm 2dod
+            2sm 1dod..outgoingPaymentCriteria
 
     //vyplaceno hotove..?
 
