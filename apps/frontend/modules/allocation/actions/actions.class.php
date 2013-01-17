@@ -13,6 +13,22 @@ require_once dirname(__FILE__).'/../lib/allocationGeneratorHelper.class.php';
  */
 class allocationActions extends autoAllocationActions
 {
+
+    public function executeDelete(sfWebRequest $request)
+    {
+        $allocation = $this->getRoute()->getObject();
+        $contract = $allocation->getSettlement()->getContract();
+
+        $allocation->delete();
+
+        ServiceContainer::getContractService()->checkContractChanges($contract);
+
+        $notice='The item was deleted successfully';
+        ServiceContainer::getMessageService()->addSuccess($notice);
+
+        $this->redirect('@allocation');
+    }
+
     public function executeFilters(sfWebRequest $request)
     {
 

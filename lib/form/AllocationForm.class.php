@@ -89,4 +89,10 @@ class AllocationForm extends BaseAllocationForm
         $this->getValidatorSchema()->setPostValidator(new AllocationPostValidator());
 
     }
+
+    public function doSave($con = null)
+    {
+        parent::doSave($con);
+        ServiceContainer::getContractService()->checkContractChanges($this->getObject()->getSettlement()->getContract());
+    }
 }

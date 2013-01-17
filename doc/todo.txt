@@ -141,4 +141,9 @@ proverit ukoly z pohledu p. Batlickove
     ukoncovani smlouvy - smazat policko bankovni ucet
         ukoncena smlouva reaktivaci, vyjmout z reportu k vyplaceni respektive vzdy nastavit rouvnou kapitalizovano
 
-    odstranit cislo uctu u vyporadani uroku
+    //odstranit cislo uctu u vyporadani uroku
+
+    //pri ponizeni jistiny prepocitat vyporadani
+
+    33000 oprava
+    ponizeni jistiny prepocet jistiny nejlepe v db

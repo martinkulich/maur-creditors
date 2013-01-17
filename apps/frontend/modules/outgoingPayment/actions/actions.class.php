@@ -22,10 +22,28 @@ class outgoingPaymentActions extends autoOutgoingPaymentActions
     {
         $this->outgoinPayment = $this->getRoute()->getObject();
     }
-    
+
     public function executeDetail(sfWebRequest $request)
     {
         $this->outgoinPayment = $this->getRoute()->getObject();
+    }
+
+    public function executeDelete(sfWebRequest $request)
+    {
+        $outgoingPayment = $this->getRoute()->getObject();
+        foreach ($outgoingPayment->getAllocations() as $allocation) {
+
+            $contract = $allocation->getSettlement()->getContract();
+            $allocation->delete();
+            ServiceContainer::getContractService()->checkContractChanges($contract);
+        }
+
+        $outgoingPayment->delete();
+
+        $notice = 'The item was deleted successfully';
+        ServiceContainer::getMessageService()->addSuccess($notice);
+
+        $this->redirect('@allocation');
     }
 
 }

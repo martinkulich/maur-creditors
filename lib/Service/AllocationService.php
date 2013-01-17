@@ -11,10 +11,6 @@ class AllocationService
         {
             $outgoingPaymentCriteria->add(OutgoingPaymentPeer::CREDITOR_ID, $creditor->getId());
         }
-    else
-        {
-            $outgoingPaymentCriteria->add(OutgoingPaymentPeer::CREDITOR_ID, null, Criteria::ISNULL);
-        }
 
 
         $customCriteria = sprintf(
