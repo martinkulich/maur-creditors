@@ -7,9 +7,15 @@ class AllocationService
         $outgoingPaymentCriteria = new Criteria();
         $outgoingPaymentCriteria->addAscendingOrderByColumn(OutgoingPaymentPeer::DATE, Criteria::DESC);
 
-        if ($creditor) {
+        if($creditor)
+        {
             $outgoingPaymentCriteria->add(OutgoingPaymentPeer::CREDITOR_ID, $creditor->getId());
         }
+    else
+        {
+            $outgoingPaymentCriteria->add(OutgoingPaymentPeer::CREDITOR_ID, null, Criteria::ISNULL);
+        }
+
 
         $customCriteria = sprintf(
             "((select coalesce(sum(%s + %s), 0) from %s where %s = %s) < %s)",

@@ -11,7 +11,7 @@ class outgoingPaymentComponents extends sfComponents
         $criteria = new Criteria();
         $criteria->add(OutgoingPaymentPeer::CREDITOR_ID, $request->getParameter('creditor_id'));
 
-        $this->outgoingPaymentId = $request->getParameter('default', 0);
+        $this->outgoingPaymentId = (integer) $request->getParameter('default', 0);
         $formClass = sfInflector::humanize($this->formName . 'Form');
         if (class_exists($formClass)) {
             if ($this->formName == 'allocation') {
