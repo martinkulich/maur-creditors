@@ -125,3 +125,6 @@ proverit ukoly z pohledu p. Batlickove
     //seradit prava
 
     prejmenovat prichozi na prijate
+
+    //nezahrnovat smlouvy s kapitalizaci do reportu k vyplaceni
+    smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit

@@ -603,3 +603,5 @@ Add gift;Přidat dárek
 Contract excluded report list;Nezahrnovat do reportu
 payment report;Příchozí platby
 of payment;Příchozí platby
+Exclude from report;Nezahrnovat tuto smlouvu do tohoto reportu
+exclude_from_report;Nezahrnovat

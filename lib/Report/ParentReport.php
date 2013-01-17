@@ -141,7 +141,7 @@ abstract class ParentReport
         } elseif (in_array($column, $this->getDateColumns())) {
             $formatedValue = format_date($row[$column], 'D');
         } else {
-            $formatedValue = $row[$column];
+            $formatedValue = array_key_exists($column, $row) ? $row[$column] : null;
         }
 
         return $formatedValue;

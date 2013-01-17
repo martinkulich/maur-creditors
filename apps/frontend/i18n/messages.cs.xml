@@ -2245,5 +2245,13 @@
       <source>payment report</source>
       <target>Příchozí platby</target>
     </trans-unit>
+    <trans-unit id="562">
+      <source>Exclude from report</source>
+      <target>Nezahrnovat tuto smlouvu do tohoto reportu</target>
+    </trans-unit>
+    <trans-unit id="563">
+      <source>exclude_from_report</source>
+      <target>Nezahrnovat</target>
+    </trans-unit>
   </body>
 </xliff>

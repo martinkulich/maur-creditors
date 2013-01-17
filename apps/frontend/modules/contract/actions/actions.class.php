@@ -14,6 +14,31 @@ require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
 class contractActions extends autoContractActions
 {
 
+    public function executeExcludeFromReport(sfWebRequest $request)
+    {
+        $contract = $this->getRoute()->getObject();
+        $report = ReportPeer::retrieveByPK($request->getParameter('report_type'));
+        $this->forward404Unless($contract && $report);
+
+        $criteria = new Criteria();
+        $criteria
+            ->add(ContractExcludedReportPeer::CONTRACT_ID, $contract->getId())
+            ->add(ContractExcludedReportPeer::REPORT_CODE, $report->getCode());
+
+        if(!ContractExcludedReportPeer::doCount($criteria))
+        {
+            $contractExcludedReport = new ContractExcludedReport();
+            $contractExcludedReport->setContract($contract);
+            $contractExcludedReport->setReport($report);
+            $contractExcludedReport->save();
+        }
+        $referef = $request->getReferer();
+        $redirect = $referef ? $referef : '@report?report_type='.$report->getCode();
+
+        return $this->redirect($redirect);
+
+    }
+
     public function executeNote(sfWebRequest $request)
     {
         $this->contract = $this->getRoute()->getObject();
@@ -27,7 +52,7 @@ class contractActions extends autoContractActions
 
     public function executeRequlation(sfWebRequest $request)
     {
-        
+
     }
 
     public function executeIndex(sfWebRequest $request)

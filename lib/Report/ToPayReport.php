@@ -12,6 +12,7 @@ class ToPayReport extends ParentReport
                 co.name as contract_name,
                 co.id as contract_id,
                 co.currency_code as currency_code,
+                co.closed_at as closed_at,
                 cr.bank_account as bank_account,
                 (SELECT COALESCE(date, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_date,
                 (SELECT COALESCE(id, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_id,
@@ -20,6 +21,7 @@ class ToPayReport extends ParentReport
             JOIN creditor cr ON cr.id = co.creditor_id
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'to_pay' AND cer.contract_id = co.id) = 0
             AND contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer <> 0
+            AND co.capitalize != true
             %where%
             GROUP BY
                 cr.lastname,
@@ -35,18 +37,30 @@ class ToPayReport extends ParentReport
 
     public function getColumns()
     {
-        return array(
+        $columns = array(
             'fullname',
             'contract_name',
             'bank_account',
             'settlement_date',
-            'to_pay'
+            'to_pay',
         );
+
+        if(sfContext::getInstance()->getUser()->hasCredential('contract.admin'))
+        {
+            $columns[] ='closed_at';
+            $columns[] = 'exclude_from_report';
+
+        }
+
+        return $columns;
     }
 
     public function getDateColumns()
     {
-        return array('settlement_date');
+        return array(
+            'settlement_date',
+            'closed_at',
+        );
     }
     
     public function getCurrencyColumns()
@@ -94,6 +108,10 @@ class ToPayReport extends ParentReport
         elseif($column == 'contract_name')
         {
             $formatedValue = link_to($formatedValue, '@settlement_addFilter?filter[contract_id]='.$row['contract_id']);
+        }
+        elseif($column == 'exclude_from_report')
+        {
+            $formatedValue = link_to(ServiceContainer::getTranslateService()->__('exclude_from_report'), '@contract_excludeFromReport?report_type=to_pay&id='.$row['contract_id']);
         }
         
         return $formatedValue;
