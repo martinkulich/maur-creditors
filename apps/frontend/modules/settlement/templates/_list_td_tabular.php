@@ -24,9 +24,6 @@
 <td class="sf_admin_text sf_admin_list_td_paid text-align-right">
     <?php echo link_to(my_format_currency($settlement->getPaid(), $currencyCode), '@allocation_filter?reset=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
 </td>
-<td class="sf_admin_boolean sf_admin_list_td_cash ">
-  <?php echo get_partial('settlement/list_field_boolean', array('value' => $settlement->getCash())) ?>
-</td>
 <td class="sf_admin_text sf_admin_list_td_capitalized text-align-right">
     <?php echo my_format_currency($settlement->getCapitalized(), $currencyCode) ?>
 </td>

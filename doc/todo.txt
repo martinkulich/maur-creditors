@@ -134,3 +134,7 @@ proverit ukoly z pohledu p. Batlickove
     //vyplaceno hotove..?
 
     rucni zadani alokaci
+
+    ukoncovani smlouvy
+        alokovani nevyplacene castky
+        s reaktivaci/bez reaktivace
