@@ -201,6 +201,15 @@ class settlementActions extends autoSettlementActions
         $settlement = $this->getRoute()->getObject();
         $contract = $settlement->getContract();
 
+        if(in_array($settlement->getSettlementType(), array(
+            SettlementPeer::CLOSING,
+            SettlementPeer::CLOSING_BY_REACTIVATION,
+        )))
+        {
+            $contract->setClosedAt(null);
+            $contract->save();
+        }
+
         $settlement->delete();
         $notice = 'The item was deleted successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);

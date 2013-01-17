@@ -130,3 +130,5 @@ proverit ukoly z pohledu p. Batlickove
     smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit
 
     oprava odchozich plateb
+
+    vyplaceno hotove..?

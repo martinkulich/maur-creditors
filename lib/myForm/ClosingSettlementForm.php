@@ -23,7 +23,6 @@ class ClosingSettlementForm extends SettlementForm
             'contract_id'
         );
 
-        $this->getWidget('paid')->setLabel('To pay');
 
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
@@ -33,8 +32,6 @@ class ClosingSettlementForm extends SettlementForm
         $contract = $this->getObject()->getContract();
         $closingAmount = ServiceContainer::getContractService()->getContractClosingAmount($contract);
         $lastDate = $contract->getLastSettlementDate();
-        $this->getObject()->setPaid($closingAmount['unsettled']);
-        $this->getObject()->setBalanceReduction($closingAmount['balance_reduction']);
         $this->getWidget('date')->setLabel('Closed at');
 
         $dateOnChange = sprintf("calculateContractClosingAmount('#settlement_date_date','#settlement_paid','#settlement_balance_reduction','#settlement_settlement_type', '%s'); ", url_for('@contract_closing_amount?id=' . $contract->getId()));
