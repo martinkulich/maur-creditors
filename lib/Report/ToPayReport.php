@@ -29,7 +29,8 @@ class ToPayReport extends ParentReport
                 co.name,
                 cr.bank_account,
                 co.id, 
-                co.currency_code
+                co.currency_code,
+                co.closed_at
             ORDER BY %order_by%, settlement_date
             ;
         ";
