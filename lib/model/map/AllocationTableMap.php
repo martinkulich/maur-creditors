@@ -50,7 +50,7 @@ class AllocationTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::MANY_TO_ONE, array('outgoing_payment_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::MANY_TO_ONE, array('outgoing_payment_id' => 'id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Settlement', 'Settlement', RelationMap::MANY_TO_ONE, array('settlement_id' => 'id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 

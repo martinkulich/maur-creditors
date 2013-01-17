@@ -56,7 +56,7 @@ class OutgoingPaymentTableMap extends TableMap {
     $this->addRelation('Creditor', 'Creditor', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Currency', 'Currency', RelationMap::MANY_TO_ONE, array('currency_code' => 'code', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('BankAccount', 'BankAccount', RelationMap::MANY_TO_ONE, array('bank_account_id' => 'id', ), 'SET NULL', 'CASCADE');
-    $this->addRelation('Allocation', 'Allocation', RelationMap::ONE_TO_MANY, array('id' => 'outgoing_payment_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Allocation', 'Allocation', RelationMap::ONE_TO_MANY, array('id' => 'outgoing_payment_id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 
 	/**

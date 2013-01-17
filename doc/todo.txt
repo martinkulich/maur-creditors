@@ -124,7 +124,9 @@ proverit ukoly z pohledu p. Batlickove
     //skryt kurz v administraci men
     //seradit prava
 
-    prejmenovat prichozi na prijate
+    //prejmenovat prichozi na prijate
 
     //nezahrnovat smlouvy s kapitalizaci do reportu k vyplaceni
     smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit
+
+    oprava odchozich plateb

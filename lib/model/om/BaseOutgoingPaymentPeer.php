@@ -377,6 +377,9 @@ abstract class BaseOutgoingPaymentPeer {
 	 */
 	public static function clearRelatedInstancePool()
 	{
+		// invalidate objects in AllocationPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+		AllocationPeer::clearInstancePool();
+
 	}
 
 	/**

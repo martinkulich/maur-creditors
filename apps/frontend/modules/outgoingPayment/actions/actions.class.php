@@ -28,38 +28,4 @@ class outgoingPaymentActions extends autoOutgoingPaymentActions
         $this->outgoinPayment = $this->getRoute()->getObject();
     }
 
-    public function executeDelete(sfWebRequest $request)
-    {
-        $outgingPayment = $this->getRoute()->getObject();
-        $this->forward404Unless($outgingPayment);
-
-        $settlements = $outgingPayment->getSettlements();
-        if (count($settlements) > 0) {
-            $dateFrom = null;
-            $dateTo = null;
-            foreach ($settlements as $settlement) {
-                if ($dateFrom == null || $dateFrom > $settlement->getDate()) {
-                    $dateFrom = $settlement->getDate();
-                }
-
-                if ($dateTo == null || $dateTo < $settlement->getDate()) {
-                    $dateTo = $settlement->getDate();
-                }
-            }
-            ServiceContainer::getMessageService()->addError('There are some settlements related to this outgoing payment, pls unrelate them before deletion');
-            $filters = array(
-                'outgoing_payment_id' => $outgingPayment->getId(),
-                'date' => array(
-                    'from' => $dateFrom,
-                    'to' => $dateTo,
-                ),
-            );
-            $this->getUser()->setAttribute('settlement.filters', $filters, 'admin_module');
-
-            return $this->redirect('@settlement');
-        } else {
-            parent::executeDelete($request);
-        }
-    }
-
 }
