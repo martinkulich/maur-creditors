@@ -167,7 +167,6 @@ class ContractService
         $settlement->setDate($date);
         $settlement->setBalance($this->getBalanceForSettlement($settlement));
         $settlement->setInterest($this->getInterestForSettlement($settlement));
-        $settlement->setBankAccount($contract->getCreditor()->getBankAccount());
         $settlement->setSettlementType($settlementType);
 
         if ($contract->getCapitalize() && $settlementType != SettlementPeer::END_OF_YEAR) {
