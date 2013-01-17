@@ -93,7 +93,7 @@ korunove zaokrouhleni
 
 //tick v listu smluv zda je smlouva kapitalizovana..
 
-report prichozich plateb pro kotrolu ze sedi ucty
+//report prichozich plateb pro kotrolu ze sedi ucty
 
 //odchozi platba zaskrtavatko v hotovosti
 
@@ -110,7 +110,7 @@ proverit ukoly z pohledu p. Batlickove
 //(ne)zahrnovani smluv do reportu
 
 //prijate platby
-    sumace
+    //sumace
     //prichozi cislo uctu unikredit default
     //zobrazit z jakeho uctu
 
@@ -123,3 +123,5 @@ proverit ukoly z pohledu p. Batlickove
   //  smazat pravo predpisy
     //skryt kurz v administraci men
     //seradit prava
+
+    prejmenovat prichozi na prijate
