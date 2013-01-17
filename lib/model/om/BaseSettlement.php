@@ -63,12 +63,6 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	protected $note;
 
 	/**
-	 * The value for the bank_account field.
-	 * @var        string
-	 */
-	protected $bank_account;
-
-	/**
 	 * The value for the settlement_type field.
 	 * Note: this column has a database default value of: 'in_period'
 	 * @var        string
@@ -246,16 +240,6 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	public function getNote()
 	{
 		return $this->note;
-	}
-
-	/**
-	 * Get the [bank_account] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getBankAccount()
-	{
-		return $this->bank_account;
 	}
 
 	/**
@@ -472,26 +456,6 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	} // setNote()
 
 	/**
-	 * Set the value of [bank_account] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Settlement The current object (for fluent API support)
-	 */
-	public function setBankAccount($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->bank_account !== $v) {
-			$this->bank_account = $v;
-			$this->modifiedColumns[] = SettlementPeer::BANK_ACCOUNT;
-		}
-
-		return $this;
-	} // setBankAccount()
-
-	/**
 	 * Set the value of [settlement_type] column.
 	 * 
 	 * @param      string $v new value
@@ -634,11 +598,10 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$this->capitalized = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->balance = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->note = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->bank_account = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->settlement_type = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->manual_interest = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
-			$this->manual_balance = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
-			$this->currency_rate = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->settlement_type = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->manual_interest = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->manual_balance = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
+			$this->currency_rate = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -648,7 +611,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Settlement object", $e);
@@ -1047,18 +1010,15 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 				return $this->getNote();
 				break;
 			case 7:
-				return $this->getBankAccount();
-				break;
-			case 8:
 				return $this->getSettlementType();
 				break;
-			case 9:
+			case 8:
 				return $this->getManualInterest();
 				break;
-			case 10:
+			case 9:
 				return $this->getManualBalance();
 				break;
-			case 11:
+			case 10:
 				return $this->getCurrencyRate();
 				break;
 			default:
@@ -1089,11 +1049,10 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$keys[4] => $this->getCapitalized(),
 			$keys[5] => $this->getBalance(),
 			$keys[6] => $this->getNote(),
-			$keys[7] => $this->getBankAccount(),
-			$keys[8] => $this->getSettlementType(),
-			$keys[9] => $this->getManualInterest(),
-			$keys[10] => $this->getManualBalance(),
-			$keys[11] => $this->getCurrencyRate(),
+			$keys[7] => $this->getSettlementType(),
+			$keys[8] => $this->getManualInterest(),
+			$keys[9] => $this->getManualBalance(),
+			$keys[10] => $this->getCurrencyRate(),
 		);
 		return $result;
 	}
@@ -1147,18 +1106,15 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 				$this->setNote($value);
 				break;
 			case 7:
-				$this->setBankAccount($value);
-				break;
-			case 8:
 				$this->setSettlementType($value);
 				break;
-			case 9:
+			case 8:
 				$this->setManualInterest($value);
 				break;
-			case 10:
+			case 9:
 				$this->setManualBalance($value);
 				break;
-			case 11:
+			case 10:
 				$this->setCurrencyRate($value);
 				break;
 		} // switch()
@@ -1192,11 +1148,10 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setCapitalized($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setBalance($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setNote($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setBankAccount($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setSettlementType($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setManualInterest($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setManualBalance($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setCurrencyRate($arr[$keys[11]]);
+		if (array_key_exists($keys[7], $arr)) $this->setSettlementType($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setManualInterest($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setManualBalance($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setCurrencyRate($arr[$keys[10]]);
 	}
 
 	/**
@@ -1215,7 +1170,6 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SettlementPeer::CAPITALIZED)) $criteria->add(SettlementPeer::CAPITALIZED, $this->capitalized);
 		if ($this->isColumnModified(SettlementPeer::BALANCE)) $criteria->add(SettlementPeer::BALANCE, $this->balance);
 		if ($this->isColumnModified(SettlementPeer::NOTE)) $criteria->add(SettlementPeer::NOTE, $this->note);
-		if ($this->isColumnModified(SettlementPeer::BANK_ACCOUNT)) $criteria->add(SettlementPeer::BANK_ACCOUNT, $this->bank_account);
 		if ($this->isColumnModified(SettlementPeer::SETTLEMENT_TYPE)) $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $this->settlement_type);
 		if ($this->isColumnModified(SettlementPeer::MANUAL_INTEREST)) $criteria->add(SettlementPeer::MANUAL_INTEREST, $this->manual_interest);
 		if ($this->isColumnModified(SettlementPeer::MANUAL_BALANCE)) $criteria->add(SettlementPeer::MANUAL_BALANCE, $this->manual_balance);
@@ -1285,8 +1239,6 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$copyObj->setBalance($this->balance);
 
 		$copyObj->setNote($this->note);
-
-		$copyObj->setBankAccount($this->bank_account);
 
 		$copyObj->setSettlementType($this->settlement_type);
 

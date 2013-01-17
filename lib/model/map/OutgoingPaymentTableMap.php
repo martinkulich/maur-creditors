@@ -45,6 +45,7 @@ class OutgoingPaymentTableMap extends TableMap {
 		$this->addForeignKey('CURRENCY_CODE', 'CurrencyCode', 'CHAR', 'currency', 'CODE', true, 3, null);
 		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'creditor', 'ID', true, null, null);
 		$this->addColumn('CASH', 'Cash', 'BOOLEAN', false, null, null);
+		$this->addColumn('RECEIVER_BANK_ACCOUNT', 'ReceiverBankAccount', 'VARCHAR', false, 255, null);
 		// validators
 	} // initialize()
 

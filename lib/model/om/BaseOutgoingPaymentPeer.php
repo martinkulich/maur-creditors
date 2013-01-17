@@ -25,7 +25,7 @@ abstract class BaseOutgoingPaymentPeer {
 	const TM_CLASS = 'OutgoingPaymentTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,9 @@ abstract class BaseOutgoingPaymentPeer {
 	/** the column name for the CASH field */
 	const CASH = 'outgoing_payment.CASH';
 
+	/** the column name for the RECEIVER_BANK_ACCOUNT field */
+	const RECEIVER_BANK_ACCOUNT = 'outgoing_payment.RECEIVER_BANK_ACCOUNT';
+
 	/**
 	 * An identiy map to hold any loaded instances of OutgoingPayment objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -77,11 +80,11 @@ abstract class BaseOutgoingPaymentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'BankAccountId', 'Amount', 'Date', 'Note', 'CurrencyCode', 'CreditorId', 'Cash', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'bankAccountId', 'amount', 'date', 'note', 'currencyCode', 'creditorId', 'cash', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::BANK_ACCOUNT_ID, self::AMOUNT, self::DATE, self::NOTE, self::CURRENCY_CODE, self::CREDITOR_ID, self::CASH, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'bank_account_id', 'amount', 'date', 'note', 'currency_code', 'creditor_id', 'cash', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'BankAccountId', 'Amount', 'Date', 'Note', 'CurrencyCode', 'CreditorId', 'Cash', 'ReceiverBankAccount', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'bankAccountId', 'amount', 'date', 'note', 'currencyCode', 'creditorId', 'cash', 'receiverBankAccount', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::BANK_ACCOUNT_ID, self::AMOUNT, self::DATE, self::NOTE, self::CURRENCY_CODE, self::CREDITOR_ID, self::CASH, self::RECEIVER_BANK_ACCOUNT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'bank_account_id', 'amount', 'date', 'note', 'currency_code', 'creditor_id', 'cash', 'receiver_bank_account', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -91,11 +94,11 @@ abstract class BaseOutgoingPaymentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'BankAccountId' => 1, 'Amount' => 2, 'Date' => 3, 'Note' => 4, 'CurrencyCode' => 5, 'CreditorId' => 6, 'Cash' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'bankAccountId' => 1, 'amount' => 2, 'date' => 3, 'note' => 4, 'currencyCode' => 5, 'creditorId' => 6, 'cash' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::BANK_ACCOUNT_ID => 1, self::AMOUNT => 2, self::DATE => 3, self::NOTE => 4, self::CURRENCY_CODE => 5, self::CREDITOR_ID => 6, self::CASH => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'bank_account_id' => 1, 'amount' => 2, 'date' => 3, 'note' => 4, 'currency_code' => 5, 'creditor_id' => 6, 'cash' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'BankAccountId' => 1, 'Amount' => 2, 'Date' => 3, 'Note' => 4, 'CurrencyCode' => 5, 'CreditorId' => 6, 'Cash' => 7, 'ReceiverBankAccount' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'bankAccountId' => 1, 'amount' => 2, 'date' => 3, 'note' => 4, 'currencyCode' => 5, 'creditorId' => 6, 'cash' => 7, 'receiverBankAccount' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::BANK_ACCOUNT_ID => 1, self::AMOUNT => 2, self::DATE => 3, self::NOTE => 4, self::CURRENCY_CODE => 5, self::CREDITOR_ID => 6, self::CASH => 7, self::RECEIVER_BANK_ACCOUNT => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'bank_account_id' => 1, 'amount' => 2, 'date' => 3, 'note' => 4, 'currency_code' => 5, 'creditor_id' => 6, 'cash' => 7, 'receiver_bank_account' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -173,6 +176,7 @@ abstract class BaseOutgoingPaymentPeer {
 		$criteria->addSelectColumn(OutgoingPaymentPeer::CURRENCY_CODE);
 		$criteria->addSelectColumn(OutgoingPaymentPeer::CREDITOR_ID);
 		$criteria->addSelectColumn(OutgoingPaymentPeer::CASH);
+		$criteria->addSelectColumn(OutgoingPaymentPeer::RECEIVER_BANK_ACCOUNT);
 	}
 
 	/**

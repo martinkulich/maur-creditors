@@ -2253,5 +2253,9 @@
       <source>exclude_from_report</source>
       <target>Nezahrnovat</target>
     </trans-unit>
+    <trans-unit id="564">
+      <source>Receiver bank account</source>
+      <target>Bankovní účet příjemce</target>
+    </trans-unit>
   </body>
 </xliff>

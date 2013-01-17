@@ -138,6 +138,7 @@ proverit ukoly z pohledu p. Batlickove
 
     rucni zadani alokaci
 
-    ukoncovani smlouvy
-        alokovani nevyplacene castky
-        s reaktivaci/bez reaktivace
+    ukoncovani smlouvy - smazat policko bankovni ucet
+        ukoncena smlouva reaktivaci, vyjmout z reportu k vyplaceni respektive vzdy nastavit rouvnou kapitalizovano
+
+    odstranit cislo uctu u vyporadani uroku

@@ -1,6 +1,9 @@
 <td class="sf_admin_text sf_admin_list_td_bank_account ">
     <?php echo $outgoingPayment->getBankAccount() ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_receiver_bank_account ">
+    <?php echo $outgoingPayment->getReceiverBankAccount() ?>
+</td>
 <td class="sf_admin_date no-wrap-line sf_admin_list_td_text ">
     <?php echo $outgoingPayment->getCreditor()?>
 </td>

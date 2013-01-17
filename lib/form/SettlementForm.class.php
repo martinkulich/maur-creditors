@@ -76,7 +76,6 @@ class SettlementForm extends BaseSettlementForm
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {
             $this->getWidgetSchema()->setDefault('creditor_id', $contract->getCreditorId());
-            $this->getWidgetSchema()->setDefault('bank_account', $contract->getCreditor()->getBankAccount());
         }
         $this->getWidget('creditor_id')->setAttribute('onchange', sprintf("updateSelectBox('%s','%s','%s', '%s'); ;", url_for('@update_contract_select?form_name=settlement'), 'settlement_creditor_id', 'settlement_contract_id', 'creditor_id'));
 

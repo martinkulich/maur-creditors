@@ -17,4 +17,16 @@ WHERE id IN (
 );
 
 ALTER TABLE settlement DROP COLUMN cash;
+
+ALTER TABLE outgoing_payment ADD COLUMN receiver_bank_account character varying;
+
+update outgoing_payment op set receiver_bank_account = (select distinct s.bank_account from settlement s
+join allocation a on a.settlement_id = s.id
+Join outgoing_payment op1 ON op1.id = a.outgoing_payment_id
+where op.id =op1.id
+and s.bank_account != ''
+);
+
+ALTER TABLE settlement drop column bank_account;
+
 COMMIT;
