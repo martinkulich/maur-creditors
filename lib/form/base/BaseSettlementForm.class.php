@@ -24,7 +24,6 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'settlement_type' => new sfWidgetFormInputText(),
       'manual_interest' => new sfWidgetFormInputCheckbox(),
       'manual_balance'  => new sfWidgetFormInputCheckbox(),
-      'currency_rate'   => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -38,7 +37,6 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'settlement_type' => new sfValidatorString(array('max_length' => 255)),
       'manual_interest' => new sfValidatorBoolean(),
       'manual_balance'  => new sfValidatorBoolean(),
-      'currency_rate'   => new sfValidatorNumber(),
     ));
 
     $this->widgetSchema->setNameFormat('settlement[%s]');

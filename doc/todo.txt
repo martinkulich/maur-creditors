@@ -129,21 +129,20 @@ proverit ukoly z pohledu p. Batlickove
     //nezahrnovat smlouvy s kapitalizaci do reportu k vyplaceni
     //smazat vyporadani ke konci smlouvy, abych mohl znova uzavrit
 
-    oprava odchozich plateb
-        ka production
-            1sm 2dod
-            2sm 1dod..outgoingPaymentCriteria
+    //oprava odchozich plateb
 
     //vyplaceno hotove..?
 
-    rucni zadani alokaci
+    //rucni zadani alokaci
 
-    ukoncovani smlouvy - smazat policko bankovni ucet
+    //ukoncovani smlouvy - smazat policko bankovni ucet
         ukoncena smlouva reaktivaci, vyjmout z reportu k vyplaceni respektive vzdy nastavit rouvnou kapitalizovano
 
     //odstranit cislo uctu u vyporadani uroku
 
     //pri ponizeni jistiny prepocitat vyporadani
 
-    33000 oprava
+    //33000 oprava
     ponizeni jistiny prepocet jistiny nejlepe v db
+
+    //odstranit kurz meny z vyplaty uroku

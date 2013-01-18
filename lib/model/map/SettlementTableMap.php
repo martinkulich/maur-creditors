@@ -47,7 +47,6 @@ class SettlementTableMap extends TableMap {
 		$this->addColumn('SETTLEMENT_TYPE', 'SettlementType', 'VARCHAR', true, 255, 'in_period');
 		$this->addColumn('MANUAL_INTEREST', 'ManualInterest', 'BOOLEAN', true, null, false);
 		$this->addColumn('MANUAL_BALANCE', 'ManualBalance', 'BOOLEAN', true, null, false);
-		$this->addColumn('CURRENCY_RATE', 'CurrencyRate', 'NUMERIC', true, 15, 1);
 		// validators
 	} // initialize()
 

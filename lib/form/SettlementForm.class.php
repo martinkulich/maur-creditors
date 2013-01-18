@@ -115,7 +115,6 @@ class SettlementForm extends BaseSettlementForm
         }
         $this->getWidget('date')->setAttribute('onChange', $calculateSettlement);
 
-        $this->getValidator('currency_rate')->setOption('min', 0.0001);
 
         //zatim nechat moznost vzdy editovat
         if (!sfContext::getInstance()->getUser()->hasCredential('settlement_manual_change')) {
@@ -135,10 +134,6 @@ class SettlementForm extends BaseSettlementForm
             $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         }
 
-        $contract = $this->getObject()->getContract();
-        if ($contract && $contract->getCurrency()->getIsDefault()) {
-            $fieldsToUnset[] = 'currency_rate';
-        }
 
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);

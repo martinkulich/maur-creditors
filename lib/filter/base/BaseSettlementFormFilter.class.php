@@ -21,7 +21,6 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'settlement_type' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'manual_interest' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'manual_balance'  => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'currency_rate'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -34,7 +33,6 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'settlement_type' => new sfValidatorPass(array('required' => false)),
       'manual_interest' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'manual_balance'  => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'currency_rate'   => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('settlement_filters[%s]');
@@ -62,7 +60,6 @@ abstract class BaseSettlementFormFilter extends BaseFormFilterPropel
       'settlement_type' => 'Text',
       'manual_interest' => 'Boolean',
       'manual_balance'  => 'Boolean',
-      'currency_rate'   => 'Number',
     );
   }
 }
