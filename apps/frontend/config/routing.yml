@@ -97,7 +97,7 @@ payment:
     prefix_path:          /payment
     column:               id
     with_wildcard_routes: true
-    collection_actions: {filters: get, filter: post, reset: get}
+    collection_actions: {filters: get, filter: post, reset: get, newReactivation: [get, post]}
     object_actions: {note: get}
 
 settlement:

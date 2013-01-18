@@ -54,7 +54,15 @@ class ClosingSettlementForm extends SettlementForm
         $settlement = $this->getObject();
         $contract = $settlement->getContract();
         $contract->setClosedAt($settlement->getDate());
+
         $contract->save($con);
+
+        if($settlement->getSettlementType() == SettlementPeer::CLOSING_BY_REACTIVATION && $contract->getCapitalize())
+        {
+            $settlement->setCapitalized($contract->getUnsettled(new DateTime($settlement->getDate())));
+            $settlement->save($con);
+        }
+
         ServiceContainer::getContractService()->checkContractChanges($contract);
     }
 }

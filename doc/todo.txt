@@ -136,7 +136,7 @@ proverit ukoly z pohledu p. Batlickove
     //rucni zadani alokaci
 
     //ukoncovani smlouvy - smazat policko bankovni ucet
-        ukoncena smlouva reaktivaci, vyjmout z reportu k vyplaceni respektive vzdy nastavit rouvnou kapitalizovano
+        //ukoncena smlouva reaktivaci, vyjmout z reportu k vyplaceni respektive vzdy nastavit rouvnou kapitalizovano
 
     //odstranit cislo uctu u vyporadani uroku
 
@@ -146,3 +146,5 @@ proverit ukoly z pohledu p. Batlickove
     ponizeni jistiny prepocet jistiny nejlepe v db
 
     //odstranit kurz meny z vyplaty uroku
+
+    odkazy vs filtry napr ze smluv do vyplaty uroku

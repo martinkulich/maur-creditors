@@ -167,7 +167,7 @@ class settlementActions extends autoSettlementActions
             $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $outgoingPayment)));
 
 //            $redirect = array('sf_route' => 'settlement_edit', 'sf_subject' => $settlement);
-            $redirect = '@settlement_allocate?id='.$settlement->getId();
+            $redirect = '@settlement_allocate?id=' . $settlement->getId();
 
             ServiceContainer::getMessageService()->addSuccess($notice);
 
@@ -185,7 +185,9 @@ class settlementActions extends autoSettlementActions
             $settlement = $form->save();
 
             if ($settlement->getSettlementType() == SettlementPeer::CLOSING_BY_REACTIVATION) {
-                return $this->forward('payment', 'newReactivation');
+                $date = new DateTime($settlement->getDate());
+                $date->modify('+1 day');
+                return $this->redirect('@payment_newReactivation?amount=' . $settlement->getBalanceAfterSettlement() . '&date=' . $date->format('Y-m-d'));
             }
 
             ServiceContainer::getMessageService()->addSuccess('Contract closed successfully');
@@ -201,11 +203,11 @@ class settlementActions extends autoSettlementActions
         $settlement = $this->getRoute()->getObject();
         $contract = $settlement->getContract();
 
-        if(in_array($settlement->getSettlementType(), array(
+        if (in_array($settlement->getSettlementType(), array(
             SettlementPeer::CLOSING,
             SettlementPeer::CLOSING_BY_REACTIVATION,
-        )))
-        {
+        ))
+        ) {
             $contract->setClosedAt(null);
             $contract->save();
         }

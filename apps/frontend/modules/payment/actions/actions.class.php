@@ -19,7 +19,7 @@ class paymentActions extends autoPaymentActions
         $this->payment = $this->getRoute()->getObject();
     }
 
-   
+
     public function executeDelete(sfWebRequest $request)
     {
         $payment = $this->getRoute()->getObject();
@@ -39,15 +39,15 @@ class paymentActions extends autoPaymentActions
     {
         $this->executeNew($request);
         $this->payment->setPaymentType(PaymentService::REACTIONVATION);
-        $contract = ContractPeer::retrieveByPK($request->getParameter('contract_id'));
-        if ($contract) {
-            $this->payment->setContract($contract);
+        $amount = $request->getParameter('amount', 0);
+        $dateString = $request->getParameter('date');
 
-            $closingSettlement = $contract->getLastSettlement(SettlementPeer::CLOSING);
-            if ($closingSettlement) {
-                $this->payment->setAmount($closingSettlement->getPaid()+$closingSettlement->getBalanceReduction());
-            }
+        $this->payment->setAmount($amount);
+
+        if ($dateString) {
+            $this->payment->setDate(new DateTime($dateString));
         }
+
         $this->form = $this->configuration->getForm($this->payment);
         $this->setTemplate('new');
     }
