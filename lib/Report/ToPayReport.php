@@ -44,11 +44,11 @@ class ToPayReport extends ParentReport
             'bank_account',
             'settlement_date',
             'to_pay',
+            'closed_at',
         );
 
         if(sfContext::getInstance()->getUser()->hasCredential('contract.admin'))
         {
-            $columns[] ='closed_at';
             $columns[] = 'exclude_from_report';
 
         }
