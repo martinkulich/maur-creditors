@@ -3,7 +3,10 @@ default:
   credentials: settlement.admin
 
 allocate:
-  credentials: [[allocation.admin, settlement.admin]]
+  credentials: allocation.admin
 
 UpdateSelect:
   is_secure: false
+
+newOutgoingPayment:
+  credentials: outgoing_payment.admin
