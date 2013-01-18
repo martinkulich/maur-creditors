@@ -609,5 +609,7 @@ Receiver bank account;Bankovní účet příjemce
 Outgoing payments;Odchozí platby
 Paid interests;Vyplacené úroky
 Unpaid interests;Nevyplacené úroky
-Received payments during year;Navýšení jistiny v průběhu roku
 Balance reduction during year;Ponížení jistiny v průběhu roku
+End balance of previous year;Jistina na konci předchozího roku
+End balance of current year;Jistina na konci zvoleného roku
+Balance increase during year;Navýšení jistiny v průběhu roku

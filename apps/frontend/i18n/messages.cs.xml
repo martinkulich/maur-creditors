@@ -2270,12 +2270,20 @@
       <target>Nevyplacené úroky</target>
     </trans-unit>
     <trans-unit id="568">
-      <source>Received payments during year</source>
-      <target>Navýšení jistiny v průběhu roku</target>
-    </trans-unit>
-    <trans-unit id="569">
       <source>Balance reduction during year</source>
       <target>Ponížení jistiny v průběhu roku</target>
+    </trans-unit>
+    <trans-unit id="569">
+      <source>End balance of previous year</source>
+      <target>Jistina na konci předchozího roku</target>
+    </trans-unit>
+    <trans-unit id="570">
+      <source>End balance of current year</source>
+      <target>Jistina na konci zvoleného roku</target>
+    </trans-unit>
+    <trans-unit id="571">
+      <source>Balance increase during year</source>
+      <target>Navýšení jistiny v průběhu roku</target>
     </trans-unit>
   </body>
 </xliff>

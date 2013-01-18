@@ -119,13 +119,13 @@ class Settlement extends BaseSettlement
 
     public function getBalanceReduction()
     {
-        $balanceRecuction = 0;
+        $balanceReduction = 0;
         foreach($this->getAllocations() as $allocation)
         {
-            $balanceRecuction += $allocation->getBalanceReduction();
+            $balanceReduction += $allocation->getBalanceReduction();
         }
 
-        return $balanceRecuction;
+        return $balanceReduction;
     }
 
     public function getBalanceAfterSettlement()

@@ -374,7 +374,19 @@ class settlementActions extends autoSettlementActions
         $criteria->addSelectColumn(sprintf('sum(settlement_balance_reduction(%s)) as balance_reduction', SettlementPeer::ID));
         $criteria->addSelectColumn(sprintf('sum(settlement_paid(%s)) as paid', SettlementPeer::ID));
         $criteria->addSelectColumn(sprintf('sum(%s) as capitalized', SettlementPeer::CAPITALIZED));
-        $criteria->addSelectColumn(sprintf('CASE sum(coalesce(interest,0) - coalesce(settlement_paid(%s),0) - coalesce(capitalized,0)) < 0 WHEN TRUE THEN 0 ELSE sum(coalesce(interest,0) - coalesce(settlement_paid(%s),0) - coalesce(capitalized,0))  END  as unsettled', SettlementPeer::ID, SettlementPeer::ID));
+        $criteria->addSelectColumn(sprintf(
+            'CASE
+                sum(%s) - sum(settlement_paid(%s)) - sum(%s) < 0
+             WHEN TRUE THEN 0
+             ELSE sum(%s) - sum(settlement_paid(%s)) - sum(%s)
+             END  as unsettled',
+            SettlementPeer::INTEREST,
+            SettlementPeer::ID,
+            SettlementPeer::CAPITALIZED,
+            SettlementPeer::INTEREST,
+            SettlementPeer::ID,
+            SettlementPeer::CAPITALIZED
+        ));
         $criteria->clearOrderByColumns();
         $criteria->addGroupByColumn(ContractPeer::CURRENCY_CODE);
         $sumPager->setCriteria($criteria);

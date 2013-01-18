@@ -35,8 +35,7 @@
                 <th class="text-align-right">
                         <?php echo my_format_currency($sumValues['paid'], $currencyCode) ?>
                 </th>
-                <th>
-                </th>
+
                 <th class="text-align-right">
                         <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
                 </th>

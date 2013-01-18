@@ -12,12 +12,12 @@ class CreditorConfirmationReport extends ParentReport
                 cr.street || ', ' || cr.city || ', ' || cr.zip as address,
                 c.currency_code as currency_code,
                 cr.id as creditor_id,
-                sum(contract_balance(c.id, first_day(1, %year%), false)) as start_balance,
-                sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance,
+                sum(contract_balance(c.id, last_day(12, %year%-1), true)) as end_balance_of_previous_year,
+                sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance_of_current_year,
                 sum(contract_unpaid(c.id, last_day(12, %year%))) as unpaid,
                 sum(contract_paid(c.id, %year%)) as paid,
                 sum(contract_balance_reduction(c.id, %year%)) as balance_reduction,
-                sum(contract_received_payments(c.id, %year%)) as received_payments,
+                sum(contract_received_payments(c.id, %year%)) + sum(contract_capitalized(c.id, %year%)) as balance_increase,
                 sum(contract_paid(c.id, %year%)) + sum(contract_balance_reduction(c.id, %year%)) as outgoing_payments
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
@@ -59,10 +59,10 @@ class CreditorConfirmationReport extends ParentReport
     public function getCurrencyColumns()
     {
         return array(
-            'start_balance',
-            'received_payments',
+            'end_balance_of_previous_year',
+            'balance_increase',
             'balance_reduction',
-            'end_balance',
+            'end_balance_of_current_year',
             'unpaid',
             'paid',
             'outgoing_payments',
@@ -105,14 +105,15 @@ class CreditorConfirmationReport extends ParentReport
         {
             $column = 'unpaid interests';
         }
-        elseif($column == 'received_payments')
-        {
-            $column = 'Received payments during year';
-        }
         elseif($column == 'balance_reduction')
         {
             $column = 'Balance reduction during year';
         }
+        elseif($column == 'balance_increase')
+        {
+            $column = 'Balance increase during year';
+        }
+
         return $column;
     }
 
