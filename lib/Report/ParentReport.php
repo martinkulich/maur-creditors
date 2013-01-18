@@ -134,14 +134,21 @@ abstract class ParentReport
         return '';
     }
 
+    public function getColumnHeader($column)
+    {
+        return $column;
+    }
+
     public function getFormatedValue($row, $column)
     {
-        if (in_array($column, $this->getCurrencyColumns())) {
+        if (!array_key_exists($column, $row)) {
+            $formatedValue = null;
+        } elseif (in_array($column, $this->getCurrencyColumns())) {
             $formatedValue = my_format_currency($row[$column], $row['currency_code']);
         } elseif (in_array($column, $this->getDateColumns())) {
             $formatedValue = format_date($row[$column], 'D');
         } else {
-            $formatedValue = array_key_exists($column, $row) ? $row[$column] : null;
+            $formatedValue = $row[$column];
         }
 
         return $formatedValue;
@@ -176,8 +183,8 @@ abstract class ParentReport
     public function getColumnRowClass($column, array $row = array())
     {
         if (
-                in_array($column, $this->getCurrencyColumns()) ||
-                in_array($column, $this->getDateColumns())
+            in_array($column, $this->getCurrencyColumns()) ||
+            in_array($column, $this->getDateColumns())
         ) {
             $class = self::ALIGN_RIGHT;
         } else {
@@ -188,7 +195,7 @@ abstract class ParentReport
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function getFilters()

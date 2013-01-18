@@ -2257,5 +2257,25 @@
       <source>Receiver bank account</source>
       <target>Bankovní účet příjemce</target>
     </trans-unit>
+    <trans-unit id="565">
+      <source>Outgoing payments</source>
+      <target>Odchozí platby</target>
+    </trans-unit>
+    <trans-unit id="566">
+      <source>Paid interests</source>
+      <target>Vyplacené úroky</target>
+    </trans-unit>
+    <trans-unit id="567">
+      <source>Unpaid interests</source>
+      <target>Nevyplacené úroky</target>
+    </trans-unit>
+    <trans-unit id="568">
+      <source>Received payments during year</source>
+      <target>Navýšení jistiny v průběhu roku</target>
+    </trans-unit>
+    <trans-unit id="569">
+      <source>Balance reduction during year</source>
+      <target>Ponížení jistiny v průběhu roku</target>
+    </trans-unit>
   </body>
 </xliff>

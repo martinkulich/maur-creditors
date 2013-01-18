@@ -4,7 +4,7 @@
         <tr>
             <?php foreach($report->getColumns() as $column){ ?>
                 <th class="span3 <?php echo $report->getColumnHeaderClass($column)?>">
-                    <?php echo link_to(__(sfInflector::humanize($column)), sprintf('@report_sort?sort=%s&report_type=%s',$column, $reportType))?>
+                    <?php echo link_to(__(sfInflector::humanize($report->getColumnHeader($column))), sprintf('@report_sort?sort=%s&report_type=%s',$column, $reportType))?>
                 </th>
             <?php } ?>
         </tr>

@@ -606,3 +606,8 @@ of payment;Přijaté platby
 Exclude from report;Nezahrnovat tuto smlouvu do tohoto reportu
 exclude_from_report;Nezahrnovat
 Receiver bank account;Bankovní účet příjemce
+Outgoing payments;Odchozí platby
+Paid interests;Vyplacené úroky
+Unpaid interests;Nevyplacené úroky
+Received payments during year;Navýšení jistiny v průběhu roku
+Balance reduction during year;Ponížení jistiny v průběhu roku

@@ -5,7 +5,7 @@ require_once 'lib/model/om/BaseOutgoingPayment.php';
 /**
  * Skeleton subclass for representing a row from the 'outgoing_payment' table.
  *
- * 
+ *
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -23,24 +23,36 @@ class OutgoingPayment extends BaseOutgoingPayment
 
     public function getLongToString()
     {
-        return sprintf("%s - %s/%s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getUnallocatedAmount(), $this->getCurrencyCode()),my_format_currency($this->getAmount(), $this->getCurrencyCode()));
+        return sprintf("%s - %s/%s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getUnallocatedAmount(), $this->getCurrencyCode()), my_format_currency($this->getAmount(), $this->getCurrencyCode()));
     }
-    
-    
+
+
     public function getAllocatedAmount()
     {
-        $amount = 0;
-        foreach($this->getAllocations() as $allocation)
-        {
-            $amount += $allocation->getPaid();
-            $amount += $allocation->getBalanceReduction();
-        }
-        return $amount;
+        return $this->getPaid() + $this->getBalanceReduction();
     }
-    
+
     public function getUnallocatedAmount()
     {
         return $this->getAmount() - $this->getAllocatedAmount();
+    }
+
+    public function getPaid()
+    {
+        $amount = 0;
+        foreach ($this->getAllocations() as $allocation) {
+            $amount += $allocation->getPaid();
+        }
+        return $amount;
+    }
+
+    public function getBalanceReduction()
+    {
+        $amount = 0;
+        foreach ($this->getAllocations() as $allocation) {
+            $amount += $allocation->getBalanceReduction();
+        }
+        return $amount;
     }
 
 }
