@@ -19,23 +19,6 @@ class settlementActions extends autoSettlementActions
         return $this->renderComponent('settlement', 'select', array('contractId' => $request->getParameter('contract_id'), 'formName' => $request->getParameter('form_name')));
     }
 
-    public function executeAddFilter(sfWebRequest $request)
-    {
-        $filters = $request->getParameter('filter');
-
-        if (array_key_exists('contract_id', $filters)) {
-            $contract = ContractPeer::retrieveByPK($filters['contract_id']);
-            if ($contract && $contract->getActivatedAt() && $contract->getLastSettlement()) {
-
-                $filters['date']['from'] = $contract->getActivatedAt();
-                $filters['date']['to'] = $contract->getLastSettlement()->getDate();
-            }
-        }
-        $this->setFilters(array_merge($this->getFilters(), $filters));
-
-
-        return $this->redirect('@settlement');
-    }
 
     public function executeNote(sfWebRequest $request)
     {
@@ -96,21 +79,6 @@ class settlementActions extends autoSettlementActions
 
         if ($request->isMethod(sfWebRequest::POST)) {
             $this->processClosingForm($request, $this->form);
-        }
-    }
-
-    public function executeContractFilter(sfWebRequest $request, $redirect = true)
-    {
-        $contractId = $request->getParameter('contract_id');
-        $contract = ContractPeer::retrieveByPK($contractId);
-        if ($contract) {
-            $filters = $this->getFilters();
-            $filters['contract_id'] = $contractId;
-            $filters['creditor_id'] = $contract->getCreditorId();
-            $this->setFilters($filters);
-        }
-        if ($redirect) {
-            return $this->redirect('@settlement');
         }
     }
 
@@ -404,19 +372,44 @@ class settlementActions extends autoSettlementActions
 
     protected function getFilters()
     {
+        $changed = false;
         $filters = $this->getUser()->getAttribute('settlement.filters', $this->configuration->getFilterDefaults(), 'admin_module');
+
+        $contract = null;
+        if (isset($filters['contract_id']) && !isset($filters['creditor_id'])) {
+            $contract = ContractPeer::retrieveByPK($filters['contract_id']);
+            if ($contract) {
+                $filters['creditor_id'] = $contract->getCreditorId();
+                $changed = true;
+            }
+        }
+
         if (!isset($filters['date']['from'])) {
-            $date = new DateTime('now');
-            $date->modify('-1 month');
+            if ($contract && $contract->getActivatedAt()) {
+                $date = new DateTime($contract->getActivatedAt());
+            } else {
+                $date = new DateTime('now');
+                $date->modify('-1 month');
+            }
             $filters['date']['from'] = $date->format('Y-m-d');
+            $changed = true;
         }
 
         if (!isset($filters['date']['to'])) {
-            $date = new DateTime('now');
-            $date->modify('+1 month');
+            if ($contract && $contract->getLastSettlement()) {
+                $date = new DateTime($contract->getLastSettlement()->getDate());
+            } else {
+                $date = new DateTime('now');
+                $date->modify('+1 month');
+            }
             $filters['date']['to'] = $date->format('Y-m-d');
+            $changed = true;
         }
 
+
+        if ($changed) {
+            $this->setFilters($filters);
+        }
         return $filters;
     }
 

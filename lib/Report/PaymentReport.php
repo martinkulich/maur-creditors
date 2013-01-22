@@ -93,6 +93,12 @@ class PaymentReport extends ParentReport
         if ($senderBankAccount = $this->getFilter('sender_bank_account')) {
             $conditions[] = ' p.sender_bank_account = ' . "'".$senderBankAccount."'";
         }
+        if ($dateFrom = $this->getFilter('date_from')) {
+            $conditions[] = ' p.date >= ' . "'".$dateFrom."'::date";
+        }
+        if ($dateTo = $this->getFilter('date_to')) {
+            $conditions[] = ' p.date <= ' . "'".$dateTo."'::date";
+        }
 
         if(count($conditions)>0)
         {
@@ -101,7 +107,7 @@ class PaymentReport extends ParentReport
         return $where;
     }
 
-    protected function getRequiredFilters()
+    public function getRequiredFilters()
     {
         return array(
             'date_from',

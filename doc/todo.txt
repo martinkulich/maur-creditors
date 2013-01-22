@@ -147,4 +147,8 @@ proverit ukoly z pohledu p. Batlickove
 
     //odstranit kurz meny z vyplaty uroku
 
-    odkazy vs filtry napr ze smluv do vyplaty uroku
+    //odkazy vs filtry napr ze smluv do vyplaty uroku
+
+    KAP doresit smlouvy!!!
+
+    filtr vs new pokud je nastaveny filter, nastavim vychozi hodnoty noweho objedku pripadne z nich udelam hidden, nebo je uplne skryji

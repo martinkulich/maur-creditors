@@ -1,5 +1,5 @@
 <td class="sf_admin_text sf_admin_list_td_name no-wrap-line ">
-    <?php echo link_to($contract->getName(), '@settlement_addFilter?filter[contract_id]='.$contract->getId()) ?>
+    <?php echo link_to($contract->getName(), '@settlement_filter?modeless=1&settlement_filters[contract_id]='.$contract->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $contract->getCreditor() ?>
@@ -8,7 +8,7 @@
     <?php echo my_format_currency($contract->getAmount(), $contract->getCurrencyCode()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_payments_amount text-align-right">
-    <?php echo link_to(my_format_currency($contract->getPaymentsAmount(), $contract->getCurrencyCode()), '@payment_contract_filter?contract_id='.$contract->getId()) ?>
+    <?php echo link_to(my_format_currency($contract->getPaymentsAmount(), $contract->getCurrencyCode()), '@payment_filter?modeless=1&payment_filters[contract_id]='.$contract->getId()) ?>
 </td>
 
 <td class="sf_admin_text sf_admin_list_td_interest_rate_as_string text-align-right">

@@ -37,7 +37,7 @@ class MonthlyReport extends ParentReport
         return $this->getColumns();
     }
 
-    protected function getRequiredFilters()
+    public function getRequiredFilters()
     {
         return array('month', 'year');
     }

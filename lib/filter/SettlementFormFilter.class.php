@@ -81,6 +81,7 @@ class SettlementFormFilter extends BaseSettlementFormFilter
             SettlementPeer::END_OF_FIRST_YEAR,
             SettlementPeer::MANUAL,
             SettlementPeer::CLOSING,
+            SettlementPeer::CLOSING_BY_REACTIVATION,
         );
         $translateService = ServiceContainer::getTranslateService();
         $choices = array('' => '');

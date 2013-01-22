@@ -65,7 +65,7 @@ class BalanceReport extends ParentReport
         return $where;
     }
 
-    protected function getRequiredFilters()
+    public function getRequiredFilters()
     {
         return array('date_to');
     }

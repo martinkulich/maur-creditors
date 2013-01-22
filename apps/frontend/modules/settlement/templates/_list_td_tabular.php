@@ -22,13 +22,13 @@
     <?php echo my_format_currency($settlement->getInterest(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_paid text-align-right">
-    <?php echo link_to(my_format_currency($settlement->getPaid(), $currencyCode), '@allocation_filter?reset=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
+    <?php echo link_to(my_format_currency($settlement->getPaid(), $currencyCode), '@allocation_filter?modeless=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_capitalized text-align-right">
     <?php echo my_format_currency($settlement->getCapitalized(), $currencyCode) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_balance_reduction text-align-right">
-    <?php echo link_to(my_format_currency($settlement->getBalanceReduction(), $currencyCode), '@allocation_filter?reset=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
+    <?php echo link_to(my_format_currency($settlement->getBalanceReduction(), $currencyCode), '@allocation_filter?modeless=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
 </td>
 
 <td class="sf_admin_text sf_admin_list_td_unsettled text-align-right">

@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/allocationGeneratorConfiguration.class.php';
-require_once dirname(__FILE__).'/../lib/allocationGeneratorHelper.class.php';
+require_once dirname(__FILE__) . '/../lib/allocationGeneratorConfiguration.class.php';
+require_once dirname(__FILE__) . '/../lib/allocationGeneratorHelper.class.php';
 
 /**
  * allocation actions.
@@ -23,63 +23,37 @@ class allocationActions extends autoAllocationActions
 
         ServiceContainer::getContractService()->checkContractChanges($contract);
 
-        $notice='The item was deleted successfully';
+        $notice = 'The item was deleted successfully';
         ServiceContainer::getMessageService()->addSuccess($notice);
 
         $this->redirect('@allocation');
     }
 
-    public function executeFilters(sfWebRequest $request)
+    public function getFilters()
     {
-
-        $filters = $this->getFilters();
-        if(isset($filters['outgoing_payment_id']) && !isset($filters['creditor_id']))
-        {
+        $filters = parent::getFilters();
+        $changed = false;
+        if (isset($filters['outgoing_payment_id']) && !isset($filters['creditor_id'])) {
             $outgoingPayment = OutgoingPaymentPeer::retrieveByPK($filters['outgoing_payment_id']);
-            if($outgoingPayment)
-            {
+            if ($outgoingPayment) {
                 $filters['creditor_id'] = $outgoingPayment->getCreditorId();
+                $changed = true;
             }
         }
 
-        if(isset($filters['settlement_id']) && (!isset($filters['contract_id']) || !isset($filters['creditor_id'])))
-        {
+        if (isset($filters['settlement_id']) && (!isset($filters['contract_id']) || !isset($filters['creditor_id']))) {
             $settlement = BaseSettlementPeer::retrieveByPK($filters['settlement_id']);
-            if($settlement)
-            {
+            if ($settlement) {
                 $filters['contract_id'] = $settlement->getContractId();
                 $filters['creditor_id'] = $settlement->getContract()->getCreditorId();
+                $changed = true;
             }
         }
-        $this->setFilters($filters);
 
-        $this->form = $this->configuration->getFilterForm($this->getFilters());
-
-        $this->form->bind($this->getFilters());
-
-    }
-
-    public function executeFilter(sfWebRequest $request)
-    {
-
-        $this->form = $this->configuration->getFilterForm($this->getFilters());
-
-        $this->form->bind($request->getParameter($this->form->getName()));
-        if ($this->form->isValid())
-        {
-            $this->setFilters($this->form->getValues());
-            $reset = $request->getParameter('reset', false);
-            $code = $reset ? 302 : 205;
-            return $this->redirect('@allocation', $code);
+        if ($changed) {
+            $this->setFilters($filters);
         }
-        else
-        {
-            ServiceContainer::getMessageService()->addFromErrors($this->form);
-        }
-        $this->pager = $this->getPager();
-        $this->sort = $this->getSort();
 
-        $this->setTemplate('filters');
+        return $filters;
     }
-
 }

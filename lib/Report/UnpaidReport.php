@@ -56,21 +56,8 @@ class UnpaidReport extends ParentReport
 
 
 
-    protected function getRequiredFilters()
+    public function getRequiredFilters()
     {
         return array('date_to');
     }
-    
-    public function getFormatedRowValue($row, $column)
-    {
-        $formatedValue = parent::getFormatedRowValue($row, $column);
-        
-        if($column == 'fullname')
-        {
-            $formatedValue = link_to($formatedValue, '@report_add_filter?report_type=to_pay&filter[creditor_id]='.$row['creditor_id']);
-        }
-        
-        return $formatedValue;
-    }
-
 }

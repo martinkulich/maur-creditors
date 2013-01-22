@@ -109,7 +109,7 @@ settlement:
     column:               id
     with_wildcard_routes: true
     object_actions: {capitalize: get, allocate: [get, post], newOutgoingPayment: [get, post], note: get}
-    collection_actions: {filters: get, filter: post, reset: get, checkContracts: get, addFilter: get}
+    collection_actions: {filters: get, filter: post, reset: get, checkContracts: get}
 
 creditor:
   class: sfPropelRouteCollection
@@ -198,11 +198,6 @@ report_filters:
 report_filter:
   url:   /report/:report_type/filter
   param: { module: report, action: filter }
-
-report_add_filter:
-  url:   /report/:report_type/add-filter
-  param: { module: report, action: addFilter }
-
 
 report_reset:
   url:   /report/:report_type/reser

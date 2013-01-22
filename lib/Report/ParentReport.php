@@ -208,7 +208,7 @@ abstract class ParentReport
         return isset($this->filters[$filterName]) ? $this->filters[$filterName] : null;
     }
 
-    protected function getRequiredFilters()
+    public function getRequiredFilters()
     {
         return array();
     }

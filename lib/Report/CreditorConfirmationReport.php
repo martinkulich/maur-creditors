@@ -80,7 +80,7 @@ class CreditorConfirmationReport extends ParentReport
         return 'currency_code';
     }
 
-    protected function getRequiredFilters()
+    public function getRequiredFilters()
     {
         return array('year');
     }

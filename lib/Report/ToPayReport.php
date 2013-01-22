@@ -108,7 +108,7 @@ class ToPayReport extends ParentReport
         }
         elseif($column == 'contract_name')
         {
-            $formatedValue = link_to($formatedValue, '@settlement_addFilter?filter[contract_id]='.$row['contract_id']);
+            $formatedValue = link_to($formatedValue, '@settlement_filter?settlement_filters[contract_id]='.$row['contract_id']);
         }
         elseif($column == 'exclude_from_report')
         {

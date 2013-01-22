@@ -20,7 +20,7 @@ class reportActions extends sfActions
         if (!$this->getUser()->hasCredential($credential)) {
             return $this->forward('security', 'secure');
         }
-       
+
         $this->reportService = ServiceContainer::getReportService();
     }
 
@@ -32,7 +32,10 @@ class reportActions extends sfActions
     public function executeIndex(sfWebRequest $request)
     {
         $filters = $this->getFilters();
+        $report = $this->reportService->getReport($this->reportType, $filters);
+        $this->checkFilters($report->getRequiredFilters());
         $this->report = $this->reportService->getReport($this->reportType, $filters);
+
         $this->hasFilter = count($filters) > 0;
     }
 
@@ -75,17 +78,7 @@ class reportActions extends sfActions
 
         $this->setTemplate('filters');
     }
-    
-    public function executeAddFilter(sfWebRequest $request)
-    {
-         if($filter = $request->getParameter('filter'))
-        {
-            $this->setFilters(array_merge($this->getFilters(), $filter));
-        }
-        return $this->redirect('@report?report_type=' . $this->reportType);
-    }
-    
-    
+
 
     public function executeReset(sfWebRequest $request)
     {
@@ -101,8 +94,56 @@ class reportActions extends sfActions
 
     protected function getFilters()
     {
-        return $this->getUser()->getAttribute('report.filters', array(), 'report');
+        $filters = $this->getUser()->getAttribute('report.filters', array(), 'report');
+
+        return $filters;
     }
+
+    protected function checkFilters(array $filtersToCheck = array())
+    {
+        $filters = $this->getFilters();
+        $changed = false;
+        foreach ($filtersToCheck as $filterKey) {
+
+
+            switch ($filterKey) {
+                case 'date_to':
+                case 'date_from':
+                    if (!isset($filters[$filterKey])) {
+                        $date = new DateTime('now');
+                        $filters[$filterKey] = $date->format('Y-m-d');
+                        $changed = true;
+                    }
+                    break;
+                case 'year':
+                    if (!isset($filters[$filterKey])) {
+                        $date = new DateTime('now');
+                        $filters[$filterKey] = (integer)$date->format('Y');
+                        $changed = true;
+                    }
+                    break;
+                case 'month':
+                    if (!isset($filters[$filterKey])) {
+                        $date = new DateTime('now');
+                        $filters[$filterKey] = (integer)$date->format('m');
+                        $changed = true;
+                    }
+                    break;
+                default:
+                    throw new exception('Undefined filter ' . $filterKey);
+                    break;
+
+            }
+        }
+        if ($changed) {
+            $this->setFilters($filters);
+            return $this->redirect('@report?report_type=' . $this->reportType);
+        }
+
+        return $filters;
+
+    }
+
 
     protected function setFilters(array $filters)
     {

@@ -17,7 +17,8 @@
     {
       $this->setFilters($this->form->getValues());
 
-      return $this->redirect('@<?php echo $this->getUrlForAction('list') ?>', 205);
+      $code = $request->getParameter('modeless', false) ? 302 : 205;
+      return $this->redirect('@<?php echo $this->getUrlForAction('list') ?>', $code);
     }
     else
     {
