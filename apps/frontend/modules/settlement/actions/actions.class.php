@@ -72,6 +72,15 @@ class settlementActions extends autoSettlementActions
 
     public function executeClose(sfWebRequest $request)
     {
+        $contractId = $request->getParameter('contract_id');
+        $contract = ContractPeer::retrieveByPK($contractId);
+        if ($contract) {
+            $filters = $this->getFilters();
+            $filters['contract_id'] = $contractId;
+            $filters['creditor_id'] = $contract->getCreditorId();
+            $this->setFilters($filters);
+        }
+
         $this->executeNew($request);
 
         $this->form = new ClosingSettlementForm($this->settlement);
@@ -80,6 +89,7 @@ class settlementActions extends autoSettlementActions
             $this->processClosingForm($request, $this->form);
         }
     }
+
 
     protected function processForm(sfWebRequest $request, sfForm $form)
     {
