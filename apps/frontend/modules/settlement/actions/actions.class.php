@@ -72,7 +72,6 @@ class settlementActions extends autoSettlementActions
 
     public function executeClose(sfWebRequest $request)
     {
-        $this->executeContractFilter($request, false);
         $this->executeNew($request);
 
         $this->form = new ClosingSettlementForm($this->settlement);
