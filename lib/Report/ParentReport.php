@@ -99,7 +99,9 @@ abstract class ParentReport
         );
         $columnKeyPattern = '%%%s%%';
         foreach ($this->getFilters() as $filter => $value) {
-            $replacements[sprintf($columnKeyPattern, $filter)] = $value;
+            if (!is_array($value)) {
+                $replacements[sprintf($columnKeyPattern, $filter)] = $value;
+            }
         }
 
         return $replacements;

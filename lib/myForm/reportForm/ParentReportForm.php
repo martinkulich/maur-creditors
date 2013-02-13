@@ -16,6 +16,7 @@ class ParentReportForm extends BaseForm
             'contract_id'=> new sfWidgetFormPropelChoice(array('add_empty' => true, 'model' => 'Contract', 'order_by' => array('Name', 'asc'))),
             'month'=> new myWidgetFormChoiceMonth(),
             'year'=> new myWidgetFormChoiceYear(),
+            'years'=> new myWidgetFormChoiceYear(array('multiple'=>true, 'expanded'=>true)),
             ));
         $this->setValidators(array(
             'date_from' => new myValidatorDate(),
@@ -24,6 +25,7 @@ class ParentReportForm extends BaseForm
             'contract_id'=> new sfValidatorPropelChoice(array('model' => 'Contract', 'required' => false)),
             'month'=> new sfValidatorChoice(array('choices'=>$this->getWidget('month')->getChoicesKeys())),
             'year'=> new sfValidatorChoice(array('choices'=>$this->getWidget('year')->getChoicesKeys())),
+            'years'=> new sfValidatorChoice(array('choices'=>$this->getWidget('year')->getChoicesKeys(), 'multiple'=>true, 'required' => false)),
         ));
 
         

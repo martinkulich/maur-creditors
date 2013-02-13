@@ -58,19 +58,20 @@ class RegulationReport extends ParentReport
         if ($creditorId = $this->getFilter('creditor_id')) {
             $conditions[] = ' creditor_id = ' . $creditorId;
         }
-        
+
         if ($contractId = $this->getFilter('contract_id')) {
             $conditions[] = ' r.contract_id = ' . $contractId;
         }
-        
-        if ($year = $this->getFilter('year')) {
-            $conditions[] = ' regulation_year = ' . $year;
+
+        if ($years = $this->getFilter('years')) {
+                $conditions[] = ' regulation_year in (' . implode(', ', $years) . ' ) ';
         }
-        $where = count($conditions) >0 ? ' AND '.implode(' AND ', $conditions) : '';
+
+        $where = count($conditions) > 0 ? ' AND ' . implode(' AND ', $conditions) : '';
 //        die(var_dump($where));
         return $where;
     }
-    
+
     public function getColumns()
     {
         return array(
@@ -139,6 +140,7 @@ class RegulationReport extends ParentReport
     {
         return 'regulation_year';
     }
+
     public function getColumnRowClass($column, array $row = array())
     {
         $class = parent::getColumnRowClass($column, $row);
