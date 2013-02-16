@@ -17,6 +17,12 @@
                 <th class="text-align-center">
                     <?php echo __('Balance reduction')?>
                 </th>
+                <th class="text-align-center">
+                    <?php echo __('Bank account')?>
+                </th>
+                <th class="text-align-center">
+                    <?php echo __('Receiver bank account')?>
+                </th>
             </tr>
         <?php foreach($outgoingPayments as $outgoingPayment){ ?>
             <tr>
@@ -27,8 +33,14 @@
                     <?php echo my_format_currency($outgoingPayment->getPaid(), $outgoingPayment->getCurrencyCode()) ?>
                 </td>
                 <td class="text-align-right">
-                <?php echo my_format_currency($outgoingPayment->getBalanceReduction(), $outgoingPayment->getCurrencyCode()) ?>
-            </td>
+                    <?php echo my_format_currency($outgoingPayment->getBalanceReduction(), $outgoingPayment->getCurrencyCode()) ?>
+                </td>
+                <td class="text-align-right">
+                    <?php echo $outgoingPayment->getBankAccount() ?>
+                </td>
+                <td class="text-align-right">
+                    <?php echo $outgoingPayment->getReceiverBankAccount() ?>
+                </td>
             </tr>
         <?php } ?>
         </table>

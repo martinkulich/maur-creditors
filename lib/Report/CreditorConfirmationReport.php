@@ -15,9 +15,11 @@ class CreditorConfirmationReport extends ParentReport
                 sum(contract_balance(c.id, last_day(12, %year%-1), true)) as end_balance_of_previous_year,
                 sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance_of_current_year,
                 sum(contract_unpaid(c.id, last_day(12, %year%))) as unpaid,
+                sum(contract_capitalized(c.id, %year%)) as capitalized,
                 sum(contract_paid(c.id, %year%)) as paid,
                 sum(contract_balance_reduction(c.id, %year%)) as balance_reduction,
                 sum(contract_received_payments(c.id, %year%)) + sum(contract_capitalized(c.id, %year%)) as balance_increase,
+                sum(contract_received_payments(c.id, %year%)) as received_payments,
                 sum(contract_paid(c.id, %year%)) + sum(contract_balance_reduction(c.id, %year%)) as outgoing_payments
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
@@ -60,7 +62,8 @@ class CreditorConfirmationReport extends ParentReport
     {
         return array(
             'end_balance_of_previous_year',
-            'balance_increase',
+            'received_payments',
+            'capitalized',
             'balance_reduction',
             'end_balance_of_current_year',
             'unpaid',
