@@ -19,6 +19,9 @@
 <td class="sf_admin_text sf_admin_list_td_bank_account ">
     <?php echo __($payment->getSenderBankAccount()) ?>
 </td>
+<td class="sf_admin_boolean sf_admin_list_td_cash ">
+    <?php echo get_partial('payment/list_field_boolean', array('value' => $payment->getCash())) ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_note text-align-right">
     <?php echo $payment->getNote() ? link_to('Poznámka', '@payment_note?id=' . $payment->getId(), array('class' => 'modal_link')) : ''; ?>
 </td>
