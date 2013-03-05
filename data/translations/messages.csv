@@ -415,6 +415,7 @@ Closed at;datum ukončení smlouvy
 Copy;Kopírovat
 regulation admin;Předpisy
 of regulation;předpisy
+of regulation_monthly;předpisy měsíčně
 Creditor firstname;Jméno
 Creditor lastname;Příjmení
 Contract name;Smlouva
@@ -575,6 +576,7 @@ Unused amount;Nevyužitá částka
 Outgoing payment;Odchozí platba
 Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel odchozí platby se neshoduje s věřitelem smlouvy
 regulation report;Předpisy
+regulation_monthly report;Předpisy měsíčně
 Filter outgoingPayment;Filtrovat odchozí platby
 New outgoingPayment;Nová odchozí platba
 Edit outgoingPayment;Editace odchozí platby
@@ -614,3 +616,6 @@ Balance reduction during year;Ponížení jistiny v průběhu roku
 End balance of previous year;Jistina na konci předchozího roku
 End balance of current year;Jistina na konci zvoleného roku
 Balance increase during year;Navýšení jistiny v průběhu roku
+Month start balance; Jistina na začátku měsíce
+Month end balance; Jistina na konci měsíce
+Teoretical regulation; Teoretické úroky

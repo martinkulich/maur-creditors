@@ -62,6 +62,7 @@ class defaultComponents extends sfComponents
         $this->reportLinks = array();
         if ($user->hasCredential('report.admin')) {
             $this->reportLinks[] = 'regulation';
+            $this->reportLinks[] = 'regulation_monthly';
             $this->reportLinks[] = 'balance';
             $this->reportLinks[] = 'birthday';
             $this->reportLinks[] = 'monthly';
