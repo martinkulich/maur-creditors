@@ -139,7 +139,7 @@ $(document).ready(function () {
         $('.table-fixed-header, .table-admin').fixedHeaderTable(
             {
                 footer:true,
-                height: $(window).height() - 100
+                height: $(window).height() - 150
 //            fixedColumns: 2
             }
         );
