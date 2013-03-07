@@ -14,30 +14,32 @@
             <?php include_partial('payment/list_td_actions', array('payment' => $payment, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
+      </tbody>
+      <tfoot>
           <?php foreach($sums as $currencyCode=>$sumValues){?>
       <tr class="sf_admin_row">
-          <th>
-          </th>
-          <th>
-          </th>
-          <th>
-          </th>
-          <th>
-          </th>
-          <th class="text-align-right">
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td class="text-align-right">
               <?php echo my_format_currency($sumValues['amount'], $currencyCode) ?>
-          </th>
-          <th>
-          </th>
-          <th>
-          </th>
-          <th>
-          </th>
-          <th>
-          </th>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
       </tr>
           <?php }?>
-      </tbody>
+        </tfoot>
     </table>
     </div>
 <?php endif; ?>

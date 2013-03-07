@@ -12,53 +12,55 @@
                         <?php include_partial('regulation/list_td_tabular', array('regulation' => $regulation)) ?>
                     </tr>
                 <?php endforeach; ?>
+            </tbody>
+            <tfoot>
                 <?php foreach($sums as $currencyCode=>$sumValues){?>
                     <tr class="sf_admin_row">
-                        <th>
-                        </th>
-                        <th>
-                        </th>
-                        <th>
-                        </th>
-                        <th class="text-align-right">
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td class="text-align-right">
                             <?php if (array_key_exists('start_balance', $sumValues)) { ?>
                                 <?php echo my_format_currency($sumValues['start_balance'], $currencyCode) ?>
                             <?php } ?>
-                        </th>
-                        <th>
-                        </th>
-                        <th>
-                        </th>
-                        <th>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
                             <?php if (array_key_exists('unpaid_in_past', $sumValues)) { ?>
                                 <?php echo my_format_currency($sumValues['unpaid_in_past'], $currencyCode) ?>
                             <?php } ?>
-                        </th>
-                        <th class="text-align-right">
+                        </td>
+                        <td class="text-align-right">
                             <?php echo my_format_currency($sumValues['regulation'], $currencyCode) ?>
-                        </th>
-                        <th class="text-align-right">
+                        </td>
+                        <td class="text-align-right">
                             <?php echo my_format_currency($sumValues['paid'], $currencyCode) ?>
-                        </th>
-                        <th class="text-align-right">
+                        </td>
+                        <td class="text-align-right">
                             <?php echo my_format_currency($sumValues['paid_for_current_year'], $currencyCode) ?>
-                        </th>
-                        <th class="text-align-right">
+                        </td>
+                        <td class="text-align-right">
                             <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
-                        </th>
-                        <th class="text-align-right">
+                        </td>
+                        <td class="text-align-right">
                             <?php if (array_key_exists('unpaid', $sumValues)) { ?>
                                 <?php echo my_format_currency($sumValues['unpaid'], $currencyCode) ?>
                             <?php } ?>
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             <?php if (array_key_exists('end_balance', $sumValues)) { ?>
                                 <?php echo my_format_currency($sumValues['end_balance'], $currencyCode) ?>
                             <?php } ?>
-                        </th>
+                        </td>
                     </tr>
                  <?php }?>
-            </tbody>
+            </tfoot>
         </table>
     </div>
 <?php endif; ?>

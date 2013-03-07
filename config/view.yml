@@ -20,6 +20,7 @@ default:
 #    - bootstrap/docs.css
     - all.css
     - main.css
+    - fixedHeader/defaultTheme.css
 
   javascripts:
 #    - jquery/jquery-1.7.2.min.js
@@ -30,6 +31,7 @@ default:
 #    - moment/moment.js
     - masks/masks.js
     - all.js
+    - fixedHeader/jquery.fixedheadertable.min.js
     - init.js
 
   has_layout:     true

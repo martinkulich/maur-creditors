@@ -15,47 +15,49 @@
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
+      </tbody>
+        <tfoot>
         <?php foreach($sums as $currencyCode=>$sumValues){?>
             <tr class="sf_admin_row">
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th class="text-align-right">
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td class="text-align-right">
                         <?php echo my_format_currency($sumValues['interest'], $currencyCode) ?>
-                </th>
-                <th class="text-align-right">
+                </td>
+                <td class="text-align-right">
                         <?php echo my_format_currency($sumValues['paid'], $currencyCode) ?>
-                </th>
+                </td>
 
-                <th class="text-align-right">
+                <td class="text-align-right">
                         <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
-                </th>
-                <th class="text-align-right">
+                </td>
+                <td class="text-align-right">
                         <?php echo my_format_currency($sumValues['balance_reduction'], $currencyCode) ?>
-                </th>
-                <th class="text-align-right">
+                </td>
+                <td class="text-align-right">
                     <?php echo my_format_currency($sumValues['unsettled'], $currencyCode) ?>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th class="no-print">
-                </th>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td class="no-print">
+                </td>
             </tr>
           <?php }?>
-      </tbody>
+        </tfoot>
     </table>
     </div>
 <?php endif; ?>
