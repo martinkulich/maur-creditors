@@ -135,11 +135,13 @@ $(document).ready(function () {
         }
     );
 
-    if ($('.table-fixed-header tr, .table-admin tr').length > 10) {
+    var freeHeight = $(window).height() - $('#main-menu').outerHeight() - $('.subnav').outerHeight() - $('.table-fixed-header tfoot, .table-admin tfoot').outerHeight();
+    var rowHeight = $('.table-fixed-header td, .table-admin td').outerHeight();
+    if ($('.table-fixed-header tr, .table-admin tr').length > freeHeight/rowHeight) {
         $('.table-fixed-header, .table-admin').fixedHeaderTable(
             {
                 footer:true,
-                height: $(window).height() - 150
+                height: freeHeight
 //            fixedColumns: 2
             }
         );
