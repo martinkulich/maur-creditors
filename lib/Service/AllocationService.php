@@ -14,13 +14,14 @@ class AllocationService
 
 
         $customCriteria = sprintf(
-            "((select coalesce(sum(%s + %s), 0) from %s where %s = %s) < %s)",
+            "((select coalesce(sum(%s + %s), 0) from %s where %s = %s) < (%s - %s))",
             AllocationPeer::PAID,
             AllocationPeer::BALANCE_REDUCTION,
             AllocationPeer::TABLE_NAME,
             AllocationPeer::OUTGOING_PAYMENT_ID,
             OutgoingPaymentPeer::ID,
-            OutgoingPaymentPeer::AMOUNT
+            OutgoingPaymentPeer::AMOUNT,
+            OutgoingPaymentPeer::REFUNDATION
         );
 
         $criterion1 = $outgoingPaymentCriteria->getNewCriterion(OutgoingPaymentPeer::ID, $customCriteria, Criteria::CUSTOM);

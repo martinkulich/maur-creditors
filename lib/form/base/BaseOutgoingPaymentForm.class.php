@@ -23,6 +23,7 @@ abstract class BaseOutgoingPaymentForm extends BaseFormPropel
       'creditor_id'           => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => false)),
       'cash'                  => new sfWidgetFormInputCheckbox(),
       'receiver_bank_account' => new sfWidgetFormInputText(),
+      'refundation'           => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -35,6 +36,7 @@ abstract class BaseOutgoingPaymentForm extends BaseFormPropel
       'creditor_id'           => new sfValidatorPropelChoice(array('model' => 'Creditor', 'column' => 'id')),
       'cash'                  => new sfValidatorBoolean(array('required' => false)),
       'receiver_bank_account' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'refundation'           => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('outgoing_payment[%s]');

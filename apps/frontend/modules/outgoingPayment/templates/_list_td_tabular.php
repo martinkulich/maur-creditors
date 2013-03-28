@@ -17,7 +17,10 @@
     <?php echo link_to(my_format_currency($usedAmount = $outgoingPayment->getAllocatedAmount(), $outgoingPayment->getCurrencyCode()), '@allocation_filter?modeless=1&allocation_filters[outgoing_payment_id]='.$outgoingPayment->getId()) ?>
 </td>
 <td class="sf_admin_text sf_admin_list_td_amount ">
-    <?php echo my_format_currency($outgoingPayment->getAmount() - $usedAmount, $outgoingPayment->getCurrencyCode()) ?>
+    <?php echo my_format_currency($outgoingPayment->getUnallocatedAmount(), $outgoingPayment->getCurrencyCode()) ?>
+</td>
+<td class="sf_admin_text sf_admin_list_td_amount ">
+    <?php echo my_format_currency($outgoingPayment->getRefundation(), $outgoingPayment->getCurrencyCode()) ?>
 </td>
 <td class="sf_admin_boolean sf_admin_list_td_cash ">
     <?php echo get_partial('outgoingPayment/list_field_boolean', array('value' => $outgoingPayment->getCash())) ?>

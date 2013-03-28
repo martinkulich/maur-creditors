@@ -74,6 +74,12 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	protected $receiver_bank_account;
 
 	/**
+	 * The value for the refundation field.
+	 * @var        string
+	 */
+	protected $refundation;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
@@ -248,6 +254,16 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	public function getReceiverBankAccount()
 	{
 		return $this->receiver_bank_account;
+	}
+
+	/**
+	 * Get the [refundation] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getRefundation()
+	{
+		return $this->refundation;
 	}
 
 	/**
@@ -472,6 +488,26 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	} // setReceiverBankAccount()
 
 	/**
+	 * Set the value of [refundation] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     OutgoingPayment The current object (for fluent API support)
+	 */
+	public function setRefundation($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->refundation !== $v) {
+			$this->refundation = $v;
+			$this->modifiedColumns[] = OutgoingPaymentPeer::REFUNDATION;
+		}
+
+		return $this;
+	} // setRefundation()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -516,6 +552,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$this->creditor_id = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->cash = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->receiver_bank_account = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->refundation = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -525,7 +562,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating OutgoingPayment object", $e);
@@ -963,6 +1000,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			case 8:
 				return $this->getReceiverBankAccount();
 				break;
+			case 9:
+				return $this->getRefundation();
+				break;
 			default:
 				return null;
 				break;
@@ -993,6 +1033,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$keys[6] => $this->getCreditorId(),
 			$keys[7] => $this->getCash(),
 			$keys[8] => $this->getReceiverBankAccount(),
+			$keys[9] => $this->getRefundation(),
 		);
 		return $result;
 	}
@@ -1051,6 +1092,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			case 8:
 				$this->setReceiverBankAccount($value);
 				break;
+			case 9:
+				$this->setRefundation($value);
+				break;
 		} // switch()
 	}
 
@@ -1084,6 +1128,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setCreditorId($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setCash($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setReceiverBankAccount($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setRefundation($arr[$keys[9]]);
 	}
 
 	/**
@@ -1104,6 +1149,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(OutgoingPaymentPeer::CREDITOR_ID)) $criteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->creditor_id);
 		if ($this->isColumnModified(OutgoingPaymentPeer::CASH)) $criteria->add(OutgoingPaymentPeer::CASH, $this->cash);
 		if ($this->isColumnModified(OutgoingPaymentPeer::RECEIVER_BANK_ACCOUNT)) $criteria->add(OutgoingPaymentPeer::RECEIVER_BANK_ACCOUNT, $this->receiver_bank_account);
+		if ($this->isColumnModified(OutgoingPaymentPeer::REFUNDATION)) $criteria->add(OutgoingPaymentPeer::REFUNDATION, $this->refundation);
 
 		return $criteria;
 	}
@@ -1173,6 +1219,8 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		$copyObj->setCash($this->cash);
 
 		$copyObj->setReceiverBankAccount($this->receiver_bank_account);
+
+		$copyObj->setRefundation($this->refundation);
 
 
 		if ($deepCopy) {

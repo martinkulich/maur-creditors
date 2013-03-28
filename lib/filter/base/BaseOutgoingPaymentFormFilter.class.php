@@ -20,6 +20,7 @@ abstract class BaseOutgoingPaymentFormFilter extends BaseFormFilterPropel
       'creditor_id'           => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => true)),
       'cash'                  => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'receiver_bank_account' => new sfWidgetFormFilterInput(),
+      'refundation'           => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -31,6 +32,7 @@ abstract class BaseOutgoingPaymentFormFilter extends BaseFormFilterPropel
       'creditor_id'           => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Creditor', 'column' => 'id')),
       'cash'                  => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'receiver_bank_account' => new sfValidatorPass(array('required' => false)),
+      'refundation'           => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('outgoing_payment_filters[%s]');
@@ -57,6 +59,7 @@ abstract class BaseOutgoingPaymentFormFilter extends BaseFormFilterPropel
       'creditor_id'           => 'ForeignKey',
       'cash'                  => 'Boolean',
       'receiver_bank_account' => 'Text',
+      'refundation'           => 'Number',
     );
   }
 }

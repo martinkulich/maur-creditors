@@ -34,7 +34,7 @@ class OutgoingPayment extends BaseOutgoingPayment
 
     public function getUnallocatedAmount()
     {
-        return $this->getAmount() - $this->getAllocatedAmount();
+        return $this->getAmount() - $this->getRefundation() - $this->getAllocatedAmount();
     }
 
     public function getPaid()

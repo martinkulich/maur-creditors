@@ -2309,5 +2309,9 @@
       <source>Teoretical regulation</source>
       <target>Teoretické úroky</target>
     </trans-unit>
+    <trans-unit id="578">
+      <source>Refundation</source>
+      <target>Vráceno</target>
+    </trans-unit>
   </body>
 </xliff>
