@@ -14,7 +14,7 @@ class AllocationService
 
 
         $customCriteria = sprintf(
-            "((select coalesce(sum(%s + %s), 0) from %s where %s = %s) < (%s - %s))",
+            "((select coalesce(sum(%s + %s), 0) from %s where %s = %s) < (%s - coalesce(%s,0)))",
             AllocationPeer::PAID,
             AllocationPeer::BALANCE_REDUCTION,
             AllocationPeer::TABLE_NAME,
