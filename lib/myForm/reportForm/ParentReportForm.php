@@ -17,6 +17,7 @@ class ParentReportForm extends BaseForm
             'month'=> new myWidgetFormChoiceMonth(),
             'year'=> new myWidgetFormChoiceYear(),
             'years'=> new myWidgetFormChoiceYear(array('multiple'=>true, 'expanded'=>true)),
+            'currency_code' => new sfWidgetFormPropelChoice(array('add_empty' => false, 'model' => 'Currency', 'order_by' => array('Code', 'asc'))),
             ));
         $this->setValidators(array(
             'date_from' => new myValidatorDate(),
@@ -26,6 +27,7 @@ class ParentReportForm extends BaseForm
             'month'=> new sfValidatorChoice(array('choices'=>$this->getWidget('month')->getChoicesKeys())),
             'year'=> new sfValidatorChoice(array('choices'=>$this->getWidget('year')->getChoicesKeys())),
             'years'=> new sfValidatorChoice(array('choices'=>$this->getWidget('year')->getChoicesKeys(), 'multiple'=>true, 'required' => false)),
+            'currency_code'=> new sfValidatorPropelChoice(array('model' => 'Currency', 'required' => false)),
         ));
 
         

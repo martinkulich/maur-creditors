@@ -102,7 +102,7 @@ class PaymentReport extends ParentReport
 
         if(count($conditions)>0)
         {
-            $where = ' WHERE '.implode(' AND ', $conditions);
+            $where .= ' WHERE '.implode(' AND ', $conditions);
         }
         return $where;
     }

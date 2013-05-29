@@ -68,7 +68,7 @@ class CreditorRevenueReport extends ParentReport
     {
         $where = '';
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $where = ' AND cr.id = ' . $creditorId;
+            $where .= ' AND cr.id = ' . $creditorId;
         }
 
         return $where;

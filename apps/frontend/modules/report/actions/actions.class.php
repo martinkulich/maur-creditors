@@ -129,6 +129,22 @@ class reportActions extends sfActions
                         $changed = true;
                     }
                     break;
+                case 'creditor_id':
+                    if (!isset($filters[$filterKey])) {
+                        if ($firstCreditor = CreditorPeer::doSelectOne(new Criteria())) {
+                            $filters[$filterKey] = $firstCreditor->getId();
+                            $changed = true;
+                        }
+                    }
+                    break;
+                case 'currency_code':
+                    if (!isset($filters[$filterKey])) {
+                        if ($currency = CurrencyPeer::doSelectOne(new Criteria())) {
+                            $filters[$filterKey] = $currency->getCode();
+                            $changed = true;
+                        }
+                    }
+                    break;
                 default:
                     throw new exception('Undefined filter ' . $filterKey);
                     break;

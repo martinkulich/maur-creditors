@@ -70,7 +70,7 @@ class BirthdayReport extends ParentReport
     {
         $where = '';
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $where = ' WHERE cr.id = ' . $creditorId;
+            $where .= ' WHERE cr.id = ' . $creditorId;
         }
         return $where;
     }

@@ -2313,5 +2313,25 @@
       <source>Refundation</source>
       <target>Vráceno</target>
     </trans-unit>
+    <trans-unit id="579">
+      <source>creditors report</source>
+      <target>Předpis věřitelů</target>
+    </trans-unit>
+    <trans-unit id="580">
+      <source>of creditors</source>
+      <target>Předpis věřitelů</target>
+    </trans-unit>
+    <trans-unit id="581">
+      <source>Month interest</source>
+      <target>Měsíční předpis</target>
+    </trans-unit>
+    <trans-unit id="582">
+      <source>Month interest cumulative</source>
+      <target>Měsíční předpis kumulativně</target>
+    </trans-unit>
+    <trans-unit id="583">
+      <source>Contractual interest</source>
+      <target>Smluvní nárok</target>
+    </trans-unit>
   </body>
 </xliff>
