@@ -124,4 +124,23 @@ $BODY$
   insert into security_perm(code, "name", is_public) values ('report-creditors', 'Předpis věřitelů', true);
 
 
+CREATE TABLE months
+(
+  "number" integer
+);
+
+insert into months(number) values
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10),
+(11),
+(12);
+
 COMMIT;
