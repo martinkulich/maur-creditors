@@ -4,3 +4,6 @@ default:
   
 UpdateSelect:
   is_secure: false
+
+AddGift:
+  credentials: report-birthday
