@@ -415,7 +415,7 @@ Closed at;datum ukončení smlouvy
 Copy;Kopírovat
 regulation admin;Předpisy
 of regulation;předpisy
-of regulation_monthly;předpisy měsíčně
+of regulation_monthly;Předpis v daném měsíci
 Creditor firstname;Jméno
 Creditor lastname;Příjmení
 Contract name;Smlouva
@@ -576,7 +576,7 @@ Unused amount;Nevyužitá částka
 Outgoing payment;Odchozí platba
 Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel odchozí platby se neshoduje s věřitelem smlouvy
 regulation report;Předpisy
-regulation_monthly report;Předpisy měsíčně
+regulation_monthly report;Předpis v daném měsíci
 Filter outgoingPayment;Filtrovat odchozí platby
 New outgoingPayment;Nová odchozí platba
 Edit outgoingPayment;Editace odchozí platby

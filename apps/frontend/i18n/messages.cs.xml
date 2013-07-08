@@ -1519,7 +1519,7 @@
     </trans-unit>
     <trans-unit id="380">
       <source>of regulation_monthly</source>
-      <target>předpisy měsíčně</target>
+      <target>Předpis v daném měsíci</target>
     </trans-unit>
     <trans-unit id="381">
       <source>Creditor firstname</source>
@@ -2143,7 +2143,7 @@
     </trans-unit>
     <trans-unit id="536">
       <source>regulation_monthly report</source>
-      <target>Předpisy měsíčně</target>
+      <target>Předpis v daném měsíci</target>
     </trans-unit>
     <trans-unit id="537">
       <source>Filter outgoingPayment</source>
