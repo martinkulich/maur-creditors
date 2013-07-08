@@ -515,8 +515,8 @@ Currency rate;Kurz měny
 unpaid;Nevyplacené úroky
 of unpaid;Nevyplacené úroky
 Unpaid to date;Nevyplaceno ke dni
-balance report;Jistiny
-of balance;Jistiny
+balance report;Jistiny po věřitelých
+of balance;Jistiny po věřitelých
 Balance to date;Jistina ke dni
 Summary to date;Sumarizace ke dni
 summary report;Sumarizace

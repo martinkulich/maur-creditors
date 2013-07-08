@@ -1907,11 +1907,11 @@
     </trans-unit>
     <trans-unit id="477">
       <source>balance report</source>
-      <target>Jistiny</target>
+      <target>Jistiny po věřitelých</target>
     </trans-unit>
     <trans-unit id="478">
       <source>of balance</source>
-      <target>Jistiny</target>
+      <target>Jistiny po věřitelých</target>
     </trans-unit>
     <trans-unit id="479">
       <source>Balance to date</source>

@@ -15,7 +15,7 @@ class RegulationMonthlyReport extends ParentReport
             sum(creditor_balance(cr.id, first_day(%month%, %year%), '%currency_code%',  false)) AS month_start_balance,
 
             sum(creditor_interest(cr.id, %month%, %year%, '%currency_code%')) AS regulation,
-            sum(creditor_interest(cr.id, %year%, '%currency_code%')/12) AS teoretical_regulation,
+            sum(creditor_interest(cr.id, %year%, '%currency_code%')/12) AS interest_in_the_recognition,
             sum(creditor_paid(cr.id,  %month%, %year%, '%currency_code%')) AS paid,
             sum(creditor_unpaid(cr.id, last_day(%month%, %year%), '%currency_code%')) AS unpaid,
             sum(creditor_capitalized(cr.id, %month%, %year%, '%currency_code%')) AS capitalized,
@@ -52,7 +52,7 @@ class RegulationMonthlyReport extends ParentReport
             'creditor_fullname',
             'month_start_balance',
             'regulation',
-            'teoretical_regulation',
+            'interest_in_the_recognition',
             'paid',
             'capitalized',
             'unpaid',
@@ -85,7 +85,7 @@ class RegulationMonthlyReport extends ParentReport
         return array(
             'month_start_balance',
             'regulation',
-            'teoretical_regulation',
+            'interest_in_the_recognition',
             'paid',
             'capitalized',
             'unpaid',
