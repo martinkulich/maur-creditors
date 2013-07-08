@@ -59,9 +59,6 @@ class RegulationMonthlyReport extends ParentReport
             $conditions[] = ' r.contract_id = ' . $contractId;
         }
 
-        if ($years = $this->getFilter('years')) {
-                $conditions[] = ' regulation_year in (' . implode(', ', $years) . ' ) ';
-        }
 
         $where = count($conditions) > 0 ? ' AND ' . implode(' AND ', $conditions) : '';
 //        die(var_dump($where));

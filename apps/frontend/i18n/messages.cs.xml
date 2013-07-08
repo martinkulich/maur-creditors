@@ -2330,8 +2330,12 @@
       <target>Měsíční předpis kumulativně</target>
     </trans-unit>
     <trans-unit id="583">
-      <source>Contractual interest</source>
-      <target>Smluvní nárok</target>
+      <source>Interest in the recognition</source>
+      <target>Úrok k zaúčtování</target>
+    </trans-unit>
+    <trans-unit id="584">
+      <source>Interest in the recognition cumulative</source>
+      <target>Úrok k zaúčtování kumulativně</target>
     </trans-unit>
   </body>
 </xliff>
