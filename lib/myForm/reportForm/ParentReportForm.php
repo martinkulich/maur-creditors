@@ -12,7 +12,7 @@ class ParentReportForm extends BaseForm
         $this->setWidgets(array(
             'date_from' => new myJQueryDateWidget(),
             'date_to' => new myJQueryDateWidget(),
-            'creditor_id'=> new sfWidgetFormPropelChoice(array('model'=>'creditor', 'order_by'=>  array('Lastname', 'asc'), 'add_empty'=>true)),
+            'creditor_id'=> new sfWidgetFormPropelChoice(array('model'=>'creditor', 'order_by'=>  array('Lastname', 'asc'), 'add_empty'=>'All')),
             'contract_id'=> new sfWidgetFormPropelChoice(array('add_empty' => true, 'model' => 'Contract', 'order_by' => array('Name', 'asc'))),
             'month'=> new myWidgetFormChoiceMonth(),
             'year'=> new myWidgetFormChoiceYear(),

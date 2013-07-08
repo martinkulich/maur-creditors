@@ -8,22 +8,34 @@ class CreditorsReport extends ParentReport
         return "
             SELECT
                 '%currency_code%' as currency_code,
-                creditor_balance(%creditor_id%, first_day(m.number, %year%), '%currency_code%') as month_start_balance,
-                creditor_interest(%creditor_id%, m.number, %year%, '%currency_code%') as contractual_interest,
-                creditor_interest(%creditor_id%,  %year%, '%currency_code%')/12 as month_interest,
-                (creditor_interest(%creditor_id%,  %year%, '%currency_code%')/12)*m.number as month_interest_cumulative,
-                creditor_paid(%creditor_id%, m.number, %year%, '%currency_code%') as paid,
-                creditor_capitalized(%creditor_id%, m.number, %year%, '%currency_code%') as capitalized,
-                creditor_unpaid(%creditor_id%, last_day(m.number, %year%), '%currency_code%') as unpaid,
-                creditor_balance(%creditor_id%, last_day(m.number, %year%), '%currency_code%', false) as month_end_balance,
+                sum(creditor_balance(cr.id, first_day(m.number, %year%), '%currency_code%')) as month_start_balance,
+                sum(creditor_interest(cr.id, m.number, %year%, '%currency_code%')) as contractual_interest,
+                sum(creditor_interest(cr.id,  %year%, '%currency_code%')/12) as month_interest,
+                sum((creditor_interest(cr.id,  %year%, '%currency_code%')/12)*m.number) as month_interest_cumulative,
+                sum(creditor_paid(cr.id, m.number, %year%, '%currency_code%')) as paid,
+                sum(creditor_capitalized(cr.id, m.number, %year%, '%currency_code%')) as capitalized,
+                sum(creditor_unpaid(cr.id, last_day(m.number, %year%), '%currency_code%')) as unpaid,
+                sum(creditor_balance(cr.id, last_day(m.number, %year%), '%currency_code%', false)) as month_end_balance,
                 m.number as month
             FROM creditor cr, months m
+            %where%
             GROUP BY
                 month
             order by
             month
             ;
         ";
+    }
+
+    public function getWhere()
+    {
+        $where = parent::getWhere();
+        if($creditorId = $this->getFilter('creditor_id'))
+        {
+            $where .= $where === '' ? ' WHERE ' : ' AND ';
+            $where .= 'cr.id='.$creditorId;
+        }
+        return $where;
     }
 
     public function getColumns()
@@ -70,7 +82,7 @@ class CreditorsReport extends ParentReport
 
     public function getRequiredFilters()
     {
-        return array('creditor_id', 'year', 'currency_code');
+        return array('year', 'currency_code');
     }
 
 }
