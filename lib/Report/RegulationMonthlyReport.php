@@ -34,7 +34,7 @@ class RegulationMonthlyReport extends ParentReport
     {
         $conditions = array();
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $conditions[] = ' creditor_id = ' . $creditorId;
+            $conditions[] = ' cr.id = ' . $creditorId;
         }
 
 
@@ -112,6 +112,16 @@ class RegulationMonthlyReport extends ParentReport
     public function getRequiredFilters()
     {
         return array('month', 'year', 'currency_code');
+    }
+
+    public function getFormatedRowValue($row, $column)
+    {
+        $formatedValue = parent::getFormatedRowValue($row, $column);
+
+        if ($column == 'paid') {
+            $formatedValue = link_to($formatedValue, '@creditor_paidDetail?filter[year]='.$row['year'].'&filter[month]='.$row['month'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
+        }
+        return $formatedValue;
     }
 
 }

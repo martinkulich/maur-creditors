@@ -141,6 +141,16 @@ class RegulationReport extends ParentReport
         return 'regulation_year';
     }
 
+    public function getFormatedRowValue($row, $column)
+    {
+        $formatedValue = parent::getFormatedRowValue($row, $column);
+
+        if ($column == 'paid') {
+            $formatedValue = link_to($formatedValue, '@contract_paidDetail?filter[year]='.$row['regulation_year'].'&id=' . $row['contract_id'], array('class' => 'modal_link'));
+        }
+        return $formatedValue;
+    }
+
     public function getColumnRowClass($column, array $row = array())
     {
         $class = parent::getColumnRowClass($column, $row);

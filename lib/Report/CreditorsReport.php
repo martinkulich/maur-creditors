@@ -8,6 +8,8 @@ class CreditorsReport extends ParentReport
         return "
             SELECT
                 '%currency_code%' as currency_code,
+                '%year%' as year,
+                %creditor_row%
                 sum(creditor_balance(cr.id, first_day(m.number, %year%), '%currency_code%')) as month_start_balance,
                 sum(creditor_interest(cr.id, m.number, %year%, '%currency_code%')) as regulation,
                 sum(creditor_interest(cr.id,  %year%, '%currency_code%')/12) as interest_in_the_recognition,
@@ -27,13 +29,21 @@ class CreditorsReport extends ParentReport
         ";
     }
 
+    public function getReplacements()
+    {
+        $replacements = parent::getReplacements();
+        $creditorId = $this->getFilter('creditor_id');
+        $replacements['%creditor_row%'] = $creditorId ? $creditorId . ' as creditor_id, ' : '';
+
+        return $replacements;
+    }
+
     public function getWhere()
     {
         $where = parent::getWhere();
-        if($creditorId = $this->getFilter('creditor_id'))
-        {
+        if ($creditorId = $this->getFilter('creditor_id')) {
             $where .= $where === '' ? ' WHERE ' : ' AND ';
-            $where .= 'cr.id='.$creditorId;
+            $where .= 'cr.id=' . $creditorId;
         }
         return $where;
     }
@@ -83,6 +93,21 @@ class CreditorsReport extends ParentReport
     public function getRequiredFilters()
     {
         return array('year', 'currency_code');
+    }
+
+    public function getFormatedRowValue($row, $column)
+    {
+        $formatedValue = parent::getFormatedRowValue($row, $column);
+
+        if ($column == 'paid') {
+            if (array_key_exists('creditor_id', $row)) {
+                $link = '@creditor_paidDetail?filter[year]=' . $row['year'] .'&filter[month]=' . $row['month'] . '&filter[currency_code]=' . $row['currency_code'] . '&id=' . $row['creditor_id'];
+            } else {
+                $link = '@paid_detail?filter[year]=' . $row['year'] .'&filter[month]=' . $row['month'] . '&filter[currency_code]=' . $row['currency_code'];
+            }
+            $formatedValue = link_to($formatedValue, $link, array('class' => 'modal_link'));
+        }
+        return $formatedValue;
     }
 
 }

@@ -9,6 +9,8 @@ class CreditorRevenueReport extends ParentReport
             SELECT 
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
                 c.currency_code as currency_code,
+                cr.id as creditor_id,
+                '%date_to%' as date_to,
                 creditor_received_payments(cr.id, '%date_to%'::date) as received_payments,
                 sum(contract_balance(c.id, '%date_to%'::date, true))::integer AS current_balance,
                 sum(contract_balance(c.id, '%date_to%'::date, true)) - creditor_received_payments(cr.id, '%date_to%'::date) as balance_change,
@@ -77,6 +79,16 @@ class CreditorRevenueReport extends ParentReport
     public function getRequiredFilters()
     {
         return array('date_to');
+    }
+
+    public function getFormatedRowValue($row, $column)
+    {
+        $formatedValue = parent::getFormatedRowValue($row, $column);
+
+        if ($column == 'paid') {
+            $formatedValue = link_to($formatedValue, '@creditor_paidDetail?filter[date_to]='.$row['date_to'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
+        }
+        return $formatedValue;
     }
 
 }

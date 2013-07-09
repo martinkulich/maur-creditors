@@ -1,5 +1,2 @@
-unsettledAmountSuccess:
-  layout: false
 paidDetailSuccess:
   layout: layoutModal
-

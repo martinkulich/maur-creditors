@@ -130,7 +130,7 @@ contract:
     prefix_path:          /contract
     column:               id
     with_wildcard_routes: true
-    object_actions: {copy: get, duplicate: post, close: [get, post], note: get, excludeFromReport: get}
+    object_actions: {copy: get, duplicate: post, close: [get, post], note: get, excludeFromReport: get, paidDetail: get}
     collection_actions: {filters: get, filter: post, reset: get, regulation: get}
 
 group:
@@ -210,6 +210,11 @@ report_sort:
 report:
   url:   /report/:report_type
   param: { module: report, action: index }
+
+paid_detail:
+  url:   /paid-detail
+  param: { module: default, action: paidDetail }
+
 
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing

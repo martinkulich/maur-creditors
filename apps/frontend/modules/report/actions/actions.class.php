@@ -31,12 +31,12 @@ class reportActions extends sfActions
      */
     public function executeIndex(sfWebRequest $request)
     {
-        $filters = $this->getFilters();
-        $report = $this->reportService->getReport($this->reportType, $filters);
+        $this->filters = $this->getFilters();
+        $report = $this->reportService->getReport($this->reportType, $this->filters);
         $this->checkFilters($report->getRequiredFilters());
-        $this->report = $this->reportService->getReport($this->reportType, $filters);
+        $this->report = $this->reportService->getReport($this->reportType, $this->filters);
 
-        $this->hasFilter = count($filters) > 0;
+        $this->hasFilter = count($this->filters) > 0;
     }
 
     public function executeFilters(sfWebRequest $request)

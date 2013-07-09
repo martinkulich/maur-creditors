@@ -40,6 +40,16 @@ class Allocation extends BaseAllocation
         return $contract;
     }
 
+    public function getContractId()
+    {
+        $contractId = null;
+        if ($contract = $this->getContract()) {
+            $contractId = $contract->getId();
+        }
+
+        return $contractId;
+    }
+
     /**
      * @return Creditor
      */

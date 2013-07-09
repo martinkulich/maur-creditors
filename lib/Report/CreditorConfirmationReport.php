@@ -12,8 +12,8 @@ class CreditorConfirmationReport extends ParentReport
                 cr.street || ', ' || cr.city || ', ' || cr.zip as address,
                 c.currency_code as currency_code,
                 cr.id as creditor_id,
-                sum(contract_balance(c.id, last_day(12, %year%-1), true)) as end_balance_of_previous_year,
-                sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance_of_current_year,
+                sum(contract_balance(c.id, first_day(1, %year%), true)) as start_balance,
+                sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance,
                 sum(contract_unpaid(c.id, last_day(12, %year%))) as unpaid,
                 sum(contract_capitalized(c.id, %year%)) as capitalized,
                 sum(contract_paid(c.id, %year%)) as paid,
@@ -61,21 +61,21 @@ class CreditorConfirmationReport extends ParentReport
     public function getCurrencyColumns()
     {
         return array(
-            'end_balance_of_previous_year',
+            'start_balance',
             'received_payments',
             'capitalized',
             'balance_reduction',
-            'end_balance_of_current_year',
             'unpaid',
             'paid',
             'outgoing_payments',
+            'end_balance',
 
         );
     }
 
     public function getTotalColumns()
     {
-        return $this->getCurrencyColumns();
+        return array();
     }
 
     public function getTotalRow()
@@ -85,17 +85,7 @@ class CreditorConfirmationReport extends ParentReport
 
     public function getRequiredFilters()
     {
-        return array('year');
-    }
-
-    public function getFormatedRowValue($row, $column)
-    {
-        $formatedValue = parent::getFormatedRowValue($row, $column);
-
-        if ($column == 'outgoing_payments') {
-            $formatedValue = link_to($formatedValue, '@creditor_paidDetail?filter[year]='.$row['year'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
-        }
-        return $formatedValue;
+        return array('year', 'creditor_id');
     }
 
     public function getColumnHeader($column)

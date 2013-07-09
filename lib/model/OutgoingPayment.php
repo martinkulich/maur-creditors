@@ -37,20 +37,24 @@ class OutgoingPayment extends BaseOutgoingPayment
         return $this->getAmount() - $this->getRefundation() - $this->getAllocatedAmount();
     }
 
-    public function getPaid()
+    public function getPaid(Contract $contract = null)
     {
         $amount = 0;
         foreach ($this->getAllocations() as $allocation) {
-            $amount += $allocation->getPaid();
+            if ((!is_null($contract) && $contract->getId() === $allocation->getContractId()) || is_null($contract)) {
+                $amount += $allocation->getPaid();
+            }
         }
         return $amount;
     }
 
-    public function getBalanceReduction()
+    public function getBalanceReduction(Contract $contract = null)
     {
         $amount = 0;
         foreach ($this->getAllocations() as $allocation) {
-            $amount += $allocation->getBalanceReduction();
+            if ((!is_null($contract) && $contract->getId() === $allocation->getContractId()) || is_null($contract)) {
+                $amount += $allocation->getBalanceReduction();
+            }
         }
         return $amount;
     }

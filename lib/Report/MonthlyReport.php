@@ -6,7 +6,9 @@ class MonthlyReport extends ParentReport
     public function getSqlPatter()
     {
         return "
-            SELECT 
+            SELECT
+                %year% as year,
+                %month% as month,
                 c.currency_code as currency_code,
                 sum(contract_paid(c.id, %month%, %year%)) as paid,
                 sum(contract_balance(c.id, last_day(%month%, %year%), true)) as end_of_month_balance,
@@ -41,5 +43,16 @@ class MonthlyReport extends ParentReport
     {
         return array('month', 'year');
     }
+
+    public function getFormatedRowValue($row, $column)
+    {
+        $formatedValue = parent::getFormatedRowValue($row, $column);
+
+        if ($column == 'paid') {
+            $formatedValue = link_to($formatedValue, '@paid_detail?filter[year]='.$row['year'].'&filter[month]='.$row['month'].'&filter[currency_code]='.$row['currency_code'], array('class' => 'modal_link'));
+        }
+        return $formatedValue;
+    }
+
 
 }

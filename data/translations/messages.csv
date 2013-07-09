@@ -536,8 +536,8 @@ Age on next birthday;Věk při příštích narozeninách
 of birthday;Narozeniny
 birthday report;Narozeniny
 Print;Tisk
-monthly report;Měsíční přehled
-of monthly;Měsíční přehled
+monthly report;Cash flow
+of monthly;Cash flow
 January;Leden
 February;Únor
 March;Březen
@@ -560,8 +560,8 @@ Birthday;Příští narozeniny
 Age;Věk při příštích narozeninách
 End of month balance;Jistina na konci měsíce
 Received payments;Přijaté platby
-creditor_confirmation report;Potvrzení od věřitelů
-of creditor_confirmation;Potvrzení od věřitelů
+creditor_confirmation report;Potvrzení pro věřitele
+of creditor_confirmation;Potvrzení pro věřitele
 Balance no capitalization and balance reduction;Jistina (bez kapitalizace a ponížení jistiny)
 outgoing_payment admin;Odchozí platby
 of outgoing_payment;Odchozí platby
@@ -581,8 +581,8 @@ Filter outgoingPayment;Filtrovat odchozí platby
 New outgoingPayment;Nová odchozí platba
 Edit outgoingPayment;Editace odchozí platby
 There are some settlements related to this outgoing payment, pls unrelate them before deletion;Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání
-to_pay report;K vyplacení
-of to_pay;K vyplacení
+to_pay report;K vyplacení tento měsíc
+of to_pay;K vyplacení tento měsíc
 Settlement date;Datum vypořádání úroků
 Unpaid cumulative;Nevyplaceno kumulativně
 Unpaid cumulative regular;Nevyplaceno kumulativně (řádná vypořádání)
@@ -626,3 +626,4 @@ Month interest; Měsíční předpis
 Month interest cumulative; Měsíční předpis kumulativně
 Interest in the recognition; Úrok k zaúčtování
 Interest in the recognition cumulative; Úrok k zaúčtování kumulativně
+Date of outgoing payment; Datum odchozí platby

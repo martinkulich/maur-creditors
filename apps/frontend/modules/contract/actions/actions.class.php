@@ -98,4 +98,34 @@ class contractActions extends autoContractActions
         $this->data = json_encode($closingAmount);
     }
 
+    public function executePaidDetail(sfWebRequest $request)
+    {
+        $this->contract = $this->getRoute()->getObject();
+        $this->forward404Unless($this->contract);
+
+        $criteria = new Criteria();
+        $criteria->addAscendingOrderByColumn(OutgoingPaymentPeer::DATE);
+        $criteria->addJoin(OutgoingPaymentPeer::ID, AllocationPeer::OUTGOING_PAYMENT_ID);
+        $criteria->addJoin(AllocationPeer::SETTLEMENT_ID, SettlementPeer::ID);
+        $criteria->add(SettlementPeer::CONTRACT_ID, $this->contract->getId());
+
+        $filters = $request->getParameter('filter');
+
+        if (is_array($filters) && array_key_exists('year', $filters)) {
+
+            $monthFrom = array_key_exists('month', $filters) ? $filters['month'] : '01';
+            $monthTo = array_key_exists('month', $filters) ? $filters['month'] : '12';
+            $firstDay = new DateTime(sprintf('%s-%s-01', $filters['year'], $monthFrom));
+            $lastDay = new DateTime(sprintf('%s-%s-01', $filters['year'], $monthTo));
+            $lastDay->modify('last day of this month');
+
+            $criterion1 = $criteria->getNewCriterion(OutgoingPaymentPeer::DATE, $firstDay, Criteria::GREATER_EQUAL);
+            $criterion2 = $criteria->getNewCriterion(OutgoingPaymentPeer::DATE, $lastDay, Criteria::LESS_EQUAL);
+            $criterion1->addAnd($criterion2);
+            $criteria->addAnd($criterion1);
+        }
+
+        $this->outgoingPayments = OutgoingPaymentPeer::doSelect($criteria);
+    }
+
 }

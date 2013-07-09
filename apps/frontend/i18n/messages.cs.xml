@@ -1991,11 +1991,11 @@
     </trans-unit>
     <trans-unit id="498">
       <source>monthly report</source>
-      <target>Měsíční přehled</target>
+      <target>Cash flow</target>
     </trans-unit>
     <trans-unit id="499">
       <source>of monthly</source>
-      <target>Měsíční přehled</target>
+      <target>Cash flow</target>
     </trans-unit>
     <trans-unit id="500">
       <source>January</source>
@@ -2079,11 +2079,11 @@
     </trans-unit>
     <trans-unit id="520">
       <source>creditor_confirmation report</source>
-      <target>Potvrzení od věřitelů</target>
+      <target>Potvrzení pro věřitele</target>
     </trans-unit>
     <trans-unit id="521">
       <source>of creditor_confirmation</source>
-      <target>Potvrzení od věřitelů</target>
+      <target>Potvrzení pro věřitele</target>
     </trans-unit>
     <trans-unit id="522">
       <source>Balance no capitalization and balance reduction</source>
@@ -2163,11 +2163,11 @@
     </trans-unit>
     <trans-unit id="541">
       <source>to_pay report</source>
-      <target>K vyplacení</target>
+      <target>K vyplacení tento měsíc</target>
     </trans-unit>
     <trans-unit id="542">
       <source>of to_pay</source>
-      <target>K vyplacení</target>
+      <target>K vyplacení tento měsíc</target>
     </trans-unit>
     <trans-unit id="543">
       <source>Settlement date</source>
@@ -2336,6 +2336,10 @@
     <trans-unit id="584">
       <source>Interest in the recognition cumulative</source>
       <target>Úrok k zaúčtování kumulativně</target>
+    </trans-unit>
+    <trans-unit id="585">
+      <source>Date of outgoing payment</source>
+      <target>Datum odchozí platby</target>
     </trans-unit>
   </body>
 </xliff>
