@@ -24,7 +24,7 @@ class RegulationMonthlyReport extends ParentReport
             creditor cr
             WHERE true
             %where%
-            group by cr.id
+            group by cr.id, cr.lastname, cr.firstname
             HAVING sum(creditor_interest(cr.id, %year%, '%currency_code%'))::integer <> 0
             ORDER BY %order_by%
         ";
