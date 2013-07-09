@@ -125,6 +125,8 @@ class contractActions extends autoContractActions
             $criteria->addAnd($criterion1);
         }
 
+        $criteria->setDistinct();
+
         $this->outgoingPayments = OutgoingPaymentPeer::doSelect($criteria);
     }
 
