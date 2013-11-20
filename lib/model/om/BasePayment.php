@@ -86,6 +86,16 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	protected $aContract;
 
 	/**
+	 * @var        array Settlement[] Collection to store aggregation of Settlement objects.
+	 */
+	protected $collSettlements;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collSettlements.
+	 */
+	private $lastSettlementCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -588,6 +598,9 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 
 			$this->aBankAccount = null;
 			$this->aContract = null;
+			$this->collSettlements = null;
+			$this->lastSettlementCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -771,6 +784,14 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collSettlements !== null) {
+				foreach ($this->collSettlements as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -859,6 +880,14 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collSettlements !== null) {
+					foreach ($this->collSettlements as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -1132,6 +1161,20 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 		$copyObj->setBankAccountId($this->bank_account_id);
 
 
+		if ($deepCopy) {
+			// important: temporarily setNew(false) because this affects the behavior of
+			// the getter/setter methods for fkey referrer objects.
+			$copyObj->setNew(false);
+
+			foreach ($this->getSettlements() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addSettlement($relObj->copy($deepCopy));
+				}
+			}
+
+		} // if ($deepCopy)
+
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1275,6 +1318,207 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collSettlements collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addSettlements()
+	 */
+	public function clearSettlements()
+	{
+		$this->collSettlements = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collSettlements collection (array).
+	 *
+	 * By default this just sets the collSettlements collection to an empty array (like clearcollSettlements());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initSettlements()
+	{
+		$this->collSettlements = array();
+	}
+
+	/**
+	 * Gets an array of Settlement objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Payment has previously been saved, it will retrieve
+	 * related Settlements from storage. If this Payment is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Settlement[]
+	 * @throws     PropelException
+	 */
+	public function getSettlements($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(PaymentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSettlements === null) {
+			if ($this->isNew()) {
+			   $this->collSettlements = array();
+			} else {
+
+				$criteria->add(SettlementPeer::PAYMENT_ID, $this->id);
+
+				SettlementPeer::addSelectColumns($criteria);
+				$this->collSettlements = SettlementPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(SettlementPeer::PAYMENT_ID, $this->id);
+
+				SettlementPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSettlementCriteria) || !$this->lastSettlementCriteria->equals($criteria)) {
+					$this->collSettlements = SettlementPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSettlementCriteria = $criteria;
+		return $this->collSettlements;
+	}
+
+	/**
+	 * Returns the number of related Settlement objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Settlement objects.
+	 * @throws     PropelException
+	 */
+	public function countSettlements(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(PaymentPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collSettlements === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(SettlementPeer::PAYMENT_ID, $this->id);
+
+				$count = SettlementPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(SettlementPeer::PAYMENT_ID, $this->id);
+
+				if (!isset($this->lastSettlementCriteria) || !$this->lastSettlementCriteria->equals($criteria)) {
+					$count = SettlementPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collSettlements);
+				}
+			} else {
+				$count = count($this->collSettlements);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Settlement object to this object
+	 * through the Settlement foreign key attribute.
+	 *
+	 * @param      Settlement $l Settlement
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addSettlement(Settlement $l)
+	{
+		if ($this->collSettlements === null) {
+			$this->initSettlements();
+		}
+		if (!in_array($l, $this->collSettlements, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collSettlements, $l);
+			$l->setPayment($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Payment is new, it will return
+	 * an empty collection; or if this Payment has previously
+	 * been saved, it will retrieve related Settlements from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Payment.
+	 */
+	public function getSettlementsJoinContract($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(PaymentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSettlements === null) {
+			if ($this->isNew()) {
+				$this->collSettlements = array();
+			} else {
+
+				$criteria->add(SettlementPeer::PAYMENT_ID, $this->id);
+
+				$this->collSettlements = SettlementPeer::doSelectJoinContract($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(SettlementPeer::PAYMENT_ID, $this->id);
+
+			if (!isset($this->lastSettlementCriteria) || !$this->lastSettlementCriteria->equals($criteria)) {
+				$this->collSettlements = SettlementPeer::doSelectJoinContract($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastSettlementCriteria = $criteria;
+
+		return $this->collSettlements;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1286,8 +1530,14 @@ abstract class BasePayment extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collSettlements) {
+				foreach ((array) $this->collSettlements as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
+		$this->collSettlements = null;
 			$this->aBankAccount = null;
 			$this->aContract = null;
 	}

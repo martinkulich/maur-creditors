@@ -42,6 +42,9 @@
                         <?php echo my_format_currency($sumValues['capitalized'], $currencyCode) ?>
                 </td>
                 <td class="text-align-right">
+                    <?php echo my_format_currency($sumValues['balance_increase'], $currencyCode) ?>
+                </td>
+                <td class="text-align-right">
                         <?php echo my_format_currency($sumValues['balance_reduction'], $currencyCode) ?>
                 </td>
                 <td class="text-align-right">

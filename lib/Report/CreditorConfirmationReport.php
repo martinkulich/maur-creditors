@@ -18,7 +18,7 @@ class CreditorConfirmationReport extends ParentReport
                 sum(contract_capitalized(c.id, %year%)) as capitalized,
                 sum(contract_paid(c.id, %year%)) as paid,
                 sum(contract_balance_reduction(c.id, %year%)) as balance_reduction,
-                sum(contract_received_payments(c.id, %year%)) + sum(contract_capitalized(c.id, %year%)) as balance_increase,
+                sum(contract_received_payments(c.id, %year%)) + sum(contract_capitalized(c.id, %year%)) + sum(contract_balance_increase(c.id, %year%)) as balance_increase,
                 sum(contract_received_payments(c.id, %year%)) as received_payments,
                 sum(contract_paid(c.id, %year%)) + sum(contract_balance_reduction(c.id, %year%)) as outgoing_payments
             FROM creditor cr
@@ -64,6 +64,7 @@ class CreditorConfirmationReport extends ParentReport
             'start_balance',
             'received_payments',
             'capitalized',
+            'balance_increase',
             'balance_reduction',
             'unpaid',
             'paid',

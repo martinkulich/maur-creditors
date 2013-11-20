@@ -349,6 +349,7 @@ class settlementActions extends autoSettlementActions
         $criteria->addSelectColumn(sprintf('sum(%s) as interest', SettlementPeer::INTEREST));
         $criteria->addSelectColumn(sprintf('sum(%s) as balance', SettlementPeer::BALANCE));
         $criteria->addSelectColumn(sprintf('sum(settlement_balance_reduction(%s)) as balance_reduction', SettlementPeer::ID));
+        $criteria->addSelectColumn(sprintf('sum(settlement_balance_increase(%s)) as balance_increase', SettlementPeer::ID));
         $criteria->addSelectColumn(sprintf('sum(settlement_paid(%s)) as paid', SettlementPeer::ID));
         $criteria->addSelectColumn(sprintf('sum(%s) as capitalized', SettlementPeer::CAPITALIZED));
         $criteria->addSelectColumn(sprintf(

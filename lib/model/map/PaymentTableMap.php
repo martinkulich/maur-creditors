@@ -56,6 +56,7 @@ class PaymentTableMap extends TableMap {
 	{
     $this->addRelation('BankAccount', 'BankAccount', RelationMap::MANY_TO_ONE, array('bank_account_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Contract', 'Contract', RelationMap::MANY_TO_ONE, array('contract_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('Settlement', 'Settlement', RelationMap::ONE_TO_MANY, array('id' => 'payment_id', ), 'SET NULL', 'CASCADE');
 	} // buildRelations()
 
 	/**

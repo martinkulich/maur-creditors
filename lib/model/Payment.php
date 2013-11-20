@@ -31,6 +31,16 @@ class Payment extends BasePayment
         // is where any default values for this object are set.
         parent::__construct();
     }
+
+    public function __toString()
+    {
+        return sprintf("%s - %s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getAmount(), $this->getCurrencyCode()));
+    }
+
+    public function getCurrencyCode()
+    {
+        return $this->getContract()->getCurrencyCode();
+    }
 }
 
 // Payment

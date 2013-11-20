@@ -24,6 +24,7 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'settlement_type' => new sfWidgetFormInputText(),
       'manual_interest' => new sfWidgetFormInputCheckbox(),
       'manual_balance'  => new sfWidgetFormInputCheckbox(),
+      'payment_id'      => new sfWidgetFormPropelChoice(array('model' => 'Payment', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -37,6 +38,7 @@ abstract class BaseSettlementForm extends BaseFormPropel
       'settlement_type' => new sfValidatorString(array('max_length' => 255)),
       'manual_interest' => new sfValidatorBoolean(),
       'manual_balance'  => new sfValidatorBoolean(),
+      'payment_id'      => new sfValidatorPropelChoice(array('model' => 'Payment', 'column' => 'id', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('settlement[%s]');

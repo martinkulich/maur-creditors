@@ -13,7 +13,9 @@ class MonthlyReport extends ParentReport
                 sum(contract_paid(c.id, %month%, %year%)) as paid,
                 sum(contract_balance(c.id, last_day(%month%, %year%), true)) as end_of_month_balance,
                 sum(contract_capitalized(c.id, %month%, %year%))::integer AS capitalized,
-                sum(contract_received_payments(c.id, %month%, %year%)) as received_payments
+                sum(contract_received_payments(c.id, %month%, %year%)) as received_payments,
+                sum(contract_balance_increase(c.id, %month%, %year%)) as balance_increase
+
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
             %where%
@@ -31,6 +33,7 @@ class MonthlyReport extends ParentReport
             'paid',
             'capitalized',
             'received_payments',
+            'balance_increase'
         );
     }
 

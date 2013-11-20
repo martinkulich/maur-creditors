@@ -128,6 +128,11 @@ class Settlement extends BaseSettlement
         return $balanceReduction;
     }
 
+    public function getBalanceIncrease()
+    {
+        return $this->getPayment() ? $this->getPayment()->getAmount() : 0;
+    }
+
     public function getBalanceAfterSettlement()
     {
         return $this->getBalance()+$this->getCapitalized()-$this->getBalanceReduction();

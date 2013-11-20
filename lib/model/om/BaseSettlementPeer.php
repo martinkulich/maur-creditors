@@ -25,7 +25,7 @@ abstract class BaseSettlementPeer {
 	const TM_CLASS = 'SettlementTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -60,6 +60,9 @@ abstract class BaseSettlementPeer {
 	/** the column name for the MANUAL_BALANCE field */
 	const MANUAL_BALANCE = 'settlement.MANUAL_BALANCE';
 
+	/** the column name for the PAYMENT_ID field */
+	const PAYMENT_ID = 'settlement.PAYMENT_ID';
+
 	/**
 	 * An identiy map to hold any loaded instances of Settlement objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -83,11 +86,11 @@ abstract class BaseSettlementPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ContractId', 'Date', 'Interest', 'Capitalized', 'Balance', 'Note', 'SettlementType', 'ManualInterest', 'ManualBalance', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'contractId', 'date', 'interest', 'capitalized', 'balance', 'note', 'settlementType', 'manualInterest', 'manualBalance', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CONTRACT_ID, self::DATE, self::INTEREST, self::CAPITALIZED, self::BALANCE, self::NOTE, self::SETTLEMENT_TYPE, self::MANUAL_INTEREST, self::MANUAL_BALANCE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'contract_id', 'date', 'interest', 'capitalized', 'balance', 'note', 'settlement_type', 'manual_interest', 'manual_balance', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ContractId', 'Date', 'Interest', 'Capitalized', 'Balance', 'Note', 'SettlementType', 'ManualInterest', 'ManualBalance', 'PaymentId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'contractId', 'date', 'interest', 'capitalized', 'balance', 'note', 'settlementType', 'manualInterest', 'manualBalance', 'paymentId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CONTRACT_ID, self::DATE, self::INTEREST, self::CAPITALIZED, self::BALANCE, self::NOTE, self::SETTLEMENT_TYPE, self::MANUAL_INTEREST, self::MANUAL_BALANCE, self::PAYMENT_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'contract_id', 'date', 'interest', 'capitalized', 'balance', 'note', 'settlement_type', 'manual_interest', 'manual_balance', 'payment_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -97,11 +100,11 @@ abstract class BaseSettlementPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ContractId' => 1, 'Date' => 2, 'Interest' => 3, 'Capitalized' => 4, 'Balance' => 5, 'Note' => 6, 'SettlementType' => 7, 'ManualInterest' => 8, 'ManualBalance' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'contractId' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'settlementType' => 7, 'manualInterest' => 8, 'manualBalance' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CONTRACT_ID => 1, self::DATE => 2, self::INTEREST => 3, self::CAPITALIZED => 4, self::BALANCE => 5, self::NOTE => 6, self::SETTLEMENT_TYPE => 7, self::MANUAL_INTEREST => 8, self::MANUAL_BALANCE => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'contract_id' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'settlement_type' => 7, 'manual_interest' => 8, 'manual_balance' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ContractId' => 1, 'Date' => 2, 'Interest' => 3, 'Capitalized' => 4, 'Balance' => 5, 'Note' => 6, 'SettlementType' => 7, 'ManualInterest' => 8, 'ManualBalance' => 9, 'PaymentId' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'contractId' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'settlementType' => 7, 'manualInterest' => 8, 'manualBalance' => 9, 'paymentId' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CONTRACT_ID => 1, self::DATE => 2, self::INTEREST => 3, self::CAPITALIZED => 4, self::BALANCE => 5, self::NOTE => 6, self::SETTLEMENT_TYPE => 7, self::MANUAL_INTEREST => 8, self::MANUAL_BALANCE => 9, self::PAYMENT_ID => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'contract_id' => 1, 'date' => 2, 'interest' => 3, 'capitalized' => 4, 'balance' => 5, 'note' => 6, 'settlement_type' => 7, 'manual_interest' => 8, 'manual_balance' => 9, 'payment_id' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -181,6 +184,7 @@ abstract class BaseSettlementPeer {
 		$criteria->addSelectColumn(SettlementPeer::SETTLEMENT_TYPE);
 		$criteria->addSelectColumn(SettlementPeer::MANUAL_INTEREST);
 		$criteria->addSelectColumn(SettlementPeer::MANUAL_BALANCE);
+		$criteria->addSelectColumn(SettlementPeer::PAYMENT_ID);
 	}
 
 	/**
@@ -498,6 +502,62 @@ abstract class BaseSettlementPeer {
 
 
 	/**
+	 * Returns the number of rows matching criteria, joining the related Payment table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinPayment(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(SettlementPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			SettlementPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(SettlementPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(SettlementPeer::PAYMENT_ID, PaymentPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseSettlementPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
 	 * Selects a collection of Settlement objects pre-filled with their Contract objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -570,6 +630,78 @@ abstract class BaseSettlementPeer {
 
 
 	/**
+	 * Selects a collection of Settlement objects pre-filled with their Payment objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Settlement objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinPayment(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		SettlementPeer::addSelectColumns($criteria);
+		$startcol = (SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS);
+		PaymentPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(SettlementPeer::PAYMENT_ID, PaymentPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseSettlementPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = SettlementPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = SettlementPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = SettlementPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				SettlementPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = PaymentPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = PaymentPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = PaymentPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					PaymentPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (Settlement) to $obj2 (Payment)
+				$obj2->addSettlement($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
 	 * Returns the number of rows matching criteria, joining all related tables
 	 *
 	 * @param      Criteria $criteria
@@ -606,6 +738,8 @@ abstract class BaseSettlementPeer {
 		}
 
 		$criteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		$criteria->addJoin(SettlementPeer::PAYMENT_ID, PaymentPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -649,7 +783,12 @@ abstract class BaseSettlementPeer {
 		ContractPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		PaymentPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		$criteria->addJoin(SettlementPeer::PAYMENT_ID, PaymentPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -691,6 +830,294 @@ abstract class BaseSettlementPeer {
 				// Add the $obj1 (Settlement) to the collection in $obj2 (Contract)
 				$obj2->addSettlement($obj1);
 			} // if joined row not null
+
+			// Add objects for joined Payment rows
+
+			$key3 = PaymentPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			if ($key3 !== null) {
+				$obj3 = PaymentPeer::getInstanceFromPool($key3);
+				if (!$obj3) {
+
+					$cls = PaymentPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					PaymentPeer::addInstanceToPool($obj3, $key3);
+				} // if obj3 loaded
+
+				// Add the $obj1 (Settlement) to the collection in $obj3 (Payment)
+				$obj3->addSettlement($obj1);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related Contract table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptContract(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(SettlementPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			SettlementPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(SettlementPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(SettlementPeer::PAYMENT_ID, PaymentPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseSettlementPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related Payment table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptPayment(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(SettlementPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			SettlementPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(SettlementPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseSettlementPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of Settlement objects pre-filled with all related objects except Contract.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Settlement objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptContract(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		SettlementPeer::addSelectColumns($criteria);
+		$startcol2 = (SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		PaymentPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (PaymentPeer::NUM_COLUMNS - PaymentPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(SettlementPeer::PAYMENT_ID, PaymentPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseSettlementPeer', $criteria, $con);
+		}
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = SettlementPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = SettlementPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = SettlementPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				SettlementPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Payment rows
+
+				$key2 = PaymentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = PaymentPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = PaymentPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					PaymentPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Settlement) to the collection in $obj2 (Payment)
+				$obj2->addSettlement($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Settlement objects pre-filled with all related objects except Payment.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Settlement objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptPayment(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		SettlementPeer::addSelectColumns($criteria);
+		$startcol2 = (SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		ContractPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(SettlementPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseSettlementPeer', $criteria, $con);
+		}
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = SettlementPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = SettlementPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = SettlementPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				SettlementPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Contract rows
+
+				$key2 = ContractPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = ContractPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = ContractPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					ContractPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Settlement) to the collection in $obj2 (Contract)
+				$obj2->addSettlement($obj1);
+
+			} // if joined row is not null
 
 			$results[] = $obj1;
 		}

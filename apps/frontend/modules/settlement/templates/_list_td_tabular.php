@@ -27,6 +27,9 @@
 <td class="sf_admin_text sf_admin_list_td_capitalized text-align-right">
     <?php echo my_format_currency($settlement->getCapitalized(), $currencyCode) ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_balance_increase text-align-right">
+    <?php echo my_format_currency($settlement->getBalanceIncrease(), $currencyCode) ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_balance_reduction text-align-right">
     <?php echo link_to(my_format_currency($settlement->getBalanceReduction(), $currencyCode), '@allocation_filter?modeless=1&allocation_filters[settlement_id]='.$settlement->getId()) ?>
 </td>

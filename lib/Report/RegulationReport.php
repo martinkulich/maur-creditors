@@ -154,11 +154,11 @@ class RegulationReport extends ParentReport
     public function getColumnRowClass($column, array $row = array())
     {
         $class = parent::getColumnRowClass($column, $row);
-        if ($column == 'contract_balance' && $row['manual_balance'] == true) {
+        if ($column == 'contract_balance' && isset($row['manual_balance']) && $row['manual_balance'] == true) {
             $class .= ' text-red';
         }
 
-        if ($column == 'regulation' && $row['manual_interest'] == true) {
+        if ($column == 'regulation' && isset($row['manual_interest']) && $row['manual_interest'] == true) {
             $class .= ' text-red';
         }
         return $class;

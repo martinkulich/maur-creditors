@@ -12,6 +12,7 @@ class ContractService
         if ($contract->getActivatedAt()) {
             $this->generateSettlementsForContract($contract);
             $this->generateEndOfYearsSettlements($contract);
+            $this->generateBalanceIncreaseSettlements($contract);
             $this->updateContractSettlements($contract);
         }
     }
@@ -117,6 +118,28 @@ class ContractService
         }
     }
 
+    public function generateBalanceIncreaseSettlements(Contract $contract)
+    {
+        foreach ($contract->getPaymentsByTypes(array(PaymentService::BALANCE_INCREASE)) as $balanceIncreasePayment) {
+            $balanceIncreaseSettlement = $contract->getSettlementForDate(new DateTime($balanceIncreasePayment->getDate()));
+            if (!$balanceIncreaseSettlement) {
+                $balanceIncreaseSettlement = $this->addSettlementForContract($contract, SettlementPeer::MANUAL, new DateTime($balanceIncreasePayment->getDate()));
+                $balanceIncreaseSettlement->setPayment($balanceIncreasePayment);
+                $balanceIncreaseSettlement->save();
+            } elseif ($balanceIncreaseSettlement && $balanceIncreaseSettlement->getPaymentId() != $balanceIncreasePayment->getId()) {
+                $balanceIncreaseSettlement->setPayment($balanceIncreasePayment);
+                $balanceIncreaseSettlement->save();
+            }
+        }
+
+        foreach ($contract->getSettlementsJoinPayment() as $balanceIncreaseSettlement) {
+            if ($balanceIncreaseSettlement->getPayment() && ($balanceIncreaseSettlement->getDate() != $balanceIncreaseSettlement->getPayment()->getDate() || $balanceIncreaseSettlement->getPayment()->getPaymentType() != PaymentService::BALANCE_INCREASE )) {
+                $balanceIncreaseSettlement->setPayment(null);
+                $balanceIncreaseSettlement->save();
+            }
+        }
+    }
+
     public function addEndOfFirstyearSettlementForContractIfNotExists(Contract $contract)
     {
         $contractActivatedAt = $contract->getActivatedAt();
@@ -144,7 +167,7 @@ class ContractService
         if ($contract->getActivatedAt()) {
             $yearFormat = 'Y';
             $activatedAt = new DateTime($contract->getActivatedAt());
-            $year = $firstYear = (integer) $activatedAt->format($yearFormat);
+            $year = $firstYear = (integer)$activatedAt->format($yearFormat);
             $today = new DateTime('now');
             $currentYear = $today->format($yearFormat);
             while ($year <= $currentYear) {
@@ -169,7 +192,7 @@ class ContractService
         $settlement->setInterest($this->getInterestForSettlement($settlement));
         $settlement->setSettlementType($settlementType);
 
-        if ($contract->getCapitalize() && $settlementType != SettlementPeer::END_OF_YEAR) {
+        if ($contract->getCapitalize() && !in_array($settlementType, array(SettlementPeer::END_OF_YEAR, SettlementPeer::MANUAL))) {
             $settlement->setCapitalized($settlement->getUnsettled());
         }
         $settlement->save();
@@ -212,7 +235,7 @@ class ContractService
             $nextSettlementMonth = $previousDateMonth + $contract->getPeriodInMonths();
             if ($nextSettlementMonth > 12) {
                 $nextSettlementMonth -= 12;
-                $nextSettlementYear +=1;
+                $nextSettlementYear += 1;
             }
 
             $nextSettlementDateMonthFirstDate = new DateTime(date(self::DATE_FORMAT, mktime(0, 0, 0, $nextSettlementMonth, 1, $nextSettlementYear)));
@@ -242,6 +265,7 @@ class ContractService
         if ($previousSettlement) {
             $balance = $previousSettlement->getBalance();
             $balance += $previousSettlement->getCapitalized() - $previousSettlement->getBalanceReduction();
+            $balance += $previousSettlement->getBalanceIncrease();
         } else {
             $balance = $contract->getAmount();
         }
@@ -290,11 +314,11 @@ class ContractService
         $daysCount = $this->getDaysDiff($this->getPreviousDateForSettlement($settlement), new DateTime($settlement->getDate()));
 
         if ($settlement->isFirstOfContract()) {
-            $daysCount +=1;
+            $daysCount += 1;
         }
 
         if ($settlement->getSettlementType() == SettlementPeer::CLOSING) {
-            $daysCount -=1;
+            $daysCount -= 1;
         }
         return $daysCount;
     }

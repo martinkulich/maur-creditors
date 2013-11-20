@@ -84,9 +84,20 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	protected $manual_balance;
 
 	/**
+	 * The value for the payment_id field.
+	 * @var        int
+	 */
+	protected $payment_id;
+
+	/**
 	 * @var        Contract
 	 */
 	protected $aContract;
+
+	/**
+	 * @var        Payment
+	 */
+	protected $aPayment;
 
 	/**
 	 * @var        array Allocation[] Collection to store aggregation of Allocation objects.
@@ -262,6 +273,16 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	public function getManualBalance()
 	{
 		return $this->manual_balance;
+	}
+
+	/**
+	 * Get the [payment_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getPaymentId()
+	{
+		return $this->payment_id;
 	}
 
 	/**
@@ -498,6 +519,30 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 	} // setManualBalance()
 
 	/**
+	 * Set the value of [payment_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Settlement The current object (for fluent API support)
+	 */
+	public function setPaymentId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->payment_id !== $v) {
+			$this->payment_id = $v;
+			$this->modifiedColumns[] = SettlementPeer::PAYMENT_ID;
+		}
+
+		if ($this->aPayment !== null && $this->aPayment->getId() !== $v) {
+			$this->aPayment = null;
+		}
+
+		return $this;
+	} // setPaymentId()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -559,6 +604,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$this->settlement_type = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->manual_interest = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
 			$this->manual_balance = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
+			$this->payment_id = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -568,7 +614,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = SettlementPeer::NUM_COLUMNS - SettlementPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Settlement object", $e);
@@ -593,6 +639,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 
 		if ($this->aContract !== null && $this->contract_id !== $this->aContract->getId()) {
 			$this->aContract = null;
+		}
+		if ($this->aPayment !== null && $this->payment_id !== $this->aPayment->getId()) {
+			$this->aPayment = null;
 		}
 	} // ensureConsistency
 
@@ -634,6 +683,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aContract = null;
+			$this->aPayment = null;
 			$this->collAllocations = null;
 			$this->lastAllocationCriteria = null;
 
@@ -791,6 +841,13 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 				$this->setContract($this->aContract);
 			}
 
+			if ($this->aPayment !== null) {
+				if ($this->aPayment->isModified() || $this->aPayment->isNew()) {
+					$affectedRows += $this->aPayment->save($con);
+				}
+				$this->setPayment($this->aPayment);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = SettlementPeer::ID;
 			}
@@ -898,6 +955,12 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aPayment !== null) {
+				if (!$this->aPayment->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aPayment->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = SettlementPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -975,6 +1038,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 9:
 				return $this->getManualBalance();
 				break;
+			case 10:
+				return $this->getPaymentId();
+				break;
 			default:
 				return null;
 				break;
@@ -1006,6 +1072,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			$keys[7] => $this->getSettlementType(),
 			$keys[8] => $this->getManualInterest(),
 			$keys[9] => $this->getManualBalance(),
+			$keys[10] => $this->getPaymentId(),
 		);
 		return $result;
 	}
@@ -1067,6 +1134,9 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			case 9:
 				$this->setManualBalance($value);
 				break;
+			case 10:
+				$this->setPaymentId($value);
+				break;
 		} // switch()
 	}
 
@@ -1101,6 +1171,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setSettlementType($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setManualInterest($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setManualBalance($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPaymentId($arr[$keys[10]]);
 	}
 
 	/**
@@ -1122,6 +1193,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SettlementPeer::SETTLEMENT_TYPE)) $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $this->settlement_type);
 		if ($this->isColumnModified(SettlementPeer::MANUAL_INTEREST)) $criteria->add(SettlementPeer::MANUAL_INTEREST, $this->manual_interest);
 		if ($this->isColumnModified(SettlementPeer::MANUAL_BALANCE)) $criteria->add(SettlementPeer::MANUAL_BALANCE, $this->manual_balance);
+		if ($this->isColumnModified(SettlementPeer::PAYMENT_ID)) $criteria->add(SettlementPeer::PAYMENT_ID, $this->payment_id);
 
 		return $criteria;
 	}
@@ -1193,6 +1265,8 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 		$copyObj->setManualInterest($this->manual_interest);
 
 		$copyObj->setManualBalance($this->manual_balance);
+
+		$copyObj->setPaymentId($this->payment_id);
 
 
 		if ($deepCopy) {
@@ -1300,6 +1374,55 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aContract;
+	}
+
+	/**
+	 * Declares an association between this object and a Payment object.
+	 *
+	 * @param      Payment $v
+	 * @return     Settlement The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setPayment(Payment $v = null)
+	{
+		if ($v === null) {
+			$this->setPaymentId(NULL);
+		} else {
+			$this->setPaymentId($v->getId());
+		}
+
+		$this->aPayment = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Payment object, it will not be re-added.
+		if ($v !== null) {
+			$v->addSettlement($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated Payment object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Payment The associated Payment object.
+	 * @throws     PropelException
+	 */
+	public function getPayment(PropelPDO $con = null)
+	{
+		if ($this->aPayment === null && ($this->payment_id !== null)) {
+			$this->aPayment = PaymentPeer::retrieveByPk($this->payment_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aPayment->addSettlements($this);
+			 */
+		}
+		return $this->aPayment;
 	}
 
 	/**
@@ -1524,6 +1647,7 @@ abstract class BaseSettlement extends BaseObject  implements Persistent {
 
 		$this->collAllocations = null;
 			$this->aContract = null;
+			$this->aPayment = null;
 	}
 
 	// symfony_behaviors behavior

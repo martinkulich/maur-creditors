@@ -103,7 +103,7 @@ class RegulationMonthlyReport extends ParentReport
     {
         $class = parent::getColumnRowClass($column, $row);
 
-        if ($column == 'regulation' && $row['manual_interest'] == true) {
+        if ($column == 'regulation' && isset($row['manual_interest']) && $row['manual_interest'] == true) {
             $class .= ' text-red';
         }
         return $class;

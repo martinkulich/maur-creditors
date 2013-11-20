@@ -38,7 +38,7 @@ class paymentActions extends autoPaymentActions
     public function executeNewReactivation(sfWebRequest $request)
     {
         $this->executeNew($request);
-        $this->payment->setPaymentType(PaymentService::REACTIONVATION);
+        $this->payment->setPaymentType(PaymentService::REACTIVATION);
         $amount = $request->getParameter('amount', 0);
         $dateString = $request->getParameter('date');
 

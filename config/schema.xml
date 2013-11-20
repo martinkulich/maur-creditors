@@ -214,8 +214,12 @@
     <column name="settlement_type" phpName="SettlementType" type="VARCHAR" required="true" defaultValue="in_period"/>
     <column name="manual_interest" phpName="ManualInterest" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="manual_balance" phpName="ManualBalance" type="BOOLEAN" required="true" defaultValue="false"/>
+    <column name="payment_id" phpName="PaymentId" type="INTEGER" required="false"/>
     <foreign-key foreignTable="contract" name="settlement_contract_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="contract_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="payment" name="settlement_payment_id_fkey" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="payment_id" foreign="id"/>
     </foreign-key>
   </table>
 </database>

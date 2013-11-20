@@ -403,6 +403,8 @@ payment admin;Přijaté platby
 of payment;přijaté platby
 Payments amount;Přijaté platby
 Balance reduction;Ponížení jistiny
+Balance increase; Navýšení jistiny
+Payment;Platba
 Date of signature;Datum podpisu
 Date of activation;Datum aktivace
 security_user admin;Uživatelé
@@ -478,6 +480,7 @@ Pay out;Vyplatit
 Reuse;Použít k reaktivaci
 payment;Platba
 reactivation;Reaktivace
+balance_increase;Navýšení jistiny
 Payment type;Typ platby
 Save and reuse;Uložit a reaktivovat
 Birth date;Datum narození

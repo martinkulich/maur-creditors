@@ -47,6 +47,7 @@ class SettlementTableMap extends TableMap {
 		$this->addColumn('SETTLEMENT_TYPE', 'SettlementType', 'VARCHAR', true, 255, 'in_period');
 		$this->addColumn('MANUAL_INTEREST', 'ManualInterest', 'BOOLEAN', true, null, false);
 		$this->addColumn('MANUAL_BALANCE', 'ManualBalance', 'BOOLEAN', true, null, false);
+		$this->addForeignKey('PAYMENT_ID', 'PaymentId', 'INTEGER', 'payment', 'ID', false, null, null);
 		// validators
 	} // initialize()
 
@@ -56,6 +57,7 @@ class SettlementTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Contract', 'Contract', RelationMap::MANY_TO_ONE, array('contract_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('Payment', 'Payment', RelationMap::MANY_TO_ONE, array('payment_id' => 'id', ), 'SET NULL', 'CASCADE');
     $this->addRelation('Allocation', 'Allocation', RelationMap::ONE_TO_MANY, array('id' => 'settlement_id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 

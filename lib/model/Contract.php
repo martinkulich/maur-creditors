@@ -26,10 +26,13 @@ class Contract extends BaseContract
     {
         $paymentsAmount = 0;
         foreach ($this->getPayments() as $payment) {
-            $paymentsAmount +=$payment->getAmount();
+            if ($payment->getPaymentType() != PaymentService::BALANCE_INCREASE) {
+                $paymentsAmount += $payment->getAmount();
+            }
         }
         return $paymentsAmount;
     }
+
 
     public static function getPeriods()
     {
@@ -92,12 +95,21 @@ class Contract extends BaseContract
         if (is_null($this->lastPayment)) {
             $criteria = new Criteria();
             $criteria->addDescendingOrderByColumn(PaymentPeer::DATE);
+            $criteria->add(PaymentPeer::PAYMENT_TYPE, PaymentService::BALANCE_INCREASE, Criteria::NOT_EQUAL);
             $payments = $this->getPayments($criteria);
 
             $this->lastPayment = reset($payments);
         }
 
         return $this->lastPayment;
+    }
+
+    public function getPaymentsByTypes(array $paymentTypes = array())
+    {
+        $criteria = new Criteria();
+        $criteria->add(PaymentPeer::PAYMENT_TYPE, $paymentTypes, Criteria::IN);
+
+        return $this->getPayments($criteria);
     }
 
     public function getSettlements($criteria = null, PropelPDO $con = null)
@@ -138,7 +150,7 @@ class Contract extends BaseContract
     }
 
     /**
-     * 
+     *
      * @param DateTime $date
      * @param Criteria $criteria
      * @return Settlement $settlement

@@ -30,6 +30,7 @@ class SettlementFormFilter extends BaseSettlementFormFilter
             'balance',
             'manual_interest',
             'manual_balance',
+            'payment_id',
         );
 
         foreach ($fieldsToUnset as $field) {

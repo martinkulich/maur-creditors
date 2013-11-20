@@ -134,6 +134,7 @@ class SettlementForm extends BaseSettlementForm
             $this->setWidget('contract_id', new sfWidgetFormInputHidden());
         }
 
+        $fieldsToUnset[] = 'payment_id';
 
         foreach ($fieldsToUnset as $field) {
             $this->unsetField($field);
