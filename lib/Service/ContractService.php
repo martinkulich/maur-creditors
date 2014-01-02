@@ -193,7 +193,15 @@ class ContractService
         $settlement->setSettlementType($settlementType);
 
         if ($contract->getCapitalize() && !in_array($settlementType, array(SettlementPeer::END_OF_YEAR, SettlementPeer::MANUAL))) {
-            $settlement->setCapitalized($settlement->getUnsettled());
+            $unsettled = $settlement->getUnsettled();
+            if($previousSettlement = $settlement->getPreviousSettlementOfContract())
+            {
+                if(SettlementPeer::END_OF_YEAR === $previousSettlement->getSettlementType())
+                {
+                    $unsettled += $settlement->getUnsettled();
+                }
+            }
+            $settlement->setCapitalized($unsettled);
         }
         $settlement->save();
         $contract->addSettlement($settlement);
