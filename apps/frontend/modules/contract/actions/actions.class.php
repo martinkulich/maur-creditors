@@ -14,6 +14,33 @@ require_once dirname(__FILE__) . '/../lib/contractGeneratorHelper.class.php';
 class contractActions extends autoContractActions
 {
 
+    public function executeDownload(sfWebRequest $request)
+    {
+        $contract = $this->getRoute()->getObject();
+        $documentService = ServiceContainer::getDocumentService();
+        $documentPath = $documentService->getContractDocumentPath($contract);
+
+        if(!file_exists($documentPath))
+        {
+            $error='File do not exists';
+            ServiceContainer::getMessageService()->addError($error);
+
+            return $this->redirect('@contract');
+        }
+
+        $extension = $documentService->getContractDocumentExtension($contract);
+        $fileName = ($contract->getName() . '.' . $extension);
+        $fileName = str_replace(' ', '_', $fileName);
+
+        header('Content-type: ' . $extension);
+        header('Content-type: ' . $extension);
+        header('Content-Disposition: attachment; filename=' . $fileName);
+        // put the content in the file
+        echo(file_get_contents($documentPath));
+
+        // stop processing the page
+        exit;
+    }
     public function executeExcludeFromReport(sfWebRequest $request)
     {
         $contract = $this->getRoute()->getObject();

@@ -31,6 +31,9 @@ generator:
           close:
             action: close
             label: Terminate
+          download:
+            action: download
+            label: download
           _delete: ~
         actions:
           _new: ~

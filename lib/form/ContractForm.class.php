@@ -27,10 +27,10 @@ class ContractForm extends BaseContractForm
             $this->setValidator($dateField, new myValidatorDate());
         }
 
-        $this->setWidget('src', new sfWidgetFormInputFile());
+        $this->setWidget('document', new sfWidgetFormInputFile());
         $path = ServiceContainer::getDocumentService()->getDocumentRootDirPath();
 
-        $this->setValidator('src', new sfValidatorFile(array('path' => $path, 'required' => false)));
+        $this->setValidator('document', new sfValidatorFile(array('path' => $path, 'required' => false)));
 
         $this->getWidget('created_at')->setLabel('Date of signature');
         $this->getValidator('created_at')->setOption('last_day_in_month', 31);
@@ -65,7 +65,6 @@ class ContractForm extends BaseContractForm
         $fieldsToUnset = array(
             'activated_at',
             'closed_at',
-            'src',
         );
 
         if (!$this->getObject()->isNew()) {

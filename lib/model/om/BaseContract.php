@@ -104,10 +104,10 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $contract_type_id;
 
 	/**
-	 * The value for the src field.
+	 * The value for the document field.
 	 * @var        string
 	 */
-	protected $src;
+	protected $document;
 
 	/**
 	 * @var        ContractType
@@ -436,13 +436,13 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [src] column value.
+	 * Get the [document] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getSrc()
+	public function getDocument()
 	{
-		return $this->src;
+		return $this->document;
 	}
 
 	/**
@@ -854,24 +854,24 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setContractTypeId()
 
 	/**
-	 * Set the value of [src] column.
+	 * Set the value of [document] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     Contract The current object (for fluent API support)
 	 */
-	public function setSrc($v)
+	public function setDocument($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->src !== $v) {
-			$this->src = $v;
-			$this->modifiedColumns[] = ContractPeer::SRC;
+		if ($this->document !== $v) {
+			$this->document = $v;
+			$this->modifiedColumns[] = ContractPeer::DOCUMENT;
 		}
 
 		return $this;
-	} // setSrc()
+	} // setDocument()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -923,7 +923,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->first_settlement_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->capitalize = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
 			$this->contract_type_id = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
-			$this->src = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->document = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1452,7 +1452,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				return $this->getContractTypeId();
 				break;
 			case 14:
-				return $this->getSrc();
+				return $this->getDocument();
 				break;
 			default:
 				return null;
@@ -1489,7 +1489,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[11] => $this->getFirstSettlementDate(),
 			$keys[12] => $this->getCapitalize(),
 			$keys[13] => $this->getContractTypeId(),
-			$keys[14] => $this->getSrc(),
+			$keys[14] => $this->getDocument(),
 		);
 		return $result;
 	}
@@ -1564,7 +1564,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				$this->setContractTypeId($value);
 				break;
 			case 14:
-				$this->setSrc($value);
+				$this->setDocument($value);
 				break;
 		} // switch()
 	}
@@ -1604,7 +1604,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[11], $arr)) $this->setFirstSettlementDate($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setCapitalize($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setContractTypeId($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setSrc($arr[$keys[14]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDocument($arr[$keys[14]]);
 	}
 
 	/**
@@ -1630,7 +1630,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::FIRST_SETTLEMENT_DATE)) $criteria->add(ContractPeer::FIRST_SETTLEMENT_DATE, $this->first_settlement_date);
 		if ($this->isColumnModified(ContractPeer::CAPITALIZE)) $criteria->add(ContractPeer::CAPITALIZE, $this->capitalize);
 		if ($this->isColumnModified(ContractPeer::CONTRACT_TYPE_ID)) $criteria->add(ContractPeer::CONTRACT_TYPE_ID, $this->contract_type_id);
-		if ($this->isColumnModified(ContractPeer::SRC)) $criteria->add(ContractPeer::SRC, $this->src);
+		if ($this->isColumnModified(ContractPeer::DOCUMENT)) $criteria->add(ContractPeer::DOCUMENT, $this->document);
 
 		return $criteria;
 	}
@@ -1711,7 +1711,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 		$copyObj->setContractTypeId($this->contract_type_id);
 
-		$copyObj->setSrc($this->src);
+		$copyObj->setDocument($this->document);
 
 
 		if ($deepCopy) {

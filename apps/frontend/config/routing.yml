@@ -130,7 +130,7 @@ contract:
     prefix_path:          /contract
     column:               id
     with_wildcard_routes: true
-    object_actions: {copy: get, duplicate: post, close: [get, post], note: get, excludeFromReport: get, paidDetail: get}
+    object_actions: {copy: get, duplicate: post, close: [get, post], note: get, excludeFromReport: get, paidDetail: get, download: get}
     collection_actions: {filters: get, filter: post, reset: get, regulation: get}
 
 contract_type:

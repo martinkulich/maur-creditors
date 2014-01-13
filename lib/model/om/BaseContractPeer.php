@@ -72,8 +72,8 @@ abstract class BaseContractPeer {
 	/** the column name for the CONTRACT_TYPE_ID field */
 	const CONTRACT_TYPE_ID = 'contract.CONTRACT_TYPE_ID';
 
-	/** the column name for the SRC field */
-	const SRC = 'contract.SRC';
+	/** the column name for the DOCUMENT field */
+	const DOCUMENT = 'contract.DOCUMENT';
 
 	/**
 	 * An identiy map to hold any loaded instances of Contract objects.
@@ -98,10 +98,10 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', 'ClosedAt', 'Note', 'CurrencyCode', 'FirstSettlementDate', 'Capitalize', 'ContractTypeId', 'Src', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', 'closedAt', 'note', 'currencyCode', 'firstSettlementDate', 'capitalize', 'contractTypeId', 'src', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, self::CLOSED_AT, self::NOTE, self::CURRENCY_CODE, self::FIRST_SETTLEMENT_DATE, self::CAPITALIZE, self::CONTRACT_TYPE_ID, self::SRC, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', 'closed_at', 'note', 'currency_code', 'first_settlement_date', 'capitalize', 'contract_type_id', 'src', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', 'ClosedAt', 'Note', 'CurrencyCode', 'FirstSettlementDate', 'Capitalize', 'ContractTypeId', 'Document', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', 'closedAt', 'note', 'currencyCode', 'firstSettlementDate', 'capitalize', 'contractTypeId', 'document', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, self::CLOSED_AT, self::NOTE, self::CURRENCY_CODE, self::FIRST_SETTLEMENT_DATE, self::CAPITALIZE, self::CONTRACT_TYPE_ID, self::DOCUMENT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', 'closed_at', 'note', 'currency_code', 'first_settlement_date', 'capitalize', 'contract_type_id', 'document', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
@@ -112,10 +112,10 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, 'ClosedAt' => 8, 'Note' => 9, 'CurrencyCode' => 10, 'FirstSettlementDate' => 11, 'Capitalize' => 12, 'ContractTypeId' => 13, 'Src' => 14, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, 'closedAt' => 8, 'note' => 9, 'currencyCode' => 10, 'firstSettlementDate' => 11, 'capitalize' => 12, 'contractTypeId' => 13, 'src' => 14, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, self::CLOSED_AT => 8, self::NOTE => 9, self::CURRENCY_CODE => 10, self::FIRST_SETTLEMENT_DATE => 11, self::CAPITALIZE => 12, self::CONTRACT_TYPE_ID => 13, self::SRC => 14, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, 'closed_at' => 8, 'note' => 9, 'currency_code' => 10, 'first_settlement_date' => 11, 'capitalize' => 12, 'contract_type_id' => 13, 'src' => 14, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, 'ClosedAt' => 8, 'Note' => 9, 'CurrencyCode' => 10, 'FirstSettlementDate' => 11, 'Capitalize' => 12, 'ContractTypeId' => 13, 'Document' => 14, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, 'closedAt' => 8, 'note' => 9, 'currencyCode' => 10, 'firstSettlementDate' => 11, 'capitalize' => 12, 'contractTypeId' => 13, 'document' => 14, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, self::CLOSED_AT => 8, self::NOTE => 9, self::CURRENCY_CODE => 10, self::FIRST_SETTLEMENT_DATE => 11, self::CAPITALIZE => 12, self::CONTRACT_TYPE_ID => 13, self::DOCUMENT => 14, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, 'closed_at' => 8, 'note' => 9, 'currency_code' => 10, 'first_settlement_date' => 11, 'capitalize' => 12, 'contract_type_id' => 13, 'document' => 14, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
@@ -200,7 +200,7 @@ abstract class BaseContractPeer {
 		$criteria->addSelectColumn(ContractPeer::FIRST_SETTLEMENT_DATE);
 		$criteria->addSelectColumn(ContractPeer::CAPITALIZE);
 		$criteria->addSelectColumn(ContractPeer::CONTRACT_TYPE_ID);
-		$criteria->addSelectColumn(ContractPeer::SRC);
+		$criteria->addSelectColumn(ContractPeer::DOCUMENT);
 	}
 
 	/**

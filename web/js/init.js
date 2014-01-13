@@ -18,19 +18,21 @@ $(document).ready(function () {
         event.stopPropagation();
     });
 
-    $('.modal_link').click(function (event) {
-        if (modal_dialog_content_updated != true) {
+    $('.modal_link').click(function(event){
+        if(modal_dialog_content_updated != true)
+        {
             event.preventDefault();
 
             var target = '#modal_dialog';
 
             currentWidth = $(target).width();
-            $result = $.get(this.href, function (data) {
+            $result = $.get(this.href, function(data) {
             });
-            $result.success(function (data, textStatus, xhr) {
+            $result.success(function(data, textStatus, xhr){
                 var status = $(xhr).attr('status');
 
-                if (status == 200) {
+                if(status == 200)
+                {
 
                     var withoutSubmenu = $(target).hasClass('without-submenu');
                     $(target).html(data);
@@ -38,32 +40,30 @@ $(document).ready(function () {
 
                     centerModal(target, currentWidth);
 
-                    if (!$('body').hasClass('modal-open')) {
-                        if (withoutSubmenu) {
+                    if(!$('body').hasClass('modal-open'))
+                    {
+                        if(withoutSubmenu)
+                        {
 
                             $('body').addClass('without-submenu');
                         }
 
-                        $(target).modal(
-                            {
-                                'show':true,
-                                'backdrop':false,
-                                'keyboard':false
-                            }
-                        );
+                        $(target).modal('show');
                     }
                 }
 
-                if (status == 205) {
+                if(status == 205)
+                {
                     location.reload();
                 }
 
 
             });
 
-            $result.error(function (data, textStatus, xhr) {
-                if (xhr == 'Unauthorized') {
-                    $(location).attr('href', login_url);
+            $result.error(function(data, textStatus, xhr){
+                if(xhr == 'Unauthorized')
+                {
+                    $(location).attr('href',login_url);
                 }
             });
             return false;
@@ -72,50 +72,35 @@ $(document).ready(function () {
 
 
     //odeslatni rezervacniho formulare
-    $(".form-modal").submit(function (event) {
-        /* stop form from submitting normally */
-        event.preventDefault();
-        if (modal_dialog_content_updated != true) {
-            /* get some values from elements on the page: */
-            var $form = $(this),
-                url = $form.attr('action');
+    $('.form-modal').ajaxForm({
+        beforeSubmit: function() {
+            var target = '[type=submit]';
+            $(target).html('<i class="icon-time icon-white"></i> Wait');
+            $(target).addClass('disabled');
+        },
+        success: function(data, textStatus, xhr){
             var target = '#modal_dialog';
-            /* Send the data using post and put the results in a div */
-            method = $form.attr('method');
-            if (method == 'post') {
-                $result = $.post(
-                    url,
-                    $(this).serialize(),
-                    function (data) {
-                    });
-            }
-            else {
-                $result = $.get(
-                    url,
-                    $(this).serialize(),
-                    function (data) {
-                    });
-            }
-
-            $result.success(function (data, textStatus, xhr) {
+            if(modal_dialog_content_updated != true)
+            {
                 var status = $(xhr).attr('status');
-                if (status == 200) {
+                if(status == 200)
+                {
                     $(target).html(data);
                     modal_dialog_content_updated = true;
                 }
 
-                if (status == 205) {
+                if(status == 205)
+                {
                     location.reload();
                 }
-            });
-
-            $result.error(function (data, textStatus, xhr) {
-                if (xhr == 'Unauthorized') {
-                    $(location).attr('href', login_url);
-                }
-            });
+            }
+        },
+        error: function(data, textStatus, xhr){
+            if(xhr == 'Unauthorized')
+            {
+                $(location).attr('href',login_url);
+            }
         }
-        return false;
     });
 
 

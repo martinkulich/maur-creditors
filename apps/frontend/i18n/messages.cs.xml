@@ -2373,5 +2373,9 @@
       <source>Date of outgoing payment</source>
       <target>Datum odchozí platby</target>
     </trans-unit>
+    <trans-unit id="594">
+      <source>Download</source>
+      <target>Stáhnout</target>
+    </trans-unit>
   </body>
 </xliff>

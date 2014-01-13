@@ -5,19 +5,19 @@ class DocumentService
 
     public function getDocumentRootDirPath()
     {
-        return sfConfig::get('sf_upload_dir');
+        return sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'uploads';
     }
 
-    public function getDocumentPath(Document $document)
+    public function getContractDocumentPath(Contract $contract)
     {
-        return $this->getDocumentRootDirPath().DIRECTORY_SEPARATOR.$document->getSrc();
+        return $this->getDocumentRootDirPath().DIRECTORY_SEPARATOR.$contract->getDocument();
     }
 
-    public function getDocumentExtension(Document $document)
+    public function getContractDocumentExtension(Contract $contract)
     {
-        $src = $document->getSrc();
+        $document = $contract->getDocument();
 
-        $parts = explode('.', $src);
+        $parts = explode('.', $document);
 
         return end($parts); 
     }

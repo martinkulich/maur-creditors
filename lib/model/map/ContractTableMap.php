@@ -51,7 +51,7 @@ class ContractTableMap extends TableMap {
 		$this->addColumn('FIRST_SETTLEMENT_DATE', 'FirstSettlementDate', 'DATE', false, null, null);
 		$this->addColumn('CAPITALIZE', 'Capitalize', 'BOOLEAN', true, null, false);
 		$this->addForeignKey('CONTRACT_TYPE_ID', 'ContractTypeId', 'INTEGER', 'contract_type', 'ID', true, null, null);
-		$this->addColumn('SRC', 'Src', 'VARCHAR', false, 255, null);
+		$this->addColumn('DOCUMENT', 'Document', 'VARCHAR', false, 255, null);
 		// validators
 	} // initialize()
 

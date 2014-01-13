@@ -34,7 +34,7 @@
     <column name="first_settlement_date" phpName="FirstSettlementDate" type="DATE" required="false"/>
     <column name="capitalize" phpName="Capitalize" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="contract_type_id" phpName="ContractTypeId" type="INTEGER" required="true"/>
-    <column name="src" phpName="Src" type="VARCHAR" required="false"/>
+    <column name="document" phpName="Document" type="VARCHAR" required="false"/>
     <foreign-key foreignTable="contract_type" name="contract_contract_type_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="contract_type_id" foreign="id"/>
     </foreign-key>

@@ -32,7 +32,8 @@ insert into security_perm(code, "name", is_public) values
 
 
 --dokumenty smluv
-ALTER TABLE contract ADD COLUMN file character varying;
+ALTER TABLE contract DROP COLUMN src;
+ALTER TABLE contract ADD COLUMN document character varying;
 
 
 COMMIT;

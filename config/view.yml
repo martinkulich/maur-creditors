@@ -32,6 +32,7 @@ default:
     - masks/masks.js
     - all.js
     - fixedHeader/jquery.fixedheadertable.min.js
+    - jquery/jquery.form.js
     - init.js
 
   has_layout:     true
