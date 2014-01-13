@@ -1,0 +1,26 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           contractType
+    theme:                 bootstrap
+    non_verbose_templates: true
+    with_show:             false
+    singular:              contractType
+    plural:                contractTypes
+    route_prefix:          contract_type
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      fields:  ~
+      list:
+        actions:
+          _new: ~
+        batch_actions: []
+        display: [name]
+      filter:  ~
+      form:
+        actions:
+          _save: ~
+      edit:    ~
+      new:     ~
