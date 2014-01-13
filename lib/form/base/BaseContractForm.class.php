@@ -27,6 +27,8 @@ abstract class BaseContractForm extends BaseFormPropel
       'currency_code'                 => new sfWidgetFormPropelChoice(array('model' => 'Currency', 'add_empty' => false)),
       'first_settlement_date'         => new sfWidgetFormDate(),
       'capitalize'                    => new sfWidgetFormInputCheckbox(),
+      'contract_type_id'              => new sfWidgetFormPropelChoice(array('model' => 'ContractType', 'add_empty' => false)),
+      'src'                           => new sfWidgetFormInputText(),
       'contract_excluded_report_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Report')),
     ));
 
@@ -44,6 +46,8 @@ abstract class BaseContractForm extends BaseFormPropel
       'currency_code'                 => new sfValidatorPropelChoice(array('model' => 'Currency', 'column' => 'code')),
       'first_settlement_date'         => new sfValidatorDate(array('required' => false)),
       'capitalize'                    => new sfValidatorBoolean(),
+      'contract_type_id'              => new sfValidatorPropelChoice(array('model' => 'ContractType', 'column' => 'id')),
+      'src'                           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'contract_excluded_report_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Report', 'required' => false)),
     ));
 

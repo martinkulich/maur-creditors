@@ -10,6 +10,7 @@ class ToPayReport extends ParentReport
             SELECT 
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
                 co.name as contract_name,
+                ct.name as contract_type_name,
                 co.id as contract_id,
                 co.currency_code as currency_code,
                 co.closed_at as closed_at,
@@ -19,6 +20,7 @@ class ToPayReport extends ParentReport
                 contract_unpaid_regular(co.id, '%date_to%'::date, true)::integer as to_pay
             FROM contract co
             JOIN creditor cr ON cr.id = co.creditor_id
+            JOIN contract_type ct ON ct.id = co.contract_type_id
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'to_pay' AND cer.contract_id = co.id) = 0
             AND contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer <> 0
             AND co.capitalize != true
@@ -26,11 +28,12 @@ class ToPayReport extends ParentReport
             GROUP BY
                 cr.lastname,
                 cr.firstname,
-                co.name,
                 cr.bank_account,
-                co.id, 
+                co.name,
+                co.id,
                 co.currency_code,
-                co.closed_at
+                co.closed_at,
+                ct.name
             ORDER BY %order_by%, settlement_date
             ;
         ";
@@ -40,6 +43,7 @@ class ToPayReport extends ParentReport
     {
         $columns = array(
             'fullname',
+            'contract_type_name',
             'contract_name',
             'bank_account',
             'settlement_date',
@@ -89,6 +93,10 @@ class ToPayReport extends ParentReport
         $where = '';
         if ($creditorId = $this->getFilter('creditor_id')) {
             $where = ' AND cr.id = ' . $creditorId;
+        }
+
+        if ($contractTypeId = $this->getFilter('contract_type_id')) {
+            $where .= ' AND co.contract_type_id = ' . $contractTypeId;
         }
         return $where;
     }

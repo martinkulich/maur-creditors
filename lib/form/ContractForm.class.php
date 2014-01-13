@@ -27,6 +27,11 @@ class ContractForm extends BaseContractForm
             $this->setValidator($dateField, new myValidatorDate());
         }
 
+        $this->setWidget('src', new sfWidgetFormInputFile());
+        $path = ServiceContainer::getDocumentService()->getDocumentRootDirPath();
+
+        $this->setValidator('src', new sfValidatorFile(array('path' => $path, 'required' => false)));
+
         $this->getWidget('created_at')->setLabel('Date of signature');
         $this->getValidator('created_at')->setOption('last_day_in_month', 31);
 
@@ -39,8 +44,8 @@ class ContractForm extends BaseContractForm
         $this->getWidgetSchema()->setHelp('first_settlement_date', 'This field is unchangeable after contract activation');
 
         $this->getWidgetSchema()
-                ->setHelp('capitalize', 'Newly generated settlements will be automaticaly capitalized')
-                ->moveField('capitalize', sfWidgetFormSchema::FIRST);
+            ->setHelp('capitalize', 'Newly generated settlements will be automaticaly capitalized')
+            ->moveField('capitalize', sfWidgetFormSchema::FIRST);
 
         $this->getWidget('contract_excluded_report_list')->setOption('expanded', true);
 
@@ -60,6 +65,7 @@ class ContractForm extends BaseContractForm
         $fieldsToUnset = array(
             'activated_at',
             'closed_at',
+            'src',
         );
 
         if (!$this->getObject()->isNew()) {

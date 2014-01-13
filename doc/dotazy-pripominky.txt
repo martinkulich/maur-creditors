@@ -22,3 +22,23 @@ vyplaceni po ukonceni
         k vyplaceni
     
     predpisy
+
+
+    schuzka u petra 10.10///////////////////////////////
+    smlouvy pridat typ smlouvy
+        dluhopis
+        kr8tkodov8
+        dlouhodob8
+
+    filtrovat v reportu
+        potvrzeni pro veritele
+        k vyplacen9 tento mesic
+    a pokud je vybrano vse, zgrupovat dle typu smlouvy
+
+
+    //vynutit https
+        info@goodlookyng.cz
+
+
+    po https moznost nahrat soubory
+        nahravani dokumentu smluv

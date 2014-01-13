@@ -133,6 +133,17 @@ contract:
     object_actions: {copy: get, duplicate: post, close: [get, post], note: get, excludeFromReport: get, paidDetail: get}
     collection_actions: {filters: get, filter: post, reset: get, regulation: get}
 
+contract_type:
+  class: sfPropelRouteCollection
+  options:
+    model:                contractType
+    module:               contractType
+    prefix_path:          /contractType
+    column:               id
+    with_wildcard_routes: true
+    collection_actions: {filters: get, filter: post, reset: get}
+
+
 group:
   class: sfPropelRouteCollection
   options:

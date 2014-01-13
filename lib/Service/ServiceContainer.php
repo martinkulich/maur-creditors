@@ -103,4 +103,12 @@ class ServiceContainer
     {
         return self::getService('allocation');
     }
+
+    /**
+     * @return DocumentService
+     */
+    public static function getDocumentService()
+    {
+        return self::getService('document');
+    }
 }

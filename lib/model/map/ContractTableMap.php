@@ -50,6 +50,8 @@ class ContractTableMap extends TableMap {
 		$this->addForeignKey('CURRENCY_CODE', 'CurrencyCode', 'CHAR', 'currency', 'CODE', true, 3, null);
 		$this->addColumn('FIRST_SETTLEMENT_DATE', 'FirstSettlementDate', 'DATE', false, null, null);
 		$this->addColumn('CAPITALIZE', 'Capitalize', 'BOOLEAN', true, null, false);
+		$this->addForeignKey('CONTRACT_TYPE_ID', 'ContractTypeId', 'INTEGER', 'contract_type', 'ID', true, null, null);
+		$this->addColumn('SRC', 'Src', 'VARCHAR', false, 255, null);
 		// validators
 	} // initialize()
 
@@ -58,6 +60,7 @@ class ContractTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('ContractType', 'ContractType', RelationMap::MANY_TO_ONE, array('contract_type_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Creditor', 'Creditor', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Currency', 'Currency', RelationMap::MANY_TO_ONE, array('currency_code' => 'code', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ContractExcludedReport', 'ContractExcludedReport', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');

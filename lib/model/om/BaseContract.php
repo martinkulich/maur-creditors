@@ -98,6 +98,23 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $capitalize;
 
 	/**
+	 * The value for the contract_type_id field.
+	 * @var        int
+	 */
+	protected $contract_type_id;
+
+	/**
+	 * The value for the src field.
+	 * @var        string
+	 */
+	protected $src;
+
+	/**
+	 * @var        ContractType
+	 */
+	protected $aContractType;
+
+	/**
 	 * @var        Creditor
 	 */
 	protected $aCreditor;
@@ -406,6 +423,26 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	public function getCapitalize()
 	{
 		return $this->capitalize;
+	}
+
+	/**
+	 * Get the [contract_type_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getContractTypeId()
+	{
+		return $this->contract_type_id;
+	}
+
+	/**
+	 * Get the [src] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSrc()
+	{
+		return $this->src;
 	}
 
 	/**
@@ -793,6 +830,50 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setCapitalize()
 
 	/**
+	 * Set the value of [contract_type_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setContractTypeId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->contract_type_id !== $v) {
+			$this->contract_type_id = $v;
+			$this->modifiedColumns[] = ContractPeer::CONTRACT_TYPE_ID;
+		}
+
+		if ($this->aContractType !== null && $this->aContractType->getId() !== $v) {
+			$this->aContractType = null;
+		}
+
+		return $this;
+	} // setContractTypeId()
+
+	/**
+	 * Set the value of [src] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setSrc($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->src !== $v) {
+			$this->src = $v;
+			$this->modifiedColumns[] = ContractPeer::SRC;
+		}
+
+		return $this;
+	} // setSrc()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -841,6 +922,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->currency_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->first_settlement_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->capitalize = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
+			$this->contract_type_id = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->src = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -850,7 +933,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 13; // 13 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Contract object", $e);
@@ -878,6 +961,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		}
 		if ($this->aCurrency !== null && $this->currency_code !== $this->aCurrency->getCode()) {
 			$this->aCurrency = null;
+		}
+		if ($this->aContractType !== null && $this->contract_type_id !== $this->aContractType->getId()) {
+			$this->aContractType = null;
 		}
 	} // ensureConsistency
 
@@ -918,6 +1004,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aContractType = null;
 			$this->aCreditor = null;
 			$this->aCurrency = null;
 			$this->collContractExcludedReports = null;
@@ -1087,6 +1174,13 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
+			if ($this->aContractType !== null) {
+				if ($this->aContractType->isModified() || $this->aContractType->isNew()) {
+					$affectedRows += $this->aContractType->save($con);
+				}
+				$this->setContractType($this->aContractType);
+			}
+
 			if ($this->aCreditor !== null) {
 				if ($this->aCreditor->isModified() || $this->aCreditor->isNew()) {
 					$affectedRows += $this->aCreditor->save($con);
@@ -1226,6 +1320,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
+			if ($this->aContractType !== null) {
+				if (!$this->aContractType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aContractType->getValidationFailures());
+				}
+			}
+
 			if ($this->aCreditor !== null) {
 				if (!$this->aCreditor->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aCreditor->getValidationFailures());
@@ -1348,6 +1448,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 12:
 				return $this->getCapitalize();
 				break;
+			case 13:
+				return $this->getContractTypeId();
+				break;
+			case 14:
+				return $this->getSrc();
+				break;
 			default:
 				return null;
 				break;
@@ -1382,6 +1488,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[10] => $this->getCurrencyCode(),
 			$keys[11] => $this->getFirstSettlementDate(),
 			$keys[12] => $this->getCapitalize(),
+			$keys[13] => $this->getContractTypeId(),
+			$keys[14] => $this->getSrc(),
 		);
 		return $result;
 	}
@@ -1452,6 +1560,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 12:
 				$this->setCapitalize($value);
 				break;
+			case 13:
+				$this->setContractTypeId($value);
+				break;
+			case 14:
+				$this->setSrc($value);
+				break;
 		} // switch()
 	}
 
@@ -1489,6 +1603,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[10], $arr)) $this->setCurrencyCode($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setFirstSettlementDate($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setCapitalize($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setContractTypeId($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setSrc($arr[$keys[14]]);
 	}
 
 	/**
@@ -1513,6 +1629,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::CURRENCY_CODE)) $criteria->add(ContractPeer::CURRENCY_CODE, $this->currency_code);
 		if ($this->isColumnModified(ContractPeer::FIRST_SETTLEMENT_DATE)) $criteria->add(ContractPeer::FIRST_SETTLEMENT_DATE, $this->first_settlement_date);
 		if ($this->isColumnModified(ContractPeer::CAPITALIZE)) $criteria->add(ContractPeer::CAPITALIZE, $this->capitalize);
+		if ($this->isColumnModified(ContractPeer::CONTRACT_TYPE_ID)) $criteria->add(ContractPeer::CONTRACT_TYPE_ID, $this->contract_type_id);
+		if ($this->isColumnModified(ContractPeer::SRC)) $criteria->add(ContractPeer::SRC, $this->src);
 
 		return $criteria;
 	}
@@ -1591,6 +1709,10 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 		$copyObj->setCapitalize($this->capitalize);
 
+		$copyObj->setContractTypeId($this->contract_type_id);
+
+		$copyObj->setSrc($this->src);
+
 
 		if ($deepCopy) {
 			// important: temporarily setNew(false) because this affects the behavior of
@@ -1666,6 +1788,55 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			self::$peer = new ContractPeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Declares an association between this object and a ContractType object.
+	 *
+	 * @param      ContractType $v
+	 * @return     Contract The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setContractType(ContractType $v = null)
+	{
+		if ($v === null) {
+			$this->setContractTypeId(NULL);
+		} else {
+			$this->setContractTypeId($v->getId());
+		}
+
+		$this->aContractType = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the ContractType object, it will not be re-added.
+		if ($v !== null) {
+			$v->addContract($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated ContractType object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     ContractType The associated ContractType object.
+	 * @throws     PropelException
+	 */
+	public function getContractType(PropelPDO $con = null)
+	{
+		if ($this->aContractType === null && ($this->contract_type_id !== null)) {
+			$this->aContractType = ContractTypePeer::retrieveByPk($this->contract_type_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aContractType->addContracts($this);
+			 */
+		}
+		return $this->aContractType;
 	}
 
 	/**
@@ -2655,6 +2826,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$this->collPayments = null;
 		$this->collSettlements = null;
 		$this->collRegulations = null;
+			$this->aContractType = null;
 			$this->aCreditor = null;
 			$this->aCurrency = null;
 	}

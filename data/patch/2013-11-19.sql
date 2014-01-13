@@ -21,8 +21,7 @@ $BODY$
     $BODY$
   LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
   COST 100;
-ALTER FUNCTION settlement_balance_reduction(integer)
-  OWNER TO developer;
+
 
 
   CREATE OR REPLACE FUNCTION contract_balance_increase(_contract_id integer, _month integer, _year integer)
@@ -57,8 +56,7 @@ $BODY$
     $BODY$
   LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER
   COST 100;
-ALTER FUNCTION creditor_paid(integer, integer, integer, text)
-  OWNER TO postgres;
+
 
 
 DROP VIEW regulation;

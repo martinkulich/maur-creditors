@@ -5,7 +5,7 @@ class CreditorConfirmationReportForm extends ParentReportForm
 
     public function getUsedFields()
     {
-        return array('year', 'creditor_id');
+        return array('year', 'contract_type_id', 'creditor_id');
 
     }
 

@@ -11,6 +11,7 @@ class CreditorConfirmationReport extends ParentReport
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
                 cr.street || ', ' || cr.city || ', ' || cr.zip as address,
                 c.currency_code as currency_code,
+                ct.name as contract_type_name,
                 cr.id as creditor_id,
                 sum(contract_balance(c.id, first_day(1, %year%), true)) as start_balance,
                 sum(contract_balance(c.id, last_day(12, %year%), true)) as end_balance,
@@ -23,8 +24,10 @@ class CreditorConfirmationReport extends ParentReport
                 sum(contract_paid(c.id, %year%)) + sum(contract_balance_reduction(c.id, %year%)) as outgoing_payments
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
+            JOIN contract_type ct ON ct.id = c.contract_type_id
             %where%
-            GROUP BY 
+            GROUP BY
+                ct.name,
                 cr.id, 
                 cr.lastname, 
                 cr.street, 
@@ -40,9 +43,13 @@ class CreditorConfirmationReport extends ParentReport
 
     public function getWhere()
     {
-        $where = '';
+        $where = 'WHERE true ';
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $where .= ' WHERE cr.id = ' . $creditorId;
+            $where .= ' AND cr.id = ' . $creditorId;
+        }
+
+        if ($contractTypeId = $this->getFilter('contract_type_id')) {
+            $where .= ' AND c.contract_type_id = ' . $contractTypeId;
         }
 
         return $where;
@@ -52,6 +59,7 @@ class CreditorConfirmationReport extends ParentReport
     {
         return array_merge(
                 array(
+                    'contract_type_name',
             'fullname',
             'address',
                 ), $this->getCurrencyColumns()

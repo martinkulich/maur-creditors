@@ -360,6 +360,7 @@ Add;Přidat
 of creditor;věřitelé
 creditor admin;Věřitelé
 contract admin;Smlouvy
+contract_type admin;Typy smluv
 of contract;smlouvy
 Creditor type code;Typ
 Identification number;IČO/Rodné číslo
@@ -376,6 +377,10 @@ Edit creditor;Editace věřitele
 Edit contract;Editace smlouvy
 Filter creditor;Filtrovat věřitele
 Filter contract;Filtrovat smlouvy
+New contractType; Nový typ smlouvy
+Edit contractType; Editace typu smlouvy
+Contract type; Typ smlouvy
+Contract type name; Type smlouvy
 Creditor type;Typ
 Period;Perioda
 Interest rate;Úroková míra

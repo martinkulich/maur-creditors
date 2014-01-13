@@ -42,6 +42,7 @@ class defaultComponents extends sfComponents
         $this->route = sfContext::getInstance()->getRouting()->getCurrentRouteName();
         $this->mainLinks = array(
             'creditor',
+            'contract_type',
             'contract',
             'payment',
             'outgoing_payment',

@@ -24,6 +24,8 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'currency_code'                 => new sfWidgetFormPropelChoice(array('model' => 'Currency', 'add_empty' => true)),
       'first_settlement_date'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'capitalize'                    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'contract_type_id'              => new sfWidgetFormPropelChoice(array('model' => 'ContractType', 'add_empty' => true)),
+      'src'                           => new sfWidgetFormFilterInput(),
       'contract_excluded_report_list' => new sfWidgetFormPropelChoice(array('model' => 'Report', 'add_empty' => true)),
     ));
 
@@ -40,6 +42,8 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'currency_code'                 => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Currency', 'column' => 'code')),
       'first_settlement_date'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'capitalize'                    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'contract_type_id'              => new sfValidatorPropelChoice(array('required' => false, 'model' => 'ContractType', 'column' => 'id')),
+      'src'                           => new sfValidatorPass(array('required' => false)),
       'contract_excluded_report_list' => new sfValidatorPropelChoice(array('model' => 'Report', 'required' => false)),
     ));
 
@@ -96,6 +100,8 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'currency_code'                 => 'ForeignKey',
       'first_settlement_date'         => 'Date',
       'capitalize'                    => 'Boolean',
+      'contract_type_id'              => 'ForeignKey',
+      'src'                           => 'Text',
       'contract_excluded_report_list' => 'ManyKey',
     );
   }
