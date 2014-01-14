@@ -8,7 +8,7 @@ class CreditorConfirmationReport extends ParentReport
         return "
             SELECT 
                 %year% as year,
-                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
+                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
                 cr.street || ', ' || cr.city || ', ' || cr.zip as address,
                 c.currency_code as currency_code,
                 ct.name as contract_type_name,
@@ -25,6 +25,7 @@ class CreditorConfirmationReport extends ParentReport
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
             JOIN contract_type ct ON ct.id = c.contract_type_id
+            WHERE (c.closed_at is null OR year(c.closed_at) >= %year%)
             %where%
             GROUP BY
                 ct.name,
@@ -43,7 +44,7 @@ class CreditorConfirmationReport extends ParentReport
 
     public function getWhere()
     {
-        $where = 'WHERE true ';
+        $where = '';
         if ($creditorId = $this->getFilter('creditor_id')) {
             $where .= ' AND cr.id = ' . $creditorId;
         }
