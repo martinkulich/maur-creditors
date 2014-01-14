@@ -25,7 +25,21 @@ class CreditorConfirmationReport extends ParentReport
             FROM creditor cr
             JOIN contract c ON c.creditor_id = cr.id
             JOIN contract_type ct ON ct.id = c.contract_type_id
-            WHERE (c.closed_at is null OR year(c.closed_at) >= %year%)
+            WHERE (
+              c.closed_at is null
+              OR
+              (
+                  c.closed_at is not null
+                  And
+                  (
+                    year(c.closed_at) >= %year%
+                    or
+                    contract_unpaid(c.id, last_day(12, %year%))::integer <> 0
+                    OR
+                    contract_paid(c.id, %year%) <> 0
+                  )
+              )
+            )
             %where%
             GROUP BY
                 ct.name,
