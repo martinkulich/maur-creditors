@@ -41,6 +41,13 @@ class contractActions extends autoContractActions
         // stop processing the page
         exit;
     }
+
+    public function executeCheck(sfWebRequest $request)
+    {
+        ServiceContainer::getContractService()->checkContractChanges($this->getRoute()->getObject());
+        return sfView::NONE;
+    }
+
     public function executeExcludeFromReport(sfWebRequest $request)
     {
         $contract = $this->getRoute()->getObject();

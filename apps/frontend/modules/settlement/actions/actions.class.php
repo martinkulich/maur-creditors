@@ -37,7 +37,6 @@ class settlementActions extends autoSettlementActions
 
     public function executeIndex(sfWebRequest $request)
     {
-//        $this->executeCheckContracts();
         parent::executeIndex($request);
         $this->sums = $this->getSums();
     }

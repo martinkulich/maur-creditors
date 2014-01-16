@@ -40,13 +40,18 @@ class Settlement extends BaseSettlement
      *
      * @return Settlement
      */
-    public function getPreviousSettlementOfContract()
+    public function getPreviousSettlementOfContract($settlementType = null)
     {
         $previousSettlement = null;
         if ($contract = $this->getContract()) {
             $criteria = new Criteria();
             $criteria->add(SettlementPeer::DATE, $this->getDate(), Criteria::LESS_THAN);
             $criteria->addDescendingOrderByColumn(SettlementPeer::DATE);
+
+            if (null !== $settlementType) {
+                $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $settlementType);
+            }
+
             $criteria->setLimit(1);
 
             $settlements = $contract->getSettlements($criteria);
@@ -56,13 +61,17 @@ class Settlement extends BaseSettlement
         return $previousSettlement;
     }
 
-    public function getNextSettlementsOfContract()
+    public function getNextSettlementsOfContract($settlementType = null)
     {
         $nextSettlements = array();
         if ($contract = $this->getContract()) {
             $criteria = new Criteria();
             $criteria->add(SettlementPeer::DATE, $this->getDate(), Criteria::GREATER_THAN);
             $criteria->addAscendingOrderByColumn(SettlementPeer::DATE);
+
+            if (null !== $settlementType) {
+                $criteria->add(SettlementPeer::SETTLEMENT_TYPE, $settlementType);
+            }
 
             $nextSettlements = $contract->getSettlements($criteria);
         }
@@ -72,7 +81,8 @@ class Settlement extends BaseSettlement
 
     public function getUnsettled($onlyPositive = true)
     {
-        $unsettled = round($this->getInterest() - $this->getPaid() - $this->getCapitalized(), 2);
+        $unsettled = $this->getInterest() - $this->getPaid() - $this->getCapitalized();
+
         return $unsettled > 0 ? $unsettled : ($onlyPositive ? 0 : $unsettled);
     }
 
@@ -109,8 +119,7 @@ class Settlement extends BaseSettlement
     public function getPaid()
     {
         $paid = 0;
-        foreach($this->getAllocations() as $allocation)
-        {
+        foreach ($this->getAllocations() as $allocation) {
             $paid += $allocation->getPaid();
         }
 
@@ -120,8 +129,7 @@ class Settlement extends BaseSettlement
     public function getBalanceReduction()
     {
         $balanceReduction = 0;
-        foreach($this->getAllocations() as $allocation)
-        {
+        foreach ($this->getAllocations() as $allocation) {
             $balanceReduction += $allocation->getBalanceReduction();
         }
 
@@ -135,10 +143,8 @@ class Settlement extends BaseSettlement
 
     public function getBalanceAfterSettlement()
     {
-        return $this->getBalance()+$this->getCapitalized()-$this->getBalanceReduction();
+        return $this->getBalance() + $this->getCapitalized() - $this->getBalanceReduction();
     }
-
-
 
 
 }

@@ -77,6 +77,18 @@ class ContractService
                 $settlement->setInterest($this->getInterestForSettlement($settlement));
             }
 
+            if ($contract->getCapitalize() && SettlementPeer::IN_PERIOD === $settlement->getSettlementType()) {
+
+                $capitalize = $settlement->getInterest();
+                $capitalize -= $settlement->getPaid();
+                if ($previousSettlement = $settlement->getPreviousSettlementOfContract()) {
+
+                    $capitalize += $contract->getUnsettled(new \DateTime($previousSettlement->getDate()));
+                }
+
+                $settlement->setCapitalized($capitalize);
+            }
+
             $settlement->save();
             $settlement->reload();
         }
@@ -133,7 +145,7 @@ class ContractService
         }
 
         foreach ($contract->getSettlementsJoinPayment() as $balanceIncreaseSettlement) {
-            if ($balanceIncreaseSettlement->getPayment() && ($balanceIncreaseSettlement->getDate() != $balanceIncreaseSettlement->getPayment()->getDate() || $balanceIncreaseSettlement->getPayment()->getPaymentType() != PaymentService::BALANCE_INCREASE )) {
+            if ($balanceIncreaseSettlement->getPayment() && ($balanceIncreaseSettlement->getDate() != $balanceIncreaseSettlement->getPayment()->getDate() || $balanceIncreaseSettlement->getPayment()->getPaymentType() != PaymentService::BALANCE_INCREASE)) {
                 $balanceIncreaseSettlement->setPayment(null);
                 $balanceIncreaseSettlement->save();
             }
@@ -192,18 +204,8 @@ class ContractService
         $settlement->setInterest($this->getInterestForSettlement($settlement));
         $settlement->setSettlementType($settlementType);
 
-        if ($contract->getCapitalize() && !in_array($settlementType, array(SettlementPeer::END_OF_YEAR, SettlementPeer::MANUAL))) {
-            $unsettled = $settlement->getUnsettled();
-            if($previousSettlement = $settlement->getPreviousSettlementOfContract())
-            {
-                if(SettlementPeer::END_OF_YEAR === $previousSettlement->getSettlementType())
-                {
-                    $unsettled += $settlement->getUnsettled();
-                }
-            }
-            $settlement->setCapitalized($unsettled);
-        }
         $settlement->save();
+        $settlement->reload();
         $contract->addSettlement($settlement);
         $contract->reload();
 
@@ -277,7 +279,9 @@ class ContractService
         } else {
             $balance = $contract->getAmount();
         }
-        return $balance;
+
+        //Round becouse in db is scale 2
+        return round($balance, 2);
     }
 
     public function getInterestForSettlement(Settlement $settlement)
@@ -300,7 +304,8 @@ class ContractService
                 $interest -= $settlement->getInterest();
             }
         }
-        return $interest;
+        //Round becouse in db is scale 2
+        return round($interest, 2);
     }
 
     public function getDaysDiff(DateTime $dateFrom, DateTime $dateTo)
