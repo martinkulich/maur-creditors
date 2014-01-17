@@ -35,6 +35,7 @@
     <column name="capitalize" phpName="Capitalize" type="BOOLEAN" required="true" defaultValue="false"/>
     <column name="contract_type_id" phpName="ContractTypeId" type="INTEGER" required="true"/>
     <column name="document" phpName="Document" type="VARCHAR" required="false"/>
+    <column name="debtor_id" phpName="DebtorId" type="INTEGER" required="true"/>
     <foreign-key foreignTable="contract_type" name="contract_contract_type_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="contract_type_id" foreign="id"/>
     </foreign-key>
@@ -43,6 +44,9 @@
     </foreign-key>
     <foreign-key foreignTable="currency" name="contract_currency_code_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="currency_code" foreign="code"/>
+    </foreign-key>
+    <foreign-key foreignTable="creditor" name="contract_debtor_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
+      <reference local="debtor_id" foreign="id"/>
     </foreign-key>
   </table>
   <table name="contract_excluded_report" phpName="ContractExcludedReport">
@@ -61,7 +65,7 @@
   </table>
   <table name="creditor" phpName="Creditor">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="creditor_type_code" phpName="CreditorTypeCode" type="VARCHAR" required="true"/>
+    <column name="subject_type_code" phpName="SubjectTypeCode" type="VARCHAR" required="true"/>
     <column name="identification_number" phpName="IdentificationNumber" type="VARCHAR" required="true"/>
     <column name="firstname" phpName="Firstname" type="VARCHAR" required="false"/>
     <column name="lastname" phpName="Lastname" type="VARCHAR" required="true"/>
