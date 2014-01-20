@@ -9,6 +9,8 @@ class RegulationReport extends ParentReport
             SELECT 
             creditor_fullname,
             creditor_id,
+            debtor_fullname,
+            debtor_id,
             contract_name,
             r.contract_id,
             regulation_year,
@@ -33,6 +35,8 @@ class RegulationReport extends ParentReport
             GROUP BY 
             creditor_id,
             creditor_fullname,
+            debtor_id,
+            debtor_fullname,
             contract_name,
             r.contract_id,
             regulation_year,
@@ -59,6 +63,10 @@ class RegulationReport extends ParentReport
             $conditions[] = ' creditor_id = ' . $creditorId;
         }
 
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $conditions[] = ' debtor_id = ' . $debtorId;
+        }
+
         if ($contractId = $this->getFilter('contract_id')) {
             $conditions[] = ' r.contract_id = ' . $contractId;
         }
@@ -75,6 +83,7 @@ class RegulationReport extends ParentReport
     public function getColumns()
     {
         return array(
+            'debtor_fullname',
             'creditor_fullname',
             'contract_name',
             'regulation_year',

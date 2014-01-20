@@ -1,27 +1,27 @@
 <?php
 
-require_once dirname(__FILE__) . '/../lib/creditorGeneratorConfiguration.class.php';
-require_once dirname(__FILE__) . '/../lib/creditorGeneratorHelper.class.php';
+require_once dirname(__FILE__) . '/../lib/subjectGeneratorConfiguration.class.php';
+require_once dirname(__FILE__) . '/../lib/subjectGeneratorHelper.class.php';
 
 /**
- * creditor actions.
+ * subject actions.
  *
  * @package    rezervuj
- * @subpackage creditor
+ * @subpackage subject
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 12474 2008-10-31 10:41:27Z fabien $
  */
-class creditorActions extends autoCreditorActions
+class subjectActions extends autoSubjectActions
 {
 
     public function executePaidDetail(sfWebRequest $request)
     {
-        $this->creditor = $this->getRoute()->getObject();
-        $this->forward404Unless($this->creditor);
+        $this->subject = $this->getRoute()->getObject();
+        $this->forward404Unless($this->subject);
 
         $criteria = new Criteria();
         $criteria->addAscendingOrderByColumn(OutgoingPaymentPeer::DATE);
-        $criteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->creditor->getId());
+        $criteria->add(OutgoingPaymentPeer::CREDITOR_ID, $this->subject->getId());
 
         $filters = $request->getParameter('filter');
 
@@ -54,17 +54,17 @@ class creditorActions extends autoCreditorActions
 
     public function executeGiftList(sfWebRequest $request)
     {
-        $this->creditor = $this->getRoute()->getObject();
-        $this->forward404Unless($this->creditor);
+        $this->subject = $this->getRoute()->getObject();
+        $this->forward404Unless($this->subject);
     }
 
     public function executeAddGift(sfWebRequest $request)
     {
-        $this->creditor = $this->getRoute()->getObject();
-        $this->forward404Unless($this->creditor);
+        $this->subject = $this->getRoute()->getObject();
+        $this->forward404Unless($this->subject);
 
         $this->gift = new Gift();
-        $this->gift->setCreditor($this->creditor);
+        $this->gift->setSubject($this->subject);
         $this->form = new CreditorGiftForm($this->gift);
 
         if ($request->isMethod(sfWebRequest::POST)) {

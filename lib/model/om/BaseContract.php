@@ -110,19 +110,30 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	protected $document;
 
 	/**
+	 * The value for the debtor_id field.
+	 * @var        int
+	 */
+	protected $debtor_id;
+
+	/**
 	 * @var        ContractType
 	 */
 	protected $aContractType;
 
 	/**
-	 * @var        Creditor
+	 * @var        Subject
 	 */
-	protected $aCreditor;
+	protected $aSubjectRelatedByCreditorId;
 
 	/**
 	 * @var        Currency
 	 */
 	protected $aCurrency;
+
+	/**
+	 * @var        Subject
+	 */
+	protected $aSubjectRelatedByDebtorId;
 
 	/**
 	 * @var        array ContractExcludedReport[] Collection to store aggregation of ContractExcludedReport objects.
@@ -446,6 +457,16 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [debtor_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getDebtorId()
+	{
+		return $this->debtor_id;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -482,8 +503,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = ContractPeer::CREDITOR_ID;
 		}
 
-		if ($this->aCreditor !== null && $this->aCreditor->getId() !== $v) {
-			$this->aCreditor = null;
+		if ($this->aSubjectRelatedByCreditorId !== null && $this->aSubjectRelatedByCreditorId->getId() !== $v) {
+			$this->aSubjectRelatedByCreditorId = null;
 		}
 
 		return $this;
@@ -874,6 +895,30 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	} // setDocument()
 
 	/**
+	 * Set the value of [debtor_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Contract The current object (for fluent API support)
+	 */
+	public function setDebtorId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->debtor_id !== $v) {
+			$this->debtor_id = $v;
+			$this->modifiedColumns[] = ContractPeer::DEBTOR_ID;
+		}
+
+		if ($this->aSubjectRelatedByDebtorId !== null && $this->aSubjectRelatedByDebtorId->getId() !== $v) {
+			$this->aSubjectRelatedByDebtorId = null;
+		}
+
+		return $this;
+	} // setDebtorId()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -924,6 +969,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->capitalize = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
 			$this->contract_type_id = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
 			$this->document = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->debtor_id = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -933,7 +979,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 16; // 16 = ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Contract object", $e);
@@ -956,14 +1002,17 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aCreditor !== null && $this->creditor_id !== $this->aCreditor->getId()) {
-			$this->aCreditor = null;
+		if ($this->aSubjectRelatedByCreditorId !== null && $this->creditor_id !== $this->aSubjectRelatedByCreditorId->getId()) {
+			$this->aSubjectRelatedByCreditorId = null;
 		}
 		if ($this->aCurrency !== null && $this->currency_code !== $this->aCurrency->getCode()) {
 			$this->aCurrency = null;
 		}
 		if ($this->aContractType !== null && $this->contract_type_id !== $this->aContractType->getId()) {
 			$this->aContractType = null;
+		}
+		if ($this->aSubjectRelatedByDebtorId !== null && $this->debtor_id !== $this->aSubjectRelatedByDebtorId->getId()) {
+			$this->aSubjectRelatedByDebtorId = null;
 		}
 	} // ensureConsistency
 
@@ -1005,8 +1054,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aContractType = null;
-			$this->aCreditor = null;
+			$this->aSubjectRelatedByCreditorId = null;
 			$this->aCurrency = null;
+			$this->aSubjectRelatedByDebtorId = null;
 			$this->collContractExcludedReports = null;
 			$this->lastContractExcludedReportCriteria = null;
 
@@ -1181,11 +1231,11 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				$this->setContractType($this->aContractType);
 			}
 
-			if ($this->aCreditor !== null) {
-				if ($this->aCreditor->isModified() || $this->aCreditor->isNew()) {
-					$affectedRows += $this->aCreditor->save($con);
+			if ($this->aSubjectRelatedByCreditorId !== null) {
+				if ($this->aSubjectRelatedByCreditorId->isModified() || $this->aSubjectRelatedByCreditorId->isNew()) {
+					$affectedRows += $this->aSubjectRelatedByCreditorId->save($con);
 				}
-				$this->setCreditor($this->aCreditor);
+				$this->setSubjectRelatedByCreditorId($this->aSubjectRelatedByCreditorId);
 			}
 
 			if ($this->aCurrency !== null) {
@@ -1193,6 +1243,13 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 					$affectedRows += $this->aCurrency->save($con);
 				}
 				$this->setCurrency($this->aCurrency);
+			}
+
+			if ($this->aSubjectRelatedByDebtorId !== null) {
+				if ($this->aSubjectRelatedByDebtorId->isModified() || $this->aSubjectRelatedByDebtorId->isNew()) {
+					$affectedRows += $this->aSubjectRelatedByDebtorId->save($con);
+				}
+				$this->setSubjectRelatedByDebtorId($this->aSubjectRelatedByDebtorId);
 			}
 
 			if ($this->isNew() ) {
@@ -1326,15 +1383,21 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aCreditor !== null) {
-				if (!$this->aCreditor->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aCreditor->getValidationFailures());
+			if ($this->aSubjectRelatedByCreditorId !== null) {
+				if (!$this->aSubjectRelatedByCreditorId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aSubjectRelatedByCreditorId->getValidationFailures());
 				}
 			}
 
 			if ($this->aCurrency !== null) {
 				if (!$this->aCurrency->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aCurrency->getValidationFailures());
+				}
+			}
+
+			if ($this->aSubjectRelatedByDebtorId !== null) {
+				if (!$this->aSubjectRelatedByDebtorId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aSubjectRelatedByDebtorId->getValidationFailures());
 				}
 			}
 
@@ -1454,6 +1517,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 14:
 				return $this->getDocument();
 				break;
+			case 15:
+				return $this->getDebtorId();
+				break;
 			default:
 				return null;
 				break;
@@ -1490,6 +1556,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$keys[12] => $this->getCapitalize(),
 			$keys[13] => $this->getContractTypeId(),
 			$keys[14] => $this->getDocument(),
+			$keys[15] => $this->getDebtorId(),
 		);
 		return $result;
 	}
@@ -1566,6 +1633,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			case 14:
 				$this->setDocument($value);
 				break;
+			case 15:
+				$this->setDebtorId($value);
+				break;
 		} // switch()
 	}
 
@@ -1605,6 +1675,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setCapitalize($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setContractTypeId($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setDocument($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDebtorId($arr[$keys[15]]);
 	}
 
 	/**
@@ -1631,6 +1702,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ContractPeer::CAPITALIZE)) $criteria->add(ContractPeer::CAPITALIZE, $this->capitalize);
 		if ($this->isColumnModified(ContractPeer::CONTRACT_TYPE_ID)) $criteria->add(ContractPeer::CONTRACT_TYPE_ID, $this->contract_type_id);
 		if ($this->isColumnModified(ContractPeer::DOCUMENT)) $criteria->add(ContractPeer::DOCUMENT, $this->document);
+		if ($this->isColumnModified(ContractPeer::DEBTOR_ID)) $criteria->add(ContractPeer::DEBTOR_ID, $this->debtor_id);
 
 		return $criteria;
 	}
@@ -1712,6 +1784,8 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$copyObj->setContractTypeId($this->contract_type_id);
 
 		$copyObj->setDocument($this->document);
+
+		$copyObj->setDebtorId($this->debtor_id);
 
 
 		if ($deepCopy) {
@@ -1840,13 +1914,13 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a Creditor object.
+	 * Declares an association between this object and a Subject object.
 	 *
-	 * @param      Creditor $v
+	 * @param      Subject $v
 	 * @return     Contract The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setCreditor(Creditor $v = null)
+	public function setSubjectRelatedByCreditorId(Subject $v = null)
 	{
 		if ($v === null) {
 			$this->setCreditorId(NULL);
@@ -1854,12 +1928,12 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$this->setCreditorId($v->getId());
 		}
 
-		$this->aCreditor = $v;
+		$this->aSubjectRelatedByCreditorId = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Creditor object, it will not be re-added.
+		// If this object has already been added to the Subject object, it will not be re-added.
 		if ($v !== null) {
-			$v->addContract($this);
+			$v->addContractRelatedByCreditorId($this);
 		}
 
 		return $this;
@@ -1867,25 +1941,25 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Creditor object
+	 * Get the associated Subject object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Creditor The associated Creditor object.
+	 * @return     Subject The associated Subject object.
 	 * @throws     PropelException
 	 */
-	public function getCreditor(PropelPDO $con = null)
+	public function getSubjectRelatedByCreditorId(PropelPDO $con = null)
 	{
-		if ($this->aCreditor === null && ($this->creditor_id !== null)) {
-			$this->aCreditor = CreditorPeer::retrieveByPk($this->creditor_id);
+		if ($this->aSubjectRelatedByCreditorId === null && ($this->creditor_id !== null)) {
+			$this->aSubjectRelatedByCreditorId = SubjectPeer::retrieveByPk($this->creditor_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aCreditor->addContracts($this);
+			   $this->aSubjectRelatedByCreditorId->addContractsRelatedByCreditorId($this);
 			 */
 		}
-		return $this->aCreditor;
+		return $this->aSubjectRelatedByCreditorId;
 	}
 
 	/**
@@ -1935,6 +2009,55 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aCurrency;
+	}
+
+	/**
+	 * Declares an association between this object and a Subject object.
+	 *
+	 * @param      Subject $v
+	 * @return     Contract The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setSubjectRelatedByDebtorId(Subject $v = null)
+	{
+		if ($v === null) {
+			$this->setDebtorId(NULL);
+		} else {
+			$this->setDebtorId($v->getId());
+		}
+
+		$this->aSubjectRelatedByDebtorId = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Subject object, it will not be re-added.
+		if ($v !== null) {
+			$v->addContractRelatedByDebtorId($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated Subject object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Subject The associated Subject object.
+	 * @throws     PropelException
+	 */
+	public function getSubjectRelatedByDebtorId(PropelPDO $con = null)
+	{
+		if ($this->aSubjectRelatedByDebtorId === null && ($this->debtor_id !== null)) {
+			$this->aSubjectRelatedByDebtorId = SubjectPeer::retrieveByPk($this->debtor_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aSubjectRelatedByDebtorId->addContractsRelatedByDebtorId($this);
+			 */
+		}
+		return $this->aSubjectRelatedByDebtorId;
 	}
 
 	/**
@@ -2706,7 +2829,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in Contract.
 	 */
-	public function getRegulationsJoinCreditor($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getRegulationsJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(ContractPeer::DATABASE_NAME);
@@ -2723,7 +2846,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 
 				$criteria->add(RegulationPeer::CONTRACT_ID, $this->id);
 
-				$this->collRegulations = RegulationPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
+				$this->collRegulations = RegulationPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -2733,7 +2856,7 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 			$criteria->add(RegulationPeer::CONTRACT_ID, $this->id);
 
 			if (!isset($this->lastRegulationCriteria) || !$this->lastRegulationCriteria->equals($criteria)) {
-				$this->collRegulations = RegulationPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
+				$this->collRegulations = RegulationPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastRegulationCriteria = $criteria;
@@ -2827,8 +2950,9 @@ abstract class BaseContract extends BaseObject  implements Persistent {
 		$this->collSettlements = null;
 		$this->collRegulations = null;
 			$this->aContractType = null;
-			$this->aCreditor = null;
+			$this->aSubjectRelatedByCreditorId = null;
 			$this->aCurrency = null;
+			$this->aSubjectRelatedByDebtorId = null;
 	}
 
 	// symfony_behaviors behavior

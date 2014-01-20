@@ -38,7 +38,7 @@ class GiftTableMap extends TableMap {
 		$this->setPrimaryKeyMethodInfo('gift_id_seq');
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'creditor', 'ID', true, null, null);
+		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'subject', 'ID', true, null, null);
 		$this->addColumn('NAME', 'Name', 'VARCHAR', true, 255, null);
 		$this->addColumn('DATE', 'Date', 'DATE', true, null, null);
 		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
@@ -50,7 +50,7 @@ class GiftTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Creditor', 'Creditor', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('Subject', 'Subject', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 
 	/**

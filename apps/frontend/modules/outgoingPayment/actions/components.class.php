@@ -15,7 +15,7 @@ class outgoingPaymentComponents extends sfComponents
         $formClass = sfInflector::humanize($this->formName . 'Form');
         if (class_exists($formClass)) {
             if ($this->formName == 'allocation') {
-                $creditor = CreditorPeer::retrieveByPK($request->getParameter('creditor_id'));
+                $creditor = SubjectPeer::retrieveByPK($request->getParameter('creditor_id'));
                 $outgoingPayment = OutgoingPaymentPeer::retrieveByPK($this->outgoingPaymentId);
                 $criteria = ServiceContainer::getAllocationService()->getAllocableOutgoingPaymentsCriteria($creditor, $outgoingPayment);
 

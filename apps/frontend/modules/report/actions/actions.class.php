@@ -131,7 +131,7 @@ class reportActions extends sfActions
                     break;
                 case 'creditor_id':
                     if (!isset($filters[$filterKey])) {
-                        if ($firstCreditor = CreditorPeer::doSelectOne(new Criteria())) {
+                        if ($firstCreditor = SubjectPeer::doSelectOne(new Criteria())) {
                             $filters[$filterKey] = $firstCreditor->getId();
                             $changed = true;
                         }

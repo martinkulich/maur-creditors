@@ -1,12 +1,12 @@
 <?php
 
-require_once 'lib/model/om/BaseCreditorPeer.php';
+require_once 'lib/model/om/BaseSubjectPeer.php';
 
 
 /**
- * Skeleton subclass for performing query and update operations on the 'creditor' table.
+ * Skeleton subclass for performing query and update operations on the 'subject' table.
  *
- *
+ * 
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -14,6 +14,6 @@ require_once 'lib/model/om/BaseCreditorPeer.php';
  *
  * @package    lib.model
  */
-class CreditorPeer extends BaseCreditorPeer {
+class SubjectPeer extends BaseSubjectPeer {
 
-} // CreditorPeer
+} // SubjectPeer

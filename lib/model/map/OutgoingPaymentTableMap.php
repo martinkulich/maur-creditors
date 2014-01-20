@@ -43,7 +43,7 @@ class OutgoingPaymentTableMap extends TableMap {
 		$this->addColumn('DATE', 'Date', 'DATE', true, null, null);
 		$this->addColumn('NOTE', 'Note', 'LONGVARCHAR', false, null, null);
 		$this->addForeignKey('CURRENCY_CODE', 'CurrencyCode', 'CHAR', 'currency', 'CODE', true, 3, null);
-		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'creditor', 'ID', true, null, null);
+		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'subject', 'ID', true, null, null);
 		$this->addColumn('CASH', 'Cash', 'BOOLEAN', false, null, null);
 		$this->addColumn('RECEIVER_BANK_ACCOUNT', 'ReceiverBankAccount', 'VARCHAR', false, 255, null);
 		$this->addColumn('REFUNDATION', 'Refundation', 'NUMERIC', false, 15, null);
@@ -55,7 +55,7 @@ class OutgoingPaymentTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Creditor', 'Creditor', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Subject', 'Subject', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Currency', 'Currency', RelationMap::MANY_TO_ONE, array('currency_code' => 'code', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('BankAccount', 'BankAccount', RelationMap::MANY_TO_ONE, array('bank_account_id' => 'id', ), 'SET NULL', 'CASCADE');
     $this->addRelation('Allocation', 'Allocation', RelationMap::ONE_TO_MANY, array('id' => 'outgoing_payment_id', ), 'CASCADE', 'CASCADE');

@@ -22,7 +22,7 @@
         <foreign-key foreignTable="contract" name="regulation_contract" onDelete="RESTRICT" onUpdate="CASCADE">
             <reference local="contract_id" foreign="id"/>
         </foreign-key>
-        <foreign-key foreignTable="creditor" name="regulation_creditor" onDelete="RESTRICT" onUpdate="CASCADE">
+        <foreign-key foreignTable="subject" name="regulation_creditor" onDelete="RESTRICT" onUpdate="CASCADE">
             <reference local="creditor_id" foreign="id"/>
         </foreign-key>
         <foreign-key foreignTable="regulation_year" name="regulation_regulation_year" onDelete="RESTRICT" onUpdate="CASCADE">

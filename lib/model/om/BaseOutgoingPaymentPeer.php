@@ -442,7 +442,7 @@ abstract class BaseOutgoingPaymentPeer {
 	}
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related Subject table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -450,7 +450,7 @@ abstract class BaseOutgoingPaymentPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinSubject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -477,7 +477,7 @@ abstract class BaseOutgoingPaymentPeer {
 			$con = Propel::getConnection(OutgoingPaymentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -610,7 +610,7 @@ abstract class BaseOutgoingPaymentPeer {
 
 
 	/**
-	 * Selects a collection of OutgoingPayment objects pre-filled with their Creditor objects.
+	 * Selects a collection of OutgoingPayment objects pre-filled with their Subject objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -618,7 +618,7 @@ abstract class BaseOutgoingPaymentPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinSubject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -629,9 +629,9 @@ abstract class BaseOutgoingPaymentPeer {
 
 		OutgoingPaymentPeer::addSelectColumns($criteria);
 		$startcol = (OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS);
-		CreditorPeer::addSelectColumns($criteria);
+		SubjectPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -657,19 +657,19 @@ abstract class BaseOutgoingPaymentPeer {
 				OutgoingPaymentPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = CreditorPeer::getInstanceFromPool($key2);
+				$obj2 = SubjectPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (OutgoingPayment) to $obj2 (Creditor)
+				// Add the $obj1 (OutgoingPayment) to $obj2 (Subject)
 				$obj2->addOutgoingPayment($obj1);
 
 			} // if joined row was not null
@@ -861,7 +861,7 @@ abstract class BaseOutgoingPaymentPeer {
 			$con = Propel::getConnection(OutgoingPaymentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(OutgoingPaymentPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
 
@@ -906,8 +906,8 @@ abstract class BaseOutgoingPaymentPeer {
 		OutgoingPaymentPeer::addSelectColumns($criteria);
 		$startcol2 = (OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		CurrencyPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
@@ -915,7 +915,7 @@ abstract class BaseOutgoingPaymentPeer {
 		BankAccountPeer::addSelectColumns($criteria);
 		$startcol5 = $startcol4 + (BankAccountPeer::NUM_COLUMNS - BankAccountPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(OutgoingPaymentPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
 
@@ -944,21 +944,21 @@ abstract class BaseOutgoingPaymentPeer {
 				OutgoingPaymentPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-			// Add objects for joined Creditor rows
+			// Add objects for joined Subject rows
 
-			$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = CreditorPeer::getInstanceFromPool($key2);
+				$obj2 = SubjectPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (OutgoingPayment) to the collection in $obj2 (Creditor)
+				// Add the $obj1 (OutgoingPayment) to the collection in $obj2 (Subject)
 				$obj2->addOutgoingPayment($obj1);
 			} // if joined row not null
 
@@ -1006,7 +1006,7 @@ abstract class BaseOutgoingPaymentPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related Subject table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1014,7 +1014,7 @@ abstract class BaseOutgoingPaymentPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptSubject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -1099,7 +1099,7 @@ abstract class BaseOutgoingPaymentPeer {
 			$con = Propel::getConnection(OutgoingPaymentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(OutgoingPaymentPeer::BANK_ACCOUNT_ID, BankAccountPeer::ID, $join_behavior);
 
@@ -1157,7 +1157,7 @@ abstract class BaseOutgoingPaymentPeer {
 			$con = Propel::getConnection(OutgoingPaymentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(OutgoingPaymentPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
 
@@ -1180,7 +1180,7 @@ abstract class BaseOutgoingPaymentPeer {
 
 
 	/**
-	 * Selects a collection of OutgoingPayment objects pre-filled with all related objects except Creditor.
+	 * Selects a collection of OutgoingPayment objects pre-filled with all related objects except Subject.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1189,7 +1189,7 @@ abstract class BaseOutgoingPaymentPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptSubject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1306,13 +1306,13 @@ abstract class BaseOutgoingPaymentPeer {
 		OutgoingPaymentPeer::addSelectColumns($criteria);
 		$startcol2 = (OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		BankAccountPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (BankAccountPeer::NUM_COLUMNS - BankAccountPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(OutgoingPaymentPeer::BANK_ACCOUNT_ID, BankAccountPeer::ID, $join_behavior);
 
@@ -1340,21 +1340,21 @@ abstract class BaseOutgoingPaymentPeer {
 				OutgoingPaymentPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Subject rows
 
-				$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = CreditorPeer::getInstanceFromPool($key2);
+					$obj2 = SubjectPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (OutgoingPayment) to the collection in $obj2 (Creditor)
+				// Add the $obj1 (OutgoingPayment) to the collection in $obj2 (Subject)
 				$obj2->addOutgoingPayment($obj1);
 
 			} // if joined row is not null
@@ -1409,13 +1409,13 @@ abstract class BaseOutgoingPaymentPeer {
 		OutgoingPaymentPeer::addSelectColumns($criteria);
 		$startcol2 = (OutgoingPaymentPeer::NUM_COLUMNS - OutgoingPaymentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		CurrencyPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(OutgoingPaymentPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(OutgoingPaymentPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
 
@@ -1443,21 +1443,21 @@ abstract class BaseOutgoingPaymentPeer {
 				OutgoingPaymentPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Subject rows
 
-				$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = CreditorPeer::getInstanceFromPool($key2);
+					$obj2 = SubjectPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (OutgoingPayment) to the collection in $obj2 (Creditor)
+				// Add the $obj1 (OutgoingPayment) to the collection in $obj2 (Subject)
 				$obj2->addOutgoingPayment($obj1);
 
 			} // if joined row is not null

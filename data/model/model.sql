@@ -273,7 +273,7 @@ ALTER SEQUENCE contract_id_seq OWNED BY contract.id;
 
 CREATE TABLE creditor (
     id integer NOT NULL,
-    creditor_type_code character varying NOT NULL,
+    subject_type_code character varying NOT NULL,
     identification_number character varying NOT NULL,
     firstname character varying NOT NULL,
     lastname character varying NOT NULL,

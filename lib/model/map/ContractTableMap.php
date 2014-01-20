@@ -38,7 +38,7 @@ class ContractTableMap extends TableMap {
 		$this->setPrimaryKeyMethodInfo('contract_id_seq');
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'creditor', 'ID', true, null, null);
+		$this->addForeignKey('CREDITOR_ID', 'CreditorId', 'INTEGER', 'subject', 'ID', true, null, null);
 		$this->addColumn('CREATED_AT', 'CreatedAt', 'DATE', true, null, null);
 		$this->addColumn('ACTIVATED_AT', 'ActivatedAt', 'DATE', false, null, null);
 		$this->addColumn('PERIOD', 'Period', 'INTEGER', true, null, null);
@@ -52,6 +52,7 @@ class ContractTableMap extends TableMap {
 		$this->addColumn('CAPITALIZE', 'Capitalize', 'BOOLEAN', true, null, false);
 		$this->addForeignKey('CONTRACT_TYPE_ID', 'ContractTypeId', 'INTEGER', 'contract_type', 'ID', true, null, null);
 		$this->addColumn('DOCUMENT', 'Document', 'VARCHAR', false, 255, null);
+		$this->addForeignKey('DEBTOR_ID', 'DebtorId', 'INTEGER', 'subject', 'ID', true, null, null);
 		// validators
 	} // initialize()
 
@@ -61,8 +62,9 @@ class ContractTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('ContractType', 'ContractType', RelationMap::MANY_TO_ONE, array('contract_type_id' => 'id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Creditor', 'Creditor', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('SubjectRelatedByCreditorId', 'Subject', RelationMap::MANY_TO_ONE, array('creditor_id' => 'id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Currency', 'Currency', RelationMap::MANY_TO_ONE, array('currency_code' => 'code', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('SubjectRelatedByDebtorId', 'Subject', RelationMap::MANY_TO_ONE, array('debtor_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ContractExcludedReport', 'ContractExcludedReport', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Payment', 'Payment', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Settlement', 'Settlement', RelationMap::ONE_TO_MANY, array('id' => 'contract_id', ), 'CASCADE', 'CASCADE');

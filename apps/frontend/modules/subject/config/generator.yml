@@ -1,13 +1,13 @@
 generator:
   class: sfPropelGenerator
   param:
-    model_class:           creditor
+    model_class:           subject
     theme:                 bootstrap
     non_verbose_templates: true
     with_show:             false
-    singular:              creditor
-    plural:                creditors
-    route_prefix:          creditor
+    singular:              subject
+    plural:                subjects
+    route_prefix:          subject
     with_propel_route:     1
     actions_base_class:    sfActions
 
@@ -18,7 +18,7 @@ generator:
           date_format: D
       list:
         batch_actions: []
-        display: [creditor_type, firstname, lastname, birth_date, email, phone, bank_account, city, street, zip]
+        display: [subject_type, firstname, lastname, birth_date, email, phone, bank_account, city, street, zip]
         actions:
           _new: ~
           filters: ~

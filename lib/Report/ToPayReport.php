@@ -19,7 +19,8 @@ class ToPayReport extends ParentReport
                 (SELECT COALESCE(id, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_id,
                 contract_unpaid_regular(co.id, '%date_to%'::date, true)::integer as to_pay
             FROM contract co
-            JOIN creditor cr ON cr.id = co.creditor_id
+            JOIN subject cr ON cr.id = co.creditor_id
+            JOIN subject de ON de.id = co.debtor_id
             JOIN contract_type ct ON ct.id = co.contract_type_id
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'to_pay' AND cer.contract_id = co.id) = 0
             AND contract_unpaid_regular(co.id,  '%date_to%'::date, true)::integer <> 0
@@ -90,14 +91,16 @@ class ToPayReport extends ParentReport
     
     public function getWhere()
     {
-        $where = '';
+        $where = 'AND '.$this->getDebtorCondition();
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $where = ' AND cr.id = ' . $creditorId;
+            $where .= ' AND cr.id = ' . $creditorId;
         }
 
         if ($contractTypeId = $this->getFilter('contract_type_id')) {
             $where .= ' AND co.contract_type_id = ' . $contractTypeId;
         }
+        
+
         return $where;
     }
     

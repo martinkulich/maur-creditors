@@ -890,7 +890,7 @@ abstract class BaseRegulationYear extends BaseObject  implements Persistent {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in RegulationYear.
 	 */
-	public function getRegulationsJoinCreditor($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getRegulationsJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(RegulationYearPeer::DATABASE_NAME);
@@ -907,7 +907,7 @@ abstract class BaseRegulationYear extends BaseObject  implements Persistent {
 
 				$criteria->add(RegulationPeer::REGULATION_YEAR, $this->id);
 
-				$this->collRegulations = RegulationPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
+				$this->collRegulations = RegulationPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -917,7 +917,7 @@ abstract class BaseRegulationYear extends BaseObject  implements Persistent {
 			$criteria->add(RegulationPeer::REGULATION_YEAR, $this->id);
 
 			if (!isset($this->lastRegulationCriteria) || !$this->lastRegulationCriteria->equals($criteria)) {
-				$this->collRegulations = RegulationPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
+				$this->collRegulations = RegulationPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastRegulationCriteria = $criteria;

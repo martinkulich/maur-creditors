@@ -2,5 +2,5 @@
 
 <?php if(array_key_exists('year', $filters)){ ?>
     <br />
-    <?php include_component('creditor','paidDetail', array( 'filters'=>$filters))?>
+    <?php include_component('subject','paidDetail', array( 'filters'=>$filters))?>
 <?php } ?>

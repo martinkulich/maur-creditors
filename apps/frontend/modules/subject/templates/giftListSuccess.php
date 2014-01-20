@@ -2,7 +2,7 @@
 <div class="modal_content">
     <div class="modal-header" >
         <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo $creditor .' - '.__('Gifts') ?></h3>
+        <h3><?php echo $subject .' - '.__('Gifts') ?></h3>
     </div>
     <div class="modal-body">
         <?php include_component('default', 'flashes') ?>
@@ -18,7 +18,7 @@
                     <?php echo __('Note') ?>
                 </th>
             </tr>
-        <?php foreach($creditor->getOrderedGifts() as $gift){ ?>
+        <?php foreach($subject->getOrderedGifts() as $gift){ ?>
             <tr>
                 <td class="text-align-right span2">
                     <?php echo format_date($gift->getDate(), 'D')?>

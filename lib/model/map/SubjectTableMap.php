@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'creditor' table.
+ * This class defines the structure of the 'subject' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class CreditorTableMap extends TableMap {
+class SubjectTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.CreditorTableMap';
+	const CLASS_NAME = 'lib.model.map.SubjectTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,15 +30,15 @@ class CreditorTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('creditor');
-		$this->setPhpName('Creditor');
-		$this->setClassname('Creditor');
+		$this->setName('subject');
+		$this->setPhpName('Subject');
+		$this->setClassname('Subject');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
-		$this->setPrimaryKeyMethodInfo('creditor_id_seq');
+		$this->setPrimaryKeyMethodInfo('subject_id_seq');
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('CREDITOR_TYPE_CODE', 'CreditorTypeCode', 'VARCHAR', true, 255, null);
+		$this->addColumn('SUBJECT_TYPE_CODE', 'SubjectTypeCode', 'VARCHAR', true, 255, null);
 		$this->addColumn('IDENTIFICATION_NUMBER', 'IdentificationNumber', 'VARCHAR', true, 255, null);
 		$this->addColumn('FIRSTNAME', 'Firstname', 'VARCHAR', false, 255, null);
 		$this->addColumn('LASTNAME', 'Lastname', 'VARCHAR', true, 255, null);
@@ -58,7 +58,8 @@ class CreditorTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Contract', 'Contract', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('ContractRelatedByCreditorId', 'Contract', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('ContractRelatedByDebtorId', 'Contract', RelationMap::ONE_TO_MANY, array('id' => 'debtor_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Gift', 'Gift', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('OutgoingPayment', 'OutgoingPayment', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Regulation', 'Regulation', RelationMap::ONE_TO_MANY, array('id' => 'creditor_id', ), 'RESTRICT', 'CASCADE');
@@ -78,4 +79,4 @@ class CreditorTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // CreditorTableMap
+} // SubjectTableMap

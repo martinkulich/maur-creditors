@@ -26,6 +26,15 @@ class OutgoingPayment extends BaseOutgoingPayment
         return sprintf("%s - %s/%s", format_date($this->getDate(), 'dd.MM.yyyy'), my_format_currency($this->getUnallocatedAmount(), $this->getCurrencyCode()), my_format_currency($this->getAmount(), $this->getCurrencyCode()));
     }
 
+    public function getCreditor()
+    {
+        return $this->getSubject();
+    }
+
+    public function setCreditor($creditor)
+    {
+        $this->setSubject($creditor);
+    }
 
     public function getAllocatedAmount()
     {

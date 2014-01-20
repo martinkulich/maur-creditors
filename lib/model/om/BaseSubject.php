@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Base class that represents a row from the 'creditor' table.
+ * Base class that represents a row from the 'subject' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseCreditor extends BaseObject  implements Persistent {
+abstract class BaseSubject extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        CreditorPeer
+	 * @var        SubjectPeer
 	 */
 	protected static $peer;
 
@@ -25,10 +25,10 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the creditor_type_code field.
+	 * The value for the subject_type_code field.
 	 * @var        string
 	 */
-	protected $creditor_type_code;
+	protected $subject_type_code;
 
 	/**
 	 * The value for the identification_number field.
@@ -99,12 +99,22 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	/**
 	 * @var        array Contract[] Collection to store aggregation of Contract objects.
 	 */
-	protected $collContracts;
+	protected $collContractsRelatedByCreditorId;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collContracts.
+	 * @var        Criteria The criteria used to select the current contents of collContractsRelatedByCreditorId.
 	 */
-	private $lastContractCriteria = null;
+	private $lastContractRelatedByCreditorIdCriteria = null;
+
+	/**
+	 * @var        array Contract[] Collection to store aggregation of Contract objects.
+	 */
+	protected $collContractsRelatedByDebtorId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collContractsRelatedByDebtorId.
+	 */
+	private $lastContractRelatedByDebtorIdCriteria = null;
 
 	/**
 	 * @var        array Gift[] Collection to store aggregation of Gift objects.
@@ -152,7 +162,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'CreditorPeer';
+	const PEER = 'SubjectPeer';
 
 	/**
 	 * Get the [id] column value.
@@ -165,13 +175,13 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [creditor_type_code] column value.
+	 * Get the [subject_type_code] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getCreditorTypeCode()
+	public function getSubjectTypeCode()
 	{
-		return $this->creditor_type_code;
+		return $this->subject_type_code;
 	}
 
 	/**
@@ -311,7 +321,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -321,37 +331,37 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = CreditorPeer::ID;
+			$this->modifiedColumns[] = SubjectPeer::ID;
 		}
 
 		return $this;
 	} // setId()
 
 	/**
-	 * Set the value of [creditor_type_code] column.
+	 * Set the value of [subject_type_code] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
-	public function setCreditorTypeCode($v)
+	public function setSubjectTypeCode($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->creditor_type_code !== $v) {
-			$this->creditor_type_code = $v;
-			$this->modifiedColumns[] = CreditorPeer::CREDITOR_TYPE_CODE;
+		if ($this->subject_type_code !== $v) {
+			$this->subject_type_code = $v;
+			$this->modifiedColumns[] = SubjectPeer::SUBJECT_TYPE_CODE;
 		}
 
 		return $this;
-	} // setCreditorTypeCode()
+	} // setSubjectTypeCode()
 
 	/**
 	 * Set the value of [identification_number] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setIdentificationNumber($v)
 	{
@@ -361,7 +371,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->identification_number !== $v) {
 			$this->identification_number = $v;
-			$this->modifiedColumns[] = CreditorPeer::IDENTIFICATION_NUMBER;
+			$this->modifiedColumns[] = SubjectPeer::IDENTIFICATION_NUMBER;
 		}
 
 		return $this;
@@ -371,7 +381,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [firstname] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setFirstname($v)
 	{
@@ -381,7 +391,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->firstname !== $v) {
 			$this->firstname = $v;
-			$this->modifiedColumns[] = CreditorPeer::FIRSTNAME;
+			$this->modifiedColumns[] = SubjectPeer::FIRSTNAME;
 		}
 
 		return $this;
@@ -391,7 +401,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [lastname] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setLastname($v)
 	{
@@ -401,7 +411,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->lastname !== $v) {
 			$this->lastname = $v;
-			$this->modifiedColumns[] = CreditorPeer::LASTNAME;
+			$this->modifiedColumns[] = SubjectPeer::LASTNAME;
 		}
 
 		return $this;
@@ -411,7 +421,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [email] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setEmail($v)
 	{
@@ -421,7 +431,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->email !== $v) {
 			$this->email = $v;
-			$this->modifiedColumns[] = CreditorPeer::EMAIL;
+			$this->modifiedColumns[] = SubjectPeer::EMAIL;
 		}
 
 		return $this;
@@ -431,7 +441,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [phone] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setPhone($v)
 	{
@@ -441,7 +451,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->phone !== $v) {
 			$this->phone = $v;
-			$this->modifiedColumns[] = CreditorPeer::PHONE;
+			$this->modifiedColumns[] = SubjectPeer::PHONE;
 		}
 
 		return $this;
@@ -451,7 +461,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [bank_account] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setBankAccount($v)
 	{
@@ -461,7 +471,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->bank_account !== $v) {
 			$this->bank_account = $v;
-			$this->modifiedColumns[] = CreditorPeer::BANK_ACCOUNT;
+			$this->modifiedColumns[] = SubjectPeer::BANK_ACCOUNT;
 		}
 
 		return $this;
@@ -471,7 +481,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [city] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setCity($v)
 	{
@@ -481,7 +491,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->city !== $v) {
 			$this->city = $v;
-			$this->modifiedColumns[] = CreditorPeer::CITY;
+			$this->modifiedColumns[] = SubjectPeer::CITY;
 		}
 
 		return $this;
@@ -491,7 +501,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [street] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setStreet($v)
 	{
@@ -501,7 +511,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->street !== $v) {
 			$this->street = $v;
-			$this->modifiedColumns[] = CreditorPeer::STREET;
+			$this->modifiedColumns[] = SubjectPeer::STREET;
 		}
 
 		return $this;
@@ -511,7 +521,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [zip] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setZip($v)
 	{
@@ -521,7 +531,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->zip !== $v) {
 			$this->zip = $v;
-			$this->modifiedColumns[] = CreditorPeer::ZIP;
+			$this->modifiedColumns[] = SubjectPeer::ZIP;
 		}
 
 		return $this;
@@ -531,7 +541,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Set the value of [note] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setNote($v)
 	{
@@ -541,7 +551,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($this->note !== $v) {
 			$this->note = $v;
-			$this->modifiedColumns[] = CreditorPeer::NOTE;
+			$this->modifiedColumns[] = SubjectPeer::NOTE;
 		}
 
 		return $this;
@@ -552,7 +562,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
-	 * @return     Creditor The current object (for fluent API support)
+	 * @return     Subject The current object (for fluent API support)
 	 */
 	public function setBirthDate($v)
 	{
@@ -589,7 +599,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 					)
 			{
 				$this->birth_date = ($dt ? $dt->format('Y-m-d\\TH:i:sO') : null);
-				$this->modifiedColumns[] = CreditorPeer::BIRTH_DATE;
+				$this->modifiedColumns[] = SubjectPeer::BIRTH_DATE;
 			}
 		} // if either are not null
 
@@ -629,7 +639,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->creditor_type_code = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->subject_type_code = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->identification_number = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->firstname = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->lastname = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
@@ -650,10 +660,10 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 13; // 13 = CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 13; // 13 = SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Creditor object", $e);
+			throw new PropelException("Error populating Subject object", $e);
 		}
 	}
 
@@ -696,13 +706,13 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CreditorPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SubjectPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = CreditorPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = SubjectPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -712,8 +722,11 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->collContracts = null;
-			$this->lastContractCriteria = null;
+			$this->collContractsRelatedByCreditorId = null;
+			$this->lastContractRelatedByCreditorIdCriteria = null;
+
+			$this->collContractsRelatedByDebtorId = null;
+			$this->lastContractRelatedByDebtorIdCriteria = null;
 
 			$this->collGifts = null;
 			$this->lastGiftCriteria = null;
@@ -743,14 +756,14 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CreditorPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SubjectPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			// symfony_behaviors behavior
-			foreach (sfMixer::getCallables('BaseCreditor:delete:pre') as $callable)
+			foreach (sfMixer::getCallables('BaseSubject:delete:pre') as $callable)
 			{
 			  if (call_user_func($callable, $this, $con))
 			  {
@@ -761,10 +774,10 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			}
 
 			if ($ret) {
-				CreditorPeer::doDelete($this, $con);
+				SubjectPeer::doDelete($this, $con);
 				$this->postDelete($con);
 				// symfony_behaviors behavior
-				foreach (sfMixer::getCallables('BaseCreditor:delete:post') as $callable)
+				foreach (sfMixer::getCallables('BaseSubject:delete:post') as $callable)
 				{
 				  call_user_func($callable, $this, $con);
 				}
@@ -800,7 +813,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(CreditorPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SubjectPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -808,7 +821,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		try {
 			$ret = $this->preSave($con);
 			// symfony_behaviors behavior
-			foreach (sfMixer::getCallables('BaseCreditor:save:pre') as $callable)
+			foreach (sfMixer::getCallables('BaseSubject:save:pre') as $callable)
 			{
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
@@ -832,12 +845,12 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 				}
 				$this->postSave($con);
 				// symfony_behaviors behavior
-				foreach (sfMixer::getCallables('BaseCreditor:save:post') as $callable)
+				foreach (sfMixer::getCallables('BaseSubject:save:post') as $callable)
 				{
 				  call_user_func($callable, $this, $con, $affectedRows);
 				}
 
-				CreditorPeer::addInstanceToPool($this);
+				SubjectPeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -867,13 +880,13 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			$this->alreadyInSave = true;
 
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = CreditorPeer::ID;
+				$this->modifiedColumns[] = SubjectPeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = CreditorPeer::doInsert($this, $con);
+					$pk = SubjectPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -882,14 +895,22 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += CreditorPeer::doUpdate($this, $con);
+					$affectedRows += SubjectPeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
-			if ($this->collContracts !== null) {
-				foreach ($this->collContracts as $referrerFK) {
+			if ($this->collContractsRelatedByCreditorId !== null) {
+				foreach ($this->collContractsRelatedByCreditorId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collContractsRelatedByDebtorId !== null) {
+				foreach ($this->collContractsRelatedByDebtorId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -986,13 +1007,21 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = CreditorPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = SubjectPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
 
-				if ($this->collContracts !== null) {
-					foreach ($this->collContracts as $referrerFK) {
+				if ($this->collContractsRelatedByCreditorId !== null) {
+					foreach ($this->collContractsRelatedByCreditorId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collContractsRelatedByDebtorId !== null) {
+					foreach ($this->collContractsRelatedByDebtorId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1041,7 +1070,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = CreditorPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SubjectPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -1060,7 +1089,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getCreditorTypeCode();
+				return $this->getSubjectTypeCode();
 				break;
 			case 2:
 				return $this->getIdentificationNumber();
@@ -1114,10 +1143,10 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = CreditorPeer::getFieldNames($keyType);
+		$keys = SubjectPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getCreditorTypeCode(),
+			$keys[1] => $this->getSubjectTypeCode(),
 			$keys[2] => $this->getIdentificationNumber(),
 			$keys[3] => $this->getFirstname(),
 			$keys[4] => $this->getLastname(),
@@ -1145,7 +1174,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = CreditorPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SubjectPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -1164,7 +1193,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setCreditorTypeCode($value);
+				$this->setSubjectTypeCode($value);
 				break;
 			case 2:
 				$this->setIdentificationNumber($value);
@@ -1221,10 +1250,10 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = CreditorPeer::getFieldNames($keyType);
+		$keys = SubjectPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setCreditorTypeCode($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setSubjectTypeCode($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setIdentificationNumber($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setFirstname($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setLastname($arr[$keys[4]]);
@@ -1245,21 +1274,21 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+		$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(CreditorPeer::ID)) $criteria->add(CreditorPeer::ID, $this->id);
-		if ($this->isColumnModified(CreditorPeer::CREDITOR_TYPE_CODE)) $criteria->add(CreditorPeer::CREDITOR_TYPE_CODE, $this->creditor_type_code);
-		if ($this->isColumnModified(CreditorPeer::IDENTIFICATION_NUMBER)) $criteria->add(CreditorPeer::IDENTIFICATION_NUMBER, $this->identification_number);
-		if ($this->isColumnModified(CreditorPeer::FIRSTNAME)) $criteria->add(CreditorPeer::FIRSTNAME, $this->firstname);
-		if ($this->isColumnModified(CreditorPeer::LASTNAME)) $criteria->add(CreditorPeer::LASTNAME, $this->lastname);
-		if ($this->isColumnModified(CreditorPeer::EMAIL)) $criteria->add(CreditorPeer::EMAIL, $this->email);
-		if ($this->isColumnModified(CreditorPeer::PHONE)) $criteria->add(CreditorPeer::PHONE, $this->phone);
-		if ($this->isColumnModified(CreditorPeer::BANK_ACCOUNT)) $criteria->add(CreditorPeer::BANK_ACCOUNT, $this->bank_account);
-		if ($this->isColumnModified(CreditorPeer::CITY)) $criteria->add(CreditorPeer::CITY, $this->city);
-		if ($this->isColumnModified(CreditorPeer::STREET)) $criteria->add(CreditorPeer::STREET, $this->street);
-		if ($this->isColumnModified(CreditorPeer::ZIP)) $criteria->add(CreditorPeer::ZIP, $this->zip);
-		if ($this->isColumnModified(CreditorPeer::NOTE)) $criteria->add(CreditorPeer::NOTE, $this->note);
-		if ($this->isColumnModified(CreditorPeer::BIRTH_DATE)) $criteria->add(CreditorPeer::BIRTH_DATE, $this->birth_date);
+		if ($this->isColumnModified(SubjectPeer::ID)) $criteria->add(SubjectPeer::ID, $this->id);
+		if ($this->isColumnModified(SubjectPeer::SUBJECT_TYPE_CODE)) $criteria->add(SubjectPeer::SUBJECT_TYPE_CODE, $this->subject_type_code);
+		if ($this->isColumnModified(SubjectPeer::IDENTIFICATION_NUMBER)) $criteria->add(SubjectPeer::IDENTIFICATION_NUMBER, $this->identification_number);
+		if ($this->isColumnModified(SubjectPeer::FIRSTNAME)) $criteria->add(SubjectPeer::FIRSTNAME, $this->firstname);
+		if ($this->isColumnModified(SubjectPeer::LASTNAME)) $criteria->add(SubjectPeer::LASTNAME, $this->lastname);
+		if ($this->isColumnModified(SubjectPeer::EMAIL)) $criteria->add(SubjectPeer::EMAIL, $this->email);
+		if ($this->isColumnModified(SubjectPeer::PHONE)) $criteria->add(SubjectPeer::PHONE, $this->phone);
+		if ($this->isColumnModified(SubjectPeer::BANK_ACCOUNT)) $criteria->add(SubjectPeer::BANK_ACCOUNT, $this->bank_account);
+		if ($this->isColumnModified(SubjectPeer::CITY)) $criteria->add(SubjectPeer::CITY, $this->city);
+		if ($this->isColumnModified(SubjectPeer::STREET)) $criteria->add(SubjectPeer::STREET, $this->street);
+		if ($this->isColumnModified(SubjectPeer::ZIP)) $criteria->add(SubjectPeer::ZIP, $this->zip);
+		if ($this->isColumnModified(SubjectPeer::NOTE)) $criteria->add(SubjectPeer::NOTE, $this->note);
+		if ($this->isColumnModified(SubjectPeer::BIRTH_DATE)) $criteria->add(SubjectPeer::BIRTH_DATE, $this->birth_date);
 
 		return $criteria;
 	}
@@ -1274,9 +1303,9 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+		$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 
-		$criteria->add(CreditorPeer::ID, $this->id);
+		$criteria->add(SubjectPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -1307,14 +1336,14 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Creditor (or compatible) type.
+	 * @param      object $copyObj An object of Subject (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setCreditorTypeCode($this->creditor_type_code);
+		$copyObj->setSubjectTypeCode($this->subject_type_code);
 
 		$copyObj->setIdentificationNumber($this->identification_number);
 
@@ -1344,9 +1373,15 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
-			foreach ($this->getContracts() as $relObj) {
+			foreach ($this->getContractsRelatedByCreditorId() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addContract($relObj->copy($deepCopy));
+					$copyObj->addContractRelatedByCreditorId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getContractsRelatedByDebtorId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addContractRelatedByDebtorId($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1386,7 +1421,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Creditor Clone of current object.
+	 * @return     Subject Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -1405,50 +1440,50 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     CreditorPeer
+	 * @return     SubjectPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new CreditorPeer();
+			self::$peer = new SubjectPeer();
 		}
 		return self::$peer;
 	}
 
 	/**
-	 * Clears out the collContracts collection (array).
+	 * Clears out the collContractsRelatedByCreditorId collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addContracts()
+	 * @see        addContractsRelatedByCreditorId()
 	 */
-	public function clearContracts()
+	public function clearContractsRelatedByCreditorId()
 	{
-		$this->collContracts = null; // important to set this to NULL since that means it is uninitialized
+		$this->collContractsRelatedByCreditorId = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collContracts collection (array).
+	 * Initializes the collContractsRelatedByCreditorId collection (array).
 	 *
-	 * By default this just sets the collContracts collection to an empty array (like clearcollContracts());
+	 * By default this just sets the collContractsRelatedByCreditorId collection to an empty array (like clearcollContractsRelatedByCreditorId());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initContracts()
+	public function initContractsRelatedByCreditorId()
 	{
-		$this->collContracts = array();
+		$this->collContractsRelatedByCreditorId = array();
 	}
 
 	/**
 	 * Gets an array of Contract objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Creditor has previously been saved, it will retrieve
-	 * related Contracts from storage. If this Creditor is new, it will return
+	 * Otherwise if this Subject has previously been saved, it will retrieve
+	 * related ContractsRelatedByCreditorId from storage. If this Subject is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -1456,25 +1491,25 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * @return     array Contract[]
 	 * @throws     PropelException
 	 */
-	public function getContracts($criteria = null, PropelPDO $con = null)
+	public function getContractsRelatedByCreditorId($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collContracts === null) {
+		if ($this->collContractsRelatedByCreditorId === null) {
 			if ($this->isNew()) {
-			   $this->collContracts = array();
+			   $this->collContractsRelatedByCreditorId = array();
 			} else {
 
 				$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
 				ContractPeer::addSelectColumns($criteria);
-				$this->collContracts = ContractPeer::doSelect($criteria, $con);
+				$this->collContractsRelatedByCreditorId = ContractPeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -1487,13 +1522,13 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 				$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
 				ContractPeer::addSelectColumns($criteria);
-				if (!isset($this->lastContractCriteria) || !$this->lastContractCriteria->equals($criteria)) {
-					$this->collContracts = ContractPeer::doSelect($criteria, $con);
+				if (!isset($this->lastContractRelatedByCreditorIdCriteria) || !$this->lastContractRelatedByCreditorIdCriteria->equals($criteria)) {
+					$this->collContractsRelatedByCreditorId = ContractPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastContractCriteria = $criteria;
-		return $this->collContracts;
+		$this->lastContractRelatedByCreditorIdCriteria = $criteria;
+		return $this->collContractsRelatedByCreditorId;
 	}
 
 	/**
@@ -1505,10 +1540,10 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * @return     int Count of related Contract objects.
 	 * @throws     PropelException
 	 */
-	public function countContracts(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countContractsRelatedByCreditorId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1519,7 +1554,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collContracts === null) {
+		if ($this->collContractsRelatedByCreditorId === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
@@ -1538,13 +1573,13 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 				$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
-				if (!isset($this->lastContractCriteria) || !$this->lastContractCriteria->equals($criteria)) {
+				if (!isset($this->lastContractRelatedByCreditorIdCriteria) || !$this->lastContractRelatedByCreditorIdCriteria->equals($criteria)) {
 					$count = ContractPeer::doCount($criteria, false, $con);
 				} else {
-					$count = count($this->collContracts);
+					$count = count($this->collContractsRelatedByCreditorId);
 				}
 			} else {
-				$count = count($this->collContracts);
+				$count = count($this->collContractsRelatedByCreditorId);
 			}
 		}
 		return $count;
@@ -1558,14 +1593,14 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addContract(Contract $l)
+	public function addContractRelatedByCreditorId(Contract $l)
 	{
-		if ($this->collContracts === null) {
-			$this->initContracts();
+		if ($this->collContractsRelatedByCreditorId === null) {
+			$this->initContractsRelatedByCreditorId();
 		}
-		if (!in_array($l, $this->collContracts, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collContracts, $l);
-			$l->setCreditor($this);
+		if (!in_array($l, $this->collContractsRelatedByCreditorId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collContractsRelatedByCreditorId, $l);
+			$l->setSubjectRelatedByCreditorId($this);
 		}
 	}
 
@@ -1573,32 +1608,32 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Creditor is new, it will return
-	 * an empty collection; or if this Creditor has previously
-	 * been saved, it will retrieve related Contracts from storage.
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
+	 * been saved, it will retrieve related ContractsRelatedByCreditorId from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Creditor.
+	 * actually need in Subject.
 	 */
-	public function getContractsJoinContractType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getContractsRelatedByCreditorIdJoinContractType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collContracts === null) {
+		if ($this->collContractsRelatedByCreditorId === null) {
 			if ($this->isNew()) {
-				$this->collContracts = array();
+				$this->collContractsRelatedByCreditorId = array();
 			} else {
 
 				$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
-				$this->collContracts = ContractPeer::doSelectJoinContractType($criteria, $con, $join_behavior);
+				$this->collContractsRelatedByCreditorId = ContractPeer::doSelectJoinContractType($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -1607,45 +1642,45 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 			$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
-			if (!isset($this->lastContractCriteria) || !$this->lastContractCriteria->equals($criteria)) {
-				$this->collContracts = ContractPeer::doSelectJoinContractType($criteria, $con, $join_behavior);
+			if (!isset($this->lastContractRelatedByCreditorIdCriteria) || !$this->lastContractRelatedByCreditorIdCriteria->equals($criteria)) {
+				$this->collContractsRelatedByCreditorId = ContractPeer::doSelectJoinContractType($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastContractCriteria = $criteria;
+		$this->lastContractRelatedByCreditorIdCriteria = $criteria;
 
-		return $this->collContracts;
+		return $this->collContractsRelatedByCreditorId;
 	}
 
 
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Creditor is new, it will return
-	 * an empty collection; or if this Creditor has previously
-	 * been saved, it will retrieve related Contracts from storage.
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
+	 * been saved, it will retrieve related ContractsRelatedByCreditorId from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Creditor.
+	 * actually need in Subject.
 	 */
-	public function getContractsJoinCurrency($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getContractsRelatedByCreditorIdJoinCurrency($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collContracts === null) {
+		if ($this->collContractsRelatedByCreditorId === null) {
 			if ($this->isNew()) {
-				$this->collContracts = array();
+				$this->collContractsRelatedByCreditorId = array();
 			} else {
 
 				$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
-				$this->collContracts = ContractPeer::doSelectJoinCurrency($criteria, $con, $join_behavior);
+				$this->collContractsRelatedByCreditorId = ContractPeer::doSelectJoinCurrency($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -1654,13 +1689,261 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 
 			$criteria->add(ContractPeer::CREDITOR_ID, $this->id);
 
-			if (!isset($this->lastContractCriteria) || !$this->lastContractCriteria->equals($criteria)) {
-				$this->collContracts = ContractPeer::doSelectJoinCurrency($criteria, $con, $join_behavior);
+			if (!isset($this->lastContractRelatedByCreditorIdCriteria) || !$this->lastContractRelatedByCreditorIdCriteria->equals($criteria)) {
+				$this->collContractsRelatedByCreditorId = ContractPeer::doSelectJoinCurrency($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastContractCriteria = $criteria;
+		$this->lastContractRelatedByCreditorIdCriteria = $criteria;
 
-		return $this->collContracts;
+		return $this->collContractsRelatedByCreditorId;
+	}
+
+	/**
+	 * Clears out the collContractsRelatedByDebtorId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addContractsRelatedByDebtorId()
+	 */
+	public function clearContractsRelatedByDebtorId()
+	{
+		$this->collContractsRelatedByDebtorId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collContractsRelatedByDebtorId collection (array).
+	 *
+	 * By default this just sets the collContractsRelatedByDebtorId collection to an empty array (like clearcollContractsRelatedByDebtorId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initContractsRelatedByDebtorId()
+	{
+		$this->collContractsRelatedByDebtorId = array();
+	}
+
+	/**
+	 * Gets an array of Contract objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Subject has previously been saved, it will retrieve
+	 * related ContractsRelatedByDebtorId from storage. If this Subject is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Contract[]
+	 * @throws     PropelException
+	 */
+	public function getContractsRelatedByDebtorId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collContractsRelatedByDebtorId === null) {
+			if ($this->isNew()) {
+			   $this->collContractsRelatedByDebtorId = array();
+			} else {
+
+				$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+				ContractPeer::addSelectColumns($criteria);
+				$this->collContractsRelatedByDebtorId = ContractPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+				ContractPeer::addSelectColumns($criteria);
+				if (!isset($this->lastContractRelatedByDebtorIdCriteria) || !$this->lastContractRelatedByDebtorIdCriteria->equals($criteria)) {
+					$this->collContractsRelatedByDebtorId = ContractPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastContractRelatedByDebtorIdCriteria = $criteria;
+		return $this->collContractsRelatedByDebtorId;
+	}
+
+	/**
+	 * Returns the number of related Contract objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Contract objects.
+	 * @throws     PropelException
+	 */
+	public function countContractsRelatedByDebtorId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collContractsRelatedByDebtorId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+				$count = ContractPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+				if (!isset($this->lastContractRelatedByDebtorIdCriteria) || !$this->lastContractRelatedByDebtorIdCriteria->equals($criteria)) {
+					$count = ContractPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collContractsRelatedByDebtorId);
+				}
+			} else {
+				$count = count($this->collContractsRelatedByDebtorId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Contract object to this object
+	 * through the Contract foreign key attribute.
+	 *
+	 * @param      Contract $l Contract
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addContractRelatedByDebtorId(Contract $l)
+	{
+		if ($this->collContractsRelatedByDebtorId === null) {
+			$this->initContractsRelatedByDebtorId();
+		}
+		if (!in_array($l, $this->collContractsRelatedByDebtorId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collContractsRelatedByDebtorId, $l);
+			$l->setSubjectRelatedByDebtorId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
+	 * been saved, it will retrieve related ContractsRelatedByDebtorId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Subject.
+	 */
+	public function getContractsRelatedByDebtorIdJoinContractType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collContractsRelatedByDebtorId === null) {
+			if ($this->isNew()) {
+				$this->collContractsRelatedByDebtorId = array();
+			} else {
+
+				$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+				$this->collContractsRelatedByDebtorId = ContractPeer::doSelectJoinContractType($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+			if (!isset($this->lastContractRelatedByDebtorIdCriteria) || !$this->lastContractRelatedByDebtorIdCriteria->equals($criteria)) {
+				$this->collContractsRelatedByDebtorId = ContractPeer::doSelectJoinContractType($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastContractRelatedByDebtorIdCriteria = $criteria;
+
+		return $this->collContractsRelatedByDebtorId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
+	 * been saved, it will retrieve related ContractsRelatedByDebtorId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Subject.
+	 */
+	public function getContractsRelatedByDebtorIdJoinCurrency($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collContractsRelatedByDebtorId === null) {
+			if ($this->isNew()) {
+				$this->collContractsRelatedByDebtorId = array();
+			} else {
+
+				$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+				$this->collContractsRelatedByDebtorId = ContractPeer::doSelectJoinCurrency($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ContractPeer::DEBTOR_ID, $this->id);
+
+			if (!isset($this->lastContractRelatedByDebtorIdCriteria) || !$this->lastContractRelatedByDebtorIdCriteria->equals($criteria)) {
+				$this->collContractsRelatedByDebtorId = ContractPeer::doSelectJoinCurrency($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastContractRelatedByDebtorIdCriteria = $criteria;
+
+		return $this->collContractsRelatedByDebtorId;
 	}
 
 	/**
@@ -1695,8 +1978,8 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Gets an array of Gift objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Creditor has previously been saved, it will retrieve
-	 * related Gifts from storage. If this Creditor is new, it will return
+	 * Otherwise if this Subject has previously been saved, it will retrieve
+	 * related Gifts from storage. If this Subject is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -1707,7 +1990,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function getGifts($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1756,7 +2039,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function countGifts(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1813,7 +2096,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collGifts, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collGifts, $l);
-			$l->setCreditor($this);
+			$l->setSubject($this);
 		}
 	}
 
@@ -1849,8 +2132,8 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Gets an array of OutgoingPayment objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Creditor has previously been saved, it will retrieve
-	 * related OutgoingPayments from storage. If this Creditor is new, it will return
+	 * Otherwise if this Subject has previously been saved, it will retrieve
+	 * related OutgoingPayments from storage. If this Subject is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -1861,7 +2144,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function getOutgoingPayments($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1910,7 +2193,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function countOutgoingPayments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1967,7 +2250,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collOutgoingPayments, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collOutgoingPayments, $l);
-			$l->setCreditor($this);
+			$l->setSubject($this);
 		}
 	}
 
@@ -1975,18 +2258,18 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Creditor is new, it will return
-	 * an empty collection; or if this Creditor has previously
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
 	 * been saved, it will retrieve related OutgoingPayments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Creditor.
+	 * actually need in Subject.
 	 */
 	public function getOutgoingPaymentsJoinCurrency($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -2022,18 +2305,18 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Creditor is new, it will return
-	 * an empty collection; or if this Creditor has previously
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
 	 * been saved, it will retrieve related OutgoingPayments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Creditor.
+	 * actually need in Subject.
 	 */
 	public function getOutgoingPaymentsJoinBankAccount($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -2097,8 +2380,8 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 * Gets an array of Regulation objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Creditor has previously been saved, it will retrieve
-	 * related Regulations from storage. If this Creditor is new, it will return
+	 * Otherwise if this Subject has previously been saved, it will retrieve
+	 * related Regulations from storage. If this Subject is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -2109,7 +2392,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function getRegulations($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -2158,7 +2441,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function countRegulations(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -2215,7 +2498,7 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collRegulations, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collRegulations, $l);
-			$l->setCreditor($this);
+			$l->setSubject($this);
 		}
 	}
 
@@ -2223,18 +2506,18 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Creditor is new, it will return
-	 * an empty collection; or if this Creditor has previously
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
 	 * been saved, it will retrieve related Regulations from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Creditor.
+	 * actually need in Subject.
 	 */
 	public function getRegulationsJoinContract($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -2270,18 +2553,18 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Creditor is new, it will return
-	 * an empty collection; or if this Creditor has previously
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
 	 * been saved, it will retrieve related Regulations from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Creditor.
+	 * actually need in Subject.
 	 */
 	public function getRegulationsJoinRegulationYearRelatedByRegulationYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(CreditorPeer::DATABASE_NAME);
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -2325,8 +2608,13 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collContracts) {
-				foreach ((array) $this->collContracts as $o) {
+			if ($this->collContractsRelatedByCreditorId) {
+				foreach ((array) $this->collContractsRelatedByCreditorId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collContractsRelatedByDebtorId) {
+				foreach ((array) $this->collContractsRelatedByDebtorId as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -2347,7 +2635,8 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
-		$this->collContracts = null;
+		$this->collContractsRelatedByCreditorId = null;
+		$this->collContractsRelatedByDebtorId = null;
 		$this->collGifts = null;
 		$this->collOutgoingPayments = null;
 		$this->collRegulations = null;
@@ -2360,9 +2649,9 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	 */
 	public function __call($method, $arguments)
 	{
-	  if (!$callable = sfMixer::getCallable('BaseCreditor:'.$method))
+	  if (!$callable = sfMixer::getCallable('BaseSubject:'.$method))
 	  {
-	    throw new sfException(sprintf('Call to undefined method BaseCreditor::%s', $method));
+	    throw new sfException(sprintf('Call to undefined method BaseSubject::%s', $method));
 	  }
 	
 	  array_unshift($arguments, $this);
@@ -2370,4 +2659,4 @@ abstract class BaseCreditor extends BaseObject  implements Persistent {
 	  return call_user_func_array($callable, $arguments);
 	}
 
-} // BaseCreditor
+} // BaseSubject

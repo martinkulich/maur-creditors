@@ -12,7 +12,7 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'creditor_id'                   => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => true)),
+      'creditor_id'                   => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => true)),
       'created_at'                    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'activated_at'                  => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'period'                        => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -26,11 +26,12 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'capitalize'                    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'contract_type_id'              => new sfWidgetFormPropelChoice(array('model' => 'ContractType', 'add_empty' => true)),
       'document'                      => new sfWidgetFormFilterInput(),
+      'debtor_id'                     => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => true)),
       'contract_excluded_report_list' => new sfWidgetFormPropelChoice(array('model' => 'Report', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'creditor_id'                   => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Creditor', 'column' => 'id')),
+      'creditor_id'                   => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Subject', 'column' => 'id')),
       'created_at'                    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'activated_at'                  => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'period'                        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -44,6 +45,7 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'capitalize'                    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'contract_type_id'              => new sfValidatorPropelChoice(array('required' => false, 'model' => 'ContractType', 'column' => 'id')),
       'document'                      => new sfValidatorPass(array('required' => false)),
+      'debtor_id'                     => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Subject', 'column' => 'id')),
       'contract_excluded_report_list' => new sfValidatorPropelChoice(array('model' => 'Report', 'required' => false)),
     ));
 
@@ -102,6 +104,7 @@ abstract class BaseContractFormFilter extends BaseFormFilterPropel
       'capitalize'                    => 'Boolean',
       'contract_type_id'              => 'ForeignKey',
       'document'                      => 'Text',
+      'debtor_id'                     => 'ForeignKey',
       'contract_excluded_report_list' => 'ManyKey',
     );
   }

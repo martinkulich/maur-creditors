@@ -22,8 +22,9 @@ class CreditorConfirmationReport extends ParentReport
                 sum(contract_received_payments(c.id, %year%)) + sum(contract_capitalized(c.id, %year%)) + sum(contract_balance_increase(c.id, %year%)) as balance_increase,
                 sum(contract_received_payments(c.id, %year%)) as received_payments,
                 sum(contract_paid(c.id, %year%)) + sum(contract_balance_reduction(c.id, %year%)) as outgoing_payments
-            FROM creditor cr
+            FROM subject cr
             JOIN contract c ON c.creditor_id = cr.id
+            JOIN subject de On de.id = c.debtor_id
             JOIN contract_type ct ON ct.id = c.contract_type_id
             WHERE (
               c.closed_at is null

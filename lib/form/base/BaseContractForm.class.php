@@ -15,7 +15,7 @@ abstract class BaseContractForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                            => new sfWidgetFormInputHidden(),
-      'creditor_id'                   => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => false)),
+      'creditor_id'                   => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => false)),
       'created_at'                    => new sfWidgetFormDate(),
       'activated_at'                  => new sfWidgetFormDate(),
       'period'                        => new sfWidgetFormInputText(),
@@ -29,12 +29,13 @@ abstract class BaseContractForm extends BaseFormPropel
       'capitalize'                    => new sfWidgetFormInputCheckbox(),
       'contract_type_id'              => new sfWidgetFormPropelChoice(array('model' => 'ContractType', 'add_empty' => false)),
       'document'                      => new sfWidgetFormInputText(),
+      'debtor_id'                     => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => false)),
       'contract_excluded_report_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Report')),
     ));
 
     $this->setValidators(array(
       'id'                            => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'creditor_id'                   => new sfValidatorPropelChoice(array('model' => 'Creditor', 'column' => 'id')),
+      'creditor_id'                   => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id')),
       'created_at'                    => new sfValidatorDate(),
       'activated_at'                  => new sfValidatorDate(array('required' => false)),
       'period'                        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
@@ -48,6 +49,7 @@ abstract class BaseContractForm extends BaseFormPropel
       'capitalize'                    => new sfValidatorBoolean(),
       'contract_type_id'              => new sfValidatorPropelChoice(array('model' => 'ContractType', 'column' => 'id')),
       'document'                      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'debtor_id'                     => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id')),
       'contract_excluded_report_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Report', 'required' => false)),
     ));
 

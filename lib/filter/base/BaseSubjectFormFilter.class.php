@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Creditor filter form base class.
+ * Subject filter form base class.
  *
  * @package    rezervuj
  * @subpackage filter
  * @author     Your name here
  */
-abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
+abstract class BaseSubjectFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
-      'creditor_type_code'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'subject_type_code'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'identification_number' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'firstname'             => new sfWidgetFormFilterInput(),
       'lastname'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -27,7 +27,7 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
     ));
 
     $this->setValidators(array(
-      'creditor_type_code'    => new sfValidatorPass(array('required' => false)),
+      'subject_type_code'     => new sfValidatorPass(array('required' => false)),
       'identification_number' => new sfValidatorPass(array('required' => false)),
       'firstname'             => new sfValidatorPass(array('required' => false)),
       'lastname'              => new sfValidatorPass(array('required' => false)),
@@ -41,7 +41,7 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
       'birth_date'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
-    $this->widgetSchema->setNameFormat('creditor_filters[%s]');
+    $this->widgetSchema->setNameFormat('subject_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -50,14 +50,14 @@ abstract class BaseCreditorFormFilter extends BaseFormFilterPropel
 
   public function getModelName()
   {
-    return 'Creditor';
+    return 'Subject';
   }
 
   public function getFields()
   {
     return array(
       'id'                    => 'Number',
-      'creditor_type_code'    => 'Text',
+      'subject_type_code'     => 'Text',
       'identification_number' => 'Text',
       'firstname'             => 'Text',
       'lastname'              => 'Text',

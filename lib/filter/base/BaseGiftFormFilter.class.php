@@ -12,14 +12,14 @@ abstract class BaseGiftFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'creditor_id' => new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'add_empty' => true)),
+      'creditor_id' => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => true)),
       'name'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'date'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'note'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'creditor_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Creditor', 'column' => 'id')),
+      'creditor_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Subject', 'column' => 'id')),
       'name'        => new sfValidatorPass(array('required' => false)),
       'date'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'note'        => new sfValidatorPass(array('required' => false)),

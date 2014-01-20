@@ -29,7 +29,7 @@ class BirthdayReport extends ParentReport
                 (select \"date\" from gift where creditor_id = cr.id order by id desc limit 1) as last_gift_date,
                 null as add_gift
 
-            FROM creditor cr
+            FROM subject cr
             %where%
             ORDER BY %order_by%
             ;
@@ -87,11 +87,11 @@ class BirthdayReport extends ParentReport
 
         if($column == 'last_gift_date' && $formatedValue)
         {
-            $formatedValue = link_to(format_date($formatedValue, 'D'), '@creditor_giftList?id='.$row['creditor_id'], array('class'=>'modal_link'));
+            $formatedValue = link_to(format_date($formatedValue, 'D'), '@subject_giftList?id='.$row['creditor_id'], array('class'=>'modal_link'));
         }
         elseif($column == 'add_gift')
         {
-            $formatedValue = link_to('Přidat dárek', '@creditor_addGift?id='.$row['creditor_id'], array('class'=>'modal_link'));
+            $formatedValue = link_to('Přidat dárek', '@subject_addGift?id='.$row['creditor_id'], array('class'=>'modal_link'));
         }
 
 

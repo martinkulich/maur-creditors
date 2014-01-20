@@ -8,9 +8,10 @@
         </tr>
       </thead>
       <tbody>
+        <?php $ownerIdentificationNumber = sfConfig::get('app_owner_identification_number') ?>
         <?php foreach ($pager->getResults() as $i => $settlement): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
                 <?php $currencyCode = $settlement->getContract()->getCurrencyCode()?>
-          <tr class="sf_admin_row <?php echo $odd.' '; echo ($settlement->isSettlementType(SettlementPeer::END_OF_YEAR) ? ' text-light-blue ' : '')?>">
+          <tr class="sf_admin_row <?php echo $odd.' '; echo ($settlement->isSettlementType(SettlementPeer::END_OF_YEAR) ? ' text-light-blue ' : '')?> <?php if($settlement->getContract()->getCreditor()->getIdentificationNumber() == $ownerIdentificationNumber) { echo ' owner_as_creditor '; }else { echo ' owner_as_debtor '; }?> ">
             <?php include_partial('settlement/list_td_tabular', array('settlement' => $settlement)) ?>
             <?php include_partial('settlement/list_td_actions', array('settlement' => $settlement, 'helper' => $helper)) ?>
           </tr>
@@ -18,7 +19,7 @@
       </tbody>
         <tfoot>
         <?php foreach($sums as $currencyCode=>$sumValues){?>
-            <tr class="sf_admin_row">
+            <tr class="sf_admin_row ">
                 <td>
                 </td>
                 <td>

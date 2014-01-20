@@ -80,9 +80,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	protected $refundation;
 
 	/**
-	 * @var        Creditor
+	 * @var        Subject
 	 */
-	protected $aCreditor;
+	protected $aSubject;
 
 	/**
 	 * @var        Currency
@@ -440,8 +440,8 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = OutgoingPaymentPeer::CREDITOR_ID;
 		}
 
-		if ($this->aCreditor !== null && $this->aCreditor->getId() !== $v) {
-			$this->aCreditor = null;
+		if ($this->aSubject !== null && $this->aSubject->getId() !== $v) {
+			$this->aSubject = null;
 		}
 
 		return $this;
@@ -591,8 +591,8 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		if ($this->aCurrency !== null && $this->currency_code !== $this->aCurrency->getCode()) {
 			$this->aCurrency = null;
 		}
-		if ($this->aCreditor !== null && $this->creditor_id !== $this->aCreditor->getId()) {
-			$this->aCreditor = null;
+		if ($this->aSubject !== null && $this->creditor_id !== $this->aSubject->getId()) {
+			$this->aSubject = null;
 		}
 	} // ensureConsistency
 
@@ -633,7 +633,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aCreditor = null;
+			$this->aSubject = null;
 			$this->aCurrency = null;
 			$this->aBankAccount = null;
 			$this->collAllocations = null;
@@ -786,11 +786,11 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aCreditor !== null) {
-				if ($this->aCreditor->isModified() || $this->aCreditor->isNew()) {
-					$affectedRows += $this->aCreditor->save($con);
+			if ($this->aSubject !== null) {
+				if ($this->aSubject->isModified() || $this->aSubject->isNew()) {
+					$affectedRows += $this->aSubject->save($con);
 				}
-				$this->setCreditor($this->aCreditor);
+				$this->setSubject($this->aSubject);
 			}
 
 			if ($this->aCurrency !== null) {
@@ -908,9 +908,9 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aCreditor !== null) {
-				if (!$this->aCreditor->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aCreditor->getValidationFailures());
+			if ($this->aSubject !== null) {
+				if (!$this->aSubject->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aSubject->getValidationFailures());
 				}
 			}
 
@@ -1282,13 +1282,13 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a Creditor object.
+	 * Declares an association between this object and a Subject object.
 	 *
-	 * @param      Creditor $v
+	 * @param      Subject $v
 	 * @return     OutgoingPayment The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setCreditor(Creditor $v = null)
+	public function setSubject(Subject $v = null)
 	{
 		if ($v === null) {
 			$this->setCreditorId(NULL);
@@ -1296,10 +1296,10 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 			$this->setCreditorId($v->getId());
 		}
 
-		$this->aCreditor = $v;
+		$this->aSubject = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Creditor object, it will not be re-added.
+		// If this object has already been added to the Subject object, it will not be re-added.
 		if ($v !== null) {
 			$v->addOutgoingPayment($this);
 		}
@@ -1309,25 +1309,25 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Creditor object
+	 * Get the associated Subject object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Creditor The associated Creditor object.
+	 * @return     Subject The associated Subject object.
 	 * @throws     PropelException
 	 */
-	public function getCreditor(PropelPDO $con = null)
+	public function getSubject(PropelPDO $con = null)
 	{
-		if ($this->aCreditor === null && ($this->creditor_id !== null)) {
-			$this->aCreditor = CreditorPeer::retrieveByPk($this->creditor_id);
+		if ($this->aSubject === null && ($this->creditor_id !== null)) {
+			$this->aSubject = SubjectPeer::retrieveByPk($this->creditor_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aCreditor->addOutgoingPayments($this);
+			   $this->aSubject->addOutgoingPayments($this);
 			 */
 		}
-		return $this->aCreditor;
+		return $this->aSubject;
 	}
 
 	/**
@@ -1649,7 +1649,7 @@ abstract class BaseOutgoingPayment extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collAllocations = null;
-			$this->aCreditor = null;
+			$this->aSubject = null;
 			$this->aCurrency = null;
 			$this->aBankAccount = null;
 	}

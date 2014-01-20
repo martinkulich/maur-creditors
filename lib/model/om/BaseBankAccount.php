@@ -979,7 +979,7 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in BankAccount.
 	 */
-	public function getOutgoingPaymentsJoinCreditor($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getOutgoingPaymentsJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(BankAccountPeer::DATABASE_NAME);
@@ -996,7 +996,7 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 
 				$criteria->add(OutgoingPaymentPeer::BANK_ACCOUNT_ID, $this->id);
 
-				$this->collOutgoingPayments = OutgoingPaymentPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
+				$this->collOutgoingPayments = OutgoingPaymentPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -1006,7 +1006,7 @@ abstract class BaseBankAccount extends BaseObject  implements Persistent {
 			$criteria->add(OutgoingPaymentPeer::BANK_ACCOUNT_ID, $this->id);
 
 			if (!isset($this->lastOutgoingPaymentCriteria) || !$this->lastOutgoingPaymentCriteria->equals($criteria)) {
-				$this->collOutgoingPayments = OutgoingPaymentPeer::doSelectJoinCreditor($criteria, $con, $join_behavior);
+				$this->collOutgoingPayments = OutgoingPaymentPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastOutgoingPaymentCriteria = $criteria;

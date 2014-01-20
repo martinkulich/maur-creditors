@@ -21,8 +21,9 @@ class CreditorRevenueReport extends ParentReport
                 sum(contract_paid(c.id, '%date_to%'::date))::integer as paid,
                 sum(contract_unpaid(c.id, '%date_to%'::date))::integer AS unpaid,
                 sum(contract_unpaid_regular(c.id, '%date_to%'::date))::integer AS unpaid_regular
-            FROM creditor cr
+            FROM subject cr
             JOIN contract c ON c.creditor_id = cr.id
+            JOIN subject de On de.id = c.debtor_id
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'creditor_revenue' AND cer.contract_id = c.id) = 0
             %where%
             GROUP BY  currency_code, cr.id, cr.lastname, cr.firstname
@@ -88,7 +89,7 @@ class CreditorRevenueReport extends ParentReport
         $formatedValue = parent::getFormatedRowValue($row, $column);
 
         if ($column == 'paid') {
-            $formatedValue = link_to($formatedValue, '@creditor_paidDetail?filter[date_to]='.$row['date_to'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
+            $formatedValue = link_to($formatedValue, '@subject_paidDetail?filter[date_to]='.$row['date_to'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
         }
         return $formatedValue;
     }

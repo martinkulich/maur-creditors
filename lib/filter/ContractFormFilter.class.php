@@ -13,6 +13,7 @@ class ContractFormFilter extends BaseContractFormFilter
     public function configure()
     {
         $this->getWidgetSchema()->moveField('name', sfWidgetFormSchema::FIRST);
+        $this->getWidgetSchema()->moveField('debtor_id', sfWidgetFormSchema::BEFORE, 'creditor_id');
 
         $this->setWidget('created_at', new MyJQueryFormFilterDate());
         $this->setWidget('activated_at', new MyJQueryFormFilterDate());
@@ -31,7 +32,17 @@ class ContractFormFilter extends BaseContractFormFilter
         $this->setWidget('period', new sfWidgetFormChoice(array('choices' => $periodChoices), array('class' => 'span2')));
         $this->setValidator('period', new sfValidatorChoice(array('choices' => array_keys($periodChoices), 'required' => false)));
 
-        $this->getWidget('creditor_id')->setOption('order_by', array('Lastname', 'asc'));
+        $creditorCriteria = new Criteria();
+        $creditorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
+        $creditorCriteria->addJoin(SubjectPeer::ID, ContractPeer::CREDITOR_ID);
+        $this->getWidget('creditor_id')->setOption('criteria', $creditorCriteria);
+
+        $debtorCriteria = new Criteria();
+        $debtorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
+        $debtorCriteria->addJoin(SubjectPeer::ID, ContractPeer::DEBTOR_ID);
+        $this->getWidget('debtor_id')->setOption('criteria', $debtorCriteria);
+
+
     }
 
     public function addActivatedColumnCriteria(Criteria $criteria, $field, $value)

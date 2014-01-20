@@ -8,8 +8,9 @@
         </tr>
       </thead>
       <tbody>
+      <?php $ownerIdentificationNumber = sfConfig::get('app_owner_identification_number') ?>
         <?php foreach ($pager->getResults() as $i => $contract): $odd = fmod(++$i, 2) ? 'odd' : 'even' ?>
-          <tr class="sf_admin_row <?php echo $odd ?>">
+          <tr class="sf_admin_row <?php echo $odd ?> <?php if($contract->getCreditor()->getIdentificationNumber() == $ownerIdentificationNumber) { echo ' owner_as_creditor '; }else { echo ' owner_as_debtor '; }?>">
             <?php include_partial('contract/list_td_tabular', array('contract' => $contract, 'currency'=>$currency)) ?>
             <?php include_partial('contract/list_td_actions', array('contract' => $contract, 'helper' => $helper)) ?>
           </tr>

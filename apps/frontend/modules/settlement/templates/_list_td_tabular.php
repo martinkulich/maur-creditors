@@ -1,5 +1,8 @@
 <?php $currencyCode = $settlement->getContract()->getCurrencyCode()?>
 <?php use_helper('Number') ?>
+<td class="sf_admin_text sf_admin_list_td_debtor no-wrap-line">
+    <?php echo $settlement->getDebtor() ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $settlement->getCreditor() ?>
 </td>

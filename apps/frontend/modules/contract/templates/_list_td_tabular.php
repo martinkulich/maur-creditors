@@ -4,6 +4,9 @@
 <td class="sf_admin_text sf_admin_list_td_contract_type no-wrap-line">
     <?php echo $contract->getContractType() ?>
 </td>
+<td class="sf_admin_text sf_admin_list_td_debtor no-wrap-line">
+    <?php echo $contract->getDebtor() ?>
+</td>
 <td class="sf_admin_text sf_admin_list_td_creditor no-wrap-line">
     <?php echo $contract->getCreditor() ?>
 </td>

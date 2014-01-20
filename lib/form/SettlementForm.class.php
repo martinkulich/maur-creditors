@@ -70,8 +70,8 @@ class SettlementForm extends BaseSettlementForm
         $contractWidget->setOption('criteria', $contractCriteria);
         $this->getValidator('contract_id')->setOption('criteria', $contractCriteria);
 
-        $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
-        $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Creditor', 'required' => true)));
+        $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Subject', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
+        $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Subject', 'required' => true)));
         $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {

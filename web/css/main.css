@@ -330,7 +330,7 @@ td.list_object_actions
     white-space: nowrap;
 }
 
-sf_admin_list_actions .btn
+.sf_admin_list_actions .btn
 {
     margin-bottom: 0;
 }
@@ -454,6 +454,10 @@ table.table-prices a
     display: block;
 }
 
+tr.owner_as_creditor
+{
+    background-color: rgba(91, 183, 91, 0.21);
+}
 
 @media (max-width: 979px) {
     body {

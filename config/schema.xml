@@ -39,13 +39,13 @@
     <foreign-key foreignTable="contract_type" name="contract_contract_type_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="contract_type_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="creditor" name="contract_creditor_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
+    <foreign-key foreignTable="subject" name="contract_creditor_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="creditor_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="currency" name="contract_currency_code_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="currency_code" foreign="code"/>
     </foreign-key>
-    <foreign-key foreignTable="creditor" name="contract_debtor_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
+    <foreign-key foreignTable="subject" name="contract_debtor_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="debtor_id" foreign="id"/>
     </foreign-key>
   </table>
@@ -63,21 +63,6 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" required="true"/>
   </table>
-  <table name="creditor" phpName="Creditor">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="subject_type_code" phpName="SubjectTypeCode" type="VARCHAR" required="true"/>
-    <column name="identification_number" phpName="IdentificationNumber" type="VARCHAR" required="true"/>
-    <column name="firstname" phpName="Firstname" type="VARCHAR" required="false"/>
-    <column name="lastname" phpName="Lastname" type="VARCHAR" required="true"/>
-    <column name="email" phpName="Email" type="VARCHAR" required="false"/>
-    <column name="phone" phpName="Phone" type="VARCHAR" required="false"/>
-    <column name="bank_account" phpName="BankAccount" type="VARCHAR" required="false"/>
-    <column name="city" phpName="City" type="VARCHAR" required="false"/>
-    <column name="street" phpName="Street" type="VARCHAR" required="false"/>
-    <column name="zip" phpName="Zip" type="VARCHAR" required="false"/>
-    <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
-    <column name="birth_date" phpName="BirthDate" type="TIMESTAMP" required="false"/>
-  </table>
   <table name="currency" phpName="Currency">
     <column name="code" phpName="Code" type="CHAR" size="3" primaryKey="true" required="true"/>
     <column name="is_default" phpName="IsDefault" type="BOOLEAN" required="true" defaultValue="false"/>
@@ -89,7 +74,7 @@
     <column name="name" phpName="Name" type="VARCHAR" required="true"/>
     <column name="date" phpName="Date" type="DATE" required="true"/>
     <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
-    <foreign-key foreignTable="creditor" name="gift_creditor_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
+    <foreign-key foreignTable="subject" name="gift_creditor_id_fkey" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="creditor_id" foreign="id"/>
     </foreign-key>
   </table>
@@ -100,6 +85,9 @@
     <unique name="ip_address_ip_address_uidx">
       <unique-column name="ip_address"/>
     </unique>
+  </table>
+  <table name="months" phpName="Months">
+    <column name="number" phpName="Number" type="INTEGER" required="false"/>
   </table>
   <table name="outgoing_payment" phpName="OutgoingPayment">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
@@ -112,7 +100,7 @@
     <column name="cash" phpName="Cash" type="BOOLEAN" required="false"/>
     <column name="receiver_bank_account" phpName="ReceiverBankAccount" type="VARCHAR" required="false"/>
     <column name="refundation" phpName="Refundation" type="NUMERIC" size="15" scale="2" required="false"/>
-    <foreign-key foreignTable="creditor" name="outgoing_payment_creditor_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
+    <foreign-key foreignTable="subject" name="outgoing_payment_creditor_id_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
       <reference local="creditor_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="currency" name="outgoing_payment_currency_code_fkey" onDelete="RESTRICT" onUpdate="CASCADE">
@@ -234,5 +222,20 @@
     <foreign-key foreignTable="payment" name="settlement_payment_id_fkey" onDelete="SET NULL" onUpdate="CASCADE">
       <reference local="payment_id" foreign="id"/>
     </foreign-key>
+  </table>
+  <table name="subject" phpName="Subject">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="subject_type_code" phpName="SubjectTypeCode" type="VARCHAR" required="true"/>
+    <column name="identification_number" phpName="IdentificationNumber" type="VARCHAR" required="true"/>
+    <column name="firstname" phpName="Firstname" type="VARCHAR" required="false"/>
+    <column name="lastname" phpName="Lastname" type="VARCHAR" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" required="false"/>
+    <column name="phone" phpName="Phone" type="VARCHAR" required="false"/>
+    <column name="bank_account" phpName="BankAccount" type="VARCHAR" required="false"/>
+    <column name="city" phpName="City" type="VARCHAR" required="false"/>
+    <column name="street" phpName="Street" type="VARCHAR" required="false"/>
+    <column name="zip" phpName="Zip" type="VARCHAR" required="false"/>
+    <column name="note" phpName="Note" type="LONGVARCHAR" required="false"/>
+    <column name="birth_date" phpName="BirthDate" type="TIMESTAMP" required="false"/>
   </table>
 </database>

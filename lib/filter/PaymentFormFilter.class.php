@@ -20,8 +20,8 @@ class PaymentFormFilter extends BasePaymentFormFilter
 
         $this->unsetField('amount');
 
-        $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'order_by' => array('Lastname', 'asc'), 'add_empty'=>true)));
-        $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Creditor', 'required' => false)));
+        $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Subject', 'order_by' => array('Lastname', 'asc'), 'add_empty'=>true)));
+        $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Subject', 'required' => false)));
         $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
         $contract = ContractPeer::retrieveByPK($this->getValue('contract_id'));
         if($contract)

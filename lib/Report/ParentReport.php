@@ -136,6 +136,21 @@ abstract class ParentReport
         return '';
     }
 
+    protected function getDebtorCondition()
+    {
+        return sprintf(" de.identification_number = '%s' ", $this->getOwnerIdentificationNumber());
+    }
+
+    protected function getOwnerIdentificationNumber()
+    {
+        $ownerIdentificationNumber = sfConfig::get('app_owner_identification_number');
+        if(!$ownerIdentificationNumber)
+        {
+            throw new Exception('Owner identification number must be defined');
+        }
+        return $ownerIdentificationNumber;
+    }
+
     public function getColumnHeader($column)
     {
         return $column;

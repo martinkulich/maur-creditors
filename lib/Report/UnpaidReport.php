@@ -12,8 +12,9 @@ class UnpaidReport extends ParentReport
                 (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
                 sum(contract_unpaid_regular(c.id, '%date_to%', true))::integer as unpaid_cumulative_regular,
                 sum(contract_unpaid(c.id, '%date_to%', true))::integer as unpaid_cumulative
-            FROM creditor cr
+            FROM subject cr
             JOIN contract c ON cr.id = c.creditor_id
+            JOIN subject de ON c.debtor_id = de.id
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'unpaid' AND cer.contract_id = c.id) = 0
             %where%
             GROUP BY 
@@ -27,6 +28,10 @@ class UnpaidReport extends ParentReport
         ";
     }
 
+    public function getWhere()
+    {
+        return ' AND '.$this->getDebtorCondition();
+    }
     public function getColumns()
     {
         return array_merge(array(

@@ -8,11 +8,19 @@ class ParentReportForm extends BaseForm
         $this->disableCSRFProtection();
         sfProjectConfiguration::getActive()->loadHelpers('Url');
 
+        $creditorCriteria = new Criteria();
+        $creditorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
+        $creditorCriteria->addJoin(SubjectPeer::ID, ContractPeer::CREDITOR_ID);
+
+        $debtorCriteria = new Criteria();
+        $debtorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
+        $debtorCriteria->addJoin(SubjectPeer::ID, ContractPeer::DEBTOR_ID);
 
         $this->setWidgets(array(
             'date_from' => new myJQueryDateWidget(),
             'date_to' => new myJQueryDateWidget(),
-            'creditor_id'=> new sfWidgetFormPropelChoice(array('model'=>'creditor', 'order_by'=>  array('Lastname', 'asc'), 'add_empty'=>'All')),
+            'creditor_id'=> new sfWidgetFormPropelChoice(array('model'=>'subject', 'criteria'=> $creditorCriteria, 'add_empty'=>'All')),
+            'debtor_id'=> new sfWidgetFormPropelChoice(array('model'=>'subject', 'criteria'=>$debtorCriteria, 'add_empty'=>'All')),
             'contract_id'=> new sfWidgetFormPropelChoice(array('add_empty' => true, 'model' => 'Contract', 'order_by' => array('Name', 'asc'))),
             'contract_type_id'=> new sfWidgetFormPropelChoice(array('add_empty' => true, 'model' => 'ContractType', 'order_by' => array('Name', 'asc'))),
             'month'=> new myWidgetFormChoiceMonth(),
@@ -23,7 +31,8 @@ class ParentReportForm extends BaseForm
         $this->setValidators(array(
             'date_from' => new myValidatorDate(),
             'date_to' => new myValidatorDate(),
-            'creditor_id'=> new sfValidatorPropelChoice(array('model'=>'creditor','required'=> false)),
+            'creditor_id'=> new sfValidatorPropelChoice(array('model'=>'subject','required'=> false)),
+            'debtor_id'=> new sfValidatorPropelChoice(array('model'=>'subject','required'=> false)),
             'contract_id'=> new sfValidatorPropelChoice(array('model' => 'Contract', 'required' => false)),
             'contract_type_id'=> new sfValidatorPropelChoice(array('model' => 'ContractType', 'required' => false)),
             'month'=> new sfValidatorChoice(array('choices'=>$this->getWidget('month')->getChoicesKeys())),

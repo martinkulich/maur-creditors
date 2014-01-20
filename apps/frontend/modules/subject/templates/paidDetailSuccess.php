@@ -2,7 +2,7 @@
     <div class="modal_content">
     <div class="modal-header" >
         <a class="close" data-dismiss="modal">×</a>
-        <h3><?php echo $creditor .' - '.__('paid') ?></h3>
+        <h3><?php echo $subject .' - '.__('paid') ?></h3>
     </div>
     <div class="modal-body">
         <?php include_component('default', 'flashes') ?>

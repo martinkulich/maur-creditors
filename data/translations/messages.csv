@@ -357,12 +357,12 @@ Version of your browser is deprecated and not supported. Please upgrade your bro
 Create;Vytvořit
 Add;Přidat
 ;
-of creditor;věřitelé
-creditor admin;Věřitelé
+of subject;Subjekty
+subject admin;Subjekty
 contract admin;Smlouvy
 contract_type admin;Typy smluv
 of contract;smlouvy
-Creditor type code;Typ
+Subject type code;Typ
 Identification number;IČO/Rodné číslo
 Lastname;Příjmení/Firma
 Bank account;Bankovní účet
@@ -371,17 +371,17 @@ Street;Ulice
 Zip;PSČ
 Individual;Fyzická osoba
 Corporation;Právnická osoba
-New creditor;Nový věřitel
+New subject;Nový subjekt
 New contract;Nová smlouva
-Edit creditor;Editace věřitele
+Edit subject;Editace subjektu
 Edit contract;Editace smlouvy
-Filter creditor;Filtrovat věřitele
+Filter subject;Filtrovat subjekty
 Filter contract;Filtrovat smlouvy
 New contractType; Nový typ smlouvy
 Edit contractType; Editace typu smlouvy
 Contract type; Typ smlouvy
 Contract type name; Type smlouvy
-Creditor type;Typ
+Subject type;Typ
 Period;Perioda
 Interest rate;Úroková míra
 Activated at;Aktivováno
@@ -404,9 +404,9 @@ Unpaid;Nevyplaceno
 Capitalize;Kapitalizovat
 Pay;Vyplatit
 ;
-payment admin;Přijaté platby
+payment admin;Platby od věřitelů
 of payment;přijaté platby
-Payments amount;Přijaté platby
+Payments amount;Platby od věřitelů
 Balance reduction;Ponížení jistiny
 Balance increase; Navýšení jistiny
 Payment;Platba
@@ -423,8 +423,8 @@ Copy;Kopírovat
 regulation admin;Předpisy
 of regulation;předpisy
 of regulation_monthly;Předpis v daném měsíci
-Creditor firstname;Jméno
-Creditor lastname;Příjmení
+Subject firstname;Jméno
+Subject lastname;Příjmení
 Contract name;Smlouva
 Settlement year;Rok
 Start balance;Jistina k 1.1.
@@ -438,9 +438,9 @@ Filter regulation;Filtrovat předpisy
 New settlement;Nová výplata úroků
 Edit settlement;Editace výplaty úroků
 Filter settlement;Filtrovat výplaty úroků
-New payment;Nová přijatá platba
-Edit payment;Editace přijaté platby
-Filter payment;Filtrovat přijaté platby
+New payment;Nová platba od věřitele
+Edit payment;Editace platby od věřitele
+Filter payment;Filtrovat platby od věřitelů
 Contract;Smlouva
 CZK;Kč
 EUR;Eur
@@ -449,6 +449,8 @@ Contract activated;Smlouva aktivována
 Contract deactivated;Smlouva deaktivována
 Cash;Hotově
 Creditor fullname;Věřitel
+Debtor fullname;Dlužník
+Debtor; Dlužník
 Activated;Aktivováno
 Closed;Ukončeno
 Settlement type;Typ
@@ -501,12 +503,12 @@ Contract closed successfully;Smlouva byla úspěšně ukončena
 Last allowed day in month is %last_day_in_month%;Poslední povolený den v měsíci je %last_day_in_month%
 Upaid in past;Nevyplacené úroky z předchozích let
 Unpaid in past;Nevyplacené úroky z předchozích let
-Outgoing payment required if paid is set;Odchozí platba je povinná, pokud je vyplněno pole “Vyplaceno“
-Paid required if outgoing payment is set;Pole “Vyplaceno“ je povinné, pokud je vyplněna odchozí platba
-Exceeded unallocated amount %unallocated_amount%;Z odchozí platby lze již alokovovat pouze částku %unallocated_amount%
-There is no amount to allocate;Odchozí platba je již zcela alokována
+Outgoing payment required if paid is set;Platba věřiteli je povinná, pokud je vyplněno pole “Vyplaceno“
+Paid required if outgoing payment is set;Pole “Vyplaceno“ je povinné, pokud je vyplněna platba věřiteli
+Exceeded unallocated amount %unallocated_amount%;Z platby věřiteli lze již alokovovat pouze částku %unallocated_amount%
+There is no amount to allocate;Platba věřiteli je již zcela alokována
 First settlement date;Datum prvního vypořádání
-Currency of outgoing payment is not equal with cuurency of settlement contract;Měna odchozí platby se neshoduje s měnou smlouvy
+Currency of outgoing payment is not equal with cuurency of settlement contract;Měna platby věřitely se neshoduje s měnou smlouvy
 unpaid report;Nevyplacené úroky
 About how much balance should be reduced;O kolik bude jistina ponížena
 This field is unchangeable after contract activation;Nutno nastavit před aktivací smlouvy
@@ -532,7 +534,7 @@ of summary;Sumarizace
 Unpaid regular;Nevyplaceno (řádná vypořádání)
 creditor_revenue report;Výnosy věřitelů
 of creditor_revenue;Výnosy věřitelů
-Received payments;Přijaté platby
+Received payments;Platby od věřitelů
 Current balance;Současná jistina
 Balance change;Změna jistiny
 Interest regular;Řádný úrok
@@ -567,12 +569,12 @@ Address;Adresa
 Birthday;Příští narozeniny
 Age;Věk při příštích narozeninách
 End of month balance;Jistina na konci měsíce
-Received payments;Přijaté platby
+Received payments;Platby od věřitelů
 creditor_confirmation report;Potvrzení pro věřitele
 of creditor_confirmation;Potvrzení pro věřitele
 Balance no capitalization and balance reduction;Jistina (bez kapitalizace a ponížení jistiny)
-outgoing_payment admin;Odchozí platby
-of outgoing_payment;Odchozí platby
+outgoing_payment admin;Platby věřitelům
+of outgoing_payment;Platby věřitelům
 bank_account admin;Bankovní účty
 of bank_account;Bankovní účty
 New bankAccount;Nový bankovní účet
@@ -581,13 +583,13 @@ Fiter bankAccount;Filtrovat bankovní účty
 Number;Číslo
 Used amount;Použitá částka
 Unused amount;Nevyužitá částka
-Outgoing payment;Odchozí platba
-Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel odchozí platby se neshoduje s věřitelem smlouvy
+Outgoing payment;Platba věřiteli
+Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel platby věřitely se neshoduje s věřitelem smlouvy
 regulation report;Předpisy
 regulation_monthly report;Předpis v daném měsíci
-Filter outgoingPayment;Filtrovat odchozí platby
-New outgoingPayment;Nová odchozí platba
-Edit outgoingPayment;Editace odchozí platby
+Filter outgoingPayment;Filtrovat platby věřitelům
+New outgoingPayment;Nová platba věřitely
+Edit outgoingPayment;Editace platby věřitely
 There are some settlements related to this outgoing payment, pls unrelate them before deletion;Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání
 to_pay report;K vyplacení tento měsíc
 of to_pay;K vyplacení tento měsíc
@@ -603,7 +605,7 @@ New allocation;Nová alokace
 Filter allocation; Filtrovat alokace
 Allocated amount;Alokováno
 Unallocated amount;Nealokováno
-There is no outgoing payment to be used for allocation;Všechny odchozí platby daného věřitele jsou plně alokovány, vytvořte prosím novou odchozí platbu
+There is no outgoing payment to be used for allocation;Všechny platby věřitely daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřitely
 Sender bank account; Bankovní účet odesílatele
 New gift;Nový dárek
 Edit gift;Editvoat dárek
@@ -612,12 +614,12 @@ Gifts;Dárky
 Last gift date;Datum posledního dárku
 Add gift;Přidat dárek
 Contract excluded report list;Nezahrnovat do reportu
-payment report;Přijaté platby
-of payment;Přijaté platby
+payment report;Platby od věřitelů
+of payment;Platby od věřitelů
 Exclude from report;Nezahrnovat tuto smlouvu do tohoto reportu
 exclude_from_report;Nezahrnovat
 Receiver bank account;Bankovní účet příjemce
-Outgoing payments;Odchozí platby
+Outgoing payments;Platby věřitelům
 Paid interests;Vyplacené úroky
 Unpaid interests;Nevyplacené úroky
 Balance reduction during year;Ponížení jistiny v průběhu roku
@@ -634,5 +636,5 @@ Month interest; Měsíční předpis
 Month interest cumulative; Měsíční předpis kumulativně
 Interest in the recognition; Úrok k zaúčtování
 Interest in the recognition cumulative; Úrok k zaúčtování kumulativně
-Date of outgoing payment; Datum odchozí platby
+Date of outgoing payment; Datum platby věřiteli
 Download; Stáhnout

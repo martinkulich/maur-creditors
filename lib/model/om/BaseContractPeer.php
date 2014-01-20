@@ -25,7 +25,7 @@ abstract class BaseContractPeer {
 	const TM_CLASS = 'ContractTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 16;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -75,6 +75,9 @@ abstract class BaseContractPeer {
 	/** the column name for the DOCUMENT field */
 	const DOCUMENT = 'contract.DOCUMENT';
 
+	/** the column name for the DEBTOR_ID field */
+	const DEBTOR_ID = 'contract.DEBTOR_ID';
+
 	/**
 	 * An identiy map to hold any loaded instances of Contract objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -98,11 +101,11 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', 'ClosedAt', 'Note', 'CurrencyCode', 'FirstSettlementDate', 'Capitalize', 'ContractTypeId', 'Document', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', 'closedAt', 'note', 'currencyCode', 'firstSettlementDate', 'capitalize', 'contractTypeId', 'document', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, self::CLOSED_AT, self::NOTE, self::CURRENCY_CODE, self::FIRST_SETTLEMENT_DATE, self::CAPITALIZE, self::CONTRACT_TYPE_ID, self::DOCUMENT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', 'closed_at', 'note', 'currency_code', 'first_settlement_date', 'capitalize', 'contract_type_id', 'document', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreditorId', 'CreatedAt', 'ActivatedAt', 'Period', 'InterestRate', 'Amount', 'Name', 'ClosedAt', 'Note', 'CurrencyCode', 'FirstSettlementDate', 'Capitalize', 'ContractTypeId', 'Document', 'DebtorId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'creditorId', 'createdAt', 'activatedAt', 'period', 'interestRate', 'amount', 'name', 'closedAt', 'note', 'currencyCode', 'firstSettlementDate', 'capitalize', 'contractTypeId', 'document', 'debtorId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREDITOR_ID, self::CREATED_AT, self::ACTIVATED_AT, self::PERIOD, self::INTEREST_RATE, self::AMOUNT, self::NAME, self::CLOSED_AT, self::NOTE, self::CURRENCY_CODE, self::FIRST_SETTLEMENT_DATE, self::CAPITALIZE, self::CONTRACT_TYPE_ID, self::DOCUMENT, self::DEBTOR_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'creditor_id', 'created_at', 'activated_at', 'period', 'interest_rate', 'amount', 'name', 'closed_at', 'note', 'currency_code', 'first_settlement_date', 'capitalize', 'contract_type_id', 'document', 'debtor_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	/**
@@ -112,11 +115,11 @@ abstract class BaseContractPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, 'ClosedAt' => 8, 'Note' => 9, 'CurrencyCode' => 10, 'FirstSettlementDate' => 11, 'Capitalize' => 12, 'ContractTypeId' => 13, 'Document' => 14, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, 'closedAt' => 8, 'note' => 9, 'currencyCode' => 10, 'firstSettlementDate' => 11, 'capitalize' => 12, 'contractTypeId' => 13, 'document' => 14, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, self::CLOSED_AT => 8, self::NOTE => 9, self::CURRENCY_CODE => 10, self::FIRST_SETTLEMENT_DATE => 11, self::CAPITALIZE => 12, self::CONTRACT_TYPE_ID => 13, self::DOCUMENT => 14, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, 'closed_at' => 8, 'note' => 9, 'currency_code' => 10, 'first_settlement_date' => 11, 'capitalize' => 12, 'contract_type_id' => 13, 'document' => 14, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreditorId' => 1, 'CreatedAt' => 2, 'ActivatedAt' => 3, 'Period' => 4, 'InterestRate' => 5, 'Amount' => 6, 'Name' => 7, 'ClosedAt' => 8, 'Note' => 9, 'CurrencyCode' => 10, 'FirstSettlementDate' => 11, 'Capitalize' => 12, 'ContractTypeId' => 13, 'Document' => 14, 'DebtorId' => 15, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'creditorId' => 1, 'createdAt' => 2, 'activatedAt' => 3, 'period' => 4, 'interestRate' => 5, 'amount' => 6, 'name' => 7, 'closedAt' => 8, 'note' => 9, 'currencyCode' => 10, 'firstSettlementDate' => 11, 'capitalize' => 12, 'contractTypeId' => 13, 'document' => 14, 'debtorId' => 15, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREDITOR_ID => 1, self::CREATED_AT => 2, self::ACTIVATED_AT => 3, self::PERIOD => 4, self::INTEREST_RATE => 5, self::AMOUNT => 6, self::NAME => 7, self::CLOSED_AT => 8, self::NOTE => 9, self::CURRENCY_CODE => 10, self::FIRST_SETTLEMENT_DATE => 11, self::CAPITALIZE => 12, self::CONTRACT_TYPE_ID => 13, self::DOCUMENT => 14, self::DEBTOR_ID => 15, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'creditor_id' => 1, 'created_at' => 2, 'activated_at' => 3, 'period' => 4, 'interest_rate' => 5, 'amount' => 6, 'name' => 7, 'closed_at' => 8, 'note' => 9, 'currency_code' => 10, 'first_settlement_date' => 11, 'capitalize' => 12, 'contract_type_id' => 13, 'document' => 14, 'debtor_id' => 15, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
 	);
 
 	/**
@@ -201,6 +204,7 @@ abstract class BaseContractPeer {
 		$criteria->addSelectColumn(ContractPeer::CAPITALIZE);
 		$criteria->addSelectColumn(ContractPeer::CONTRACT_TYPE_ID);
 		$criteria->addSelectColumn(ContractPeer::DOCUMENT);
+		$criteria->addSelectColumn(ContractPeer::DEBTOR_ID);
 	}
 
 	/**
@@ -524,7 +528,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related SubjectRelatedByCreditorId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -532,7 +536,7 @@ abstract class BaseContractPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinSubjectRelatedByCreditorId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -559,7 +563,7 @@ abstract class BaseContractPeer {
 			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -616,6 +620,62 @@ abstract class BaseContractPeer {
 		}
 
 		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related SubjectRelatedByDebtorId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinSubjectRelatedByDebtorId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ContractPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -708,7 +768,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with their Creditor objects.
+	 * Selects a collection of Contract objects pre-filled with their Subject objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -716,7 +776,7 @@ abstract class BaseContractPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinSubjectRelatedByCreditorId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -727,9 +787,9 @@ abstract class BaseContractPeer {
 
 		ContractPeer::addSelectColumns($criteria);
 		$startcol = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
-		CreditorPeer::addSelectColumns($criteria);
+		SubjectPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -755,20 +815,20 @@ abstract class BaseContractPeer {
 				ContractPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = CreditorPeer::getInstanceFromPool($key2);
+				$obj2 = SubjectPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (Contract) to $obj2 (Creditor)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (Contract) to $obj2 (Subject)
+				$obj2->addContractRelatedByCreditorId($obj1);
 
 			} // if joined row was not null
 
@@ -852,6 +912,78 @@ abstract class BaseContractPeer {
 
 
 	/**
+	 * Selects a collection of Contract objects pre-filled with their Subject objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Contract objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinSubjectRelatedByDebtorId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ContractPeer::addSelectColumns($criteria);
+		$startcol = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = ContractPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ContractPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = SubjectPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = SubjectPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (Contract) to $obj2 (Subject)
+				$obj2->addContractRelatedByDebtorId($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
 	 * Returns the number of rows matching criteria, joining all related tables
 	 *
 	 * @param      Criteria $criteria
@@ -889,9 +1021,11 @@ abstract class BaseContractPeer {
 
 		$criteria->addJoin(ContractPeer::CONTRACT_TYPE_ID, ContractTypePeer::ID, $join_behavior);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -935,17 +1069,22 @@ abstract class BaseContractPeer {
 		ContractTypePeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ContractTypePeer::NUM_COLUMNS - ContractTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		CurrencyPeer::addSelectColumns($criteria);
 		$startcol5 = $startcol4 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol6 = $startcol5 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(ContractPeer::CONTRACT_TYPE_ID, ContractTypePeer::ID, $join_behavior);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -988,22 +1127,22 @@ abstract class BaseContractPeer {
 				$obj2->addContract($obj1);
 			} // if joined row not null
 
-			// Add objects for joined Creditor rows
+			// Add objects for joined Subject rows
 
-			$key3 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			$key3 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 			if ($key3 !== null) {
-				$obj3 = CreditorPeer::getInstanceFromPool($key3);
+				$obj3 = SubjectPeer::getInstanceFromPool($key3);
 				if (!$obj3) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = SubjectPeer::getOMClass(false);
 
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					CreditorPeer::addInstanceToPool($obj3, $key3);
+					SubjectPeer::addInstanceToPool($obj3, $key3);
 				} // if obj3 loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj3 (Creditor)
-				$obj3->addContract($obj1);
+				// Add the $obj1 (Contract) to the collection in $obj3 (Subject)
+				$obj3->addContractRelatedByCreditorId($obj1);
 			} // if joined row not null
 
 			// Add objects for joined Currency rows
@@ -1022,6 +1161,24 @@ abstract class BaseContractPeer {
 
 				// Add the $obj1 (Contract) to the collection in $obj4 (Currency)
 				$obj4->addContract($obj1);
+			} // if joined row not null
+
+			// Add objects for joined Subject rows
+
+			$key5 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol5);
+			if ($key5 !== null) {
+				$obj5 = SubjectPeer::getInstanceFromPool($key5);
+				if (!$obj5) {
+
+					$cls = SubjectPeer::getOMClass(false);
+
+					$obj5 = new $cls();
+					$obj5->hydrate($row, $startcol5);
+					SubjectPeer::addInstanceToPool($obj5, $key5);
+				} // if obj5 loaded
+
+				// Add the $obj1 (Contract) to the collection in $obj5 (Subject)
+				$obj5->addContractRelatedByDebtorId($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -1067,9 +1224,11 @@ abstract class BaseContractPeer {
 			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -1090,7 +1249,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related SubjectRelatedByCreditorId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1098,7 +1257,7 @@ abstract class BaseContractPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptSubjectRelatedByCreditorId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -1185,7 +1344,67 @@ abstract class BaseContractPeer {
 	
 		$criteria->addJoin(ContractPeer::CONTRACT_TYPE_ID, ContractTypePeer::ID, $join_behavior);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		}
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related SubjectRelatedByDebtorId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptSubjectRelatedByDebtorId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ContractPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ContractPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ContractPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(ContractPeer::CONTRACT_TYPE_ID, ContractTypePeer::ID, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -1229,15 +1448,20 @@ abstract class BaseContractPeer {
 		ContractPeer::addSelectColumns($criteria);
 		$startcol2 = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		CurrencyPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -1263,22 +1487,22 @@ abstract class BaseContractPeer {
 				ContractPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Subject rows
 
-				$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = CreditorPeer::getInstanceFromPool($key2);
+					$obj2 = SubjectPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj2 (Creditor)
-				$obj2->addContract($obj1);
+				// Add the $obj1 (Contract) to the collection in $obj2 (Subject)
+				$obj2->addContractRelatedByCreditorId($obj1);
 
 			} // if joined row is not null
 
@@ -1301,6 +1525,25 @@ abstract class BaseContractPeer {
 
 			} // if joined row is not null
 
+				// Add objects for joined Subject rows
+
+				$key4 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+				if ($key4 !== null) {
+					$obj4 = SubjectPeer::getInstanceFromPool($key4);
+					if (!$obj4) {
+	
+						$cls = SubjectPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					SubjectPeer::addInstanceToPool($obj4, $key4);
+				} // if $obj4 already loaded
+
+				// Add the $obj1 (Contract) to the collection in $obj4 (Subject)
+				$obj4->addContractRelatedByDebtorId($obj1);
+
+			} // if joined row is not null
+
 			$results[] = $obj1;
 		}
 		$stmt->closeCursor();
@@ -1309,7 +1552,7 @@ abstract class BaseContractPeer {
 
 
 	/**
-	 * Selects a collection of Contract objects pre-filled with all related objects except Creditor.
+	 * Selects a collection of Contract objects pre-filled with all related objects except SubjectRelatedByCreditorId.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1318,7 +1561,7 @@ abstract class BaseContractPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptSubjectRelatedByCreditorId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1438,12 +1681,17 @@ abstract class BaseContractPeer {
 		ContractTypePeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ContractTypePeer::NUM_COLUMNS - ContractTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		$criteria->addJoin(ContractPeer::CONTRACT_TYPE_ID, ContractTypePeer::ID, $join_behavior);
 
-		$criteria->addJoin(ContractPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(ContractPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::DEBTOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -1488,21 +1736,143 @@ abstract class BaseContractPeer {
 
 			} // if joined row is not null
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Subject rows
 
-				$key3 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				$key3 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 				if ($key3 !== null) {
-					$obj3 = CreditorPeer::getInstanceFromPool($key3);
+					$obj3 = SubjectPeer::getInstanceFromPool($key3);
 					if (!$obj3) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = SubjectPeer::getOMClass(false);
 
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					CreditorPeer::addInstanceToPool($obj3, $key3);
+					SubjectPeer::addInstanceToPool($obj3, $key3);
 				} // if $obj3 already loaded
 
-				// Add the $obj1 (Contract) to the collection in $obj3 (Creditor)
+				// Add the $obj1 (Contract) to the collection in $obj3 (Subject)
+				$obj3->addContractRelatedByCreditorId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined Subject rows
+
+				$key4 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+				if ($key4 !== null) {
+					$obj4 = SubjectPeer::getInstanceFromPool($key4);
+					if (!$obj4) {
+	
+						$cls = SubjectPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					SubjectPeer::addInstanceToPool($obj4, $key4);
+				} // if $obj4 already loaded
+
+				// Add the $obj1 (Contract) to the collection in $obj4 (Subject)
+				$obj4->addContractRelatedByDebtorId($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Contract objects pre-filled with all related objects except SubjectRelatedByDebtorId.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Contract objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptSubjectRelatedByDebtorId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ContractPeer::addSelectColumns($criteria);
+		$startcol2 = (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		ContractTypePeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ContractTypePeer::NUM_COLUMNS - ContractTypePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		CurrencyPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (CurrencyPeer::NUM_COLUMNS - CurrencyPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(ContractPeer::CONTRACT_TYPE_ID, ContractTypePeer::ID, $join_behavior);
+
+		$criteria->addJoin(ContractPeer::CURRENCY_CODE, CurrencyPeer::CODE, $join_behavior);
+
+		// symfony_behaviors behavior
+		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
+		{
+		  call_user_func($sf_hook, 'BaseContractPeer', $criteria, $con);
+		}
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ContractPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ContractPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = ContractPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ContractPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined ContractType rows
+
+				$key2 = ContractTypePeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = ContractTypePeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = ContractTypePeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					ContractTypePeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Contract) to the collection in $obj2 (ContractType)
+				$obj2->addContract($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined Currency rows
+
+				$key3 = CurrencyPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = CurrencyPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = CurrencyPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					CurrencyPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (Contract) to the collection in $obj3 (Currency)
 				$obj3->addContract($obj1);
 
 			} // if joined row is not null

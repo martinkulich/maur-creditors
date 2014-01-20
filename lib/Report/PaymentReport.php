@@ -18,7 +18,7 @@ class PaymentReport extends ParentReport
                 p.note as note
             FROM payment p
             JOIN contract co ON co.id = p.contract_id
-            JOIN creditor cr ON cr.id = co.creditor_id
+            JOIN subject cr ON cr.id = co.creditor_id
             JOIN bank_account ba ON ba.id = p.bank_account_id
             %where%
             ORDER BY   %order_by%

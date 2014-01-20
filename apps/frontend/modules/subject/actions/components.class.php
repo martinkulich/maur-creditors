@@ -1,6 +1,6 @@
 <?php
 
-class creditorComponents extends sfComponents
+class subjectComponents extends sfComponents
 {
 
     public function executePaidDetail()

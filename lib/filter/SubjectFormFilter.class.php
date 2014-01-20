@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Creditor filter form.
+ * Subject filter form.
  *
  * @package    rezervuj
  * @subpackage filter
  * @author     Your name here
  */
-class CreditorFormFilter extends BaseCreditorFormFilter
+class SubjectFormFilter extends BaseSubjectFormFilter
 {
   public function configure()
   {

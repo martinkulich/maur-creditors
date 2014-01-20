@@ -25,6 +25,12 @@ class Settlement extends BaseSettlement
         return $this->getContract()->getCreditor();
     }
 
+    public function getDebtor()
+    {
+        return $this->getContract()->getDebtor();
+
+    }
+
     /**
      * Initializes internal state of Settlement object.
      * @see        parent::__construct()

@@ -16,8 +16,9 @@ class MonthlyReport extends ParentReport
                 sum(contract_received_payments(c.id, %month%, %year%)) as received_payments,
                 sum(contract_balance_increase(c.id, %month%, %year%)) as balance_increase
 
-            FROM creditor cr
+            FROM subject cr
             JOIN contract c ON c.creditor_id = cr.id
+            JOIN subject de ON de.id = c.debtor_id
             %where%
             GROUP BY currency_code
             ORDER BY currency_code, %order_by%
@@ -56,6 +57,12 @@ class MonthlyReport extends ParentReport
         }
         return $formatedValue;
     }
+
+    public function getWhere()
+    {
+        return ' where '.$this->getDebtorCondition();
+    }
+
 
 
 }

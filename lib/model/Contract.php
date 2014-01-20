@@ -22,6 +22,16 @@ class Contract extends BaseContract
         return $this->getName();
     }
 
+    public function getCreditor(PropelPDO $con = null)
+    {
+        return $this->getSubjectRelatedByCreditorId($con);
+    }
+
+    public function getDebtor(PropelPDO $con = null)
+    {
+        return $this->getSubjectRelatedByDebtorId($con);
+    }
+
     public function getPaymentsAmount()
     {
         $paymentsAmount = 0;

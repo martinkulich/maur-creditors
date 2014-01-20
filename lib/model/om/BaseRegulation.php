@@ -120,9 +120,9 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	protected $aContract;
 
 	/**
-	 * @var        Creditor
+	 * @var        Subject
 	 */
-	protected $aCreditor;
+	protected $aSubject;
 
 	/**
 	 * @var        RegulationYear
@@ -387,8 +387,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = RegulationPeer::CREDITOR_ID;
 		}
 
-		if ($this->aCreditor !== null && $this->aCreditor->getId() !== $v) {
-			$this->aCreditor = null;
+		if ($this->aSubject !== null && $this->aSubject->getId() !== $v) {
+			$this->aSubject = null;
 		}
 
 		return $this;
@@ -771,8 +771,8 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aCreditor !== null && $this->creditor_id !== $this->aCreditor->getId()) {
-			$this->aCreditor = null;
+		if ($this->aSubject !== null && $this->creditor_id !== $this->aSubject->getId()) {
+			$this->aSubject = null;
 		}
 		if ($this->aContract !== null && $this->contract_id !== $this->aContract->getId()) {
 			$this->aContract = null;
@@ -820,7 +820,7 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aContract = null;
-			$this->aCreditor = null;
+			$this->aSubject = null;
 			$this->aRegulationYearRelatedByRegulationYear = null;
 		} // if (deep)
 	}
@@ -976,11 +976,11 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 				$this->setContract($this->aContract);
 			}
 
-			if ($this->aCreditor !== null) {
-				if ($this->aCreditor->isModified() || $this->aCreditor->isNew()) {
-					$affectedRows += $this->aCreditor->save($con);
+			if ($this->aSubject !== null) {
+				if ($this->aSubject->isModified() || $this->aSubject->isNew()) {
+					$affectedRows += $this->aSubject->save($con);
 				}
-				$this->setCreditor($this->aCreditor);
+				$this->setSubject($this->aSubject);
 			}
 
 			if ($this->aRegulationYearRelatedByRegulationYear !== null) {
@@ -1084,9 +1084,9 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aCreditor !== null) {
-				if (!$this->aCreditor->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aCreditor->getValidationFailures());
+			if ($this->aSubject !== null) {
+				if (!$this->aSubject->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aSubject->getValidationFailures());
 				}
 			}
 
@@ -1545,13 +1545,13 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a Creditor object.
+	 * Declares an association between this object and a Subject object.
 	 *
-	 * @param      Creditor $v
+	 * @param      Subject $v
 	 * @return     Regulation The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setCreditor(Creditor $v = null)
+	public function setSubject(Subject $v = null)
 	{
 		if ($v === null) {
 			$this->setCreditorId(NULL);
@@ -1559,10 +1559,10 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 			$this->setCreditorId($v->getId());
 		}
 
-		$this->aCreditor = $v;
+		$this->aSubject = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Creditor object, it will not be re-added.
+		// If this object has already been added to the Subject object, it will not be re-added.
 		if ($v !== null) {
 			$v->addRegulation($this);
 		}
@@ -1572,25 +1572,25 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Creditor object
+	 * Get the associated Subject object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Creditor The associated Creditor object.
+	 * @return     Subject The associated Subject object.
 	 * @throws     PropelException
 	 */
-	public function getCreditor(PropelPDO $con = null)
+	public function getSubject(PropelPDO $con = null)
 	{
-		if ($this->aCreditor === null && ($this->creditor_id !== null)) {
-			$this->aCreditor = CreditorPeer::retrieveByPk($this->creditor_id);
+		if ($this->aSubject === null && ($this->creditor_id !== null)) {
+			$this->aSubject = SubjectPeer::retrieveByPk($this->creditor_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aCreditor->addRegulations($this);
+			   $this->aSubject->addRegulations($this);
 			 */
 		}
-		return $this->aCreditor;
+		return $this->aSubject;
 	}
 
 	/**
@@ -1657,7 +1657,7 @@ abstract class BaseRegulation extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 			$this->aContract = null;
-			$this->aCreditor = null;
+			$this->aSubject = null;
 			$this->aRegulationYearRelatedByRegulationYear = null;
 	}
 

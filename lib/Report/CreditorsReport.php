@@ -20,7 +20,7 @@ class CreditorsReport extends ParentReport
                 sum(creditor_unpaid(cr.id, last_day(m.number, %year%), '%currency_code%')) as unpaid,
                 sum(creditor_balance(cr.id, last_day(m.number, %year%), '%currency_code%', false)) as month_end_balance,
                 m.number as month
-            FROM creditor cr, months m
+            FROM subject cr, months m
             %where%
             GROUP BY
                 month
@@ -41,10 +41,9 @@ class CreditorsReport extends ParentReport
 
     public function getWhere()
     {
-        $where = parent::getWhere();
+        $where = sprintf(" WHERE cr.identification_number != '%s' ", $this->getOwnerIdentificationNumber());
         if ($creditorId = $this->getFilter('creditor_id')) {
-            $where .= $where === '' ? ' WHERE ' : ' AND ';
-            $where .= 'cr.id=' . $creditorId;
+            $where .= ' AND cr.id=' . $creditorId;
         }
         return $where;
     }

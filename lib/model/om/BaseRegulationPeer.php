@@ -519,7 +519,7 @@ abstract class BaseRegulationPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related Subject table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -527,7 +527,7 @@ abstract class BaseRegulationPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinSubject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -554,7 +554,7 @@ abstract class BaseRegulationPeer {
 			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -703,7 +703,7 @@ abstract class BaseRegulationPeer {
 
 
 	/**
-	 * Selects a collection of Regulation objects pre-filled with their Creditor objects.
+	 * Selects a collection of Regulation objects pre-filled with their Subject objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -711,7 +711,7 @@ abstract class BaseRegulationPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinSubject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -722,9 +722,9 @@ abstract class BaseRegulationPeer {
 
 		RegulationPeer::addSelectColumns($criteria);
 		$startcol = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
-		CreditorPeer::addSelectColumns($criteria);
+		SubjectPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -750,19 +750,19 @@ abstract class BaseRegulationPeer {
 				RegulationPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = CreditorPeer::getInstanceFromPool($key2);
+				$obj2 = SubjectPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (Regulation) to $obj2 (Creditor)
+				// Add the $obj1 (Regulation) to $obj2 (Subject)
 				$obj2->addRegulation($obj1);
 
 			} // if joined row was not null
@@ -884,7 +884,7 @@ abstract class BaseRegulationPeer {
 
 		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
 
@@ -930,15 +930,15 @@ abstract class BaseRegulationPeer {
 		ContractPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		RegulationYearPeer::addSelectColumns($criteria);
 		$startcol5 = $startcol4 + (RegulationYearPeer::NUM_COLUMNS - RegulationYearPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
 
@@ -983,21 +983,21 @@ abstract class BaseRegulationPeer {
 				$obj2->addRegulation($obj1);
 			} // if joined row not null
 
-			// Add objects for joined Creditor rows
+			// Add objects for joined Subject rows
 
-			$key3 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			$key3 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 			if ($key3 !== null) {
-				$obj3 = CreditorPeer::getInstanceFromPool($key3);
+				$obj3 = SubjectPeer::getInstanceFromPool($key3);
 				if (!$obj3) {
 
-					$cls = CreditorPeer::getOMClass(false);
+					$cls = SubjectPeer::getOMClass(false);
 
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					CreditorPeer::addInstanceToPool($obj3, $key3);
+					SubjectPeer::addInstanceToPool($obj3, $key3);
 				} // if obj3 loaded
 
-				// Add the $obj1 (Regulation) to the collection in $obj3 (Creditor)
+				// Add the $obj1 (Regulation) to the collection in $obj3 (Subject)
 				$obj3->addRegulation($obj1);
 			} // if joined row not null
 
@@ -1062,7 +1062,7 @@ abstract class BaseRegulationPeer {
 			$con = Propel::getConnection(RegulationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
 
@@ -1085,7 +1085,7 @@ abstract class BaseRegulationPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Creditor table
+	 * Returns the number of rows matching criteria, joining the related Subject table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1093,7 +1093,7 @@ abstract class BaseRegulationPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptCreditor(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptSubject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -1180,7 +1180,7 @@ abstract class BaseRegulationPeer {
 	
 		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -1224,13 +1224,13 @@ abstract class BaseRegulationPeer {
 		RegulationPeer::addSelectColumns($criteria);
 		$startcol2 = (RegulationPeer::NUM_COLUMNS - RegulationPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		RegulationYearPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (RegulationYearPeer::NUM_COLUMNS - RegulationYearPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(RegulationPeer::REGULATION_YEAR, RegulationYearPeer::ID, $join_behavior);
 
@@ -1258,21 +1258,21 @@ abstract class BaseRegulationPeer {
 				RegulationPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Subject rows
 
-				$key2 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = CreditorPeer::getInstanceFromPool($key2);
+					$obj2 = SubjectPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = SubjectPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					CreditorPeer::addInstanceToPool($obj2, $key2);
+					SubjectPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (Regulation) to the collection in $obj2 (Creditor)
+				// Add the $obj1 (Regulation) to the collection in $obj2 (Subject)
 				$obj2->addRegulation($obj1);
 
 			} // if joined row is not null
@@ -1304,7 +1304,7 @@ abstract class BaseRegulationPeer {
 
 
 	/**
-	 * Selects a collection of Regulation objects pre-filled with all related objects except Creditor.
+	 * Selects a collection of Regulation objects pre-filled with all related objects except Subject.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1313,7 +1313,7 @@ abstract class BaseRegulationPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptCreditor(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptSubject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1433,12 +1433,12 @@ abstract class BaseRegulationPeer {
 		ContractPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ContractPeer::NUM_COLUMNS - ContractPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		CreditorPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (CreditorPeer::NUM_COLUMNS - CreditorPeer::NUM_LAZY_LOAD_COLUMNS);
+		SubjectPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		$criteria->addJoin(RegulationPeer::CONTRACT_ID, ContractPeer::ID, $join_behavior);
 
-		$criteria->addJoin(RegulationPeer::CREDITOR_ID, CreditorPeer::ID, $join_behavior);
+		$criteria->addJoin(RegulationPeer::CREDITOR_ID, SubjectPeer::ID, $join_behavior);
 
 		// symfony_behaviors behavior
 		foreach (sfMixer::getCallables(self::getMixerPreSelectHook(__FUNCTION__)) as $sf_hook)
@@ -1483,21 +1483,21 @@ abstract class BaseRegulationPeer {
 
 			} // if joined row is not null
 
-				// Add objects for joined Creditor rows
+				// Add objects for joined Subject rows
 
-				$key3 = CreditorPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				$key3 = SubjectPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 				if ($key3 !== null) {
-					$obj3 = CreditorPeer::getInstanceFromPool($key3);
+					$obj3 = SubjectPeer::getInstanceFromPool($key3);
 					if (!$obj3) {
 	
-						$cls = CreditorPeer::getOMClass(false);
+						$cls = SubjectPeer::getOMClass(false);
 
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					CreditorPeer::addInstanceToPool($obj3, $key3);
+					SubjectPeer::addInstanceToPool($obj3, $key3);
 				} // if $obj3 already loaded
 
-				// Add the $obj1 (Regulation) to the collection in $obj3 (Creditor)
+				// Add the $obj1 (Regulation) to the collection in $obj3 (Subject)
 				$obj3->addRegulation($obj1);
 
 			} // if joined row is not null

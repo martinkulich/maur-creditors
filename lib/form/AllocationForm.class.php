@@ -13,8 +13,8 @@ class AllocationForm extends BaseAllocationForm
     {
         sfProjectConfiguration::getActive()->loadHelpers('Url');
 
-        $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Creditor', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
-        $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Creditor', 'required' => true)));
+        $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Subject', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
+        $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Subject', 'required' => true)));
 
         $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
         $this->getWidgetSchema()->moveField('outgoing_payment_id', sfWidgetFormSchema::AFTER, 'creditor_id');

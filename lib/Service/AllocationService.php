@@ -2,7 +2,7 @@
 
 class AllocationService
 {
-    public function getAllocableOutgoingPaymentsCriteria(Creditor $creditor = null, OutgoingPayment $outgoingPayment = null)
+    public function getAllocableOutgoingPaymentsCriteria(Subject $creditor = null, OutgoingPayment $outgoingPayment = null)
     {
         $outgoingPaymentCriteria = new Criteria();
         $outgoingPaymentCriteria->addAscendingOrderByColumn(OutgoingPaymentPeer::DATE, Criteria::DESC);

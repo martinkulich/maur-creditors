@@ -1,11 +1,12 @@
 <?php
 
-require_once 'lib/model/om/BaseCreditor.php';
+require_once 'lib/model/om/BaseSubject.php';
+
 
 /**
- * Skeleton subclass for representing a row from the 'creditor' table.
+ * Skeleton subclass for representing a row from the 'subject' table.
  *
- *
+ * 
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -13,20 +14,19 @@ require_once 'lib/model/om/BaseCreditor.php';
  *
  * @package    lib.model
  */
-class Creditor extends BaseCreditor
-{
-    const CREDITOR_TYPE_FO = 'individual';
-    const CREDITOR_TYPE_PO = 'corporation';
+class Subject extends BaseSubject {
+    const SUBJECT_TYPE_FO = 'individual';
+    const SUBJECT_TYPE_PO = 'corporation';
 
-    const CREDITOR_TYPE_CODE_FO = 'fo';
-    const CREDITOR_TYPE_CODE_PO = 'po';
+    const SUBJECT_TYPE_CODE_FO = 'fo';
+    const SUBJECT_TYPE_CODE_PO = 'po';
 
-    public static function getCreditorTypes()
+    public static function getSubjectTypes()
     {
         $translateService = ServiceContainer::getTranslateService();
         return array(
-            self::CREDITOR_TYPE_CODE_FO => $translateService->__(sfInflector::humanize(self::CREDITOR_TYPE_FO)),
-            self::CREDITOR_TYPE_CODE_PO => $translateService->__(sfInflector::humanize(self::CREDITOR_TYPE_PO)),
+            self::SUBJECT_TYPE_CODE_FO => $translateService->__(sfInflector::humanize(self::SUBJECT_TYPE_FO)),
+            self::SUBJECT_TYPE_CODE_PO => $translateService->__(sfInflector::humanize(self::SUBJECT_TYPE_PO)),
         );
     }
 
@@ -40,11 +40,11 @@ class Creditor extends BaseCreditor
         return $this->getLastname() . ' ' . $this->getFirstname();
     }
 
-    public function getCreditorType()
+    public function getSubjectType()
     {
-        $creditorTypeCode = $this->getCreditorTypeCode();
+        $creditorTypeCode = $this->getSubjectTypeCode();
         $creditorType = null;
-        $creditorTypes = $this->getCreditorTypes();
+        $creditorTypes = $this->getSubjectTypes();
 
         return array_key_exists($creditorTypeCode, $creditorTypes) ? $creditorTypes[$creditorTypeCode] : null;
     }
@@ -58,6 +58,4 @@ class Creditor extends BaseCreditor
 
         return $this->getGifts($criteria);
     }
-}
-
-// Creditor
+} // Subject

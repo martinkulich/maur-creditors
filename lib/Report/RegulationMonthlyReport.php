@@ -21,7 +21,7 @@ class RegulationMonthlyReport extends ParentReport
             sum(creditor_capitalized(cr.id, %month%, %year%, '%currency_code%')) AS capitalized,
             sum(creditor_balance(cr.id, last_day(%month%, %year%), '%currency_code%', true)) AS month_end_balance
             FROM
-            creditor cr
+            subject cr
             WHERE true
             %where%
             group by cr.id, cr.lastname, cr.firstname
@@ -119,7 +119,7 @@ class RegulationMonthlyReport extends ParentReport
         $formatedValue = parent::getFormatedRowValue($row, $column);
 
         if ($column == 'paid') {
-            $formatedValue = link_to($formatedValue, '@creditor_paidDetail?filter[year]='.$row['year'].'&filter[month]='.$row['month'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
+            $formatedValue = link_to($formatedValue, '@subject_paidDetail?filter[year]='.$row['year'].'&filter[month]='.$row['month'].'&id=' . $row['creditor_id'], array('class' => 'modal_link'));
         }
         return $formatedValue;
     }

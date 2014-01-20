@@ -1,4 +1,5 @@
  # default values
 all:
    default_currency_code: CZK
+   owner_identification_number: 28990137
 
