@@ -37,6 +37,7 @@ class PaymentForm extends BasePaymentForm
         $this->setWidget('payment_type', new sfWidgetFormChoice(array('choices' => $paymemtTypeChoices)));
         $this->setValidator('payment_type', new sfValidatorChoice(array('choices' => array_keys($paymemtTypeChoices))));
         $this->getWidgetSchema()->moveField('payment_type', sfWidgetFormSchema::FIRST);
+        $this->getWidget('bank_account_id')->setOption('order_by', array('Name', 'desc'));
 
         if (!$this->getObject()->isNew()) {
             $this->unsetField('date');

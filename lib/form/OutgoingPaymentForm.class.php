@@ -18,6 +18,7 @@ class OutgoingPaymentForm extends BaseOutgoingPaymentForm
         $this->setValidator('date', new myValidatorDate());
 
         $this->getWidget('creditor_id')->setOption('order_by', array('Lastname', 'asc'));
+        $this->getWidget('bank_account_id')->setOption('order_by', array('Name', 'desc'));
 
         $fields = array('amount', 'refundation');
         foreach ($fields as $field) {
