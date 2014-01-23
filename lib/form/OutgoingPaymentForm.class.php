@@ -14,6 +14,7 @@ class OutgoingPaymentForm extends BaseOutgoingPaymentForm
     {
         $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
         $this->getWidgetSchema()->moveField('refundation', sfWidgetFormSchema::AFTER, 'amount');
+        $this->getWidgetSchema()->moveField('receiver_bank_account', sfWidgetFormSchema::AFTER, 'bank_account_id');
         $this->setWidget('date', new myJQueryDateWidget());
         $this->setValidator('date', new myValidatorDate());
 

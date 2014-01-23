@@ -24,6 +24,10 @@ class PaymentForm extends BasePaymentForm
         $this->setWidget('creditor_id', new sfWidgetFormPropelChoice(array('model' => 'Subject', 'order_by' => array('Lastname', 'asc'), 'add_empty' => true)));
         $this->setValidator('creditor_id', new sfValidatorPropelChoice(array('model' => 'Subject', 'required' => true)));
         $this->getWidgetSchema()->moveField('creditor_id', sfWidgetFormSchema::FIRST);
+
+
+        $this->getWidgetSchema()->moveField('sender_bank_account', sfWidgetFormSchema::AFTER, 'bank_account_id');
+
         $contract = ContractPeer::retrieveByPK($this->getObject()->getContractId());
         if ($contract) {
             $this->getWidget('creditor_id')->setDefault($contract->getCreditorId());

@@ -1327,7 +1327,7 @@
     </trans-unit>
     <trans-unit id="332">
       <source>Bank account</source>
-      <target>Bankovní účet</target>
+      <target>Náš bankovní účet</target>
     </trans-unit>
     <trans-unit id="333">
       <source>City</source>
@@ -1879,7 +1879,7 @@
     </trans-unit>
     <trans-unit id="470">
       <source>Currency of outgoing payment is not equal with cuurency of settlement contract</source>
-      <target>Měna platby věřitely se neshoduje s měnou smlouvy</target>
+      <target>Měna platby věřiteli se neshoduje s měnou smlouvy</target>
     </trans-unit>
     <trans-unit id="471">
       <source>unpaid report</source>
@@ -2175,7 +2175,7 @@
     </trans-unit>
     <trans-unit id="544">
       <source>Creditor of outgoing payment is not equal with creditor of settlement contract</source>
-      <target>Věřitel platby věřitely se neshoduje s věřitelem smlouvy</target>
+      <target>Věřitel platby věřiteli se neshoduje s věřitelem smlouvy</target>
     </trans-unit>
     <trans-unit id="545">
       <source>regulation report</source>
@@ -2191,11 +2191,11 @@
     </trans-unit>
     <trans-unit id="548">
       <source>New outgoingPayment</source>
-      <target>Nová platba věřitely</target>
+      <target>Nová platba věřiteli</target>
     </trans-unit>
     <trans-unit id="549">
       <source>Edit outgoingPayment</source>
-      <target>Editace platby věřitely</target>
+      <target>Editace platby věřiteli</target>
     </trans-unit>
     <trans-unit id="550">
       <source>There are some settlements related to this outgoing payment, pls unrelate them before deletion</source>
@@ -2259,11 +2259,11 @@
     </trans-unit>
     <trans-unit id="565">
       <source>There is no outgoing payment to be used for allocation</source>
-      <target>Všechny platby věřitely daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřitely</target>
+      <target>Všechny platby věřiteli daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřiteli</target>
     </trans-unit>
     <trans-unit id="566">
       <source>Sender bank account</source>
-      <target>Bankovní účet odesílatele</target>
+      <target>Bankovní účet partnera</target>
     </trans-unit>
     <trans-unit id="567">
       <source>New gift</source>
@@ -2307,7 +2307,7 @@
     </trans-unit>
     <trans-unit id="577">
       <source>Receiver bank account</source>
-      <target>Bankovní účet příjemce</target>
+      <target>Bankovní účet partnera</target>
     </trans-unit>
     <trans-unit id="578">
       <source>Outgoing payments</source>

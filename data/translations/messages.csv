@@ -365,7 +365,7 @@ of contract;smlouvy
 Subject type code;Typ
 Identification number;IČO/Rodné číslo
 Lastname;Příjmení/Firma
-Bank account;Bankovní účet
+Bank account;Náš bankovní účet
 City;Město
 Street;Ulice
 Zip;PSČ
@@ -508,7 +508,7 @@ Paid required if outgoing payment is set;Pole “Vyplaceno“ je povinné, pokud
 Exceeded unallocated amount %unallocated_amount%;Z platby věřiteli lze již alokovovat pouze částku %unallocated_amount%
 There is no amount to allocate;Platba věřiteli je již zcela alokována
 First settlement date;Datum prvního vypořádání
-Currency of outgoing payment is not equal with cuurency of settlement contract;Měna platby věřitely se neshoduje s měnou smlouvy
+Currency of outgoing payment is not equal with cuurency of settlement contract;Měna platby věřiteli se neshoduje s měnou smlouvy
 unpaid report;Nevyplacené úroky
 About how much balance should be reduced;O kolik bude jistina ponížena
 This field is unchangeable after contract activation;Nutno nastavit před aktivací smlouvy
@@ -584,12 +584,12 @@ Number;Číslo
 Used amount;Použitá částka
 Unused amount;Nevyužitá částka
 Outgoing payment;Platba věřiteli
-Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel platby věřitely se neshoduje s věřitelem smlouvy
+Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel platby věřiteli se neshoduje s věřitelem smlouvy
 regulation report;Předpisy
 regulation_monthly report;Předpis v daném měsíci
 Filter outgoingPayment;Filtrovat platby věřitelům
-New outgoingPayment;Nová platba věřitely
-Edit outgoingPayment;Editace platby věřitely
+New outgoingPayment;Nová platba věřiteli
+Edit outgoingPayment;Editace platby věřiteli
 There are some settlements related to this outgoing payment, pls unrelate them before deletion;Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání
 to_pay report;K vyplacení tento měsíc
 of to_pay;K vyplacení tento měsíc
@@ -605,8 +605,8 @@ New allocation;Nová alokace
 Filter allocation; Filtrovat alokace
 Allocated amount;Alokováno
 Unallocated amount;Nealokováno
-There is no outgoing payment to be used for allocation;Všechny platby věřitely daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřitely
-Sender bank account; Bankovní účet odesílatele
+There is no outgoing payment to be used for allocation;Všechny platby věřiteli daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřiteli
+Sender bank account; Bankovní účet partnera
 New gift;Nový dárek
 Edit gift;Editvoat dárek
 Filter gift;Filtrovat dárky
@@ -618,7 +618,7 @@ payment report;Platby od věřitelů
 of payment;Platby od věřitelů
 Exclude from report;Nezahrnovat tuto smlouvu do tohoto reportu
 exclude_from_report;Nezahrnovat
-Receiver bank account;Bankovní účet příjemce
+Receiver bank account;Bankovní účet partnera
 Outgoing payments;Platby věřitelům
 Paid interests;Vyplacené úroky
 Unpaid interests;Nevyplacené úroky
