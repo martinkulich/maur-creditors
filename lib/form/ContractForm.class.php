@@ -15,6 +15,8 @@ class ContractForm extends BaseContractForm
         $this->getWidgetSchema()->moveField('name', sfWidgetFormSchema::FIRST);
         $this->getWidgetSchema()->moveField('currency_code', sfWidgetFormSchema::AFTER, 'amount');
         $this->getWidgetSchema()->moveField('first_settlement_date', sfWidgetFormSchema::AFTER, 'created_at');
+        $this->getWidgetSchema()->moveField('debtor_id', sfWidgetFormSchema::BEFORE, 'creditor_id');
+
         $dateFields = array(
             'activated_at',
             'created_at',
