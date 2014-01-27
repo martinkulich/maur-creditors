@@ -22,6 +22,7 @@ class PaymentReportForm extends ParentReportForm
         return array(
             'date_from',
             'date_to',
+            'debtor_id',
             'creditor_id',
             'contract_id',
         );

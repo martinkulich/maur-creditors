@@ -8,7 +8,8 @@ class PaymentReport extends ParentReport
         return "
             SELECT 
                 co.currency_code as currency_code,
-                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
+                (cr.lastname::text || ' '::text || cr.firstname::text) as creditor_fullname,
+                (de.lastname::text || ' '::text || de.firstname::text) as debtor_fullname,
                 co.name as contract_name,
                 p.payment_type as payment_type,
                 p.date as date,
@@ -19,6 +20,7 @@ class PaymentReport extends ParentReport
             FROM payment p
             JOIN contract co ON co.id = p.contract_id
             JOIN subject cr ON cr.id = co.creditor_id
+            JOIN subject de ON de.id = co.debtor_id
             JOIN bank_account ba ON ba.id = p.bank_account_id
             %where%
             ORDER BY   %order_by%
@@ -29,7 +31,8 @@ class PaymentReport extends ParentReport
     public function getColumns()
     {
         return array(
-            'fullname',
+            'debtor_fullname',
+            'creditor_fullname',
             'contract_name',
             'payment_type',
              'date',
@@ -78,6 +81,10 @@ class PaymentReport extends ParentReport
             $conditions[] = ' cr.id = ' . $creditorId;
         }
 
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $conditions[] = ' de.id = ' . $debtorId;
+        }
+
         if ($contractId = $this->getFilter('contract_id')) {
             $conditions[] = ' co.id = ' . $contractId;
         }
@@ -111,7 +118,7 @@ class PaymentReport extends ParentReport
     {
         return array(
             'date_from',
-            'date_to',
+            'date_to'
         );
     }
 
