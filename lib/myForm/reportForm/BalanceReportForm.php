@@ -11,6 +11,6 @@ class BalanceReportForm extends ParentReportForm
     
     public function getUsedFields()
     {
-        return array('date_to', 'creditor_id');
+        return array('date_to', 'debtor_id', 'creditor_id');
     }
 }
