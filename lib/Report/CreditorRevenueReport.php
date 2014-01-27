@@ -11,7 +11,7 @@ class CreditorRevenueReport extends ParentReport
                 c.currency_code as currency_code,
                 cr.id as creditor_id,
                 '%date_to%' as date_to,
-                creditor_received_payments(cr.id, '%date_to%'::date) as received_payments,
+                sum(contract_received_payments(c.id, '%date_to%'::date)) as received_payments,
                 sum(contract_balance(c.id, '%date_to%'::date, true))::integer AS current_balance,
                 sum(contract_balance(c.id, '%date_to%'::date, true)) - creditor_received_payments(cr.id, '%date_to%'::date)  as balance_change,
                 sum(contract_capitalized(c.id, '%date_to%'::date))::integer as capitalized,
@@ -21,8 +21,8 @@ class CreditorRevenueReport extends ParentReport
                 sum(contract_paid(c.id, '%date_to%'::date))::integer as paid,
                 sum(contract_unpaid(c.id, '%date_to%'::date))::integer AS unpaid,
                 sum(contract_unpaid_regular(c.id, '%date_to%'::date))::integer AS unpaid_regular
-            FROM subject cr
-            JOIN contract c ON c.creditor_id = cr.id
+            FROM contract c
+            JOIN subject cr ON c.creditor_id = cr.id
             JOIN subject de On de.id = c.debtor_id
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'creditor_revenue' AND cer.contract_id = c.id) = 0
             %where%
@@ -76,12 +76,16 @@ class CreditorRevenueReport extends ParentReport
             $where .= ' AND cr.id = ' . $creditorId;
         }
 
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $where .= ' AND de.id = ' . $debtorId;
+        }
+
         return $where;
     }
 
     public function getRequiredFilters()
     {
-        return array('date_to');
+        return array('date_to', 'debtor_id');
     }
 
     public function getFormatedRowValue($row, $column)

@@ -42,3 +42,11 @@ vyplaceni po ukonceni
 
     po https moznost nahrat soubory
         nahravani dokumentu smluv
+
+
+//report z pohledu VSDK jako dluznik
+
+Cash flow report
+    pridal jsem povinou podminku na dluznik = vsdk
+    nelze sloucit do jednoho reportu, nedava smysl
+    chces udelat stejny report i z druheho pohledu?
