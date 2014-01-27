@@ -9,7 +9,8 @@ class UnpaidReport extends ParentReport
             SELECT 
                 cr.id as creditor_id,
                 c.currency_code as currency_code,
-                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname, 
+                (cr.lastname::text || ' '::text || cr.firstname::text) as creditor_fullname,
+                (de.lastname::text || ' '::text || de.firstname::text) as debtor_fullname,
                 sum(contract_unpaid_regular(c.id, '%date_to%', true))::integer as unpaid_cumulative_regular,
                 sum(contract_unpaid(c.id, '%date_to%', true))::integer as unpaid_cumulative
             FROM subject cr
@@ -21,7 +22,10 @@ class UnpaidReport extends ParentReport
                 c.currency_code, 
                 cr.id, 
                 cr.lastname, 
-                cr.firstname
+                cr.firstname,
+                de.id,
+                de.lastname,
+                de.firstname
             HAVING sum(contract_unpaid_regular(c.id, '%date_to%'::date, true))::integer <> 0
             ORDER BY currency_code,  %order_by%
             ;
@@ -30,12 +34,24 @@ class UnpaidReport extends ParentReport
 
     public function getWhere()
     {
-        return ' AND '.$this->getDebtorCondition();
+        $where = '';
+        if ($creditorId = $this->getFilter('creditor_id')) {
+            $where .= ' AND cr.id = ' . $creditorId;
+        }
+
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $where .= ' AND de.id = ' . $debtorId;
+        }
+
+        return $where;
     }
+
     public function getColumns()
     {
         return array_merge(array(
-            'fullname',),
+            'debtor_fullname',
+            'creditor_fullname',
+            ),
             $this->getCurrencyColumns()
         );
     }
@@ -63,6 +79,6 @@ class UnpaidReport extends ParentReport
 
     public function getRequiredFilters()
     {
-        return array('date_to');
+        return array('date_to', 'debtor_id');
     }
 }
