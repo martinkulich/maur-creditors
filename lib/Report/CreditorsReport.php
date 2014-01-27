@@ -10,20 +10,24 @@ class CreditorsReport extends ParentReport
                 '%currency_code%' as currency_code,
                 '%year%' as year,
                 %creditor_row%
-                sum(creditor_balance(cr.id, first_day(m.number, %year%), '%currency_code%')) as month_start_balance,
-                sum(creditor_interest(cr.id, m.number, %year%, '%currency_code%')) as regulation,
-                sum(creditor_interest(cr.id,  %year%, '%currency_code%')/12) as interest_in_the_recognition,
-                sum((creditor_interest(cr.id,  %year%, '%currency_code%')/12)*m.number) as interest_in_the_recognition_cumulative,
-                sum(creditor_paid(cr.id, m.number, %year%, '%currency_code%')) as paid,
-                sum(creditor_balance_increase(cr.id, m.number, %year%, '%currency_code%')) as balance_increase,
-                sum(creditor_capitalized(cr.id, m.number, %year%, '%currency_code%')) as capitalized,
-                sum(creditor_unpaid(cr.id, last_day(m.number, %year%), '%currency_code%')) as unpaid,
-                sum(creditor_balance(cr.id, last_day(m.number, %year%), '%currency_code%', false)) as month_end_balance,
+                sum(contract_balance(c.id, first_day(m.number, %year%))) as month_start_balance,
+                sum(contract_interest(c.id, m.number, %year%)) as regulation,
+                sum(contract_interest(c.id,  %year%)/12) as interest_in_the_recognition,
+                sum((contract_interest(c.id,  %year%)/12)*m.number) as interest_in_the_recognition_cumulative,
+                sum(contract_paid(c.id, m.number, %year%)) as paid,
+                sum(contract_balance_increase(c.id, m.number, %year%)) as balance_increase,
+                sum(contract_capitalized(c.id, m.number, %year%)) as capitalized,
+                sum(contract_unpaid(c.id, last_day(m.number, %year%))) as unpaid,
+                sum(contract_balance(c.id, last_day(m.number, %year%), false)) as month_end_balance,
                 m.number as month
-            FROM subject cr, months m
+            FROM months m,  contract c
+            JOIN subject cr ON cr.id = c.creditor_id
+            JOIN subject de ON de.id = c.debtor_id
+            where c.currency_code = '%currency_code%'
             %where%
             GROUP BY
-                month
+                month,
+                c.currency_code
             order by
             month
             ;
@@ -41,9 +45,13 @@ class CreditorsReport extends ParentReport
 
     public function getWhere()
     {
-        $where = sprintf(" WHERE cr.identification_number != '%s' ", $this->getOwnerIdentificationNumber());
+        $where = '';
         if ($creditorId = $this->getFilter('creditor_id')) {
             $where .= ' AND cr.id=' . $creditorId;
+        }
+
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $where .= ' AND de.id = ' . $debtorId;
         }
         return $where;
     }
@@ -94,7 +102,7 @@ class CreditorsReport extends ParentReport
 
     public function getRequiredFilters()
     {
-        return array('year', 'currency_code');
+        return array('year', 'currency_code', 'debtor_id');
     }
 
     public function getFormatedRowValue($row, $column)

@@ -137,6 +137,14 @@ class reportActions extends sfActions
                         }
                     }
                     break;
+                case 'debtor_id':
+                    if (!isset($filters[$filterKey])) {
+                        if ($owner = SubjectPeer::getOwner()) {
+                            $filters[$filterKey] = $owner->getId();
+                            $changed = true;
+                        }
+                    }
+                    break;
                 case 'currency_code':
                     if (!isset($filters[$filterKey])) {
                         if ($currency = CurrencyPeer::doSelectOne(new Criteria())) {
