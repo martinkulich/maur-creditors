@@ -11,21 +11,35 @@ class RegulationMonthlyReport extends ParentReport
             %month% as month,
             (cr.lastname::text || ' '::text) || cr.firstname::text AS creditor_fullname,
             cr.id AS creditor_id,
-            '%currency_code%' AS currency_code,
-            sum(creditor_balance(cr.id, first_day(%month%, %year%), '%currency_code%',  false)) AS month_start_balance,
+            (de.lastname::text || ' '::text) || de.firstname::text AS debtor_fullname,
+            de.id AS debtor_id,
+            c.currency_code AS currency_code,
+            sum(contract_balance(c.id, first_day(%month%, %year%),  false)) AS month_start_balance,
 
-            sum(creditor_interest(cr.id, %month%, %year%, '%currency_code%')) AS regulation,
-            sum(creditor_interest(cr.id, %year%, '%currency_code%')/12) AS interest_in_the_recognition,
-            sum(creditor_paid(cr.id,  %month%, %year%, '%currency_code%')) AS paid,
-            sum(creditor_unpaid(cr.id, last_day(%month%, %year%), '%currency_code%')) AS unpaid,
-            sum(creditor_capitalized(cr.id, %month%, %year%, '%currency_code%')) AS capitalized,
-            sum(creditor_balance(cr.id, last_day(%month%, %year%), '%currency_code%', true)) AS month_end_balance
+            sum(contract_interest(c.id, %month%, %year%)) AS regulation,
+            sum(contract_interest(c.id, %year%)/12) AS interest_in_the_recognition,
+            sum(contract_paid(c.id,  %month%, %year%)) AS paid,
+            sum(contract_unpaid(c.id, last_day(%month%, %year%))) AS unpaid,
+            sum(contract_capitalized(c.id, %month%, %year%)) AS capitalized,
+            sum(contract_balance(c.id, last_day(%month%, %year%), true)) AS month_end_balance
             FROM
-            subject cr
+            contract c
+            JOIN
+            subject cr on c.creditor_id = cr.id
+            JOIN
+            subject de on c.debtor_id = de.id
+
             WHERE true
             %where%
-            group by cr.id, cr.lastname, cr.firstname
-            HAVING sum(creditor_interest(cr.id, %year%, '%currency_code%'))::integer <> 0
+            group by
+            cr.id,
+            cr.lastname,
+            cr.firstname,
+            de.id,
+            de.lastname,
+            de.firstname,
+            c.currency_code
+            HAVING sum(contract_interest(c.id, %year%))::integer <> 0
             ORDER BY %order_by%
         ";
     }
@@ -35,6 +49,9 @@ class RegulationMonthlyReport extends ParentReport
         $conditions = array();
         if ($creditorId = $this->getFilter('creditor_id')) {
             $conditions[] = ' cr.id = ' . $creditorId;
+        }
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $conditions[] = ' de.id = ' . $debtorId;
         }
 
 
@@ -49,6 +66,7 @@ class RegulationMonthlyReport extends ParentReport
         return array(
             'year',
             'month',
+            'debtor_fullname',
             'creditor_fullname',
             'month_start_balance',
             'regulation',

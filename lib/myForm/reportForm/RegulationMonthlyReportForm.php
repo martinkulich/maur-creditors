@@ -4,6 +4,6 @@ class RegulationMonthlyReportForm extends ParentReportForm
 {
     public function getUsedFields()
     {
-        return array('year', 'month', 'creditor_id', 'currency_code');
+        return array('year', 'month','debtor_id', 'creditor_id');
     }
 }
