@@ -421,7 +421,7 @@ Unsettled;Nevypořádáno
 Closed at;datum ukončení smlouvy
 Copy;Kopírovat
 regulation admin;Předpisy
-of regulation;předpisy
+
 of regulation_monthly;Předpis v daném měsíci
 Subject firstname;Jméno
 Subject lastname;Příjmení
@@ -587,7 +587,10 @@ Used amount;Použitá částka
 Unused amount;Nevyužitá částka
 Outgoing payment;Platba věřiteli
 Creditor of outgoing payment is not equal with creditor of settlement contract;Věřitel platby věřiteli se neshoduje s věřitelem smlouvy
-regulation report;Předpisy
+creditor_regulation report;Předpisy věřitelů
+of creditor_regulation;předpisy věřitelů
+debtor_regulation report;Předpisy dlužníků
+of debtor_regulation;předpisy dlužníků
 regulation_monthly report;Předpis v daném měsíci
 Filter outgoingPayment;Filtrovat platby věřitelům
 New outgoingPayment;Nová platba věřiteli

@@ -131,9 +131,26 @@ abstract class ParentReport
         return reset($columns);
     }
 
-    protected function getWhere()
+    public function getWhere()
     {
-        return '';
+        $conditions = $this->getConditions();
+
+        $where = count($conditions) > 0 ? ' AND ' . implode(' AND ', $conditions) : '';
+        return $where;
+    }
+
+    protected function getConditions()
+    {
+        $conditions = array();
+        if ($creditorId = $this->getFilter('creditor_id')) {
+            $conditions[] = ' cr.id = ' . $creditorId;
+        }
+
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $conditions[] = ' de.id = ' . $debtorId;
+        }
+
+        return $conditions;
     }
 
     protected function getOwnerAsDebtorCondition()
@@ -141,9 +158,19 @@ abstract class ParentReport
         return sprintf(" de.identification_number = '%s' ", $this->getOwnerIdentificationNumber());
     }
 
+    protected function getExcludeOwnerFromDebtorsCondition()
+    {
+        return sprintf(" de.identification_number != '%s' ", $this->getOwnerIdentificationNumber());
+    }
+
     protected function getOwnerAsCreditorCondition()
     {
         return sprintf(" cr.identification_number = '%s' ", $this->getOwnerIdentificationNumber());
+    }
+
+    protected function getExcludeOwnerFromCreditorsCondition()
+    {
+        return sprintf(" cr.identification_number != '%s' ", $this->getOwnerIdentificationNumber());
     }
 
 

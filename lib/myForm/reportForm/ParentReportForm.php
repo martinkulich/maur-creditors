@@ -1,6 +1,6 @@
 <?php
 
-class ParentReportForm extends BaseForm
+abstract class ParentReportForm extends BaseForm
 {
 
     public function configure()
@@ -75,5 +75,21 @@ class ParentReportForm extends BaseForm
         }
 
         return $usedFields;
+    }
+
+    public function excludeOwnerFromCreditors()
+    {
+        $creditorCriteria = $this->getWidget('creditor_id')->getOption('criteria');
+        $creditorCriteria = SubjectPeer::getExcludeOwnerCriteria($creditorCriteria);
+        $this->getWidget('creditor_id')->setOption('criteria', $creditorCriteria);
+        $this->getValidator('creditor_id')->setOption('criteria', $creditorCriteria);
+    }
+
+    public function excludeOwnerFromDebtors()
+    {
+        $debtorCriteria = $this->getWidget('debtor_id')->getOption('criteria');
+        $debtorCriteria = SubjectPeer::getExcludeOwnerCriteria($debtorCriteria);
+        $this->getWidget('debtor_id')->setOption('criteria', $debtorCriteria);
+        $this->getValidator('debtor_id')->setOption('criteria', $debtorCriteria);
     }
 }

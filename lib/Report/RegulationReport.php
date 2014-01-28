@@ -1,6 +1,6 @@
 <?php
 
-class RegulationReport extends ParentReport
+abstract class RegulationReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -28,6 +28,8 @@ class RegulationReport extends ParentReport
             count(s1.id)>0 as manual_balance,
             count(s2.id)>0 as manual_interest
             FROM regulation r
+            JOIN subject cr ON cr.id = r.creditor_id
+            JOIN subject de ON de.id = r.debtor_id
             LEFT JOIN settlement s1 on s1.contract_id = r.contract_id and s1.manual_balance = true
             LEFT JOIN settlement s2 on s2.contract_id = r.contract_id and s2.manual_interest = true
             WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'regulation' AND cer.contract_id = r.contract_id) = 0
@@ -56,28 +58,20 @@ class RegulationReport extends ParentReport
         ";
     }
 
-    public function getWhere()
+    public function getConditions()
     {
-        $conditions = array();
-        if ($creditorId = $this->getFilter('creditor_id')) {
-            $conditions[] = ' creditor_id = ' . $creditorId;
-        }
+        $conditions = parent::getConditions();
 
-        if ($debtorId = $this->getFilter('debtor_id')) {
-            $conditions[] = ' debtor_id = ' . $debtorId;
-        }
 
         if ($contractId = $this->getFilter('contract_id')) {
             $conditions[] = ' r.contract_id = ' . $contractId;
         }
 
         if ($years = $this->getFilter('years')) {
-                $conditions[] = ' regulation_year in (' . implode(', ', $years) . ' ) ';
+            $conditions[] = ' regulation_year in (' . implode(', ', $years) . ' ) ';
         }
 
-        $where = count($conditions) > 0 ? ' AND ' . implode(' AND ', $conditions) : '';
-//        die(var_dump($where));
-        return $where;
+        return $conditions;
     }
 
     public function getColumns()
