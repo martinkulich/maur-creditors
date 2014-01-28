@@ -2399,33 +2399,41 @@
     </trans-unit>
     <trans-unit id="600">
       <source>creditors report</source>
-      <target>Měsíčně k zaúčtování</target>
+      <target>Měsíčně k zaúčtování - věřitelé</target>
     </trans-unit>
     <trans-unit id="601">
       <source>of creditors</source>
-      <target>Měsíčně k zaúčtování</target>
+      <target>Měsíčně k zaúčtování - věřitelé</target>
     </trans-unit>
     <trans-unit id="602">
+      <source>debtors report</source>
+      <target>Měsíčně k zaúčtování - dlužníci</target>
+    </trans-unit>
+    <trans-unit id="603">
+      <source>of debtors</source>
+      <target>Měsíčně k zaúčtování - dlužníci</target>
+    </trans-unit>
+    <trans-unit id="604">
       <source>Month interest</source>
       <target>Měsíční předpis</target>
     </trans-unit>
-    <trans-unit id="603">
+    <trans-unit id="605">
       <source>Month interest cumulative</source>
       <target>Měsíční předpis kumulativně</target>
     </trans-unit>
-    <trans-unit id="604">
+    <trans-unit id="606">
       <source>Interest in the recognition</source>
       <target>Úrok k zaúčtování</target>
     </trans-unit>
-    <trans-unit id="605">
+    <trans-unit id="607">
       <source>Interest in the recognition cumulative</source>
       <target>Úrok k zaúčtování kumulativně</target>
     </trans-unit>
-    <trans-unit id="606">
+    <trans-unit id="608">
       <source>Date of outgoing payment</source>
       <target>Datum platby věřiteli</target>
     </trans-unit>
-    <trans-unit id="607">
+    <trans-unit id="609">
       <source>Download</source>
       <target>Stáhnout</target>
     </trans-unit>
