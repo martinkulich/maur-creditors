@@ -1,13 +1,12 @@
 <?php
 
-class CreditorRegulationReport extends RegulationReport
+class CreditorBalanceReport extends BalanceReport
 {
 
-    public function getConditions()
+    protected function getConditions()
     {
         return $this->getCreditorReportConditions();
     }
-
 
     public function getColumns()
     {

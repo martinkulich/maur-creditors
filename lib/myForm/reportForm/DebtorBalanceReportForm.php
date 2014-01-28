@@ -1,16 +1,17 @@
 <?php
 
-class BalanceReportForm extends ParentReportForm
+class DebtorBalanceReportForm extends ParentReportForm
 {
 
     public function configure()
     {
         parent::configure();
         $this->getWidget('date_to')->setLabel('Balance to date');
+        $this->excludeOwnerFromDebtors();
     }
     
     public function getUsedFields()
     {
-        return array('date_to', 'debtor_id', 'creditor_id');
+        return array('date_to', 'debtor_id');
     }
 }

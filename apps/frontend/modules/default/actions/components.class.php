@@ -66,7 +66,8 @@ class defaultComponents extends sfComponents
             $this->reportLinks[] = 'debtor_regulation';
             $this->reportLinks[] = 'creditor_regulation_monthly';
             $this->reportLinks[] = 'debtor_regulation_monthly';
-            $this->reportLinks[] = 'balance';
+            $this->reportLinks[] = 'creditor_balance';
+            $this->reportLinks[] = 'debtor_balance';
             $this->reportLinks[] = 'birthday';
             $this->reportLinks[] = 'monthly';
             $this->reportLinks[] = 'creditors';

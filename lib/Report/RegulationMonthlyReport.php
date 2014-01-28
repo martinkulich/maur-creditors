@@ -113,7 +113,7 @@ abstract class RegulationMonthlyReport extends ParentReport
 
     public function getRequiredFilters()
     {
-        return array('month', 'year', 'currency_code');
+        return array('month', 'year');
     }
 
     public function getFormatedRowValue($row, $column)

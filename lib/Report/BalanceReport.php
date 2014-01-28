@@ -1,6 +1,6 @@
 <?php
 
-class BalanceReport extends ParentReport
+abstract class BalanceReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -68,20 +68,6 @@ class BalanceReport extends ParentReport
     {
         $totalColumns = $this->getTotalColumns();
         return in_array($column, $totalColumns);
-    }
-
-    public function getWhere()
-    {
-        $where = '';
-        if ($creditorId = $this->getFilter('creditor_id')) {
-            $where = ' AND cr.id = ' . $creditorId;
-        }
-
-        if ($debtorId = $this->getFilter('debtor_id')) {
-            $where = ' AND de.id = ' . $debtorId;
-        }
-
-        return $where;
     }
 
     public function getRequiredFilters()

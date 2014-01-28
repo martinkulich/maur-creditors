@@ -32,9 +32,10 @@ class reportActions extends sfActions
     public function executeIndex(sfWebRequest $request)
     {
         $this->filters = $this->getFilters();
-        $report = $this->reportService->getReport($this->reportType, $this->filters);
-        $this->checkFilters($report->getRequiredFilters());
+        $this->form = $this->getForm($request);
         $this->report = $this->reportService->getReport($this->reportType, $this->filters);
+        $this->checkFilters($request);
+
 
         $this->hasFilter = count($this->filters) > 0;
     }
@@ -99,11 +100,12 @@ class reportActions extends sfActions
         return $filters;
     }
 
-    protected function checkFilters(array $filtersToCheck = array())
+    protected function checkFilters(sfWebRequest $request)
     {
+        $requiredFilters = $this->report->getRequiredFilters();
         $filters = $this->getFilters();
         $changed = false;
-        foreach ($filtersToCheck as $filterKey) {
+        foreach ($requiredFilters as $filterKey) {
 
             if (!isset($filters[$filterKey])) {
 
@@ -171,6 +173,16 @@ class reportActions extends sfActions
                 }
             }
         }
+        $usedFilters = $this->getForm($request)->getUsedFields();
+        foreach($filters as $filter=>$value)
+        {
+            if(!in_array($filter, $usedFilters))
+            {
+                unset($filters[$filter]);
+                $changed = true;
+            }
+        }
+
         if ($changed) {
             $this->setFilters($filters);
             return $this->redirect('@report?report_type=' . $this->reportType);

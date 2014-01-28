@@ -141,6 +141,11 @@ abstract class ParentReport
 
     protected function getConditions()
     {
+        return $this->getDefaultConditions();
+    }
+
+    protected  function getDefaultConditions()
+    {
         $conditions = array();
         if ($creditorId = $this->getFilter('creditor_id')) {
             $conditions[] = ' cr.id = ' . $creditorId;
@@ -151,6 +156,26 @@ abstract class ParentReport
         }
 
         return $conditions;
+    }
+
+    protected function getCreditorReportConditions()
+    {
+        $conditions = $this->getDefaultConditions();
+        $conditions[] = $this->getOwnerAsDebtorCondition();
+        $conditions[] = $this->getExcludeOwnerFromCreditorsCondition();
+
+        return $conditions;
+
+    }
+
+    protected function getDebtorReportConditions()
+    {
+        $conditions = $this->getDefaultConditions();
+        $conditions[] = $this->getOwnerAsCreditorCondition();
+        $conditions[] = $this->getExcludeOwnerFromDebtorsCondition();
+
+        return $conditions;
+
     }
 
     protected function getOwnerAsDebtorCondition()

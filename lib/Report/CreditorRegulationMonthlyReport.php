@@ -5,11 +5,7 @@ class CreditorRegulationMonthlyReport extends RegulationMonthlyReport
 
     protected function getConditions()
     {
-        $conditions = parent::getConditions();
-        $conditions[] = $this->getOwnerAsDebtorCondition();
-        $conditions[] = $this->getExcludeOwnerFromCreditorsCondition();
-
-        return $conditions;
+        return $this->getCreditorReportConditions();
     }
 
     public function getColumns()

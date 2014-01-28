@@ -525,8 +525,10 @@ Currency rate;Kurz měny
 unpaid;Nevyplacené úroky
 of unpaid;Nevyplacené úroky
 Unpaid to date;Nevyplaceno ke dni
-balance report;Jistiny po věřitelých
-of balance;Jistiny po věřitelých
+creditor_balance report;Jistiny po věřitelích
+of creditor_balance;Jistiny po věřitelích
+debtor_balance report;Jistiny po dlužnících
+of debtor_balance;Jistiny po dlužnících
 Balance to date;Jistina ke dni
 Summary to date;Sumarizace ke dni
 summary report;Sumarizace

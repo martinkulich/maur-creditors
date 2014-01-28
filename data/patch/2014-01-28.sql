@@ -15,4 +15,7 @@ insert into security_perm(code, "name", is_public) values ('report-debtor-regula
 
 update security_perm set name = 'Předpisy věřitelů v daném měsíci', code ='report-creditor-regulation-monthly' where code ='report-regulation-monthly';
 insert into security_perm(code, "name", is_public) values ('report-debtor-regulation-monthly', 'Předpisy dlužníků v daném měsíci', true);
+
+update security_perm set name = 'Jistiny po věřitelích',code ='report-creditor-balance' where code ='report-balance';
+insert into security_perm(code, "name", is_public) values ('report-debtor-balance', 'Jistiny po dlužnících', true);
 COMMIT;
