@@ -1,10 +1,10 @@
 <?php
 
-class CreditorRegulationReportForm extends ParentReportForm
+class CreditorRegulationMonthlyReportForm extends ParentReportForm
 {
     public function getUsedFields()
     {
-        return array('creditor_id', 'contract_id', 'years');
+        return array('year', 'month', 'creditor_id');
     }
 
     public function configure()

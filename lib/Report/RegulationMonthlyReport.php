@@ -1,6 +1,6 @@
 <?php
 
-class RegulationMonthlyReport extends ParentReport
+abstract class RegulationMonthlyReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -44,22 +44,6 @@ class RegulationMonthlyReport extends ParentReport
         ";
     }
 
-    public function getWhere()
-    {
-        $conditions = array();
-        if ($creditorId = $this->getFilter('creditor_id')) {
-            $conditions[] = ' cr.id = ' . $creditorId;
-        }
-        if ($debtorId = $this->getFilter('debtor_id')) {
-            $conditions[] = ' de.id = ' . $debtorId;
-        }
-
-
-
-        $where = count($conditions) > 0 ? ' AND ' . implode(' AND ', $conditions) : '';
-//        die(var_dump($where));
-        return $where;
-    }
 
     public function getColumns()
     {

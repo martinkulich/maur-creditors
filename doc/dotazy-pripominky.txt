@@ -55,3 +55,8 @@ Cash flow report
  k vyplaceni tento mesic
     ma cenu delat report pro VSDK jako veritele?
     k obdrzeni tento mesic
+
+
+validace smlouvy
+VSDK musi byt but veritel nebo dluznik!!!
+    navaznost na reporty

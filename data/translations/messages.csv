@@ -591,7 +591,10 @@ creditor_regulation report;Předpisy věřitelů
 of creditor_regulation;předpisy věřitelů
 debtor_regulation report;Předpisy dlužníků
 of debtor_regulation;předpisy dlužníků
-regulation_monthly report;Předpis v daném měsíci
+creditor_regulation_monthly report;Předpisy věřitelů v daném měsíci
+of creditor_regulation_monthly;Předpisy věřitelů v daném měsíci
+debtor_regulation_monthly report;Předpisy dlužníků v daném měsíci
+of debtor_regulation_monthly;Předpisy dlužníků v daném měsíci
 Filter outgoingPayment;Filtrovat platby věřitelům
 New outgoingPayment;Nová platba věřiteli
 Edit outgoingPayment;Editace platby věřiteli

@@ -64,7 +64,8 @@ class defaultComponents extends sfComponents
         if ($user->hasCredential('report.admin')) {
             $this->reportLinks[] = 'creditor_regulation';
             $this->reportLinks[] = 'debtor_regulation';
-            $this->reportLinks[] = 'regulation_monthly';
+            $this->reportLinks[] = 'creditor_regulation_monthly';
+            $this->reportLinks[] = 'debtor_regulation_monthly';
             $this->reportLinks[] = 'balance';
             $this->reportLinks[] = 'birthday';
             $this->reportLinks[] = 'monthly';
@@ -81,7 +82,6 @@ class defaultComponents extends sfComponents
             foreach ($this->reportLinks as $key => $link) {
                 $credential = str_replace("_", "-", sprintf($pattern, $link));
                 if (!$user->hasCredential($credential)) {
-                    die(var_dump($credential));
                     unset($this->reportLinks[$key]);
                 }
             }
