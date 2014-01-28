@@ -2022,426 +2022,438 @@
       <target>Adresa</target>
     </trans-unit>
     <trans-unit id="506">
+      <source>Creditor address</source>
+      <target>Adresa</target>
+    </trans-unit>
+    <trans-unit id="507">
+      <source>Debtor address</source>
+      <target>Adresa</target>
+    </trans-unit>
+    <trans-unit id="508">
       <source>Next birthday</source>
       <target>Příští narozeniny</target>
     </trans-unit>
-    <trans-unit id="507">
+    <trans-unit id="509">
       <source>Age on next birthday</source>
       <target>Věk při příštích narozeninách</target>
     </trans-unit>
-    <trans-unit id="508">
+    <trans-unit id="510">
       <source>of birthday</source>
       <target>Narozeniny</target>
     </trans-unit>
-    <trans-unit id="509">
+    <trans-unit id="511">
       <source>birthday report</source>
       <target>Narozeniny</target>
     </trans-unit>
-    <trans-unit id="510">
+    <trans-unit id="512">
       <source>Print</source>
       <target>Tisk</target>
     </trans-unit>
-    <trans-unit id="511">
+    <trans-unit id="513">
       <source>monthly report</source>
       <target>Cash flow</target>
     </trans-unit>
-    <trans-unit id="512">
+    <trans-unit id="514">
       <source>of monthly</source>
       <target>Cash flow</target>
     </trans-unit>
-    <trans-unit id="513">
+    <trans-unit id="515">
       <source>January</source>
       <target>Leden</target>
     </trans-unit>
-    <trans-unit id="514">
+    <trans-unit id="516">
       <source>February</source>
       <target>Únor</target>
     </trans-unit>
-    <trans-unit id="515">
+    <trans-unit id="517">
       <source>March</source>
       <target>Březen</target>
     </trans-unit>
-    <trans-unit id="516">
+    <trans-unit id="518">
       <source>April</source>
       <target>Duben</target>
     </trans-unit>
-    <trans-unit id="517">
+    <trans-unit id="519">
       <source>May</source>
       <target>Květen</target>
     </trans-unit>
-    <trans-unit id="518">
+    <trans-unit id="520">
       <source>June</source>
       <target>Červen</target>
     </trans-unit>
-    <trans-unit id="519">
+    <trans-unit id="521">
       <source>July</source>
       <target>Červenec</target>
     </trans-unit>
-    <trans-unit id="520">
+    <trans-unit id="522">
       <source>August</source>
       <target>Srpen</target>
     </trans-unit>
-    <trans-unit id="521">
+    <trans-unit id="523">
       <source>September</source>
       <target>Září</target>
     </trans-unit>
-    <trans-unit id="522">
+    <trans-unit id="524">
       <source>October</source>
       <target>Říjen</target>
     </trans-unit>
-    <trans-unit id="523">
+    <trans-unit id="525">
       <source>November</source>
       <target>Listopad</target>
     </trans-unit>
-    <trans-unit id="524">
+    <trans-unit id="526">
       <source>December</source>
       <target>Prosinec</target>
     </trans-unit>
-    <trans-unit id="525">
+    <trans-unit id="527">
       <source>Creditor unpaid regular</source>
       <target>Nevyplaceno (řádná vypořádání)</target>
     </trans-unit>
-    <trans-unit id="526">
+    <trans-unit id="528">
       <source>Creditor capitalized</source>
       <target>Kapitalizováno</target>
     </trans-unit>
-    <trans-unit id="527">
+    <trans-unit id="529">
       <source>Creditor balance reduction</source>
       <target>Ponížení jistiny</target>
     </trans-unit>
-    <trans-unit id="528">
+    <trans-unit id="530">
       <source>Creditor unpaid</source>
       <target>Nevyplaceno</target>
     </trans-unit>
-    <trans-unit id="529">
+    <trans-unit id="531">
       <source>Creditor balance</source>
       <target>Jistina</target>
     </trans-unit>
-    <trans-unit id="530">
+    <trans-unit id="532">
       <source>Birthday</source>
       <target>Příští narozeniny</target>
     </trans-unit>
-    <trans-unit id="531">
+    <trans-unit id="533">
       <source>Age</source>
       <target>Věk při příštích narozeninách</target>
     </trans-unit>
-    <trans-unit id="532">
+    <trans-unit id="534">
       <source>End of month balance</source>
       <target>Jistina na konci měsíce</target>
     </trans-unit>
-    <trans-unit id="533">
+    <trans-unit id="535">
       <source>creditor_confirmation report</source>
       <target>Potvrzení pro věřitele</target>
     </trans-unit>
-    <trans-unit id="534">
+    <trans-unit id="536">
       <source>of creditor_confirmation</source>
       <target>Potvrzení pro věřitele</target>
     </trans-unit>
-    <trans-unit id="535">
+    <trans-unit id="537">
       <source>debtor_confirmation report</source>
       <target>Potvrzení pro dlužníky</target>
     </trans-unit>
-    <trans-unit id="536">
+    <trans-unit id="538">
       <source>of debtor_confirmation</source>
       <target>Potvrzení pro dlužníky</target>
     </trans-unit>
-    <trans-unit id="537">
+    <trans-unit id="539">
       <source>Balance no capitalization and balance reduction</source>
       <target>Jistina (bez kapitalizace a ponížení jistiny)</target>
     </trans-unit>
-    <trans-unit id="538">
+    <trans-unit id="540">
       <source>outgoing_payment admin</source>
       <target>Platby věřitelům</target>
     </trans-unit>
-    <trans-unit id="539">
+    <trans-unit id="541">
       <source>of outgoing_payment</source>
       <target>Platby věřitelům</target>
     </trans-unit>
-    <trans-unit id="540">
+    <trans-unit id="542">
       <source>bank_account admin</source>
       <target>Bankovní účty</target>
     </trans-unit>
-    <trans-unit id="541">
+    <trans-unit id="543">
       <source>of bank_account</source>
       <target>Bankovní účty</target>
     </trans-unit>
-    <trans-unit id="542">
+    <trans-unit id="544">
       <source>New bankAccount</source>
       <target>Nový bankovní účet</target>
     </trans-unit>
-    <trans-unit id="543">
+    <trans-unit id="545">
       <source>Edit bankAccount</source>
       <target>Editace bankovního účtu</target>
     </trans-unit>
-    <trans-unit id="544">
+    <trans-unit id="546">
       <source>Fiter bankAccount</source>
       <target>Filtrovat bankovní účty</target>
     </trans-unit>
-    <trans-unit id="545">
+    <trans-unit id="547">
       <source>Number</source>
       <target>Číslo</target>
     </trans-unit>
-    <trans-unit id="546">
+    <trans-unit id="548">
       <source>Used amount</source>
       <target>Použitá částka</target>
     </trans-unit>
-    <trans-unit id="547">
+    <trans-unit id="549">
       <source>Unused amount</source>
       <target>Nevyužitá částka</target>
     </trans-unit>
-    <trans-unit id="548">
+    <trans-unit id="550">
       <source>Outgoing payment</source>
       <target>Platba věřiteli</target>
     </trans-unit>
-    <trans-unit id="549">
+    <trans-unit id="551">
       <source>Creditor of outgoing payment is not equal with creditor of settlement contract</source>
       <target>Věřitel platby věřiteli se neshoduje s věřitelem smlouvy</target>
     </trans-unit>
-    <trans-unit id="550">
+    <trans-unit id="552">
       <source>creditor_regulation report</source>
       <target>Předpisy věřitelů</target>
     </trans-unit>
-    <trans-unit id="551">
+    <trans-unit id="553">
       <source>of creditor_regulation</source>
       <target>předpisy věřitelů</target>
     </trans-unit>
-    <trans-unit id="552">
+    <trans-unit id="554">
       <source>debtor_regulation report</source>
       <target>Předpisy dlužníků</target>
     </trans-unit>
-    <trans-unit id="553">
+    <trans-unit id="555">
       <source>of debtor_regulation</source>
       <target>předpisy dlužníků</target>
     </trans-unit>
-    <trans-unit id="554">
+    <trans-unit id="556">
       <source>creditor_regulation_monthly report</source>
       <target>Předpisy věřitelů v daném měsíci</target>
     </trans-unit>
-    <trans-unit id="555">
+    <trans-unit id="557">
       <source>of creditor_regulation_monthly</source>
       <target>Předpisy věřitelů v daném měsíci</target>
     </trans-unit>
-    <trans-unit id="556">
+    <trans-unit id="558">
       <source>debtor_regulation_monthly report</source>
       <target>Předpisy dlužníků v daném měsíci</target>
     </trans-unit>
-    <trans-unit id="557">
+    <trans-unit id="559">
       <source>of debtor_regulation_monthly</source>
       <target>Předpisy dlužníků v daném měsíci</target>
     </trans-unit>
-    <trans-unit id="558">
+    <trans-unit id="560">
       <source>Filter outgoingPayment</source>
       <target>Filtrovat platby věřitelům</target>
     </trans-unit>
-    <trans-unit id="559">
+    <trans-unit id="561">
       <source>New outgoingPayment</source>
       <target>Nová platba věřiteli</target>
     </trans-unit>
-    <trans-unit id="560">
+    <trans-unit id="562">
       <source>Edit outgoingPayment</source>
       <target>Editace platby věřiteli</target>
     </trans-unit>
-    <trans-unit id="561">
+    <trans-unit id="563">
       <source>There are some settlements related to this outgoing payment, pls unrelate them before deletion</source>
       <target>Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání</target>
     </trans-unit>
-    <trans-unit id="562">
+    <trans-unit id="564">
       <source>to_pay report</source>
       <target>K vyplacení tento měsíc</target>
     </trans-unit>
-    <trans-unit id="563">
+    <trans-unit id="565">
       <source>of to_pay</source>
       <target>K vyplacení tento měsíc</target>
     </trans-unit>
-    <trans-unit id="564">
+    <trans-unit id="566">
       <source>to_receive report</source>
       <target>K obdržení tento měsíc</target>
     </trans-unit>
-    <trans-unit id="565">
+    <trans-unit id="567">
       <source>of to_receive</source>
       <target>K obdržení tento měsíc</target>
     </trans-unit>
-    <trans-unit id="566">
+    <trans-unit id="568">
       <source>Settlement date</source>
       <target>Datum vypořádání úroků</target>
     </trans-unit>
-    <trans-unit id="567">
+    <trans-unit id="569">
       <source>Unpaid cumulative</source>
       <target>Nevyplaceno kumulativně</target>
     </trans-unit>
-    <trans-unit id="568">
+    <trans-unit id="570">
       <source>Unpaid cumulative regular</source>
       <target>Nevyplaceno kumulativně (řádná vypořádání)</target>
     </trans-unit>
-    <trans-unit id="569">
+    <trans-unit id="571">
       <source>Newly generated settlements will be automaticaly capitalized</source>
       <target>Nově vygenerované vypořádání úroků budou atomaticky kapitalizovány</target>
     </trans-unit>
-    <trans-unit id="570">
+    <trans-unit id="572">
       <source>allocation admin</source>
       <target>Alokace</target>
     </trans-unit>
-    <trans-unit id="571">
+    <trans-unit id="573">
       <source>of allocation</source>
       <target>Alokace</target>
     </trans-unit>
-    <trans-unit id="572">
+    <trans-unit id="574">
       <source>Settlement</source>
       <target>Vypořádání úroků</target>
     </trans-unit>
-    <trans-unit id="573">
+    <trans-unit id="575">
       <source>Edit allocation</source>
       <target>Editace alokace</target>
     </trans-unit>
-    <trans-unit id="574">
+    <trans-unit id="576">
       <source>New allocation</source>
       <target>Nová alokace</target>
     </trans-unit>
-    <trans-unit id="575">
+    <trans-unit id="577">
       <source>Filter allocation</source>
       <target>Filtrovat alokace</target>
     </trans-unit>
-    <trans-unit id="576">
+    <trans-unit id="578">
       <source>Allocated amount</source>
       <target>Alokováno</target>
     </trans-unit>
-    <trans-unit id="577">
+    <trans-unit id="579">
       <source>Unallocated amount</source>
       <target>Nealokováno</target>
     </trans-unit>
-    <trans-unit id="578">
+    <trans-unit id="580">
       <source>There is no outgoing payment to be used for allocation</source>
       <target>Všechny platby věřiteli daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřiteli</target>
     </trans-unit>
-    <trans-unit id="579">
+    <trans-unit id="581">
       <source>Sender bank account</source>
       <target>Bankovní účet partnera</target>
     </trans-unit>
-    <trans-unit id="580">
-      <source>New gift</source>
-      <target>Nový dárek</target>
-    </trans-unit>
-    <trans-unit id="581">
-      <source>Edit gift</source>
-      <target>Editvoat dárek</target>
-    </trans-unit>
     <trans-unit id="582">
-      <source>Filter gift</source>
-      <target>Filtrovat dárky</target>
-    </trans-unit>
-    <trans-unit id="583">
-      <source>Gifts</source>
-      <target>Dárky</target>
-    </trans-unit>
-    <trans-unit id="584">
-      <source>Last gift date</source>
-      <target>Datum posledního dárku</target>
-    </trans-unit>
-    <trans-unit id="585">
-      <source>Add gift</source>
-      <target>Přidat dárek</target>
-    </trans-unit>
-    <trans-unit id="586">
-      <source>Contract excluded report list</source>
-      <target>Nezahrnovat do reportu</target>
-    </trans-unit>
-    <trans-unit id="587">
-      <source>payment report</source>
-      <target>Platby od věřitelů</target>
-    </trans-unit>
-    <trans-unit id="588">
-      <source>Exclude from report</source>
-      <target>Nezahrnovat tuto smlouvu do tohoto reportu</target>
-    </trans-unit>
-    <trans-unit id="589">
-      <source>exclude_from_report</source>
-      <target>Nezahrnovat</target>
-    </trans-unit>
-    <trans-unit id="590">
       <source>Receiver bank account</source>
       <target>Bankovní účet partnera</target>
     </trans-unit>
+    <trans-unit id="583">
+      <source>Partner bank account</source>
+      <target>Bankovní účet partnera</target>
+    </trans-unit>
+    <trans-unit id="584">
+      <source>New gift</source>
+      <target>Nový dárek</target>
+    </trans-unit>
+    <trans-unit id="585">
+      <source>Edit gift</source>
+      <target>Editvoat dárek</target>
+    </trans-unit>
+    <trans-unit id="586">
+      <source>Filter gift</source>
+      <target>Filtrovat dárky</target>
+    </trans-unit>
+    <trans-unit id="587">
+      <source>Gifts</source>
+      <target>Dárky</target>
+    </trans-unit>
+    <trans-unit id="588">
+      <source>Last gift date</source>
+      <target>Datum posledního dárku</target>
+    </trans-unit>
+    <trans-unit id="589">
+      <source>Add gift</source>
+      <target>Přidat dárek</target>
+    </trans-unit>
+    <trans-unit id="590">
+      <source>Contract excluded report list</source>
+      <target>Nezahrnovat do reportu</target>
+    </trans-unit>
     <trans-unit id="591">
+      <source>payment report</source>
+      <target>Platby od věřitelů</target>
+    </trans-unit>
+    <trans-unit id="592">
+      <source>Exclude from report</source>
+      <target>Nezahrnovat tuto smlouvu do tohoto reportu</target>
+    </trans-unit>
+    <trans-unit id="593">
+      <source>exclude_from_report</source>
+      <target>Nezahrnovat</target>
+    </trans-unit>
+    <trans-unit id="594">
       <source>Outgoing payments</source>
       <target>Platby věřitelům</target>
     </trans-unit>
-    <trans-unit id="592">
+    <trans-unit id="595">
       <source>Paid interests</source>
       <target>Vyplacené úroky</target>
     </trans-unit>
-    <trans-unit id="593">
+    <trans-unit id="596">
       <source>Unpaid interests</source>
       <target>Nevyplacené úroky</target>
     </trans-unit>
-    <trans-unit id="594">
+    <trans-unit id="597">
       <source>Balance reduction during year</source>
       <target>Ponížení jistiny v průběhu roku</target>
     </trans-unit>
-    <trans-unit id="595">
+    <trans-unit id="598">
       <source>End balance of previous year</source>
       <target>Jistina na konci předchozího roku</target>
     </trans-unit>
-    <trans-unit id="596">
+    <trans-unit id="599">
       <source>End balance of current year</source>
       <target>Jistina na konci zvoleného roku</target>
     </trans-unit>
-    <trans-unit id="597">
+    <trans-unit id="600">
       <source>Balance increase during year</source>
       <target>Navýšení jistiny v průběhu roku</target>
     </trans-unit>
-    <trans-unit id="598">
+    <trans-unit id="601">
       <source>Month start balance</source>
       <target>Jistina na začátku měsíce</target>
     </trans-unit>
-    <trans-unit id="599">
+    <trans-unit id="602">
       <source>Month end balance</source>
       <target>Jistina na konci měsíce</target>
     </trans-unit>
-    <trans-unit id="600">
+    <trans-unit id="603">
       <source>Teoretical regulation</source>
       <target>Teoretické úroky</target>
     </trans-unit>
-    <trans-unit id="601">
+    <trans-unit id="604">
       <source>Refundation</source>
       <target>Vráceno</target>
     </trans-unit>
-    <trans-unit id="602">
+    <trans-unit id="605">
       <source>creditors report</source>
       <target>Měsíčně k zaúčtování - věřitelé</target>
     </trans-unit>
-    <trans-unit id="603">
+    <trans-unit id="606">
       <source>of creditors</source>
       <target>Měsíčně k zaúčtování - věřitelé</target>
     </trans-unit>
-    <trans-unit id="604">
+    <trans-unit id="607">
       <source>debtors report</source>
       <target>Měsíčně k zaúčtování - dlužníci</target>
     </trans-unit>
-    <trans-unit id="605">
+    <trans-unit id="608">
       <source>of debtors</source>
       <target>Měsíčně k zaúčtování - dlužníci</target>
     </trans-unit>
-    <trans-unit id="606">
+    <trans-unit id="609">
       <source>Month interest</source>
       <target>Měsíční předpis</target>
     </trans-unit>
-    <trans-unit id="607">
+    <trans-unit id="610">
       <source>Month interest cumulative</source>
       <target>Měsíční předpis kumulativně</target>
     </trans-unit>
-    <trans-unit id="608">
+    <trans-unit id="611">
       <source>Interest in the recognition</source>
       <target>Úrok k zaúčtování</target>
     </trans-unit>
-    <trans-unit id="609">
+    <trans-unit id="612">
       <source>Interest in the recognition cumulative</source>
       <target>Úrok k zaúčtování kumulativně</target>
     </trans-unit>
-    <trans-unit id="610">
+    <trans-unit id="613">
       <source>Date of outgoing payment</source>
       <target>Datum platby věřiteli</target>
     </trans-unit>
-    <trans-unit id="611">
+    <trans-unit id="614">
       <source>Download</source>
       <target>Stáhnout</target>
     </trans-unit>

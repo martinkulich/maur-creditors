@@ -14,10 +14,6 @@ class CreditorConfirmationReportForm extends ParentReportForm
         parent::configure();
 
         $this->getWidget('creditor_id')->setOption('add_empty', false);
-
-        $creditorCriteria = $this->getWidget('creditor_id')->getOption('criteria');
-        $creditorCriteria->setDistinct();
-
-        $this->getWidget('creditor_id')->setOption('criteria', SubjectPeer::getExcludeOwnerCriteria($creditorCriteria));
+        $this->excludeOwnerFromCreditors();
     }
 }

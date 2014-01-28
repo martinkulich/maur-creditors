@@ -12,7 +12,7 @@
             <?php echo __('Balance reduction') ?>
         </th>
         <th class="text-align-center">
-            <?php echo __('Bank account') ?>
+            <?php echo __('Receiver bank account') ?>
         </th>
     </tr>
     <?php foreach ($outgoingPayments as $outgoingPayment) { ?>

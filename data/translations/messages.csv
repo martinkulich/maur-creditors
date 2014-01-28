@@ -545,6 +545,8 @@ Interest regular;Řádný úrok
 paid;vyplaceno
 unpaid regular cumulative;Nevyplaceno kumulativně
 Address;Adresa
+Creditor address; Adresa
+Debtor address; Adresa
 Next birthday;Příští narozeniny
 Age on next birthday;Věk při příštích narozeninách
 of birthday;Narozeniny
@@ -621,6 +623,8 @@ Allocated amount;Alokováno
 Unallocated amount;Nealokováno
 There is no outgoing payment to be used for allocation;Všechny platby věřiteli daného věřitele jsou plně alokovány, vytvořte prosím novou platbu věřiteli
 Sender bank account; Bankovní účet partnera
+Receiver bank account;Bankovní účet partnera
+Partner bank account;Bankovní účet partnera
 New gift;Nový dárek
 Edit gift;Editvoat dárek
 Filter gift;Filtrovat dárky
@@ -632,7 +636,6 @@ payment report;Platby od věřitelů
 of payment;Platby od věřitelů
 Exclude from report;Nezahrnovat tuto smlouvu do tohoto reportu
 exclude_from_report;Nezahrnovat
-Receiver bank account;Bankovní účet partnera
 Outgoing payments;Platby věřitelům
 Paid interests;Vyplacené úroky
 Unpaid interests;Nevyplacené úroky

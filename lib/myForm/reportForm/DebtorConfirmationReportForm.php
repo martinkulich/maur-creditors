@@ -14,8 +14,6 @@ class DebtorConfirmationReportForm extends ParentReportForm
         parent::configure();
 
         $this->getWidget('debtor_id')->setOption('add_empty', false);
-        $debtorCriteria = $this->getWidget('debtor_id')->getOption('criteria');
-
-        $this->getWidget('debtor_id')->setOption('criteria', SubjectPeer::getExcludeOwnerCriteria($debtorCriteria));
+        $this->excludeOwnerFromDebtors();
     }
 }
