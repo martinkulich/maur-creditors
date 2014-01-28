@@ -572,6 +572,8 @@ End of month balance;Jistina na konci měsíce
 Received payments;Platby od věřitelů
 creditor_confirmation report;Potvrzení pro věřitele
 of creditor_confirmation;Potvrzení pro věřitele
+debtor_confirmation report;Potvrzení pro dlužníky
+of debtor_confirmation;Potvrzení pro dlužníky
 Balance no capitalization and balance reduction;Jistina (bez kapitalizace a ponížení jistiny)
 outgoing_payment admin;Platby věřitelům
 of outgoing_payment;Platby věřitelům

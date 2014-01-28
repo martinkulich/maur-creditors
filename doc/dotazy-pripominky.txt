@@ -53,6 +53,9 @@ Cash flow report
 
  potvrzeni pro veritele
     ma cenu delat report pro VSDK jako veritele?
+    potvrzeni pro dluzniky
 
  k vyplaceni tento mesic
     ma cenu delat report pro VSDK jako veritele?
+
+    k obdrzeni tento mesic

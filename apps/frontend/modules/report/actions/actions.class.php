@@ -139,10 +139,26 @@ class reportActions extends sfActions
                     break;
                 case 'debtor_id':
                     if (!isset($filters[$filterKey])) {
-                        if ($owner = SubjectPeer::getOwner()) {
-                            $filters[$filterKey] = $owner->getId();
-                            $changed = true;
+
+                        switch ($this->reportType) {
+                            case 'debtor_confirmation':
+                                $debtorCriteria = new Criteria();
+                                $debtorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
+                                $debtorCriteria->addJoin(SubjectPeer::ID, ContractPeer::DEBTOR_ID);
+                                $debtorCriteria->add(SubjectPeer::IDENTIFICATION_NUMBER, sfConfig::get('app_owner_identification_number'), Criteria::NOT_EQUAL);
+                                if ($debtor = SubjectPeer::doSelectOne($debtorCriteria)) {
+                                    $changed = true;
+                                    $filters[$filterKey] = $debtor->getId();
+                                }
+                                break;
+                            default:
+                                if ($debtor = SubjectPeer::getOwner()) {
+                                    $changed = true;
+                                    $filters[$filterKey] = $debtor->getId();
+                                }
+                                break;
                         }
+
                     }
                     break;
                 case 'currency_code':
