@@ -52,9 +52,6 @@ Cash flow report
     chces udelat stejny report i z druheho pohledu?
     minusem smlouvy kde VSDK je veritelem
 
- k vyplaceni tento mesic
-    ma cenu delat report pro VSDK jako veritele?
-    k obdrzeni tento mesic
 
 
 validace smlouvy

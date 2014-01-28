@@ -1,17 +1,17 @@
 <?php
 
-class CreditorRevenueReport extends SubjectProfitReport
+class DebtorCostReport extends SubjectProfitReport
 {
 
     protected function getConditions()
     {
-        return $this->getCreditorReportConditions();
+        return $this->getDebtorReportConditions();
     }
 
     public function getColumns()
     {
         $columns = parent::getColumns();
-        $columns = array_diff($columns, array('debtor_fullname'));
+        $columns = array_diff($columns, array('creditor_fullname'));
 
         return $columns;
     }

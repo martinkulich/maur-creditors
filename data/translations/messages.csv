@@ -536,6 +536,8 @@ of summary;Sumarizace
 Unpaid regular;Nevyplaceno (řádná vypořádání)
 creditor_revenue report;Výnosy věřitelů
 of creditor_revenue;Výnosy věřitelů
+debtor_cost report;Náklady dlužníků
+of debtor_cost;Náklady dlužníků
 Received payments;Platby od věřitelů
 Current balance;Současná jistina
 Balance change;Změna jistiny
