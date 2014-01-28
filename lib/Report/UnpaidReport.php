@@ -1,6 +1,6 @@
 <?php
 
-class UnpaidReport extends ParentReport
+abstract class UnpaidReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -30,20 +30,6 @@ class UnpaidReport extends ParentReport
             ORDER BY currency_code,  %order_by%
             ;
         ";
-    }
-
-    public function getWhere()
-    {
-        $where = '';
-        if ($creditorId = $this->getFilter('creditor_id')) {
-            $where .= ' AND cr.id = ' . $creditorId;
-        }
-
-        if ($debtorId = $this->getFilter('debtor_id')) {
-            $where .= ' AND de.id = ' . $debtorId;
-        }
-
-        return $where;
     }
 
     public function getColumns()
@@ -79,6 +65,6 @@ class UnpaidReport extends ParentReport
 
     public function getRequiredFilters()
     {
-        return array('date_to', 'debtor_id');
+        return array('date_to');
     }
 }

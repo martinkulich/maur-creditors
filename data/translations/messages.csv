@@ -509,7 +509,10 @@ Exceeded unallocated amount %unallocated_amount%;Z platby věřiteli lze již al
 There is no amount to allocate;Platba věřiteli je již zcela alokována
 First settlement date;Datum prvního vypořádání
 Currency of outgoing payment is not equal with cuurency of settlement contract;Měna platby věřiteli se neshoduje s měnou smlouvy
-unpaid report;Nevyplacené úroky
+creditor_unpaid report;Nevyplacené úroky věřitelům
+of creditor_unpaid;Nevyplacené úroky věřitelům
+debtor_unpaid report;Nevyplacené úroky od dlužníků
+of debtor_unpaid;Nevyplacené úroky od dlužníků
 About how much balance should be reduced;O kolik bude jistina ponížena
 This field is unchangeable after contract activation;Nutno nastavit před aktivací smlouvy
 currency admin;Měny
@@ -523,7 +526,6 @@ Edit currency;Editace měny
 Filter currency;Filtrovat měny
 Currency rate;Kurz měny
 unpaid;Nevyplacené úroky
-of unpaid;Nevyplacené úroky
 Unpaid to date;Nevyplaceno ke dni
 creditor_balance report;Jistiny po věřitelích
 of creditor_balance;Jistiny po věřitelích

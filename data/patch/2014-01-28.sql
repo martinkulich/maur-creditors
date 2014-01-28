@@ -24,3 +24,9 @@ insert into security_perm(code, "name", is_public) values ('report-debtors', 'M�
 
 insert into security_perm(code, "name", is_public) values ('report-debtor-cost', 'Náklady dlužníků', true);
 COMMIT;
+
+BEGIN;
+
+update security_perm set name = 'Nevyplacené úroky věřitelům', code ='report-creditor-unpaid' where code ='report-unpaid';
+insert into security_perm(code, "name", is_public) values ('report-debtor-unpaid', 'Nevyplacené úroky od dlužníků', true);
+COMMIt;
