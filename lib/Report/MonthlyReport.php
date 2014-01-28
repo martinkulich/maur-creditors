@@ -60,7 +60,7 @@ class MonthlyReport extends ParentReport
 
     public function getWhere()
     {
-        return ' where '.$this->getDebtorCondition();
+        return ' where '.$this->getOwnerAsDebtorCondition();
     }
 
 

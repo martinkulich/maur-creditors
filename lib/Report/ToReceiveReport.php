@@ -1,6 +1,6 @@
 <?php
 
-class ToPayReport extends ParentReport
+class ToReceiveReport extends ParentReport
 {
 
     public function getSqlPatter()
@@ -8,13 +8,13 @@ class ToPayReport extends ParentReport
         $endOfYearSettlementType = SettlementPeer::END_OF_YEAR;
         return "
             SELECT 
-                (cr.lastname::text || ' '::text || cr.firstname::text) as fullname,
+                (de.lastname::text || ' '::text || de.firstname::text) as fullname,
                 co.name as contract_name,
                 ct.name as contract_type_name,
                 co.id as contract_id,
                 co.currency_code as currency_code,
                 co.closed_at as closed_at,
-                cr.bank_account as bank_account,
+                de.bank_account as bank_account,
                 (SELECT COALESCE(date, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_date,
                 (SELECT COALESCE(id, null) FROM previous_regular_settlement(co.id, '%date_to%'::date)) AS settlement_id,
                 contract_unpaid_regular(co.id, '%date_to%'::date, true)::integer as to_pay
@@ -27,9 +27,9 @@ class ToPayReport extends ParentReport
             AND co.capitalize != true
             %where%
             GROUP BY
-                cr.lastname,
-                cr.firstname,
-                cr.bank_account,
+                de.lastname,
+                de.firstname,
+                de.bank_account,
                 co.name,
                 co.id,
                 co.currency_code,
@@ -91,9 +91,9 @@ class ToPayReport extends ParentReport
     
     public function getWhere()
     {
-        $where = 'AND '.$this->getOwnerAsDebtorCondition();
-        if ($creditorId = $this->getFilter('creditor_id')) {
-            $where .= ' AND cr.id = ' . $creditorId;
+        $where = 'AND '.$this->getOwnerAsCreditorCondition();
+        if ($debtorId = $this->getFilter('debtor_id')) {
+            $where .= ' AND de.id = ' . $debtorId;
         }
 
         if ($contractTypeId = $this->getFilter('contract_type_id')) {

@@ -136,10 +136,16 @@ abstract class ParentReport
         return '';
     }
 
-    protected function getDebtorCondition()
+    protected function getOwnerAsDebtorCondition()
     {
         return sprintf(" de.identification_number = '%s' ", $this->getOwnerIdentificationNumber());
     }
+
+    protected function getOwnerAsCreditorCondition()
+    {
+        return sprintf(" cr.identification_number = '%s' ", $this->getOwnerIdentificationNumber());
+    }
+
 
     protected function getOwnerIdentificationNumber()
     {

@@ -50,12 +50,8 @@ Cash flow report
     pridal jsem povinou podminku na dluznik = vsdk
     nelze sloucit do jednoho reportu, nedava smysl
     chces udelat stejny report i z druheho pohledu?
-
- potvrzeni pro veritele
-    ma cenu delat report pro VSDK jako veritele?
-    potvrzeni pro dluzniky
+    minusem smlouvy kde VSDK je veritelem
 
  k vyplaceni tento mesic
     ma cenu delat report pro VSDK jako veritele?
-
     k obdrzeni tento mesic

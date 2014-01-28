@@ -8,13 +8,9 @@ class ParentReportForm extends BaseForm
         $this->disableCSRFProtection();
         sfProjectConfiguration::getActive()->loadHelpers('Url');
 
-        $creditorCriteria = new Criteria();
-        $creditorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
-        $creditorCriteria->addJoin(SubjectPeer::ID, ContractPeer::CREDITOR_ID);
+        $creditorCriteria = SubjectPeer::getCreditorsCriteria();
 
-        $debtorCriteria = new Criteria();
-        $debtorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
-        $debtorCriteria->addJoin(SubjectPeer::ID, ContractPeer::DEBTOR_ID);
+        $debtorCriteria = SubjectPeer::getDebtorsCriteria();
 
         $this->setWidgets(array(
             'date_from' => new myJQueryDateWidget(),

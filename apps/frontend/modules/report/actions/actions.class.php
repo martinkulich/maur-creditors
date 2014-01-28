@@ -105,74 +105,70 @@ class reportActions extends sfActions
         $changed = false;
         foreach ($filtersToCheck as $filterKey) {
 
+            if (!isset($filters[$filterKey])) {
 
-            switch ($filterKey) {
-                case 'date_to':
-                case 'date_from':
-                    if (!isset($filters[$filterKey])) {
+                switch ($filterKey) {
+                    case 'date_to':
+                    case 'date_from':
                         $date = new DateTime('now');
                         $filters[$filterKey] = $date->format('Y-m-d');
                         $changed = true;
-                    }
-                    break;
-                case 'year':
-                    if (!isset($filters[$filterKey])) {
+                        break;
+                    case 'year':
                         $date = new DateTime('now');
                         $filters[$filterKey] = (integer)$date->format('Y');
                         $changed = true;
-                    }
-                    break;
-                case 'month':
-                    if (!isset($filters[$filterKey])) {
+                        break;
+                    case 'month':
                         $date = new DateTime('now');
                         $filters[$filterKey] = (integer)$date->format('m');
                         $changed = true;
-                    }
-                    break;
-                case 'creditor_id':
-                    if (!isset($filters[$filterKey])) {
-                        if ($firstCreditor = SubjectPeer::doSelectOne(new Criteria())) {
-                            $filters[$filterKey] = $firstCreditor->getId();
-                            $changed = true;
+                        break;
+                    case 'creditor_id':
+                        switch ($this->reportType) {
+                            case 'creditor_confirmation':
+                            case 'to_pay':
+                                if ($creditor = SubjectPeer::doSelectOne(SubjectPeer::getCreditorsExcludeOwnerCriteria())) {
+                                    $changed = true;
+                                    $filters[$filterKey] = $creditor->getId();
+                                }
+                                break;
+                            default:
+                                if ($creditor = SubjectPeer::doSelectOne(SubjectPeer::getOwnerAsCreditorCriteria())) {
+                                    $changed = true;
+                                    $filters[$filterKey] = $creditor->getId();
+                                }
+                                break;
                         }
-                    }
-                    break;
-                case 'debtor_id':
-                    if (!isset($filters[$filterKey])) {
-
+                        break;
+                    case 'debtor_id':
                         switch ($this->reportType) {
                             case 'debtor_confirmation':
-                                $debtorCriteria = new Criteria();
-                                $debtorCriteria->addAscendingOrderByColumn(SubjectPeer::LASTNAME);
-                                $debtorCriteria->addJoin(SubjectPeer::ID, ContractPeer::DEBTOR_ID);
-                                $debtorCriteria->add(SubjectPeer::IDENTIFICATION_NUMBER, sfConfig::get('app_owner_identification_number'), Criteria::NOT_EQUAL);
-                                if ($debtor = SubjectPeer::doSelectOne($debtorCriteria)) {
+                            case 'to_receive':
+                                if ($debtor = SubjectPeer::doSelectOne(SubjectPeer::getDebtorsExcludeOwnerCriteria())) {
                                     $changed = true;
                                     $filters[$filterKey] = $debtor->getId();
                                 }
                                 break;
                             default:
-                                if ($debtor = SubjectPeer::getOwner()) {
+                                if ($debtor = SubjectPeer::doSelectOne(SubjectPeer::getOwnerAsDebtorCriteria())) {
                                     $changed = true;
                                     $filters[$filterKey] = $debtor->getId();
                                 }
                                 break;
                         }
-
-                    }
-                    break;
-                case 'currency_code':
-                    if (!isset($filters[$filterKey])) {
+                        break;
+                    case 'currency_code':
                         if ($currency = CurrencyPeer::doSelectOne(new Criteria())) {
                             $filters[$filterKey] = $currency->getCode();
                             $changed = true;
                         }
-                    }
-                    break;
-                default:
-                    throw new exception('Undefined filter ' . $filterKey);
-                    break;
+                        break;
+                    default:
+                        throw new exception('Undefined filter ' . $filterKey);
+                        break;
 
+                }
             }
         }
         if ($changed) {
@@ -185,7 +181,8 @@ class reportActions extends sfActions
     }
 
 
-    protected function setFilters(array $filters)
+    protected
+    function setFilters(array $filters)
     {
         return $this->getUser()->setAttribute('report.filters', $filters, 'report');
     }

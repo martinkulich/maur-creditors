@@ -595,6 +595,8 @@ Edit outgoingPayment;Editace platby věřiteli
 There are some settlements related to this outgoing payment, pls unrelate them before deletion;Odchozí platbu nelze smazat, protože byla použita na vypořádání úroku. Pokud chcete platbu odstranit, odeberte ji nejdříve z těchto vypořádání
 to_pay report;K vyplacení tento měsíc
 of to_pay;K vyplacení tento měsíc
+to_receive report;K obdržení tento měsíc
+of to_receive;K obdržení tento měsíc
 Settlement date;Datum vypořádání úroků
 Unpaid cumulative;Nevyplaceno kumulativně
 Unpaid cumulative regular;Nevyplaceno kumulativně (řádná vypořádání)

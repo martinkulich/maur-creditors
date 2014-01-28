@@ -1,12 +1,12 @@
 <?php
 
-class DebtorConfirmationReportForm extends ParentReportForm
+class ToReceiveReportForm extends ParentReportForm
 {
 
+    
     public function getUsedFields()
     {
-        return array('year', 'contract_type_id', 'debtor_id');
-
+        return array('date_to', 'debtor_id', 'contract_type_id', 'contract_id');
     }
 
     public function configure()
