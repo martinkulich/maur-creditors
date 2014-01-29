@@ -3,6 +3,10 @@
 class DebtorRegulationReport extends RegulationReport
 {
 
+    public function getReportCode()
+    {
+        return 'debtor_regulation';
+    }
     public function getConditions()
     {
         return $this->getDebtorReportConditions();

@@ -29,4 +29,18 @@ BEGIN;
 
 update security_perm set name = 'Nevyplacené úroky věřitelům', code ='report-creditor-unpaid' where code ='report-unpaid';
 insert into security_perm(code, "name", is_public) values ('report-debtor-unpaid', 'Nevyplacené úroky od dlužníků', true);
-COMMIt;
+COMMIT;
+
+BEGIN;
+
+update report set code = 'creditor_balance', name='Jistiny po věřitelích' where code = 'balance';
+update report set code = 'creditor_regulation', name='Předpisy věřitelů' where code = 'regulation';
+update report set code = 'creditor_unpaid', name='Nevyplacené úroky věřitelům' where code = 'unpaid';
+
+insert into report(code, name) values
+('debtor_balance', 'Jistiny po dlužnících'),
+('debtor_cost', 'Náklady dlužníků'),
+('debtor_regulation', 'Předpisy dlužníků'),
+('debtor_unpaid', 'Nevyplacené úroky od dlužníků');
+
+COMMIT;

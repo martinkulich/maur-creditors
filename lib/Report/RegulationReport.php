@@ -32,7 +32,7 @@ abstract class RegulationReport extends ParentReport
             JOIN subject de ON de.id = r.debtor_id
             LEFT JOIN settlement s1 on s1.contract_id = r.contract_id and s1.manual_balance = true
             LEFT JOIN settlement s2 on s2.contract_id = r.contract_id and s2.manual_interest = true
-            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'regulation' AND cer.contract_id = r.contract_id) = 0
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = '%report_code%' AND cer.contract_id = r.contract_id) = 0
             %where%
             GROUP BY 
             creditor_id,

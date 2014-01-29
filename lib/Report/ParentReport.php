@@ -15,6 +15,8 @@ abstract class ParentReport
 
     public abstract function getColumns();
 
+    public abstract function getReportCode();
+
     public function __construct(array $filters = array())
     {
         $this->filters = $filters;
@@ -96,6 +98,7 @@ abstract class ParentReport
         $replacements = array(
             '%order_by%' => $this->getOrderBy(),
             '%where%' => $this->getWhere(),
+            '%report_code%'=>$this->getReportCode(),
         );
         $columnKeyPattern = '%%%s%%';
         foreach ($this->getFilters() as $filter => $value) {
@@ -153,6 +156,10 @@ abstract class ParentReport
 
         if ($debtorId = $this->getFilter('debtor_id')) {
             $conditions[] = ' de.id = ' . $debtorId;
+        }
+
+        if ($contractTypeId = $this->getFilter('contract_type_id')) {
+            $conditions[] = ' c.contract_type_id = ' . $contractTypeId;
         }
 
         return $conditions;

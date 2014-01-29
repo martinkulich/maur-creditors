@@ -2,6 +2,11 @@
 
 class DebtorUnpaidReport extends UnpaidReport
 {
+    public function getReportCode()
+    {
+        return 'debtor_unpaid';
+    }
+
     public function getConditions()
     {
         return $this->getDebtorReportConditions();

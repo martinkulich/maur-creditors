@@ -2,7 +2,10 @@
 
 class BirthdayReport extends ParentReport
 {
-
+    public function getReportCode()
+    {
+        return 'birthday';
+    }
     public function getSqlPatter()
     {
         return "

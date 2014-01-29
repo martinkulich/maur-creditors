@@ -2,6 +2,11 @@
 
 class CreditorUnpaidReport extends UnpaidReport
 {
+    public function getReportCode()
+    {
+        return 'creditor_unpaid';
+    }
+
     public function getConditions()
     {
         return $this->getCreditorReportConditions();

@@ -2,6 +2,10 @@
 
 class MonthlyReport extends ParentReport
 {
+    public function getReportCode()
+    {
+        return 'monthly';
+    }
 
     public function getSqlPatter()
     {

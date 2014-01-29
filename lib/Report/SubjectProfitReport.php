@@ -26,7 +26,7 @@ abstract class SubjectProfitReport extends ParentReport
             FROM contract c
             JOIN subject cr ON c.creditor_id = cr.id
             JOIN subject de On de.id = c.debtor_id
-            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'creditor_revenue' AND cer.contract_id = c.id) = 0
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = '%report_code%' AND cer.contract_id = c.id) = 0
             %where%
             GROUP BY
             currency_code,

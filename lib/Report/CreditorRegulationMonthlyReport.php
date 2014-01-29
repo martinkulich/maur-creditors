@@ -3,6 +3,11 @@
 class CreditorRegulationMonthlyReport extends RegulationMonthlyReport
 {
 
+    public function getReportCode()
+    {
+        return 'creditor_regulation_monthly';
+    }
+
     protected function getConditions()
     {
         return $this->getCreditorReportConditions();

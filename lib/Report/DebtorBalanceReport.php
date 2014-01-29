@@ -3,6 +3,11 @@
 class DebtorBalanceReport extends BalanceReport
 {
 
+    public function getReportCode()
+    {
+        return 'debtor_balance';
+    }
+
     protected function getConditions()
     {
         return $this->getDebtorReportConditions();

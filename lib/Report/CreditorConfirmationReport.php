@@ -2,6 +2,10 @@
 
 class CreditorConfirmationReport extends ConfirmationReport
 {
+    public function getReportCode()
+    {
+        return 'creditor_confirmation';
+    }
 
     protected function getConditions()
     {

@@ -2,6 +2,10 @@
 
 class CreditorRegulationReport extends RegulationReport
 {
+    public function getReportCode()
+    {
+        return 'creditor_regulation';
+    }
 
     public function getConditions()
     {

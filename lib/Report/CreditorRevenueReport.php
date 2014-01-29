@@ -3,6 +3,10 @@
 class CreditorRevenueReport extends SubjectProfitReport
 {
 
+    public function getReportCode()
+    {
+        return 'creditor_revenue';
+    }
     protected function getConditions()
     {
         return $this->getCreditorReportConditions();

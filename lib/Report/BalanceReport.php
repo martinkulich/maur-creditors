@@ -18,7 +18,7 @@ abstract class BalanceReport extends ParentReport
 
             JOIN subject cr ON cr.id = c.creditor_id
             JOIN subject de ON de.id = c.debtor_id
-            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = 'balance' AND cer.contract_id = c.id) = 0
+            WHERE (select count(cer.contract_id) from contract_excluded_report cer where cer.report_code = '%report_code%' AND cer.contract_id = c.id) = 0
             %where%
             GROUP BY
             c.currency_code,

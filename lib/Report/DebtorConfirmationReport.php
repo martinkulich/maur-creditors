@@ -3,6 +3,11 @@
 class DebtorConfirmationReport extends ConfirmationReport
 {
 
+    public function getReportCode()
+    {
+        return 'debtor_confirmation';
+    }
+
     protected function getConditions()
     {
         return $this->getDebtorReportConditions();

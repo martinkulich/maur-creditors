@@ -7,10 +7,10 @@ class PaymentReport extends ParentReport
     {
         return "
             SELECT 
-                co.currency_code as currency_code,
+                c.currency_code as currency_code,
                 (cr.lastname::text || ' '::text || cr.firstname::text) as creditor_fullname,
                 (de.lastname::text || ' '::text || de.firstname::text) as debtor_fullname,
-                co.name as contract_name,
+                c.name as contract_name,
                 p.payment_type as payment_type,
                 p.date as date,
                 p.amount as amount,
@@ -18,9 +18,9 @@ class PaymentReport extends ParentReport
                 p.sender_bank_account as sender_bank_account,
                 p.note as note
             FROM payment p
-            JOIN contract co ON co.id = p.contract_id
-            JOIN subject cr ON cr.id = co.creditor_id
-            JOIN subject de ON de.id = co.debtor_id
+            JOIN contract c ON c.id = p.contract_id
+            JOIN subject cr ON cr.id = c.creditor_id
+            JOIN subject de ON de.id = c.debtor_id
             JOIN bank_account ba ON ba.id = p.bank_account_id
             %where%
             ORDER BY   %order_by%
@@ -86,7 +86,7 @@ class PaymentReport extends ParentReport
         }
 
         if ($contractId = $this->getFilter('contract_id')) {
-            $conditions[] = ' co.id = ' . $contractId;
+            $conditions[] = ' c.id = ' . $contractId;
         }
 
         if ($paymentType = $this->getFilter('payment_type')) {
