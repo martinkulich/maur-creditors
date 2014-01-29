@@ -3,6 +3,11 @@
 class CreditorBalanceReport extends BalanceReport
 {
 
+    public function getReportCode()
+    {
+        return 'creditor_balance';
+
+    }
     protected function getConditions()
     {
         return $this->getCreditorReportConditions();

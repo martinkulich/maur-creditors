@@ -9,7 +9,9 @@ class CreditorRegulationReport extends RegulationReport
 
     public function getConditions()
     {
-        return $this->getCreditorReportConditions();
+        $conditions = parent::getConditions();
+        $creditorConditions =  $this->getCreditorReportConditions();
+        return array_merge($conditions, $creditorConditions);
     }
 
 

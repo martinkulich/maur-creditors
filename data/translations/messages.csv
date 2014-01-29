@@ -554,8 +554,8 @@ Age on next birthday;Věk při příštích narozeninách
 of birthday;Narozeniny
 birthday report;Narozeniny
 Print;Tisk
-monthly report;Cash flow
-of monthly;Cash flow
+cash_flow report;Cash flow
+of cash_flow;Cash flow
 January;Leden
 February;Únor
 March;Březen

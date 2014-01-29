@@ -2058,11 +2058,11 @@
       <target>Tisk</target>
     </trans-unit>
     <trans-unit id="515">
-      <source>monthly report</source>
+      <source>cash_flow report</source>
       <target>Cash flow</target>
     </trans-unit>
     <trans-unit id="516">
-      <source>of monthly</source>
+      <source>of cash_flow</source>
       <target>Cash flow</target>
     </trans-unit>
     <trans-unit id="517">

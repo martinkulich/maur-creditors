@@ -4,7 +4,7 @@ class DebtorRegulationReportForm extends ParentReportForm
 {
     public function getUsedFields()
     {
-        return array('debtor_id', 'contract_id', 'years');
+        return array('debtor_id', 'years');
     }
 
     public function configure()

@@ -9,7 +9,9 @@ class DebtorRegulationReport extends RegulationReport
     }
     public function getConditions()
     {
-        return $this->getDebtorReportConditions();
+        $conditions = parent::getConditions();
+        $debtorConditions =  $this->getDebtorReportConditions();
+        return array_merge($conditions, $debtorConditions);
     }
 
 

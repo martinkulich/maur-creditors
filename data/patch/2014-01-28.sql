@@ -44,3 +44,7 @@ insert into report(code, name) values
 ('debtor_unpaid', 'Nevyplacené úroky od dlužníků');
 
 COMMIT;
+
+BEGIN;
+update security_perm set nam='Cash flow', code ='report-cash-flow' where code ='report-monthly';
+COMMIT;
