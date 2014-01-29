@@ -32,6 +32,8 @@
                 </td>
                 <td>
                 </td>
+                <td>
+                </td>
                 <td class="text-align-right">
                         <?php echo my_format_currency($sumValues['interest'], $currencyCode) ?>
                 </td>
