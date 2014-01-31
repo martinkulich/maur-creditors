@@ -120,6 +120,13 @@ $(document).ready(function () {
         }
     );
 
+    fixTableHeaderAndFooter();
+
+
+});
+
+function fixTableHeaderAndFooter()
+{
     var freeHeight = $(window).height() - $('#main-menu').outerHeight() - $('.subnav').outerHeight() - $('.table-fixed-header tfoot, .table-admin tfoot').outerHeight();
     var rowHeight = $('.table-fixed-header td, .table-admin td').outerHeight();
     if ($('.table-fixed-header tr, .table-admin tr').length > freeHeight/rowHeight) {
@@ -131,8 +138,12 @@ $(document).ready(function () {
             }
         );
     }
+}
 
-});
+function unfixTableHeaderAndFooter()
+{
+    $('.table-fixed-header, .table-admin').fixedHeaderTable('destroy');
+}
 
 jQuery(function () {
     jQuery.support.placeholder = false;

@@ -6,7 +6,7 @@
             <?php if($hasFilter){?>
                 <li class="sf_admin_action_filters"> <?php echo link_to(__('Reset', array(), 'sf_admin'), '@report_reset?report_type='.$reportType, array('class'=>'')) ?></li>
             <?php }?>
-                <li class="sf_admin_action_print"><a href=# onclick="window.print();return false;"><?php echo __('Print'); ?></a></li>
+                <li class="sf_admin_action_print"><a href=# onclick="unfixTableHeaderAndFooter(); window.print(); fixTableHeaderAndFooter(); return false;"><?php echo __('Print'); ?></a></li>
         </ul>
     </div>
 </div>
